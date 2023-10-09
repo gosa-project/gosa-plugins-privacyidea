@@ -1,0 +1,7 @@
+2023-10-09 Daniel Teichmann
+
+        * Add plugin.dsc file. (HEAD -> main)
+        * Add README.gosa-compat file. (520586e)
+        * Add AUTHORS file. (8a87bcc)
+        * LICENSE: Add GPLv2 license text. (21c069b)
+        * Initial commit. (6220684)
