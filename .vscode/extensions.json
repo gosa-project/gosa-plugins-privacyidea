@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "xdebug.php-debug",
+
+        // Please ensure phpcs is installed (for example via composer)
+        // Read the extension page for more information.
+        "shevaua.phpcs"
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "*.inc": "php"
+    },
+    // 85 till 100 characters per line should be enough.
+    "editor.rulers": [85, 100],
+
+    "php.debug.ideKey": "VSCODE",
+
+    // Disable builtin PHP support. (We got Intelephense for that)
+    "php.suggest.basic": false,
+
+    // Explicitly ask for PHP8.2
+    "intelephense.environment.phpVersion": "8.2.0",
+
+    "phpcs.standard": "PSR12"
+}
