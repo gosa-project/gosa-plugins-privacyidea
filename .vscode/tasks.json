@@ -1,0 +1,13 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "sleep-task",
+            "command": "sleep 0.5s",
+            "type": "shell",
+            "presentation": {
+                "reveal": "never"
+            },
+        }
+    ]
+}
