@@ -17,4 +17,6 @@
     "phpcs.standard": "PSR12",
     // Code beautifier and fixer
     "phpcbf.standard": "PSR12",
+
+    "smarty.highlight": true,
 }

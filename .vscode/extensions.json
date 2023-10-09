@@ -6,5 +6,6 @@
         // Read the extension page for more information.
         "shevaua.phpcs",
         "persoderlind.vscode-phpcbf",
+        "aswinkumar863.smarty-template-support"
     ]
 }
