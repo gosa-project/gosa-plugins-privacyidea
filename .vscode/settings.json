@@ -20,4 +20,11 @@
     "phpcbf.standard": "PSR12",
 
     "smarty.highlight": true,
+
+    // WARNING: These must be adapted to your paths.
+    // "intelephense.environment.includePaths": [
+    //     "~/Development/GOsa/gosa-core/gosa-core.upstream/include/",
+    //     "~/Development/upstream/php-client/src/",
+    //     "vendor/smarty/smarty/libs/"
+    // ],
 }
