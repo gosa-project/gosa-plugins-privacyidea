@@ -2,8 +2,9 @@
     "files.associations": {
         "*.inc": "php"
     },
-    // 85 till 100 characters per line should be enough.
-    "editor.rulers": [85, 100],
+    // Lines should be under 80 chars but
+    // 120 is max line-length of PSR12.
+    "editor.rulers": [80, 120],
 
     "php.debug.ideKey": "VSCODE",
 
