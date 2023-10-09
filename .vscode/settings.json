@@ -13,5 +13,8 @@
     // Explicitly ask for PHP8.2
     "intelephense.environment.phpVersion": "8.2.0",
 
-    "phpcs.standard": "PSR12"
+    // Code sniffer (lints code)
+    "phpcs.standard": "PSR12",
+    // Code beautifier and fixer
+    "phpcbf.standard": "PSR12",
 }

@@ -4,6 +4,7 @@
 
         // Please ensure phpcs is installed (for example via composer)
         // Read the extension page for more information.
-        "shevaua.phpcs"
+        "shevaua.phpcs",
+        "persoderlind.vscode-phpcbf",
     ]
 }
