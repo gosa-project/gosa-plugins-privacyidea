@@ -9,6 +9,7 @@
                 // server -> local
                 "pathMappings": {
                         "/usr/share/gosa/plugins/privacyidea": "${workspaceRoot}",
+                        "/usr/share/gosa": "${workspaceRoot}/../gosa-core/",
                 },
                 "postDebugTask": "sleep-task",
                 "log": true,
