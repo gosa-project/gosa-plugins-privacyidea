@@ -32,23 +32,35 @@ require_once("/usr/share/gosa/vendor/privacyidea/privacyidea-php-client/src/Auth
 
 class PrivacyIdeaUtils
 {
-    public function validateCheck($user, $pass)
+    private PrivacyIDEA $pi;
+
+    public function __construct()
+    {
+        // TODO: Load privacyIDEA server URL from settings.
+        $pi_server_url = "localhost:5000/";
+
+        $this->pi = new PrivacyIDEA($_SERVER['HTTP_USER_AGENT'], $pi_server_url);
+    }
+
+    /*!
+     * \brief  Dirty hacked-together function to test the validateCheck endpoint of privacyIDEA.
+     */
+    public function validateCheck($user, $pass, $realm = "")
     {
         assert('string' === gettype($user));
         assert('string' === gettype($pass));
+        assert('string' === gettype($realm));
 
-        $pi = new PrivacyIDEA($_SERVER['HTTP_USER_AGENT'], "localhost:5000/");
-        $pi->realm = "nwt-ldap";
+        $this->pi->realm = $realm;
 
         try {
-            $response = $pi->validateCheck($user, $pass);
+            $response = $this->pi->validateCheck($user, $pass);
         } catch (PIBadRequestException $e) {
             echo "<h1>Exception while validating!</h1><br>" .
-                 "<p>" . var_dump($e) . "</p>";
+                 "<p>" . $e->getMessage() . "</p>";
 
             echo "<br>";
-
-            var_dump($response);
         }
+        var_dump($response);
     }
 }

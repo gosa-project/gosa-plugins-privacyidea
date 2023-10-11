@@ -87,7 +87,7 @@ class MultifactorAuth extends plugin
         #$tmpl_path = "phase1.tpl";
 
         // Test:
-        $this->utils->validateCheck("testuser", "000000");
+        $this->utils->validateCheck("testuser", "000000", "testrealm");
 
         // Show introduction page…
         $return_template = $smarty->fetch(get_template_path($tmpl_path, true, dirname(__FILE__)));
