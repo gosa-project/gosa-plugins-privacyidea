@@ -1,5 +1,5 @@
 # gosa-plugins-privacyidea
 
-2FA management for GOsa² using privacyIDEA.
+Multifactor authentication management for GOsa² using privacyIDEA.
 
 See: https://www.privacyidea.org/
