@@ -1,0 +1,18 @@
+attributetype ( 1.3.6.1.4.1.12718.2.2.1.81
+                NAME 'mfaRequired'
+                DESC 'Specifies if multi factor authentication is required for login'
+                EQUALITY caseIgnoreMatch
+                SUBSTR caseIgnoreSubstringsMatch
+                SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+attributetype ( 1.3.6.1.4.1.12718.2.2.1.82
+                NAME 'allowedTokenTypes'
+                DESC 'Specifies which methods for multi factor authentication is allowed for the user'
+                EQUALITY caseIgnoreMatch
+                SUBSTR caseIgnoreSubstringsMatch
+                SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+objectclass  ( 1.3.6.1.4.1.12718.2.2.2.13
+               NAME 'mfaService'
+               DESC 'Information needed for Multifactor authentication'
+               SUP top
+               AUXILIARY MAY (mfaRequired $ allowedTokenTypes)
+             )
