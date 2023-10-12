@@ -83,7 +83,7 @@ class MultifactorAuth extends plugin
         $return_template = null;
 
         // Which Phase are we loading?
-        $tmpl_path = "phase0.tpl";
+        $tmpl_path = "mfa_intro.tpl";
         #$tmpl_path = "phase1.tpl";
 
         // Test:
