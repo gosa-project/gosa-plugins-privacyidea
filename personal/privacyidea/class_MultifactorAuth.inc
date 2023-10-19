@@ -59,6 +59,10 @@ class MultifactorAuth extends plugin
         );
     }
 
+    /**
+     * Executes plugin logic, renders template, etc...
+     * @return string Complete template, ideally loaded by Smarty to display to the user.
+     */
     public function execute()
     {
         /* Call parent execute */
@@ -95,16 +99,16 @@ class MultifactorAuth extends plugin
         return $return_template;
     }
 
-    /*!
-     * \brief  Save data to object
+    /**
+     * Save data to object
      */
     public function save_object()
     {
         plugin::save_object();
     }
 
-    /*!
-     * \brief  Removes the mailAccount extension from ldap
+    /**
+     * Removes the mailAccount extension from ldap
      */
     public function remove_from_parent()
     {
@@ -133,8 +137,8 @@ class MultifactorAuth extends plugin
         $this->handle_post_events("remove", array("uid" => $this->uid));
     }
 
-    /*!
-     * \brief  Save the MultifactorAuth settings to the ldap database.
+    /**
+     * Save the MultifactorAuth settings to the ldap database.
      */
     public function save()
     {
@@ -175,8 +179,9 @@ class MultifactorAuth extends plugin
         }
     }
 
-    /*!
-     * \brief  Check given values
+    /**
+     * Check given values
+     * @return array Strings of error messages (should be translated already).
      */
     public function check()
     {
@@ -195,8 +200,11 @@ class MultifactorAuth extends plugin
         return ($message);
     }
 
-    /*!
-     * \brief  Adapt from template, using 'dn'
+    /**
+     * Adapt from template
+     *
+     * @param string $dn   DN of the template to adapt from.
+     * @param array  $skip
      */
     public function adapt_from_template($dn, $skip = array ())
     {

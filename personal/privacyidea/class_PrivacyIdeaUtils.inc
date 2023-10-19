@@ -42,8 +42,10 @@ class PrivacyIdeaUtils
         $this->pi = new PrivacyIDEA($_SERVER['HTTP_USER_AGENT'], $pi_server_url);
     }
 
-    /*!
-     * \brief  Dirty hacked-together function to test the validateCheck endpoint of privacyIDEA.
+    /*
+     * Dirty hacked-together function to test the validateCheck endpoint of privacyIDEA.
+     *
+     * @param string $user Username inside of Realm $realm privacyIDEA
      */
     public function validateCheck($user, $pass, $realm = "")
     {
