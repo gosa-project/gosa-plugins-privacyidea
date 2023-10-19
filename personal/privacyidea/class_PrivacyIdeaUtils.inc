@@ -34,6 +34,7 @@ class PrivacyIdeaUtils
 {
     private PrivacyIDEA $pi;
     private config $config;
+    private bool $ENABLE_DEBUG_JS_CONSOLE = false;
 
     /** @param config $config Configuration object provided by GOsa. */
     public function __construct(&$config)
@@ -46,7 +47,79 @@ class PrivacyIdeaUtils
         $this->pi = new PrivacyIDEA($_SERVER['HTTP_USER_AGENT'], $pi_server_url);
     }
 
-    /*
+    /**
+     * @param string|array $data Data to show inside of the Javascript console (in the client browser).
+     */
+    public function debugToJsConsole($data)
+    {
+        // Don't print anything to js console, if ENABLE_DEBUG_JS_CONSOLE isn't 'true'.
+        if ($this->ENABLE_DEBUG_JS_CONSOLE !== true) {
+            return;
+        }
+
+        if (is_array($data)) {
+            $output = implode('', $data);
+        }
+
+        echo "<script>console.log('" . addslashes($data) . "');</script>";
+    }
+
+    /**
+     * @param string $key
+     * @return string Value from GOsa's config system.
+     */
+    public function getConfigStrValue($key)
+    {
+        return $this->getConfigStrValueInternal($key, true);
+    }
+
+    private function getConfigStrValueInternal($key, $debug_to_jsconsole = true)
+    {
+        assert(is_string($key));
+
+        // Define our main class
+        $class = "privacyidea";
+
+        // Get config value from LDAP-Tree, gosa config file (gosa.conf) or
+        // defaults from class_schoolmgr.inc
+        $ret = $this->config->get_cfg_value($class, $key);
+
+        if ($debug_to_jsconsole) {
+            // Debug property to js console (if debugging is enabled!).
+            $debug_str = "Got string property '" . str_pad($key . "':", 58) . "'" . $ret . "'";
+            $this->debugToJsConsole($debug_str);
+        }
+
+        return $ret;
+    }
+
+    /**
+     * @param string $key
+     * @return bool Value from GOsa's config system.
+     */
+    public function getConfigBoolValue($key)
+    {
+        assert(is_string($key));
+
+        // Get config value, but pause debugging output.
+        $conf_value = strtolower($this->getConfigStrValueInternal($key, false));
+
+        $ret = false;
+
+        // Only return TRUE if value is literally "true"…
+        if ($conf_value === "true") {
+            $ret = true;
+        }
+
+        // Debug property to js console (if debugging is enabled!).
+        $ret_str = $ret ? "✅" : "❌";
+        $debug_str = "Got bool property '" . str_pad($key . "':", 60) . "'" . $ret_str . "'";
+        $this->debugToJsConsole($debug_str);
+
+        return $ret;
+    }
+
+    /**
      * Dirty hacked-together function to test the validateCheck endpoint of privacyIDEA.
      *
      * @param string $user Username inside of Realm $realm privacyIDEA
