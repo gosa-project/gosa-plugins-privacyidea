@@ -33,9 +33,13 @@ require_once("/usr/share/gosa/vendor/privacyidea/privacyidea-php-client/src/Auth
 class PrivacyIdeaUtils
 {
     private PrivacyIDEA $pi;
+    private config $config;
 
-    public function __construct()
+    /** @param config $config Configuration object provided by GOsa. */
+    public function __construct(&$config)
     {
+        $this->config = &$config;
+
         // TODO: Load privacyIDEA server URL from settings.
         $pi_server_url = "localhost:5000/";
 
