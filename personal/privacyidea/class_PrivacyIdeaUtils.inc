@@ -36,6 +36,8 @@ class PrivacyIdeaUtils
     private config $config;
     private bool $ENABLE_DEBUG_JS_CONSOLE = false;
 
+    private string $GOSA_SETTINGS_GROUP = "privacyidea";
+
     /** @param config $config Configuration object provided by GOsa. */
     public function __construct(&$config)
     {
@@ -77,12 +79,9 @@ class PrivacyIdeaUtils
     {
         assert(is_string($key));
 
-        // Define our main class
-        $class = "privacyidea";
-
         // Get config value from LDAP-Tree, gosa config file (gosa.conf) or
         // defaults from class_schoolmgr.inc
-        $ret = $this->config->get_cfg_value($class, $key);
+        $ret = $this->config->get_cfg_value($this->GOSA_SETTINGS_GROUP, $key);
 
         if ($debug_to_jsconsole) {
             // Debug property to js console (if debugging is enabled!).
