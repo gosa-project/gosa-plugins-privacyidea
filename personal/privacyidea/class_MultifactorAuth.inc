@@ -190,7 +190,7 @@ class MultifactorAuth extends plugin
         $message = plugin::check();
 
         // $message[] = msgPool::required(_("Mail address"));
-        $message[] = "check()";
+        // $message[] = "check()";
 
         return ($message);
     }
