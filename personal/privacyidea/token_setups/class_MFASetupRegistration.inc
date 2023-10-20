@@ -26,10 +26,23 @@ class MFASetupRegistration implements MFASetupToken
 {
     private string $renderResult = "";
     private string $TEMPLATE_PREFIX = "mfatype_registration/";
+    private PrivacyIdeaUtils $utils;
+    private Smarty $smarty;
+    private MultifactorAuth $mfaClass;
 
-    public function render($smarty, $multifactorAuth)
+    public function __construct(&$utils, &$smarty, &$mfaClass)
     {
-        $this->renderResult = $smarty->fetch(
+        assert(get_class($utils)     == "PrivacyIdeaUtils");
+        assert(get_class($smarty)    == "Smarty");
+        assert(get_class($mfaClass)  == "MultifactorAuth");
+        $this->utils    = &$utils;
+        $this->smarty   = &$smarty;
+        $this->mfaClass = &$mfaClass;
+    }
+
+    public function render()
+    {
+        $this->renderResult = $this->smarty->fetch(
             get_template_path($this->TEMPLATE_PREFIX . "phase00.tpl", true, dirname(__FILE__) . "/..")
         );
 

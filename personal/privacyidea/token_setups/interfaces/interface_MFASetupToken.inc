@@ -23,13 +23,19 @@
 interface MFASetupToken
 {
     /**
-     * Renders setup for a specific token type.
-     * @param Smarty          $smarty          Smarty instance
-     * @param MultifactorAuth $multifactorAuth Parent plugin class.
-     *
-     * @return boolean 'False' is indicating that something did go wrong.
+     * Contructor
+     * @param PrivacyIdeaUtils $utils
+     * @param Smarty $smarty
+     * @param MultifactorAuth $mfaClass
      */
-    public function render($smarty, $multifactorAuth);
+    public function __construct(&$utils, &$smarty, &$mfaClass);
+
+    /**
+     * Renders setup steps/phases.
+     *
+     * @return bool 'False' is indicating that something did go wrong.
+     */
+    public function render();
 
     /**
      * @return string Rendered template, ready to be given to GOsa.

@@ -110,16 +110,16 @@ class MultifactorAuth extends plugin
 
             switch ($token_type) {
                 case 'WebAuthn':
-                    $MFASetup = new MFASetupWebAuthn();
+                    $MFASetup = new MFASetupWebAuthn($this->utils, $smarty, $this);
                     break;
                 case 'TOTP':
-                    $MFASetup = new MFASetupTOTP();
+                    $MFASetup = new MFASetupTOTP($this->utils, $smarty, $this);
                     break;
                 case 'Paper':
-                    $MFASetup = new MFASetupPaper();
+                    $MFASetup = new MFASetupPaper($this->utils, $smarty, $this);
                     break;
                 case 'Registration':
-                    $MFASetup = new MFASetupRegistration();
+                    $MFASetup = new MFASetupRegistration($this->utils, $smarty, $this);
                     break;
 
                 default:
@@ -137,7 +137,7 @@ class MultifactorAuth extends plugin
 
         // Either return template from a MFASetup class or the MFA intro.
         if (isset($MFASetup)) {
-            $renderSuccess = $MFASetup->render($smarty, $this);
+            $renderSuccess = $MFASetup->render();
 
             if ($renderSuccess) {
                 return $MFASetup->getRenderResult();
