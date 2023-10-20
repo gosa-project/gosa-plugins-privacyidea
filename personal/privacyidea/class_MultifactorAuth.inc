@@ -28,8 +28,13 @@ class MultifactorAuth extends plugin
     public $access        = "";
 
     // Attribute list for save action
-    public $attributes    = [];
-    public $objectclasses = [];
+    public $attributes    = array(
+        "mfaRequired",
+        "allowedTokenTypes",
+    );
+    public $objectclasses = array(
+        "mfaService",
+    );
     private $view_logged = false;
 
     public $config    = null;
