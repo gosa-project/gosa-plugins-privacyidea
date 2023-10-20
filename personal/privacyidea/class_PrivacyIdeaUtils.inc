@@ -117,28 +117,4 @@ class PrivacyIdeaUtils
 
         return $ret;
     }
-
-    /**
-     * Dirty hacked-together function to test the validateCheck endpoint of privacyIDEA.
-     *
-     * @param string $user Username inside of Realm $realm privacyIDEA
-     */
-    public function validateCheck($user, $pass, $realm = "")
-    {
-        assert('string' === gettype($user));
-        assert('string' === gettype($pass));
-        assert('string' === gettype($realm));
-
-        $this->pi->realm = $realm;
-
-        try {
-            $response = $this->pi->validateCheck($user, $pass);
-        } catch (PIBadRequestException $e) {
-            echo "<h1>Exception while validating!</h1><br>" .
-                 "<p>" . $e->getMessage() . "</p>";
-
-            echo "<br>";
-        }
-        var_dump($response);
-    }
 }
