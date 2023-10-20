@@ -50,6 +50,13 @@ class PrivacyIdeaUtils
         $this->pi = new PrivacyIDEA($_SERVER['HTTP_USER_AGENT'], $pi_server_url);
     }
 
+    /** @return string Always returns translated string (see source code for actual message). */
+    public function pleaseTryAgainMsg()
+    {
+        return _("Please try logging out and logging in again and contact your " .
+                 "system administrator, if the problem persists. Thank you.");
+    }
+
     /**
      * @param string|array $data Data to show inside of the Javascript console (in the client browser).
      */
