@@ -13,6 +13,6 @@ attributetype ( 1.3.6.1.4.1.12718.2.2.1.82
 objectclass  ( 1.3.6.1.4.1.12718.2.2.2.13
                NAME 'mfaService'
                DESC 'Information needed for Multifactor authentication'
-               SUP top
-               AUXILIARY MAY (mfaRequired $ allowedTokenTypes)
+               SUP ( top ) AUXILIARY
+               MAY (mfaRequired $ allowedTokenTypes)
              )
