@@ -90,12 +90,16 @@ class MultifactorAuth extends plugin
             $this->ldapinfo = [];
         }
 
-        // Showing this template next…
-        $return_template = null;
+        /*
+         * SMARTY ASSIGN VARIABLES
+         */
 
-        // Which Phase are we loading?
-        $tmpl_path = "mfa_intro.tpl";
-        #$tmpl_path = "phase1.tpl";
+        // Let smarty know about "$name . 'ACL'"
+        $providedACLs = $this->plInfo()['plProvidedAcls'];
+        foreach ($providedACLs as $name => $transl) {
+            $acl = $this->getacl($name);
+            $smarty->assign("$name" . "ACL", $acl);
+        }
 
         $smarty->assign("additionalFactorRequiredByOrg", $this->additionalFactorRequiredByOrg);
 
