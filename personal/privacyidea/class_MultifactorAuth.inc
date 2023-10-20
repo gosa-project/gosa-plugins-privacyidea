@@ -40,6 +40,9 @@ class MultifactorAuth extends plugin
     /** @var PrivacyIdeaUtils */
     private $utils    = null;
 
+    /** @var bool This is a gosaSetting telling if all accounts need an additional factor. */
+    private $additionalFactorRequiredByOrg;
+
     public function __construct(&$config, $dn = null)
     {
         $this->initTime = microtime(true);
@@ -49,6 +52,8 @@ class MultifactorAuth extends plugin
 
         // Initialize utils class
         $this->utils = new PrivacyIdeaUtils($config);
+
+        $this->additionalFactorRequiredByOrg = $this->utils->getConfigBoolValue("additionalFactorRequiredByOrg");
 
         $this->ui = get_userinfo();
         stats::log(
@@ -217,6 +222,56 @@ class MultifactorAuth extends plugin
      */
     public function adapt_from_template($dn, $skip = array ())
     {
+        // TODO: Adapt allowed token types.
         plugin::adapt_from_template($dn, $skip);
+    }
+
+    /**
+     * Provide plugin information
+     * @return array Plugin settings.
+     */
+    public static function plInfo()
+    {
+        $properties = MultifactorAuth::getProperties();
+
+        return (array (
+            "plShortName"    => _("MFA"),
+            "plDescription"  => _("Multifactor Authentification"),
+            "plSelfModify"   => true,
+            "plDepends"      => array ("user"),           // This plugin depends on
+            "plPriority"     => 4,                        // Position in tabs
+            "plSection"      => array ("personal"   => _("My account")),
+            "plCategory"     => array ("users"),
+            "plOptions"      => array (),
+            "plProperties"   => $properties,
+            "plRequirements" => array ('onFailureDisablePlugin' => array (get_class())),
+            "plProvidedAcls" => array (
+                                   "mfaWebAuthn"     => _("Allowed token type: WebAuthn"),
+                                   "mfaTotp"         => _("Allowed token type: TOTP"),
+                                   "mfaPaper"        => _("Allowed token type: Paper"),
+                                   "mfaRegistration" => _("Allowed token type: Registration"),
+            ),
+        ));
+    }
+
+    /**
+     * Define properties (saved in LDAP as 'gosaSettings' or in gosa.conf).
+     * @return array Properties information.
+     */
+    public static function getProperties()
+    {
+        return array(
+            array(
+                "name"        => "additionalFactorRequiredByOrg",
+                "type"        => "bool",
+                "check"       => "gosaProperty::isBool",
+                "group"       => "privacyidea",
+                "default"     => "false",
+                "migrate"     => "",
+                "mandatory"   => true,
+                "description" => _("Every user needs to have at least one " .
+                                   "additional factor (besides password)."),
+            ),
+        );
     }
 }
