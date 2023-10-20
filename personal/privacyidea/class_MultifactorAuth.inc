@@ -35,7 +35,9 @@ class MultifactorAuth extends plugin
     public $config    = null;
     public $initTime  = null;
     private $ldap     = null;
+    private $ui       = null;
     private $ldapinfo = null;
+    /** @var PrivacyIdeaUtils */
     private $utils    = null;
 
     public function __construct(&$config, $dn = null)
@@ -52,7 +54,7 @@ class MultifactorAuth extends plugin
         stats::log(
             'plugin',
             $class = get_class($this),
-            $category = array($this-> acl_category),
+            $category = array($this->acl_category),
             $action = 'open',
             $amount = 1,
             $duration = (microtime(true) - $this->initTime),
@@ -128,7 +130,10 @@ class MultifactorAuth extends plugin
         /* Add "view" to logging class */
         new log("remove", "users/" . get_class($this), $this->dn, array_keys($this->attrs), $ldap->get_error());
         if (!$ldap->success()) {
-            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+            msg_dialog::display(
+                _("LDAP error"),
+                msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class())
+            );
         }
 
         /* Optionally execute a command after we are done */
@@ -147,7 +152,6 @@ class MultifactorAuth extends plugin
         // Call parents save to prepare $this->attrs
         plugin::save();
 
-
         // Fill $this->attrs from $this's fields.
         // $this->attrs['mail'] = $this->mail;
 
@@ -157,7 +161,10 @@ class MultifactorAuth extends plugin
         $ldap->modify($this->attrs);
 
         if (!$ldap->success()) {
-            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+            msg_dialog::display(
+                _("LDAP error"),
+                msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class())
+            );
         }
 
         /* Log last action */
@@ -191,6 +198,10 @@ class MultifactorAuth extends plugin
 
         // Call common method to give check the hook
         $message = plugin::check();
+
+        // TODO: If user looks at it's own page AND mfa method must be activated
+        // then don't let user leave!
+        // $message[] = msgPool::required(_("A MFA method must be initialized or else you can't login anymore!"));
 
         // $message[] = msgPool::required(_("Mail address"));
         // $message[] = "check()";

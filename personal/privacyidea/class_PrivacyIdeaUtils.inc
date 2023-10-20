@@ -34,7 +34,8 @@ class PrivacyIdeaUtils
 {
     private PrivacyIDEA $pi;
     private config $config;
-    private bool $ENABLE_DEBUG_JS_CONSOLE = false;
+    // TODO: Replace with GOsa's development mode.
+    private bool $ENABLE_DEBUG_JS_CONSOLE = true;
 
     private string $GOSA_SETTINGS_GROUP = "privacyidea";
 
