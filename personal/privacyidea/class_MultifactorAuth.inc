@@ -97,11 +97,73 @@ class MultifactorAuth extends plugin
         $tmpl_path = "mfa_intro.tpl";
         #$tmpl_path = "phase1.tpl";
 
+        $smarty->assign("additionalFactorRequiredByOrg", $this->additionalFactorRequiredByOrg);
 
+        /*
+         * MFA Setup logic
+         */
+        $MFASetup = null;
+        if ((get_post("add_token"))) {
+            // Okay, user clicked on a button, which should add a token.
+            // Starting MFA setup for this token type now.
+            $token_type = get_post("token_type");
+
+            switch ($token_type) {
+                case 'WebAuthn':
+                    $MFASetup = new MFASetupWebAuthn();
+                    break;
+                case 'TOTP':
+                    $MFASetup = new MFASetupTOTP();
+                    break;
+                case 'Paper':
+                    $MFASetup = new MFASetupPaper();
+                    break;
+                case 'Registration':
+                    $MFASetup = new MFASetupRegistration();
+                    break;
+
+                default:
+                    // THIS SHOULD NOT HAPPEN _POST IS MALFORMED!
+                    // User Attack? Showing intro site again.
+                    $MFASetup = null;
+                    msg_dialog::display(
+                        _("Internal error"),
+                        _("Could not process POST data of your request.") . "<br>" .
+                        $this->utils->pleaseTryAgainMsg()
+                    );
+                    break;
+            };
+        }
+
+        // Either return template from a MFASetup class or the MFA intro.
+        if (isset($MFASetup)) {
+            $renderSuccess = $MFASetup->render($smarty, $this);
+
+            if ($renderSuccess) {
+                return $MFASetup->getRenderResult();
+            } else {
+                // Oof, something did go terribly wrong.
+                msg_dialog::display(
+                    _("Internal error"),
+                    _("Could not load/render template for MFA setup.") . "<br>" .
+                    $this->utils->pleaseTryAgainMsg()
+                );
+
+                return $this->getMFAIntroTemplate($smarty);
+            }
+        }
+
+        return $this->getMFAIntroTemplate($smarty);
+    }
+
+    /**
+     * @return string Always returnes the MFA intro template.
+     * @param Smarty $smarty Smarty instance.
+     */
+    private function getMFAIntroTemplate($smarty)
+    {
         // Show introduction page…
-        $return_template = $smarty->fetch(get_template_path($tmpl_path, true, dirname(__FILE__)));
-
-        return $return_template;
+        return $smarty->fetch(get_template_path("mfa_intro.tpl", true, dirname(__FILE__)));
     }
 
     /**
