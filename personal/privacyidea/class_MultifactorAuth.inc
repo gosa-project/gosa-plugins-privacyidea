@@ -37,16 +37,18 @@ class MultifactorAuth extends plugin
     );
     private $view_logged = false;
 
-    public $config    = null;
-    /** @var array<MFAToken> Save an instance of all MFATokens. */
+    public $config = null;
+    public $ldap   = null;
+    /** @var PrivacyIdeaUtils */
+    public $utils = null;
+    /** @var MFAToken[] Save an instance of all MFATokens. */
     public $mfaTokens = array();
+    /** @var Smarty */
+    public $smarty = null;
 
     public $initTime  = null;
-    private $ldap     = null;
-    private $ui       = null;
+    public $ui        = null;
     private $ldapinfo = null;
-    /** @var PrivacyIdeaUtils */
-    private $utils    = null;
 
     /** @var bool This is a gosaSetting telling if all accounts need an additional factor. */
     private $additionalFactorRequiredByOrg;
@@ -73,10 +75,12 @@ class MultifactorAuth extends plugin
             $duration = (microtime(true) - $this->initTime),
         );
 
-        $mfaTokens['WebAuthn']     = new MFAWebAuthn($this->utils, $smarty, $this);
-        $mfaTokens['TOTP']         = new MFATOTP($this->utils, $smarty, $this);
-        $mfaTokens['Paper']        = new MFAPaper($this->utils, $smarty, $this);
-        $mfaTokens['Registration'] = new MFARegistration($this->utils, $smarty, $this);
+        $this->smarty = get_smarty();
+        assert(get_class($this->smarty) == "Smarty");
+        $mfaTokens['WebAuthn']     = new MFAWebAuthnToken($this);
+        $mfaTokens['TOTP']         = new MFATotpToken($this);
+        $mfaTokens['Paper']        = new MFAPaperToken($this);
+        $mfaTokens['Registration'] = new MFARegistrationToken($this);
     }
 
     /**
@@ -88,17 +92,23 @@ class MultifactorAuth extends plugin
         /* Call parent execute */
         plugin::execute();
 
+        // Save this for later...
+        $this->initially_was_account = $this->is_account;
+
+        // Always mark this as an account.
+        if (!$this->is_account && $this->acl_is_createable()) {
+            $this->is_account = true;
+        }
+
         /* Log view */
         if ($this->is_account && !$this->view_logged) {
             $this->view_logged = true;
             new log("view", "users/" . get_class($this), $this->dn);
         }
 
-        // Initialize smarty
-        $smarty = get_smarty();
-
         // Initialize LDAP
         $this->ldap = $this->config->get_ldap_link();
+        assert(get_class($this->ldap) == "LDAP");
         if (!is_array($this->ldapinfo)) {
             $this->ldapinfo = [];
         }
@@ -106,15 +116,14 @@ class MultifactorAuth extends plugin
         /*
          * SMARTY ASSIGN VARIABLES
          */
-
         // Let smarty know about "$name . 'ACL'"
         $providedACLs = $this->plInfo()['plProvidedAcls'];
         foreach ($providedACLs as $name => $transl) {
             $acl = $this->getacl($name);
-            $smarty->assign("$name" . "ACL", $acl);
+            $this->smarty->assign("$name" . "ACL", $acl);
         }
 
-        $smarty->assign("additionalFactorRequiredByOrg", $this->additionalFactorRequiredByOrg);
+        $this->smarty->assign("additionalFactorRequiredByOrg", $this->additionalFactorRequiredByOrg);
 
         /*
          * MFA Setup logic
@@ -157,21 +166,20 @@ class MultifactorAuth extends plugin
                     $this->utils->pleaseTryAgainMsg()
                 );
 
-                return $this->getMFAIntroTemplate($smarty);
+                return $this->getMFAIntroTemplate();
             }
         }
 
-        return $this->getMFAIntroTemplate($smarty);
+        return $this->getMFAIntroTemplate();
     }
 
     /**
      * @return string Always returnes the MFA intro template.
-     * @param Smarty $smarty Smarty instance.
      */
-    private function getMFAIntroTemplate($smarty)
+    private function getMFAIntroTemplate()
     {
         // Show introduction page…
-        return $smarty->fetch(get_template_path("mfa_intro.tpl", true, dirname(__FILE__)));
+        return $this->smarty->fetch(get_template_path("mfa_intro.tpl", true, dirname(__FILE__)));
     }
 
     /**

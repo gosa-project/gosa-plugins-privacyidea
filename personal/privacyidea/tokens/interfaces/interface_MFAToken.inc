@@ -24,11 +24,9 @@ interface MFAToken
 {
     /**
      * Contructor
-     * @param PrivacyIdeaUtils $utils
-     * @param Smarty $smarty
      * @param MultifactorAuth $mfaClass
      */
-    public function __construct(&$utils, &$smarty, &$mfaClass);
+    public function __construct(&$mfaClass);
 
     /**
      * Renders setup steps/phases.

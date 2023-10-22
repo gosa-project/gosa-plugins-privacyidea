@@ -22,30 +22,32 @@
 
 require_once(dirname(__FILE__) . "/interfaces/interface_MFAToken.inc");
 
-class MFAPaper implements MFAToken
+class MFARegistrationToken implements MFAToken
 {
     private string $renderResult = "";
-    private string $TEMPLATE_PREFIX = "mfatype_paper/";
+    private string $TEMPLATE_PREFIX = "mfatype_registration/";
     private PrivacyIdeaUtils $utils;
     private Smarty $smarty;
     private config $config;
-    private LDAP $ldap;
     private MultifactorAuth $mfaClass;
+    /** @var ldapMultiplexer|LDAP */
+    private $ldap;
 
-    public function __construct(&$utils, &$smarty, &$mfaClass)
+    public function __construct(&$mfaClass)
     {
         // Crashing is okay here, we want to find errors like this in early development.
-        assert(get_class($utils)     == "PrivacyIdeaUtils");
-        assert(get_class($smarty)    == "Smarty");
         assert(get_class($mfaClass)  == "MultifactorAuth");
-        $this->utils    = &$utils;
-        $this->smarty   = &$smarty;
         $this->mfaClass = &$mfaClass;
 
+        $this->utils    = $mfaClass->utils;
+        $this->smarty   = $mfaClass->smarty;
         $this->ldap     = $mfaClass->ldap;
         $this->config   = $mfaClass->config;
+        assert(get_class($this->utils)   == "PrivacyIdeaUtils");
+        assert(get_class($this->smarty)  == "Smarty");
         assert(get_class($this->config)  == "config");
-        assert(get_class($this->ldap)    == "LDAP");
+        assert(get_class($this->ldap)    == "LDAP" ||
+               get_class($this->ldap)    == "ldapMultiplexer");
     }
 
     public function renderSetup()
