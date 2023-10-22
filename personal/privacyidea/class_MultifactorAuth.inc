@@ -55,6 +55,8 @@ class MultifactorAuth extends plugin
 
     public function __construct(&$config, $dn = null)
     {
+        plugin::__construct($config, $dn);
+
         $this->initTime = microtime(true);
 
         /* Include config object */
@@ -62,6 +64,13 @@ class MultifactorAuth extends plugin
 
         // Initialize utils class
         $this->utils = new PrivacyIdeaUtils($config);
+
+        // Initialize LDAP
+        $this->ldap = $this->config->get_ldap_link();
+        assert(get_class($this->ldap) == "LDAP" || get_class($this->ldap) == "ldapMultiplexer");
+        if (!is_array($this->ldapinfo)) {
+            $this->ldapinfo = [];
+        }
 
         $this->additionalFactorRequiredByOrg = $this->utils->getConfigBoolValue("additionalFactorRequiredByOrg");
 
@@ -92,9 +101,6 @@ class MultifactorAuth extends plugin
         /* Call parent execute */
         plugin::execute();
 
-        // Save this for later...
-        $this->initially_was_account = $this->is_account;
-
         // Always mark this as an account.
         if (!$this->is_account && $this->acl_is_createable()) {
             $this->is_account = true;
@@ -104,13 +110,6 @@ class MultifactorAuth extends plugin
         if ($this->is_account && !$this->view_logged) {
             $this->view_logged = true;
             new log("view", "users/" . get_class($this), $this->dn);
-        }
-
-        // Initialize LDAP
-        $this->ldap = $this->config->get_ldap_link();
-        assert(get_class($this->ldap) == "LDAP");
-        if (!is_array($this->ldapinfo)) {
-            $this->ldapinfo = [];
         }
 
         /*
