@@ -38,6 +38,9 @@ class MultifactorAuth extends plugin
     private $view_logged = false;
 
     public $config    = null;
+    /** @var array<MFAToken> Save an instance of all MFATokens. */
+    public $mfaTokens = array();
+
     public $initTime  = null;
     private $ldap     = null;
     private $ui       = null;
@@ -69,6 +72,11 @@ class MultifactorAuth extends plugin
             $amount = 1,
             $duration = (microtime(true) - $this->initTime),
         );
+
+        $mfaTokens['WebAuthn']     = new MFAWebAuthn($this->utils, $smarty, $this);
+        $mfaTokens['TOTP']         = new MFATOTP($this->utils, $smarty, $this);
+        $mfaTokens['Paper']        = new MFAPaper($this->utils, $smarty, $this);
+        $mfaTokens['Registration'] = new MFARegistration($this->utils, $smarty, $this);
     }
 
     /**
@@ -111,45 +119,36 @@ class MultifactorAuth extends plugin
         /*
          * MFA Setup logic
          */
-        $MFASetup = null;
-        if ((get_post("add_token"))) {
+        $setup = null;
+        if (in_array('add_token', $_POST)) {
             // Okay, user clicked on a button, which should add a token.
             // Starting MFA setup for this token type now.
-            $token_type = get_post("token_type");
+            $token_type = "";
+            if (in_array('token_type', $_POST)) {
+                $token_type = get_post("token_type");
+            }
 
-            switch ($token_type) {
-                case 'WebAuthn':
-                    $MFASetup = new MFASetupWebAuthn($this->utils, $smarty, $this);
-                    break;
-                case 'TOTP':
-                    $MFASetup = new MFASetupTOTP($this->utils, $smarty, $this);
-                    break;
-                case 'Paper':
-                    $MFASetup = new MFASetupPaper($this->utils, $smarty, $this);
-                    break;
-                case 'Registration':
-                    $MFASetup = new MFASetupRegistration($this->utils, $smarty, $this);
-                    break;
+            // Detect if $token_type is not registered in $mfaTokens.
+            // This probably means the user sent some garbage _POST request!
+            // Just showing intro site again to avoid being susceptible for proxy hacks.
+            if (!in_array($token_type, array_keys($this->mfaTokens))) {
+                $setup = null;
+                msg_dialog::display(
+                    _("Internal error"),
+                    _("Could not process POST data of your request.") . "<br>" .
+                    $this->utils->pleaseTryAgainMsg()
+                );
+            }
 
-                default:
-                    // THIS SHOULD NOT HAPPEN _POST IS MALFORMED!
-                    // User Attack? Showing intro site again.
-                    $MFASetup = null;
-                    msg_dialog::display(
-                        _("Internal error"),
-                        _("Could not process POST data of your request.") . "<br>" .
-                        $this->utils->pleaseTryAgainMsg()
-                    );
-                    break;
-            };
+            $setup = $this->mfaTokens[$token_type];
         }
 
-        // Either return template from a MFASetup class or the MFA intro.
-        if (isset($MFASetup)) {
-            $renderSuccess = $MFASetup->render();
+        // Either return template from a setup class or the MFA intro.
+        if (isset($setup)) {
+            $renderSuccess = $setup->renderSetup();
 
             if ($renderSuccess) {
-                return $MFASetup->getRenderResult();
+                return $setup->getRenderSetupResult();
             } else {
                 // Oof, something did go terribly wrong.
                 msg_dialog::display(

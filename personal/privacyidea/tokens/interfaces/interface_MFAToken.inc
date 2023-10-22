@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-interface MFASetupToken
+interface MFAToken
 {
     /**
      * Contructor
@@ -35,11 +35,11 @@ interface MFASetupToken
      *
      * @return bool 'False' is indicating that something did go wrong.
      */
-    public function render();
+    public function renderSetup();
 
     /**
      * @return string Rendered template, ready to be given to GOsa.
      *                e.g. MultifactorAuth's execute()
      */
-    public function getRenderResult();
+    public function getRenderSetupResult();
 }

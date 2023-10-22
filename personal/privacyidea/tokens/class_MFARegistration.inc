@@ -20,27 +20,35 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-require_once(dirname(__FILE__) . "/interfaces/interface_MFASetupToken.inc");
+require_once(dirname(__FILE__) . "/interfaces/interface_MFAToken.inc");
 
-class MFASetupRegistration implements MFASetupToken
+class MFARegistration implements MFAToken
 {
     private string $renderResult = "";
     private string $TEMPLATE_PREFIX = "mfatype_registration/";
     private PrivacyIdeaUtils $utils;
     private Smarty $smarty;
+    private config $config;
+    private LDAP $ldap;
     private MultifactorAuth $mfaClass;
 
     public function __construct(&$utils, &$smarty, &$mfaClass)
     {
+        // Crashing is okay here, we want to find errors like this in early development.
         assert(get_class($utils)     == "PrivacyIdeaUtils");
         assert(get_class($smarty)    == "Smarty");
         assert(get_class($mfaClass)  == "MultifactorAuth");
         $this->utils    = &$utils;
         $this->smarty   = &$smarty;
         $this->mfaClass = &$mfaClass;
+
+        $this->ldap     = $mfaClass->ldap;
+        $this->config   = $mfaClass->config;
+        assert(get_class($this->config)  == "config");
+        assert(get_class($this->ldap)    == "LDAP");
     }
 
-    public function render()
+    public function renderSetup()
     {
         $this->renderResult = $this->smarty->fetch(
             get_template_path($this->TEMPLATE_PREFIX . "phase00.tpl", true, dirname(__FILE__) . "/..")
@@ -49,7 +57,7 @@ class MFASetupRegistration implements MFASetupToken
         return true;
     }
 
-    public function getRenderResult()
+    public function getRenderSetupResult()
     {
         return $this->renderResult;
     }
