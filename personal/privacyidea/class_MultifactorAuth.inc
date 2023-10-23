@@ -186,6 +186,21 @@ class MultifactorAuth extends plugin
      */
     public function save_object()
     {
+        $wishMfaRequired = false;
+        if (isset($_POST['wishMfaRequired'])) {
+            $wishMfaRequired = true;
+        }
+
+        // Set mfaRequired to 'by_user' if wished.
+        // If mfaRequired was already 'by_user', do nothing.
+        // If mfaRequired wasn't 'by_user' set to 'by_rule' IF org set the rules so.
+        $mfaRequired = $this->attrs['mfaRequired'];
+        if ($wishMfaRequired || $mfaRequired == "by_user") {
+            $this->attrs['mfaRequired'] = "by_user";
+        } elseif ($this->additionalFactorRequiredByOrg) {
+            $this->attrs['mfaRequired'] = "by_rule";
+        }
+
         plugin::save_object();
     }
 
