@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class MultifactorAuth extends plugin
+class mfaAccount extends plugin
 {
     // Plugin definitions
     public $plHeadline    = "Multifactor authentication";
@@ -238,7 +238,7 @@ class MultifactorAuth extends plugin
     }
 
     /**
-     * Save the MultifactorAuth settings to the ldap database.
+     * Save the mfaAccount settings to the ldap database.
      */
     public function save()
     {
@@ -324,7 +324,7 @@ class MultifactorAuth extends plugin
      */
     public static function plInfo()
     {
-        $properties = MultifactorAuth::getProperties();
+        $properties = mfaAccount::getProperties();
 
         return (array (
             "plShortName"    => _("MFA"),

@@ -6,14 +6,14 @@ the `<usertabs>` entry):
 
 ```xml
      <!-- PrivacyIDEA Plugin -->
-     <tab class="MultifactorAuth" name="Multifactor Auth"/>
+     <tab class="mfaAccount" name="Multifactor Auth"/>
 ```
 
 also add the following inside of the `<MyAccountTabs>` entry:
 
 ```xml
      <!-- PrivacyIDEA Plugin -->
-     <tab class="MultifactorAuth" name="Multifactor Auth"/>
+     <tab class="mfaAccount" name="Multifactor Auth"/>
 ```
 
 For the changes to take effect, restart your http daemon (e.g. the Apache web server).

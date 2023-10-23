@@ -37,8 +37,7 @@ class PrivacyIdeaUtils
     // TODO: Replace with GOsa's development mode.
     private bool $ENABLE_DEBUG_JS_CONSOLE = true;
 
-    // TODO: Edit if class MultifactorAuth renames..
-    private string $GOSA_SETTINGS_GROUP = "multifactorauth";
+    private string $GOSA_SETTINGS_GROUP = "mfaAccount";
 
     /** @param config $config Configuration object provided by GOsa. */
     public function __construct(&$config)

@@ -29,20 +29,20 @@ class MFARegistrationToken implements MFAToken
     private PrivacyIdeaUtils $utils;
     private Smarty $smarty;
     private config $config;
-    private MultifactorAuth $mfaClass;
+    private mfaAccount $mfaAccount;
     /** @var ldapMultiplexer|LDAP */
     private $ldap;
 
-    public function __construct(&$mfaClass)
+    public function __construct(&$mfaAccount)
     {
         // Crashing is okay here, we want to find errors like this in early development.
-        assert(get_class($mfaClass)  == "MultifactorAuth");
-        $this->mfaClass = &$mfaClass;
+        assert(get_class($mfaAccount)  == "mfaAccount");
+        $this->mfaAccount = &$mfaAccount;
 
-        $this->utils    = $mfaClass->utils;
-        $this->smarty   = $mfaClass->smarty;
-        $this->ldap     = $mfaClass->ldap;
-        $this->config   = $mfaClass->config;
+        $this->utils    = $mfaAccount->utils;
+        $this->smarty   = $mfaAccount->smarty;
+        $this->ldap     = $mfaAccount->ldap;
+        $this->config   = $mfaAccount->config;
         assert(get_class($this->utils)   == "PrivacyIdeaUtils");
         assert(get_class($this->smarty)  == "Smarty");
         assert(get_class($this->config)  == "config");

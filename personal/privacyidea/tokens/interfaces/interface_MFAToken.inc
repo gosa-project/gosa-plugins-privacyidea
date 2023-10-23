@@ -24,9 +24,9 @@ interface MFAToken
 {
     /**
      * Contructor
-     * @param MultifactorAuth $mfaClass
+     * @param mfaAccount $mfaAccount
      */
-    public function __construct(&$mfaClass);
+    public function __construct(&$mfaAccount);
 
     /**
      * Renders setup steps/phases.
@@ -37,7 +37,7 @@ interface MFAToken
 
     /**
      * @return string Rendered template, ready to be given to GOsa.
-     *                e.g. MultifactorAuth's execute()
+     *                e.g. mfaAccount's execute()
      */
     public function getRenderSetupResult();
 }
