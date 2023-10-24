@@ -43,6 +43,8 @@ class mfaAccount extends plugin
     public $utils = null;
     /** @var MFAToken[] Save an instance of all MFATokens. */
     public $mfaTokens = array();
+    /** @var &MFAToken Used to save which setup we are currently running. */
+    public $currentSetup = null;
     /** @var Smarty */
     public $smarty = null;
 
@@ -128,24 +130,26 @@ class mfaAccount extends plugin
          * MFA Setup logic
          */
         $setup = null;
-        if (in_array('add_token', $_POST)) {
+        if (in_array_ics('add_token', array_keys($_POST))) {
             // Okay, user clicked on a button, which should add a token.
             // Starting MFA setup for this token type now.
             $token_type = "";
-            if (in_array('token_type', $_POST)) {
+            if (in_array_ics('token_type', array_keys($_POST))) {
                 $token_type = get_post("token_type");
             }
 
             // Detect if $token_type is not registered in $mfaTokens.
             // This probably means the user sent some garbage _POST request!
             // Just showing intro site again to avoid being susceptible for proxy hacks.
-            if (!in_array($token_type, array_keys($this->mfaTokens))) {
+            if (empty($token_type) || !in_array($token_type, array_keys($this->mfaTokens))) {
                 $setup = null;
                 msg_dialog::display(
                     _("Internal error"),
                     _("Could not process POST data of your request.") . "<br>" .
                     $this->utils->pleaseTryAgainMsg()
                 );
+
+                return $this->getMFAIntroTemplate();
             }
 
             $setup = $this->mfaTokens[$token_type];
