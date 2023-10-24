@@ -34,15 +34,20 @@ class PrivacyIdeaUtils
 {
     private PrivacyIDEA $pi;
     private config $config;
+    private mfaAccount $mfaAccount;
     // TODO: Replace with GOsa's development mode.
     private bool $ENABLE_DEBUG_JS_CONSOLE = true;
 
-    private string $GOSA_SETTINGS_GROUP = "mfaAccount";
+    private string $GOSA_SETTINGS_GROUP;
 
-    /** @param config $config Configuration object provided by GOsa. */
-    public function __construct(&$config)
+    /** @param mfaAccount $mfaAccount MFA Account class (likely parent) */
+    public function __construct(&$mfaAccount)
     {
-        $this->config = &$config;
+        assert(get_class($mfaAccount) == "mfaAccount");
+        $this->mfaAccount = $mfaAccount;
+        $this->config     = $mfaAccount->config;
+
+        $this->GOSA_SETTINGS_GROUP = get_class($mfaAccount);
 
         // TODO: Load privacyIDEA server URL from settings.
         $pi_server_url = "localhost:5000/";

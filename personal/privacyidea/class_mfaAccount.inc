@@ -65,7 +65,7 @@ class mfaAccount extends plugin
         $this->config = &$config;
 
         // Initialize utils class
-        $this->utils = new PrivacyIdeaUtils($config);
+        $this->utils = new PrivacyIdeaUtils($this);
 
         // Initialize LDAP
         $this->ldap = $this->config->get_ldap_link();
