@@ -39,15 +39,15 @@ class MFAWebAuthnToken implements MFAToken
         assert(get_class($mfaAccount)  == "mfaAccount");
         $this->mfaAccount = &$mfaAccount;
 
-        $this->utils    = $mfaAccount->utils;
-        $this->smarty   = $mfaAccount->smarty;
-        $this->ldap     = $mfaAccount->ldap;
-        $this->config   = $mfaAccount->config;
-        assert(get_class($this->utils)   == "PrivacyIdeaUtils");
-        assert(get_class($this->smarty)  == "Smarty");
-        assert(get_class($this->config)  == "config");
-        assert(get_class($this->ldap)    == "LDAP" ||
-               get_class($this->ldap)    == "ldapMultiplexer");
+        $this->utils  = $mfaAccount->utils;
+        $this->smarty = $mfaAccount->smarty;
+        $this->ldap   = $mfaAccount->ldap;
+        $this->config = $mfaAccount->config;
+        assert(get_class($this->utils)  == "PrivacyIdeaUtils");
+        assert(get_class($this->smarty) == "Smarty");
+        assert(get_class($this->config) == "config");
+        assert(get_class($this->ldap)   == "LDAP" ||
+               get_class($this->ldap)   == "ldapMultiplexer");
     }
 
     public function renderSetup()
