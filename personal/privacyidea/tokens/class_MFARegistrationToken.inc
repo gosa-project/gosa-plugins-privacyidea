@@ -63,4 +63,27 @@ class MFARegistrationToken implements MFAToken
     {
         return $this->renderResult;
     }
+
+    public function getSetupCardIcon()
+    {
+        return _("password");
+    }
+
+    public function getSetupCardTitle()
+    {
+        return _("Wiederherstellungs­schlüssel");
+    }
+
+    public function getSetupCardDescription()
+    {
+        return _("Wiederherstellungsschlüssel werden zur einmaligen Anmeldung " .
+            "verwendet und verfallen dann. Sie werden nur vergeben, wenn " .
+            "keine andere Methode zur Anmeldung verfügbar ist, z.B. bei " .
+            "Hardwareverlust.");
+    }
+
+    public function getSetupCardButtonText()
+    {
+        return _("Wiederherstellungsschlüssel hinzufügen");
+    }
 }

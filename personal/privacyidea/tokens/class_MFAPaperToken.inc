@@ -63,4 +63,26 @@ class MFAPaperToken implements MFAToken
     {
         return $this->renderResult;
     }
+
+    public function getSetupCardIcon()
+    {
+        return _("receipt");
+    }
+
+    public function getSetupCardTitle()
+    {
+        return _("TAN-Liste");
+    }
+
+    public function getSetupCardDescription()
+    {
+        return _("TAN-Listen werden ausgedruckt an einem sicheren Ort gelagert. " .
+            "Sie enthalten Einmalpasswörter, von denen für jeden Anmeldevorgang " .
+            "eines angegeben werden muss.");
+    }
+
+    public function getSetupCardButtonText()
+    {
+        return _("TAN-Liste hinzufügen");
+    }
 }

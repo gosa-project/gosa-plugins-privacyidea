@@ -63,4 +63,27 @@ class MFAWebAuthnToken implements MFAToken
     {
         return $this->renderResult;
     }
+
+    public function getSetupCardIcon()
+    {
+        return _("usb");
+    }
+
+    public function getSetupCardTitle()
+    {
+        return _("Sicherheitsschlüssel");
+    }
+
+    public function getSetupCardDescription()
+    {
+        return _("FIDO2-kompatible Sicherheitsschlüssel werden in einen " .
+            "USB-Anschluss gesteckt oder kontaktlos über NFC angesprochen. " .
+            "Während des Anmeldevorgangs wird je nach Modell eine Sensortaste " .
+            "berührt oder ein Knopf gedrückt.");
+    }
+
+    public function getSetupCardButtonText()
+    {
+        return _("Sicherheitsschlüssel hinzufügen");
+    }
 }

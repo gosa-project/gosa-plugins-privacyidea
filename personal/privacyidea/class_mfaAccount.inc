@@ -136,6 +136,26 @@ class mfaAccount extends plugin
             ($this->attrs['mfaRequired'] == 'by_user') ? "checked" : ""
         );
 
+        $this->smarty->assign('tokenTypes', array_keys($this->mfaTokens));
+        foreach ($this->mfaTokens as $tokenName => $token) {
+            $this->smarty->assign(
+                "mfa_" . $tokenName . "_icon",
+                $this->mfaTokens[$tokenName]->getSetupCardIcon()
+            );
+            $this->smarty->assign(
+                "mfa_" . $tokenName . "_title",
+                $this->mfaTokens[$tokenName]->getSetupCardTitle()
+            );
+            $this->smarty->assign(
+                "mfa_" . $tokenName . "_description",
+                $this->mfaTokens[$tokenName]->getSetupCardDescription()
+            );
+            $this->smarty->assign(
+                "mfa_" . $tokenName . "_button_text",
+                $this->mfaTokens[$tokenName]->getSetupCardButtonText()
+            );
+        }
+
         /*
          * MFA Setup logic
          */
