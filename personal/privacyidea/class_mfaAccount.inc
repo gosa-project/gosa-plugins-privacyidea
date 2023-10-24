@@ -163,7 +163,7 @@ class mfaAccount extends plugin
         $providedACLs = $this->plInfo()['plProvidedAcls'];
         foreach ($providedACLs as $name => $transl) {
             $aclVal  = $this->getacl($name);
-            $aclName = "$name" . "ACL";
+            $aclName = "$name" . "_ACL";
             $this->smarty->assign($aclName, $aclVal);
         }
 
@@ -405,13 +405,18 @@ class mfaAccount extends plugin
             "plProperties"   => $properties,
             "plRequirements" => array ('onFailureDisablePlugin' => array (get_class())),
             "plProvidedAcls" => array (
-                                   "mfaWebAuthn"     => _("Allowed token type: WebAuthn"),
-                                   "mfaTOTP"         => _("Allowed token type: TOTP"),
-                                   "mfaPaper"        => _("Allowed token type: Paper"),
-                                   "mfaRegistration" => _("Allowed token type: Registration"),
-                                   "wishMfaRequired" => _("Let the user decide if an additional factor should " .
-                                                          "voluntarily always be required."),
+                "overrideAllowToken_webauthn"     => _("Override token type: WebAuthn. This allows the user to add a " .
+                                                       "token with this type."),
+                "overrideAllowToken_totp"         => _("Override token type: TOTP. This allows the user to add a " .
+                                                       "token with this type."),
+                "overrideAllowToken_paper"        => _("Override token type: Paper. This allows the user to add a " .
+                                                       "token with this type."),
+                "overrideAllowToken_registration" => _("Override token type: Registration. This allows the user to " .
+                                                       "add a token with this type."),
+                "wishMfaRequired" => _("Let the user decide if an additional factor should " .
+                                       "voluntarily always be required."),
             ),
+            // TODO: Outsource ACLs overrideAllowToken_* to MFAToken classes!!
         ));
     }
 
