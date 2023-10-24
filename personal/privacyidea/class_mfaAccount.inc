@@ -126,7 +126,15 @@ class mfaAccount extends plugin
             $this->smarty->assign($aclName, $aclVal);
         }
 
-        $this->smarty->assign("additionalFactorRequiredByOrg", $this->additionalFactorRequiredByOrg);
+        $this->smarty->assign(
+            "additionalFactorRequiredByOrg",
+            $this->additionalFactorRequiredByOrg ? "checked" : ""
+        );
+
+        $this->smarty->assign(
+            "wishMfaRequired",
+            ($this->attrs['mfaRequired'] == 'by_user') ? "checked" : ""
+        );
 
         /*
          * MFA Setup logic
@@ -348,6 +356,8 @@ class mfaAccount extends plugin
                                    "mfaTOTP"         => _("Allowed token type: TOTP"),
                                    "mfaPaper"        => _("Allowed token type: Paper"),
                                    "mfaRegistration" => _("Allowed token type: Registration"),
+                                   "mfaRequired"     => _("Let the user decide if an additional factor should " .
+                                                          "voluntarily always be required."),
             ),
         ));
     }
