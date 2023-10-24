@@ -117,11 +117,13 @@ class mfaAccount extends plugin
         /*
          * SMARTY ASSIGN VARIABLES
          */
-        // Let smarty know about "$name . 'ACL'"
+        // Extract all ACLs and give them to Smarty, so that we can enable/disable
+        // UI elements based on ACLs.
         $providedACLs = $this->plInfo()['plProvidedAcls'];
         foreach ($providedACLs as $name => $transl) {
-            $acl = $this->getacl($name);
-            $this->smarty->assign("$name" . "ACL", $acl);
+            $aclVal  = $this->getacl($name);
+            $aclName = "$name" . "ACL";
+            $this->smarty->assign($aclName, $aclVal);
         }
 
         $this->smarty->assign("additionalFactorRequiredByOrg", $this->additionalFactorRequiredByOrg);
