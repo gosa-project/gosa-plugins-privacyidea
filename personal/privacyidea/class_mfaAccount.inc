@@ -345,7 +345,7 @@ class mfaAccount extends plugin
             "plRequirements" => array ('onFailureDisablePlugin' => array (get_class())),
             "plProvidedAcls" => array (
                                    "mfaWebAuthn"     => _("Allowed token type: WebAuthn"),
-                                   "mfaTotp"         => _("Allowed token type: TOTP"),
+                                   "mfaTOTP"         => _("Allowed token type: TOTP"),
                                    "mfaPaper"        => _("Allowed token type: Paper"),
                                    "mfaRegistration" => _("Allowed token type: Registration"),
             ),
