@@ -205,14 +205,24 @@ class mfaAccount extends plugin
             $wishMfaRequired = true;
         }
 
-        // Set mfaRequired to 'by_user' if wished.
-        // If mfaRequired was already 'by_user', do nothing.
-        // If mfaRequired wasn't 'by_user' set to 'by_rule' IF org set the rules so.
-        $mfaRequired = $this->attrs['mfaRequired'];
-        if ($wishMfaRequired || $mfaRequired == "by_user") {
-            $this->attrs['mfaRequired'] = "by_user";
-        } elseif ($this->additionalFactorRequiredByOrg) {
-            $this->attrs['mfaRequired'] = "by_rule";
+        // If user clicked safe settings button.
+        if (isset($_POST['safe_settings'])) {
+            $wishMfaRequired = false;
+            if (isset($_POST['wishMfaRequired'])) {
+                // TODO: Check for ACL! Is the user allowed to do this?
+                $wishMfaRequired = true;
+            }
+
+            // Set mfaRequired to by_user if user wishes to.
+            // If org. requires all users to use MFA then set to 'by_rule'.
+            $mfaRequired = $this->attrs['mfaRequired'];
+            if ($wishMfaRequired) {
+                $this->attrs['mfaRequired'] = "by_user";
+            } elseif ($this->additionalFactorRequiredByOrg) {
+                $this->attrs['mfaRequired'] = "by_rule";
+            } else {
+                $this->attrs['mfaRequired'] = "";
+            }
         }
 
         plugin::save_object();
