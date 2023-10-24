@@ -386,7 +386,7 @@ class mfaAccount extends plugin
                                    "mfaTOTP"         => _("Allowed token type: TOTP"),
                                    "mfaPaper"        => _("Allowed token type: Paper"),
                                    "mfaRegistration" => _("Allowed token type: Registration"),
-                                   "mfaRequired"     => _("Let the user decide if an additional factor should " .
+                                   "wishMfaRequired" => _("Let the user decide if an additional factor should " .
                                                           "voluntarily always be required."),
             ),
         ));
