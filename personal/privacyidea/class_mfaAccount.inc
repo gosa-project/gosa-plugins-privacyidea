@@ -88,10 +88,51 @@ class mfaAccount extends plugin
 
         $this->smarty = get_smarty();
         assert(get_class($this->smarty) == "Smarty");
-        $this->mfaTokens['WebAuthn']     = new MFAWebAuthnToken($this);
-        $this->mfaTokens['TOTP']         = new MFATotpToken($this);
-        $this->mfaTokens['Paper']        = new MFAPaperToken($this);
-        $this->mfaTokens['Registration'] = new MFARegistrationToken($this);
+        $this->mfaTokens['webauthn']     = new MFAWebAuthnToken($this);
+        $this->mfaTokens['totp']         = new MFATotpToken($this);
+        $this->mfaTokens['paper']        = new MFAPaperToken($this);
+        $this->mfaTokens['registration'] = new MFARegistrationToken($this);
+    }
+
+    /**
+     * This function decides which PrivacyIDEA tokens should be displayed and
+     * prepares Smarty variables accordingly.
+     */
+    private function prepareSetupCards()
+    {
+        $allTokenNames = array_keys($this->mfaTokens);
+
+        // Only enroll tokens which are allowed by allowedTokenTypes attribute.
+        // Or which are overriden by ACLs.
+        $allowedTokenNames = $this->attrs['allowedTokenTypes'];
+
+        if ($allowedTokenNames['count'] <= 0) {
+            // TODO: No tokens allowed???
+            // Figure out what we should do now.
+        }
+
+        unset($allowedTokenNames['count']);
+        $allowedTokenNames = array_map('strtolower', $allowedTokenNames);
+
+        // TODO: Check if there are ACLs which override the token's allowance.
+
+        foreach ($allowedTokenNames as $key => $tokenName) {
+            if (!in_array_ics($tokenName, $allTokenNames)) {
+                // Malformed LDAP data?!
+                // TODO: Log error message here.
+
+                // Don't show empty setup card.
+                unset($allowedTokenNames[$key]);
+                continue;
+            }
+            $token = $this->mfaTokens[$tokenName];
+
+            $this->smarty->assign("mfa_" . $tokenName . "_icon", $token->getSetupCardIcon());
+            $this->smarty->assign("mfa_" . $tokenName . "_title", $token->getSetupCardTitle());
+            $this->smarty->assign("mfa_" . $tokenName . "_description", $token->getSetupCardDescription());
+            $this->smarty->assign("mfa_" . $tokenName . "_button_text", $token->getSetupCardButtonText());
+        }
+        $this->smarty->assign('tokenTypes', $allowedTokenNames);
     }
 
     /**
@@ -136,25 +177,7 @@ class mfaAccount extends plugin
             ($this->attrs['mfaRequired'] == 'by_user') ? "checked" : ""
         );
 
-        $this->smarty->assign('tokenTypes', array_keys($this->mfaTokens));
-        foreach ($this->mfaTokens as $tokenName => $token) {
-            $this->smarty->assign(
-                "mfa_" . $tokenName . "_icon",
-                $this->mfaTokens[$tokenName]->getSetupCardIcon()
-            );
-            $this->smarty->assign(
-                "mfa_" . $tokenName . "_title",
-                $this->mfaTokens[$tokenName]->getSetupCardTitle()
-            );
-            $this->smarty->assign(
-                "mfa_" . $tokenName . "_description",
-                $this->mfaTokens[$tokenName]->getSetupCardDescription()
-            );
-            $this->smarty->assign(
-                "mfa_" . $tokenName . "_button_text",
-                $this->mfaTokens[$tokenName]->getSetupCardButtonText()
-            );
-        }
+        $this->prepareSetupCards();
 
         /*
          * MFA Setup logic
@@ -171,7 +194,7 @@ class mfaAccount extends plugin
             // Detect if $token_type is not registered in $mfaTokens.
             // This probably means the user sent some garbage _POST request!
             // Just showing intro site again to avoid being susceptible for proxy hacks.
-            if (empty($token_type) || !in_array($token_type, array_keys($this->mfaTokens))) {
+            if (empty($token_type) || !in_array_ics($token_type, array_keys($this->mfaTokens))) {
                 $setup = null;
                 msg_dialog::display(
                     _("Internal error"),
