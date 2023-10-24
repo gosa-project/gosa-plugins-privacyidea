@@ -86,10 +86,10 @@ class mfaAccount extends plugin
 
         $this->smarty = get_smarty();
         assert(get_class($this->smarty) == "Smarty");
-        $mfaTokens['WebAuthn']     = new MFAWebAuthnToken($this);
-        $mfaTokens['TOTP']         = new MFATotpToken($this);
-        $mfaTokens['Paper']        = new MFAPaperToken($this);
-        $mfaTokens['Registration'] = new MFARegistrationToken($this);
+        $this->mfaTokens['WebAuthn']     = new MFAWebAuthnToken($this);
+        $this->mfaTokens['TOTP']         = new MFATotpToken($this);
+        $this->mfaTokens['Paper']        = new MFAPaperToken($this);
+        $this->mfaTokens['Registration'] = new MFARegistrationToken($this);
     }
 
     /**
