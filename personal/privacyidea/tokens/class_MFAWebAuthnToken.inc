@@ -66,7 +66,8 @@ class MFAWebAuthnToken implements MFAToken
 
     public function getSetupCardIcon()
     {
-        return _("usb");
+        // Materialize Icon class.
+        return "usb";
     }
 
     public function getSetupCardTitle()

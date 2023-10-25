@@ -66,7 +66,8 @@ class MFATotpToken implements MFAToken
 
     public function getSetupCardIcon()
     {
-        return _("smartphone");
+        // Materialize Icon class.
+        return "smartphone";
     }
 
     public function getSetupCardTitle()

@@ -66,7 +66,8 @@ class MFAPaperToken implements MFAToken
 
     public function getSetupCardIcon()
     {
-        return _("receipt");
+        // Materialize Icon class.
+        return "receipt";
     }
 
     public function getSetupCardTitle()

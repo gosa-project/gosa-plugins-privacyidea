@@ -66,7 +66,8 @@ class MFARegistrationToken implements MFAToken
 
     public function getSetupCardIcon()
     {
-        return _("password");
+        // Materialize Icon class.
+        return "password";
     }
 
     public function getSetupCardTitle()
