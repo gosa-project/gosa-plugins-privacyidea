@@ -155,9 +155,6 @@ class mfaAccount extends plugin
             new log("view", "users/" . get_class($this), $this->dn);
         }
 
-        /*
-         * SMARTY ASSIGN VARIABLES
-         */
         // Extract all ACLs and give them to Smarty, so that we can enable/disable
         // UI elements based on ACLs.
         $providedACLs = $this->plInfo()['plProvidedAcls'];
@@ -166,18 +163,6 @@ class mfaAccount extends plugin
             $aclName = "$name" . "_ACL";
             $this->smarty->assign($aclName, $aclVal);
         }
-
-        $this->smarty->assign(
-            "additionalFactorRequiredByOrg",
-            $this->additionalFactorRequiredByOrg ? "checked" : ""
-        );
-
-        $this->smarty->assign(
-            "wishMfaRequired",
-            ($this->attrs['mfaRequired'] == 'by_user') ? "checked" : ""
-        );
-
-        $this->prepareSetupCards();
 
         /*
          * MFA Setup logic
@@ -230,10 +215,31 @@ class mfaAccount extends plugin
     }
 
     /**
+     * Prepares Smarty to show the MFA intro, renders and returns it.
      * @return string Always returnes the MFA intro template.
      */
     private function getMFAIntroTemplate()
     {
+        $this->smarty->assign(
+            "additionalFactorRequiredByOrg",
+            $this->additionalFactorRequiredByOrg ? "checked" : ""
+        );
+
+        $this->smarty->assign(
+            "wishMfaRequired",
+            ($this->attrs['mfaRequired'] == 'by_user') ? "checked" : ""
+        );
+
+        $this->smarty->assign(
+            "mfaRequiredText",
+            empty($this->attrs['mfaRequired']) ? _("not necessary") : _("necessary")
+        );
+
+        // TODO: Change this variable to false, if a valid token has been detected.
+        $this->smarty->assign("showWarningNoTokenRegistered", true);
+
+        $this->prepareSetupCards();
+
         // Show introduction page…
         return $this->smarty->fetch(get_template_path("mfa_intro.tpl", true, dirname(__FILE__)));
     }
