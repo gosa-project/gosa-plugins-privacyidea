@@ -414,15 +414,6 @@ class mfaAccount extends plugin
         } else {
             new log("create", "users/" . get_class($this), $this->dn, array_keys($this->attrs), $ldap->get_error());
         }
-
-        /* Optionally execute a command after we are done */
-        if ($this->initially_was_account == $this->is_account) {
-            if ($this->is_modified) {
-                $this->handle_post_events("modify", array ("uid" => $this->uid));
-            }
-        } else {
-            $this->handle_post_events("add", array ("uid" => $this->uid));
-        }
     }
 
     /**
