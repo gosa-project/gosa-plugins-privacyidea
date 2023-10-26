@@ -230,10 +230,7 @@ class mfaAccount extends plugin
             ($this->attrs['mfaRequired'] == 'by_user') ? "checked" : ""
         );
 
-        $this->smarty->assign(
-            "mfaRequiredText",
-            empty($this->attrs['mfaRequired']) ? _("not necessary") : _("necessary")
-        );
+        $this->smarty->assign("mfaRequired", empty($this->attrs['mfaRequired']) ? false : true);
 
         // TODO: Change this variable to false, if a valid token has been detected.
         $this->smarty->assign("showWarningNoTokenRegistered", true);
