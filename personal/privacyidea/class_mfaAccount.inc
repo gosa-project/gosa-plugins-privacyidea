@@ -37,6 +37,12 @@ class mfaAccount extends plugin
     );
     private $view_logged = false;
 
+    /*
+     * ATTRIBUTES
+     */
+    public $mfaRequired;
+    public $allowedTokenTypes;
+
     public $config = null;
     public $ldap   = null;
     /** @var PrivacyIdeaUtils */
@@ -76,6 +82,9 @@ class mfaAccount extends plugin
 
         $this->additionalFactorRequiredByOrg = $this->utils->getConfigBoolValue("additionalFactorRequiredByOrg");
 
+        $this->allowedTokenTypes = $this->attrs['allowedTokenTypes'];
+        $this->mfaRequired       = $this->attrs['mfaRequired'];
+
         $this->ui = get_userinfo();
         stats::log(
             'plugin',
@@ -100,39 +109,39 @@ class mfaAccount extends plugin
      */
     private function prepareSetupCards()
     {
-        $allTokenNames = array_keys($this->mfaTokens);
+        $allRegisteredTokenTypes = array_keys($this->mfaTokens);
 
         // Only enroll tokens which are allowed by allowedTokenTypes attribute.
         // Or which are overriden by ACLs.
-        $allowedTokenNames = $this->attrs['allowedTokenTypes'];
 
-        if ($allowedTokenNames['count'] <= 0) {
+        $this->updateAttrsAllowedTokenTypes();
+
+        if (empty($this->allowedTokenTypes)) {
             // TODO: No tokens allowed???
             // Figure out what we should do now.
         }
 
-        unset($allowedTokenNames['count']);
-        $allowedTokenNames = array_map('strtolower', $allowedTokenNames);
-
         // TODO: Check if there are ACLs which override the token's allowance.
 
-        foreach ($allowedTokenNames as $key => $tokenName) {
-            if (!in_array_ics($tokenName, $allTokenNames)) {
+        foreach ($this->allowedTokenTypes as $key => $tokenType) {
+            if (!in_array_ics($tokenType, $allRegisteredTokenTypes)) {
                 // Malformed LDAP data?!
                 // TODO: Log error message here.
 
                 // Don't show empty setup card.
-                unset($allowedTokenNames[$key]);
+                unset($this->allowedTokenTypes[$key]);
                 continue;
             }
-            $token = $this->mfaTokens[$tokenName];
 
-            $this->smarty->assign("mfa_" . $tokenName . "_icon", $token->getSetupCardIcon());
-            $this->smarty->assign("mfa_" . $tokenName . "_title", $token->getSetupCardTitle());
-            $this->smarty->assign("mfa_" . $tokenName . "_description", $token->getSetupCardDescription());
-            $this->smarty->assign("mfa_" . $tokenName . "_button_text", $token->getSetupCardButtonText());
+            // We should be able to map $tokenType to a MFAToken now.
+            $token = $this->mfaTokens[$tokenType];
+
+            $this->smarty->assign("mfa_" . $tokenType . "_icon", $token->getSetupCardIcon());
+            $this->smarty->assign("mfa_" . $tokenType . "_title", $token->getSetupCardTitle());
+            $this->smarty->assign("mfa_" . $tokenType . "_description", $token->getSetupCardDescription());
+            $this->smarty->assign("mfa_" . $tokenType . "_button_text", $token->getSetupCardButtonText());
         }
-        $this->smarty->assign('tokenTypes', $allowedTokenNames);
+        $this->smarty->assign('tokenTypes', $this->allowedTokenTypes);
     }
 
     /**
@@ -163,6 +172,12 @@ class mfaAccount extends plugin
             $aclName = "$name" . "_ACL";
             $this->smarty->assign($aclName, $aclVal);
         }
+
+        if ($this->updateAttrsMfaRequired()) {
+            // TODO: Figure out what to do now.
+            // mfaRequired has changed somehow (likely additionalFactorRequiredByOrg) has changed
+        }
+        $this->updateAttrsAllowedTokenTypes();
 
         /*
          * MFA Setup logic
@@ -215,6 +230,64 @@ class mfaAccount extends plugin
     }
 
     /**
+     * This function makes sure that $this->mfaRequired is always up to date.
+     * @param bool|null $wishMfaRequired
+     * @return bool Indicating if $this->mfaRequired changed!
+     */
+    private function updateAttrsMfaRequired($wishMfaRequired = null)
+    {
+        $mfaRequiredOld = $this->mfaRequired;
+
+        // Clean up $mfaRequiredOld.
+        if (isset($mfaRequiredOld['count'])) {
+            unset($mfaRequiredOld['count']);
+            $mfaRequiredOld = $mfaRequiredOld[0]; // Just assume it has only ONE entry.
+        }
+
+        // If the user wished for mfaRequired at some point, we should keep it that way.
+        if (!isset($wishMfaRequired)) {
+            $wishMfaRequired = ($mfaRequiredOld == "by_user") ? true : false;
+        }
+
+        // Set mfaRequired to by_user if user wishes to.
+        // If org. requires all users to use MFA then set to 'by_rule'.
+        if ($wishMfaRequired) {
+            $this->mfaRequired = "by_user";
+        } elseif ($this->additionalFactorRequiredByOrg) {
+            $this->mfaRequired = "by_rule";
+        } else {
+            $this->mfaRequired = "";
+        }
+
+        if ($this->mfaRequired != $mfaRequiredOld) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * This function makes sure that $this->allowedTokenTypes is always up to date.
+     */
+    private function updateAttrsAllowedTokenTypes()
+    {
+        // Clean up $this->allowedTokenTypes.
+        if (is_array($this->allowedTokenTypes)) {
+            if (isset($this->allowedTokenTypes['count'])) {
+                unset($this->allowedTokenTypes['count']);
+            }
+        } else {
+            // Convert to string[].
+            $this->allowedTokenTypes = array($this->allowedTokenTypes);
+        }
+
+        if (!empty($this->allowedTokenTypes)) {
+            $this->allowedTokenTypes = array_map('strtolower', $this->allowedTokenTypes);
+            $this->allowedTokenTypes = array_map('trim', $this->allowedTokenTypes);
+        }
+    }
+
+    /**
      * Prepares Smarty to show the MFA intro, renders and returns it.
      * @return string Always returnes the MFA intro template.
      */
@@ -227,10 +300,10 @@ class mfaAccount extends plugin
 
         $this->smarty->assign(
             "wishMfaRequired",
-            ($this->attrs['mfaRequired'] == 'by_user') ? "checked" : ""
+            ($this->mfaRequired == 'by_user') ? "checked" : ""
         );
 
-        $this->smarty->assign("mfaRequired", empty($this->attrs['mfaRequired']) ? false : true);
+        $this->smarty->assign("mfaRequired", empty($this->mfaRequired) ? false : true);
 
         // TODO: Change this variable to false, if a valid token has been detected.
         $this->smarty->assign("showWarningNoTokenRegistered", true);
@@ -259,19 +332,11 @@ class mfaAccount extends plugin
                 $wishMfaRequired = true;
             }
 
-            // Set mfaRequired to by_user if user wishes to.
-            // If org. requires all users to use MFA then set to 'by_rule'.
-            $mfaRequired = $this->attrs['mfaRequired'];
-            if ($wishMfaRequired) {
-                $this->attrs['mfaRequired'] = "by_user";
-            } elseif ($this->additionalFactorRequiredByOrg) {
-                $this->attrs['mfaRequired'] = "by_rule";
-            } else {
-                $this->attrs['mfaRequired'] = "";
+            if ($this->updateAttrsMfaRequired($wishMfaRequired)) {
+                // TODO: Figure out what to do now.
+                // mfaRequired has changed somehow (likely additionalFactorRequiredByOrg) has changed
             }
         }
-
-        plugin::save_object();
     }
 
     /**
@@ -319,8 +384,17 @@ class mfaAccount extends plugin
         // Call parents save to prepare $this->attrs
         plugin::save();
 
-        // Fill $this->attrs from $this's fields.
-        // $this->attrs['mail'] = $this->mail;
+        // Fill $this->attrs with $this's fields.
+        $this->attrs['allowedTokenTypes'] = $this->allowedTokenTypes;
+        $this->attrs['mfaRequired'] = $this->mfaRequired;
+
+        // Clean up $this->attrs.
+        if (is_string($this->attrs['allowedTokenTypes']) && empty($this->attrs['allowedTokenTypes'])) {
+            $this->attrs['allowedTokenTypes'] = array();
+        }
+        if (is_string($this->attrs['mfaRequired']) && empty($this->attrs['mfaRequired'])) {
+            $this->attrs['mfaRequired'] = array();
+        }
 
         // Save data to LDAP
         $ldap->cd($this->dn);
