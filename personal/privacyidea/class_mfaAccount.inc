@@ -252,7 +252,7 @@ class mfaAccount extends plugin
         }
 
         // If user clicked safe settings button.
-        if (isset($_POST['safe_settings'])) {
+        if (isset($_POST['edit_apply'])) {
             $wishMfaRequired = false;
             if (isset($_POST['wishMfaRequired'])) {
                 // TODO: Check for ACL! Is the user allowed to do this?
