@@ -36,7 +36,7 @@
 <div class="row">
     <div class="col">
         <label>
-            <input type="checkbox" {if $additionalFactorRequiredByOrg == "checked"}checked{/if} disabled>
+            <input type="checkbox" {if $mfaRequiredByRule == "checked"}checked{/if} disabled>
             <span>{t}Additional factor necessary due to organisation requirements.{/t}</span>
         </label>
     </div>

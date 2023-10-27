@@ -58,9 +58,6 @@ class mfaAccount extends plugin
     public $ui        = null;
     private $ldapinfo = null;
 
-    /** @var bool This is a gosaSetting telling if all accounts need an additional factor. */
-    private $additionalFactorRequiredByOrg;
-
     public function __construct(&$config, $dn = null)
     {
         plugin::__construct($config, $dn);
@@ -79,8 +76,6 @@ class mfaAccount extends plugin
         if (!is_array($this->ldapinfo)) {
             $this->ldapinfo = [];
         }
-
-        $this->additionalFactorRequiredByOrg = $this->utils->getConfigBoolValue("additionalFactorRequiredByOrg");
 
         $this->allowedTokenTypes = $this->attrs['allowedTokenTypes'];
         $this->mfaRequired       = $this->attrs['mfaRequired'];
@@ -173,10 +168,7 @@ class mfaAccount extends plugin
             $this->smarty->assign($aclName, $aclVal);
         }
 
-        if ($this->updateAttrsMfaRequired()) {
-            // TODO: Figure out what to do now.
-            // mfaRequired has changed somehow (likely additionalFactorRequiredByOrg) has changed
-        }
+        $this->updateAttrsMfaRequired();
         $this->updateAttrsAllowedTokenTypes();
 
         /*
@@ -230,55 +222,50 @@ class mfaAccount extends plugin
     }
 
     /**
-     * This function makes sure that $this->mfaRequired is always up to date.
+     * This function makes sure that $this->mfaRequired is always cleaned up.
      * @param bool|null $wishMfaRequired
-     * @return bool Indicating if $this->mfaRequired changed!
      */
     private function updateAttrsMfaRequired($wishMfaRequired = null)
     {
-        $mfaRequiredOld = $this->mfaRequired;
-
-        // Clean up $mfaRequiredOld.
-        if (isset($mfaRequiredOld['count'])) {
-            unset($mfaRequiredOld['count']);
-            $mfaRequiredOld = $mfaRequiredOld[0]; // Just assume it has only ONE entry.
+        // Keep $this->mfaRequired an array.
+        if (!is_array($this->mfaRequired)) {
+            $this->mfaRequired = array($this->mfaRequired);
         }
 
-        // If the user wished for mfaRequired at some point, we should keep it that way.
-        if (!isset($wishMfaRequired)) {
-            $wishMfaRequired = ($mfaRequiredOld == "by_user") ? true : false;
+        // Clean up $this->mfaRequired.
+        if (isset($this->mfaRequired['count'])) {
+            unset($this->mfaRequired['count']);
         }
 
-        // Set mfaRequired to by_user if user wishes to.
-        // If org. requires all users to use MFA then set to 'by_rule'.
-        if ($wishMfaRequired) {
-            $this->mfaRequired = "by_user";
-        } elseif ($this->additionalFactorRequiredByOrg) {
-            $this->mfaRequired = "by_rule";
-        } else {
-            $this->mfaRequired = "";
+        if (!empty($this->mfaRequired)) {
+            $this->mfaRequired = array_map('strtolower', $this->mfaRequired);
+            $this->mfaRequired = array_map('trim', $this->mfaRequired);
         }
 
-        if ($this->mfaRequired != $mfaRequiredOld) {
-            return true;
-        } else {
-            return false;
+        if (isset($wishMfaRequired)) {
+            if ($wishMfaRequired) {
+                if (!in_array("by_user", $this->mfaRequired)) {
+                    $this->mfaRequired[] = "by_user";
+                }
+            } else {
+                array_diff($this->mfaRequired, ['by_user']);
+            }
         }
     }
 
     /**
-     * This function makes sure that $this->allowedTokenTypes is always up to date.
+     * This function makes sure that $this->allowedTokenTypes is always cleaned up.
      */
     private function updateAttrsAllowedTokenTypes()
     {
-        // Clean up $this->allowedTokenTypes.
-        if (is_array($this->allowedTokenTypes)) {
-            if (isset($this->allowedTokenTypes['count'])) {
-                unset($this->allowedTokenTypes['count']);
-            }
-        } else {
-            // Convert to string[].
+        // Keep $this->allowedTokenTypes an array.
+        if (!is_array($this->allowedTokenTypes)) {
             $this->allowedTokenTypes = array($this->allowedTokenTypes);
+        }
+
+        // Clean up $this->allowedTokenTypes.
+        if (isset($this->allowedTokenTypes['count'])) {
+            unset($this->allowedTokenTypes['count']);
         }
 
         if (!empty($this->allowedTokenTypes)) {
@@ -293,15 +280,8 @@ class mfaAccount extends plugin
      */
     private function getMFAIntroTemplate()
     {
-        $this->smarty->assign(
-            "additionalFactorRequiredByOrg",
-            $this->additionalFactorRequiredByOrg ? "checked" : ""
-        );
-
-        $this->smarty->assign(
-            "wishMfaRequired",
-            ($this->mfaRequired == 'by_user') ? "checked" : ""
-        );
+        $this->smarty->assign("mfaRequiredByRule", in_array("by_rule", $this->mfaRequired) ? "checked" : "");
+        $this->smarty->assign("wishMfaRequired", in_array("by_user", $this->mfaRequired) ? "checked" : "");
 
         $this->smarty->assign("mfaRequired", empty($this->mfaRequired) ? false : true);
 
@@ -332,10 +312,7 @@ class mfaAccount extends plugin
                 $wishMfaRequired = true;
             }
 
-            if ($this->updateAttrsMfaRequired($wishMfaRequired)) {
-                // TODO: Figure out what to do now.
-                // mfaRequired has changed somehow (likely additionalFactorRequiredByOrg) has changed
-            }
+            $this->updateAttrsMfaRequired($wishMfaRequired);
         }
     }
 
@@ -494,18 +471,6 @@ class mfaAccount extends plugin
      */
     public static function getProperties()
     {
-        return array(
-            array(
-                "name"        => "additionalFactorRequiredByOrg",
-                "type"        => "bool",
-                "check"       => "gosaProperty::isBool",
-                "group"       => "privacyidea",
-                "default"     => "false",
-                "migrate"     => "",
-                "mandatory"   => true,
-                "description" => _("Every user needs to have at least one " .
-                                   "additional factor (besides password)."),
-            ),
-        );
+        return array();
     }
 }
