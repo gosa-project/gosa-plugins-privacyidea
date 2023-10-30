@@ -287,7 +287,7 @@ class mfaAccount extends plugin
         $this->smarty->assign("mfaRequired", empty($this->mfaRequired) ? false : true);
 
         // TODO: Change this variable to false, if a valid token has been detected.
-        $this->smarty->assign("showWarningNoTokenRegistered", true);
+        $this->smarty->assign("showWarningNoTokenRegistered", (!empty($this->mfaRequired) && true));
 
         $this->prepareSetupCards();
 

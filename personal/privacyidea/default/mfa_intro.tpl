@@ -56,8 +56,8 @@
     </div>
 </div>
 
-{* If no token is registered, warn the user!!! *}
-{if $showWarningNoTokenRegistered && $mfaRequired}
+{* If no token is registered, warn the user! *}
+{if $showWarningNoTokenRegistered}
 <div class="card-panel red lighten-2">
     <b>{t}Attention: {/t}</b>{t}You cannot log in again with this account because there is no multifactor method associated with it. Please add one of the available methods now.{/t}
 </div>
