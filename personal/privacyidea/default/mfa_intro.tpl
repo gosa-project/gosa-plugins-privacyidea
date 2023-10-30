@@ -122,3 +122,44 @@
         </p>
     </div>
 {/if}
+
+<hr class="divider">
+<h2>{t}Associated multifactor methods{/t}</h2>
+<div class="row">
+    <div class="col-md-12 col-xl-9">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="width: 2%" ><input type="checkbox"></th>
+                    <th style="width: 5%" >{t}ID{/t}</th>
+                    <th style="width: 20%">{t}Type{/t}</th>
+                    <th>{t}Description{/t}</th>
+                    <th style="width: 15%">{t}Last use{/t}</th>
+                    <th style="width: 5%" >{t}Status{/t}</th>
+                    <th style="width: 5%" >{t}Error counter{/t}</th>
+                    <th style="width: 10%">{t}Actions{/t}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {foreach from=$tokens key=$key item=$token}
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td><a href="">{$token.serial}</a></td>
+                        <td><a href=""><span class="material-icons">{$mfa_{$token.tokentype}_icon}</span>{$mfa_{$token.tokentype}_title}</a></td>
+                        <td><a href="">{$token.description}</a></td>
+                        <td>{$token.info.last_auth}</td>
+                        <td>{$token.active}</td>
+                        <td>{$token.failcount} / {$token.maxfail}</td>
+                        <td>
+                            <a title="{t}Bearbeiten{/t}"   href="/mfa/Detail-Edit"><span class="material-icons">edit          </span></a>
+                            <a title="{t}Fehlerzähler zurücksetzen{/t}" href="#">  <span class="material-icons">restart_alt   </span></a>
+                            <a title="{t}Deaktivieren{/t}"              href="#">  <span class="material-icons">lock          </span></a>
+                            <a title="{t}Widerrufen{/t}"                href="#">  <span class="material-icons">cancel        </span></a>
+                            <a title="{t}Entfernen{/t}"                 href="#">  <span class="material-icons">delete_forever</span></a>
+                        </td>
+                    </tr>
+                {/foreach}
+            </tbody>
+        </table>
+    </div>
+</div>

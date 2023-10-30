@@ -40,6 +40,16 @@ class PrivacyIdeaUtils implements PILog
 
     private string $GOSA_SETTINGS_GROUP;
 
+    /**
+     * @param string $authToken The authentication token will be used with every API call to PrivacyIDEA.
+     * https://privacyidea.readthedocs.io/en/latest/modules/api/auth.html
+     */
+    // TODO: Make static or global or gosaSetting?
+    private string $authToken;
+    private string $authUsername = "";
+    private string $authPassword = "";
+    private string $authRealm    = "";
+
     /** @param mfaAccount $mfaAccount MFA Account class (likely parent) */
     public function __construct(&$mfaAccount)
     {
@@ -50,10 +60,12 @@ class PrivacyIdeaUtils implements PILog
         $this->GOSA_SETTINGS_GROUP = get_class($mfaAccount);
 
         // TODO: Load privacyIDEA server URL from settings.
-        $pi_server_url = "localhost:5000/";
+        $pi_server_url = "http://localhost:5000/";
 
         $this->pi = new PrivacyIDEA($_SERVER['HTTP_USER_AGENT'], $pi_server_url);
         $this->pi->logger = $this;
+
+        $this->authenticate();
     }
 
     public function piDebug($message)
@@ -68,6 +80,130 @@ class PrivacyIdeaUtils implements PILog
         echo "piError (" . date("H:i:s") . "): ";
         echo "$message";
         echo "<br><br>";
+    }
+
+    /**
+     * Requests a authentication token which will be stored in $this->authToken if successful.
+     * @return bool Indicates if authentication was successful.
+     */
+    public function authenticate()
+    {
+        if (!empty($this->authToken)) {
+            return true;
+        }
+
+        $this->pi->serviceAccountName  = $this->authUsername;
+        $this->pi->serviceAccountPass  = $this->authPassword;
+        $this->pi->serviceAccountRealm = $this->authRealm;
+
+        $retString = "";
+        try {
+            $retString = $this->pi->getAuthToken();
+        } catch (PIBadRequestException $e) {
+            msg_dialog::display(
+                _("Internal error"),
+                _("Could not get authentification token from PrivacyIDEA backend server.") . "<br>" .
+                $this->pleaseTryAgainMsg()
+            );
+        }
+
+        if (!empty($retString)) {
+            $this->authToken = $retString;
+            return true;
+        } else {
+            $this->authToken = "";
+        }
+
+        return false;
+    }
+
+    /**
+     * @param array $tokens Array of tokens.
+     * @return array Returns $tokens back with $token["MFATokenClass"] mapped to the specific MFAToken class.
+     */
+    public function mapTokenTypes($tokens)
+    {
+        if (empty($tokens)) {
+            // Can't map tokens, if there are none.
+            return $tokens;
+        }
+
+        $allTokenTypes = array_keys($this->mfaAccount->mfaTokens);
+        foreach ($tokens as $key => $token) {
+            $piTokenType = strtolower($token["tokentype"]);
+
+            if (!in_array($piTokenType, $allTokenTypes)) {
+                // Token is not supported by this plugin, remove it.
+                // TODO: Do a log here!
+                unset($tokens[$key]);
+            } else {
+                $token = &$this->mfaAccount->mfaTokens[$piTokenType];
+                $tokens[$key]["MFATokenClass"] = $token;
+            }
+        }
+
+        return $tokens;
+    }
+
+    /**
+     * @param string $user Username/UID of user to request a list of tokens for.
+     * @param string $userRealm
+     * @return array Array of PI tokens (can be empty).
+     */
+    public function getTokensOfUser($user, $userRealm)
+    {
+        if (!$this->authenticate()) {
+            return array();
+        }
+
+        $params = array(
+            "user"   => $user,
+            "realm"  => $userRealm,
+            "sortby" => "count", // TODO: Sort somehow by last use.
+        );
+
+        // $endpoint must be written like this or else we get a HTTP redirect.
+        $requestAnswer = $this->piSendRequest($params, array(), "GET", $endpoint = "/token/");
+
+        // Extract token information now.
+        if ($requestAnswer["result"]["status"]) {
+            $returnArray = $requestAnswer["result"]["value"]["tokens"];
+            return $returnArray;
+        }
+
+        return array();
+    }
+
+    /**
+     * Send a request to an endpoint with the specified parameters and headers.
+     *
+     * @param array $params request parameters
+     * @param array $headers headers fields (Authentication field gets set automatically)
+     * @param string $httpMethod GET or POST
+     * @param string $endpoint endpoint of the privacyIDEA API (e.g. /validate/check)
+     * @return ?array returns json-decoded array with the response from server
+     */
+    public function piSendRequest(array $params, array $headers, $httpMethod, $endpoint)
+    {
+        $headers[] = "authorization:" . $this->authToken;
+
+        try {
+            $returnedJSON = $this->pi->sendRequest($params, $headers, $httpMethod, $endpoint);
+        } catch (PIBadRequestException $e) {
+            msg_dialog::display(
+                _("Internal error"),
+                _("Could not connect to PrivacyIDEA backend server.") . "<br>" .
+                $this->pleaseTryAgainMsg()
+            );
+
+            return array(
+                "result" => array(
+                    "status" => false
+                )
+            );
+        }
+
+        return json_decode($returnedJSON, true, $flags = JSON_PRETTY_PRINT);
     }
 
     /** @return string Always returns translated string (see source code for actual message). */

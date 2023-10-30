@@ -81,6 +81,7 @@ class mfaAccount extends plugin
         $this->mfaRequired       = $this->attrs['mfaRequired'];
 
         $this->ui = get_userinfo();
+
         stats::log(
             'plugin',
             $class = get_class($this),
@@ -289,6 +290,12 @@ class mfaAccount extends plugin
         $this->smarty->assign("showWarningNoTokenRegistered", true);
 
         $this->prepareSetupCards();
+
+        // TODO: Get uid from this account.
+        $tokens = $this->utils->getTokensOfUser("", "defrealm");
+        $tokens = $this->utils->mapTokenTypes($tokens);
+        // TODO: Sanity check in new function.
+        $this->smarty->assign("tokens", $tokens);
 
         // Show introduction page…
         return $this->smarty->fetch(get_template_path("mfa_intro.tpl", true, dirname(__FILE__)));
