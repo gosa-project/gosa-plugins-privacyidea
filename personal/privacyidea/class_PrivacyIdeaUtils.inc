@@ -30,7 +30,7 @@ require_once("/usr/share/gosa/vendor/privacyidea/privacyidea-php-client/src/PICh
 require_once("/usr/share/gosa/vendor/privacyidea/privacyidea-php-client/src/PIBadRequestException.php");
 require_once("/usr/share/gosa/vendor/privacyidea/privacyidea-php-client/src/AuthenticationStatus.php");
 
-class PrivacyIdeaUtils
+class PrivacyIdeaUtils implements PILog
 {
     private PrivacyIDEA $pi;
     private config $config;
@@ -53,6 +53,21 @@ class PrivacyIdeaUtils
         $pi_server_url = "localhost:5000/";
 
         $this->pi = new PrivacyIDEA($_SERVER['HTTP_USER_AGENT'], $pi_server_url);
+        $this->pi->logger = $this;
+    }
+
+    public function piDebug($message)
+    {
+        echo "piDebug (" . date("H:i:s") . "): ";
+        echo "$message";
+        echo "<br><br>";
+    }
+
+    public function piError($message)
+    {
+        echo "piError (" . date("H:i:s") . "): ";
+        echo "$message";
+        echo "<br><br>";
     }
 
     /** @return string Always returns translated string (see source code for actual message). */
