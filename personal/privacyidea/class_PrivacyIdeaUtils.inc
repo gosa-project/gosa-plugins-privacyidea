@@ -41,7 +41,7 @@ class PrivacyIdeaUtils implements PILog
     private string $GOSA_SETTINGS_GROUP;
 
     /**
-     * @param string $authToken The authentication token will be used with every API call to PrivacyIDEA.
+     * @var string $authToken The authentication token will be used with every API call to PrivacyIDEA.
      * https://privacyidea.readthedocs.io/en/latest/modules/api/auth.html
      */
     // TODO: Make static or global or gosaSetting?
