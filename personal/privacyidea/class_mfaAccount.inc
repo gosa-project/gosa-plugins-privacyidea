@@ -58,6 +58,9 @@ class mfaAccount extends plugin
     public $ui        = null;
     private $ldapinfo = null;
 
+    /** @var string Used to find users in PrivacyIDEA */
+    public const PI_USER_REALM = "nwt-ldap";
+
     public function __construct(&$config, $dn = null)
     {
         plugin::__construct($config, $dn);
@@ -291,8 +294,12 @@ class mfaAccount extends plugin
 
         $this->prepareSetupCards();
 
-        // TODO: Get uid from this account.
-        $tokens = $this->utils->getTokensOfUser("", "defrealm");
+        $uid = "";
+        if (isset($this->attrs["uid"][0])) {
+            $uid = $this->attrs["uid"][0];
+        }
+
+        $tokens = $this->utils->getTokensOfUser($uid, mfaAccount::PI_USER_REALM);
         $tokens = $this->utils->mapTokenTypes($tokens);
         // TODO: Sanity check in new function.
         $this->smarty->assign("tokens", $tokens);
