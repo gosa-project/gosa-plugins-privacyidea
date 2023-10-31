@@ -19,38 +19,32 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *}
 
-<h2>{t}Add a recovery key{/t}</h2>
+<h2>{t}Recovery key added{/t}</h2>
+
+<div class="card-panel green lighten-4 green-text text-darken-4">{t escape=no 1=$tokenDescription}The recovery key <b>%1</b> was successfully added and can now be used for logging in one time only.{/t}</div>
+
+<div class="card-panel clue lighten-4 blue-text text-darken-4">
+    <p>{t escape=no 1=$mfaRecoveryKey}The recovery key value is <b>%1</b>.{/t}<p>
+    <p><a href="" title="{t}Download as PDF{/t}">{t}Download as PDF{/t}</a></p>
+</div>
 
 <div class="section">
-    <p>{t}A recovery key can be used exactly once for logging in.{/t}</p>
-    <p>{t}Recovery keys are created through the following procedure:{/t}</p>
-    <ol>
-        <li>{t}Assign a meaningful description for the recovery key.{/t}</li>
-        <li>{t}The key will be shown immediately.{/t}</li>
-    </ol>
-    <div class="row">
-        <div class="input-field col s12">
-            <label for="tokenDescription">{t}Description{/t}</label>
-            <input type="text" id="tokenDescription" name="tokenDescription" size="60" maxlength="120">
-            <span class="helper-text">{t}Please enter a meaningful description allowing you to recognize the recovery key. This description may be edited later.{/t}</span>
-        </div>
-    </div>
+    <p>{t}Please ensure that nobody other than yourself is able to access this factor.{/t}</p>
+    <p>{t}Please take precautions in case your device is damaged or lost and set up at least two different factors.{/t}</p>
 </div>
 
 <div class="section">
 {* These hidden inputs should always get send via _POST, so that mfaAccount knows which type of token setup we want. *}
     <input type="hidden" id="add_token" name="add_token" value="yes">
     <input type="hidden" id="token_type" name="token_type" value="registration">
+    <input type="hidden" id="current_phase" name="current_phase" value="1">
+    <input type="hidden" id="tokenSerial" name="tokenSerial" value="{$tokenSerial}">
 
 {* Remove 'add_token' from POST, so that mfaAccount doesn't think we are in a token setup anymore.
  * Which means we return to the mfa intro page. *}
-    <button class="btn"
-        onclick="document.getElementById('add_token').remove();"
-        name="setup_cancel"
-        type="submit">{t}Cancel{/t}
-    </button>
     <button class="btn primary"
         name="setup_continue"
-        type="submit">{t}Continue{/t}
+        type="submit">{t}Back to overview{/t}
     </button>
 </div>
+
