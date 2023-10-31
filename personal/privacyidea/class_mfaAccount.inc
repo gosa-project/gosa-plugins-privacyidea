@@ -242,6 +242,9 @@ class mfaAccount extends plugin
         }
 
         if (!empty($this->mfaRequired)) {
+            $this->mfaRequired = array_filter($this->mfaRequired, function ($value) {
+                return ($value !== null && $value !== false && $value !== '');
+            });
             $this->mfaRequired = array_map('strtolower', $this->mfaRequired);
             $this->mfaRequired = array_map('trim', $this->mfaRequired);
         }
@@ -273,6 +276,9 @@ class mfaAccount extends plugin
         }
 
         if (!empty($this->allowedTokenTypes)) {
+            $this->allowedTokenTypes = array_filter($this->allowedTokenTypes, function ($value) {
+                return ($value !== null && $value !== false && $value !== '');
+            });
             $this->allowedTokenTypes = array_map('strtolower', $this->allowedTokenTypes);
             $this->allowedTokenTypes = array_map('trim', $this->allowedTokenTypes);
         }
