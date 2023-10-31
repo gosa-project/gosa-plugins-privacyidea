@@ -126,7 +126,8 @@
 <hr class="divider">
 <h2>{t}Associated multifactor methods{/t}</h2>
 <div class="row">
-    <div class="col-md-12 col-xl-9">
+    {if count($tokens) > 0}
+        <div class="col-md-12 col-xl-9">
         <table class="table">
             <thead>
                 <tr>
@@ -145,7 +146,13 @@
                     <tr>
                         <td><input type="checkbox"></td>
                         <td><a href="">{$token.serial}</a></td>
-                        <td><a href=""><span class="material-icons">{$mfa_{$token.tokentype}_icon}</span>{$mfa_{$token.tokentype}_title}</a></td>
+                        <td>
+                            {* TODO: Refactor getSetupCard{Icon,Title}, also mfa{tokenType}_{icon,title}.
+                             * There are only available if in allowedTokenType or overriden by ACL.
+                             * Make them a const in the MFA{Icon, Title}Token class. *}
+                            <a href=""><span class="material-icons">{$mfa_{$token.tokentype}_icon}</span>
+                            {$mfa_{$token.tokentype}_title}</a>
+                        </td>
                         <td><a href="">{$token.description}</a></td>
                         <td>{$token.info.last_auth}</td>
                         <td>{$token.active}</td>
@@ -161,5 +168,8 @@
                 {/foreach}
             </tbody>
         </table>
-    </div>
+        </div>
+    {else}
+        <span>{t}Currently there are no multifactor methods associated.{/t}</span>
+    {/if}
 </div>
