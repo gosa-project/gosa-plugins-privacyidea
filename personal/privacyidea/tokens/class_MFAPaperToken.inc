@@ -58,25 +58,26 @@ class MFAPaperToken implements MFAToken
         $phaseNumber = $this->getNextPhaseNumber();
         $templateFileName = "phase" . str_pad($phaseNumber, 2, "0", STR_PAD_LEFT) . ".tpl";
 
+        $success = true;
         switch ($phaseNumber) {
             case 1:
                 # PHASE 1 #
-                $this->preparePhase1();
+                $success = $success && $this->preparePhase1();
                 break;
 
             case 2:
                 # PHASE 2 #
-                $this->preparePhase2();
+                $success = $success && $this->preparePhase2();
                 break;
 
             case 3:
                 # PHASE 3 #
-                $this->preparePhase3();
+                $success = $success && $this->preparePhase3();
                 break;
 
             default:
                 # PHASE 0 #
-                $this->preparePhase0();
+                $success = $success && $this->preparePhase0();
                 break;
         }
 
@@ -87,27 +88,39 @@ class MFAPaperToken implements MFAToken
         return true;
     }
 
+    /** @return bool */
     private function preparePhase0()
     {
         // TODO: Prepare for phase 0.
+
+        return true;
     }
 
+    /** @return bool */
     private function preparePhase1()
     {
         // TODO: Analyze data of phase 0.
         // TODO: Prepare for phase 1.
+
+        return true;
     }
 
+    /** @return bool */
     private function preparePhase2()
     {
         // TODO: Analyze data of phase 1.
         // TODO: Prepare for phase 2.
+
+        return true;
     }
 
+    /** @return bool */
     private function preparePhase3()
     {
         // TODO: Analyze data of phase 2.
         // TODO: Prepare for phase 3.
+
+        return true;
     }
 
     public function getRenderSetupResult()

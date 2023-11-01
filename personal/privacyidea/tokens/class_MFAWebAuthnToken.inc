@@ -58,10 +58,11 @@ class MFAWebAuthnToken implements MFAToken
         $phaseNumber = $this->getNextPhaseNumber();
         $templateFileName = "phase" . str_pad($phaseNumber, 2, "0", STR_PAD_LEFT) . ".tpl";
 
+        $success = true;
         switch ($phaseNumber) {
             default:
                 # PHASE 0 #
-                $this->preparePhase0();
+                $success = $success && $this->preparePhase0();
                 break;
         }
 
@@ -72,9 +73,11 @@ class MFAWebAuthnToken implements MFAToken
         return true;
     }
 
+    /** @return bool */
     private function preparePhase0()
     {
         // TODO: Prepare for phase 0.
+        return true;
     }
 
     public function getRenderSetupResult()
