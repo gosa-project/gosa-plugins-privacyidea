@@ -91,16 +91,53 @@ class MFAPaperToken implements MFAToken
     /** @return bool */
     private function preparePhase0()
     {
-        // TODO: Prepare for phase 0.
-
         return true;
     }
 
     /** @return bool */
     private function preparePhase1()
     {
-        // TODO: Analyze data of phase 0.
-        // TODO: Prepare for phase 1.
+        $tokenDescription = "";
+        if (isset($_POST["tokenDescription"])) {
+            $tokenDescription = $_POST["tokenDescription"];
+            $tokenDescription = trim($tokenDescription);
+        }
+
+        $tokenInfo = $this->utils->enrollPaperStep1(
+            $this->mfaAccount->getUid(),
+            mfaAccount::PI_USER_REALM,
+            $tokenDescription
+        );
+
+        if (isset($tokenInfo) && !empty($tokenInfo)) {
+            // TODO: Which should we use as default?
+            $type = "googleurl"; // This works for me.
+            // $type = "oathurl";
+            // $type = "otpkey";
+
+            // TODO: Replace 'issuer=privacyIDEA' with something else. :)
+            // This will be directly visible in the TOTP app.
+
+            // $qrImage      = $tokenInfo[$type]["img"];
+            // $qrImageValue = $tokenInfo[$type]["value"];
+            $tokenSerial  = $tokenInfo["serial"];
+            $tokenOTPs    = $tokenInfo["otps"];
+            $tokenConfTAN = $tokenInfo["otps"][0];
+
+            // Cut first item. (It is used as a confirmation TAN.)
+            $tokenOTPs = array_splice($tokenOTPs, 1, count($tokenOTPs));
+
+            $this->smarty->assign("mfaTanJSON", addslashes(json_encode($tokenOTPs)));
+            $this->smarty->assign("mfaConfirmationTan", $tokenConfTAN);
+            $this->smarty->assign("tokenSerial", $tokenSerial);
+            $this->smarty->assign("tokenDescription", $tokenDescription);
+        } else {
+            msg_dialog::display(
+                _("Internal error"),
+                _("Couldn't enroll token!") . "<br>" .
+                $this->utils->pleaseTryAgainMsg()
+            );
+        }
 
         return true;
     }
@@ -108,8 +145,12 @@ class MFAPaperToken implements MFAToken
     /** @return bool */
     private function preparePhase2()
     {
-        // TODO: Analyze data of phase 1.
-        // TODO: Prepare for phase 2.
+        $tokenSerial = "";
+        if (isset($_POST["tokenSerial"])) {
+            // TODO: Make sure its a real token (sanitize it).
+            $tokenSerial = $_POST["tokenSerial"];
+            $this->smarty->assign("tokenSerial", $tokenSerial);
+        }
 
         return true;
     }
@@ -117,8 +158,38 @@ class MFAPaperToken implements MFAToken
     /** @return bool */
     private function preparePhase3()
     {
-        // TODO: Analyze data of phase 2.
-        // TODO: Prepare for phase 3.
+        $mfaVerificationTan = "";
+        if (isset($_POST["mfaVerificationTan"])) {
+            $mfaVerificationTan = $_POST["mfaVerificationTan"];
+            // Remove everything which isn't a digit.
+            $mfaVerificationTan = preg_replace('~\D~', '', $mfaVerificationTan);
+
+            if (!is_numeric($mfaVerificationTan)) {
+                // Okay, $mfaTOTPCode is definitely borked.
+                msg_dialog::display(
+                    _("Internal error"),
+                    _("Given TOTP code is malformed and could not be read.") . "<br>" .
+                    $this->utils->pleaseTryAgainMsg()
+                );
+
+                return;
+            }
+        }
+
+        $tokenSerial = "";
+        if (isset($_POST["tokenSerial"])) {
+            // TODO: Make sure its a real token (sanitize it).
+            $tokenSerial = $_POST["tokenSerial"];
+        } else {
+            return false;
+        }
+
+        $resultArray = $this->utils->enrollPaperStep2($tokenSerial, $mfaVerificationTan);
+        if ($resultArray["result"]["status"]) {
+            return true;
+        } else {
+            return false;
+        }
 
         return true;
     }

@@ -118,6 +118,66 @@ class PrivacyIdeaUtils implements PILog
     }
 
     /**
+     * Enrolls a PI token with type 'paper'. in a 2-step-process. Step 1 (creation).
+     * @param string $username
+     * @param string $realm
+     * @param string $description (Default is empty)
+     * @return array array(...)
+     */
+    public function enrollPaperStep1($username, $realm, $description = "")
+    {
+        assert('string' === gettype($username));
+        assert(!empty($username));
+        assert('string' === gettype($realm));
+        assert('string' === gettype($description));
+
+        $params["user"]        = $username;
+        $params["realm"]       = $realm;
+        $params["genkey"]      = "1";
+        $params["2stepinit"]   = "1";
+        $params["type"]        = "paper";
+        $params["description"] = $description;
+
+        $requestAnswer = $this->piSendRequest($params, array(), "POST", "/token/init");
+
+        if ($requestAnswer && $requestAnswer["result"]["status"]) {
+            return array(
+                "googleurl" => $requestAnswer["detail"]["googleurl"],
+                "oathurl"   => $requestAnswer["detail"]["oathurl"],
+                "otpkey"    => $requestAnswer["detail"]["otpkey"],
+                "otps"      => $requestAnswer["detail"]["otps"],
+                "serial"    => $requestAnswer["detail"]["serial"],
+            );
+        } else {
+            return array();
+        }
+    }
+
+    /**
+     * Enrolls a PI token with type 'PAPER' in a 2-step-process. Step 2 (verify).
+     * @param string $tokenSerial
+     * @param string $tokenCode
+     * @return array array(...)
+     */
+    public function enrollPaperStep2($tokenSerial, $tokenCode)
+    {
+        assert('string' === gettype($tokenSerial));
+        assert('string' === gettype($tokenCode));
+        assert(!empty($tokenSerial));
+        assert(!empty($tokenCode));
+
+        $params = array();
+        $params["serial"] = $tokenSerial;
+        $params["otpkey"] = $tokenCode;
+        $params["type"]   = "paper";
+
+        // Call /token/init again to enroll TOTP token.
+        $resultArray = $this->piSendRequest($params, array(), "POST", "/token/init");
+
+        return $resultArray;
+    }
+
+    /**
      * Enrolls a PI token with type 'TOTP' in a 2-step-process.
      * @param string $username
      * @param string $realm
@@ -129,9 +189,7 @@ class PrivacyIdeaUtils implements PILog
         assert('string' === gettype($username));
         assert(!empty($username));
         assert('string' === gettype($realm));
-        if (isset($description)) {
-            assert('string' === gettype($description));
-        }
+        assert('string' === gettype($description));
 
         $params["user"]        = $username;
         $params["realm"]       = $realm;
