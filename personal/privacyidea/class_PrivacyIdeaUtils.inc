@@ -188,13 +188,13 @@ class PrivacyIdeaUtils implements PILog
     {
         $authTokenHeader = array("authorization:" . $this->authToken);
         if (!empty($headers)) {
-            $headers = array_merge($headers, $authTokenHeader);
+            $fullHeaders = array_merge($headers, $authTokenHeader);
         } else {
-            $headers = $authTokenHeader;
+            $fullHeaders = $authTokenHeader;
         }
 
         try {
-            $returnedJSON = $this->pi->sendRequest($params, $headers, $httpMethod, $endpoint);
+            $returnedJSON = $this->pi->sendRequest($params, $fullHeaders, $httpMethod, $endpoint);
         } catch (PIBadRequestException $e) {
             msg_dialog::display(
                 _("Internal error"),
