@@ -270,7 +270,19 @@ class PrivacyIdeaUtils implements PILog
             );
         }
 
-        return json_decode($returnedJSON, true, $flags = JSON_PRETTY_PRINT);
+        $returnArray = json_decode($returnedJSON, true, $flags = JSON_PRETTY_PRINT);
+
+        if (isset($returnArray["result"]["error"]["code"])) {
+            if ($returnArray["result"]["error"]["code"] == 4305) {
+                // This is the code for "Authentication failure. Your token has expired: Signature has expired"
+                $this->authToken = "";
+                $this->authenticate();
+                // Don't bother to check if we loop recursively. Just do it and hope for the best.
+                $this->piSendRequest($params, $headers, $httpMethod, $endpoint);
+            }
+        }
+
+        return $returnArray;
     }
 
     /** @return string Always returns translated string (see source code for actual message). */
