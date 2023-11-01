@@ -179,14 +179,19 @@ class PrivacyIdeaUtils implements PILog
      * Send a request to an endpoint with the specified parameters and headers.
      *
      * @param array $params request parameters
-     * @param array $headers headers fields (Authentication field gets set automatically)
+     * @param array $headers headers fields (Authentication field gets added automatically)
      * @param string $httpMethod GET or POST
      * @param string $endpoint endpoint of the privacyIDEA API (e.g. /validate/check)
      * @return ?array returns json-decoded array with the response from server
      */
     public function piSendRequest(array $params, array $headers, $httpMethod, $endpoint)
     {
-        $headers[] = "authorization:" . $this->authToken;
+        $authTokenHeader = array("authorization:" . $this->authToken);
+        if (!empty($headers)) {
+            $headers = array_merge($headers, $authTokenHeader);
+        } else {
+            $headers = $authTokenHeader;
+        }
 
         try {
             $returnedJSON = $this->pi->sendRequest($params, $headers, $httpMethod, $endpoint);
