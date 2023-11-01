@@ -319,10 +319,7 @@ class mfaAccount extends plugin
      */
     public function save_object()
     {
-        $wishMfaRequired = false;
-        if (isset($_POST['wishMfaRequired'])) {
-            $wishMfaRequired = true;
-        }
+        plugin::save_object();
 
         // If user clicked safe settings button.
         if (isset($_POST['edit_apply'])) {
