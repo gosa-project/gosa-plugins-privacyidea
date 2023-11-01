@@ -5,7 +5,7 @@
 <input type="hidden" id="add_token" name="add_token" value="yes">
 <input type="hidden" id="token_type" name="token_type" value="webauthn">
 
-{* Use a little hack, remove 'add_token' input, so that mfaAccount doesn't think we are in a token setup. *}
+{* Remove 'add_token' input, so that mfaAccount doesn't think we are in a token setup. *}
 <button class="btn primary"
     onclick="document.getElementById('add_token').remove();"
     type="submit">{t}Back{/t}

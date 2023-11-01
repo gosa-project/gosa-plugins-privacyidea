@@ -91,7 +91,7 @@
     <input type="hidden" id="current_phase" name="current_phase" value="1">
     <input type="hidden" id="tokenSerial" name="tokenSerial" value="{$tokenSerial}">
 
-{* Use a little hack, remove 'add_token' from POST, so that mfaAccount doesn't think we are in a token setup anymore.
+{* Remove 'add_token' from POST, so that mfaAccount doesn't think we are in a token setup anymore.
  * Which means we return to the mfa intro page. *}
     <button class="btn"
         onclick="document.getElementById('add_token').remove();"
