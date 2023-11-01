@@ -49,4 +49,10 @@ interface MFAToken
      *                e.g. mfaAccount's execute()
      */
     public function getRenderSetupResult();
+
+
+    /**
+     * @return int Calculates and returns phase number of next phase.
+     */
+    public function getNextPhaseNumber();
 }

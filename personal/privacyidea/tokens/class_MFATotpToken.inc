@@ -33,6 +33,9 @@ class MFATotpToken implements MFAToken
     /** @var ldapMultiplexer|LDAP */
     private $ldap;
 
+    /** @var int Indicates how many phases the token setup has. */
+    public const MAX_SETUP_PHASES = 4;
+
     public function __construct(&$mfaAccount)
     {
         // Crashing is okay here, we want to find errors like this in early development.
@@ -52,16 +55,83 @@ class MFATotpToken implements MFAToken
 
     public function renderSetup()
     {
+        $phaseNumber = $this->getNextPhaseNumber();
+        $templateFileName = "phase" . str_pad($phaseNumber, 2, "0", STR_PAD_LEFT) . ".tpl";
+
+        switch ($phaseNumber) {
+            case 1:
+                # PHASE 1 #
+                $this->preparePhase1();
+                break;
+
+            case 2:
+                # PHASE 2 #
+                $this->preparePhase2();
+                break;
+
+            case 3:
+                # PHASE 3 #
+                $this->preparePhase3();
+                break;
+
+            default:
+                # PHASE 0 #
+                $this->preparePhase0();
+                break;
+        }
+
         $this->renderResult = $this->smarty->fetch(
-            get_template_path($this->TEMPLATE_PREFIX . "phase00.tpl", true, dirname(__FILE__) . "/..")
+            get_template_path($this->TEMPLATE_PREFIX . $templateFileName, true, dirname(__FILE__) . "/..")
         );
 
         return true;
     }
 
+    private function preparePhase0()
+    {
+        // TODO: Prepare for phase 0.
+    }
+
+    private function preparePhase1()
+    {
+        // TODO: Analyze data of phase 0.
+        // TODO: Prepare for phase 1.
+    }
+
+    private function preparePhase2()
+    {
+        // TODO: Analyze data of phase 1.
+        // TODO: Prepare for phase 2.
+    }
+
+    private function preparePhase3()
+    {
+        // TODO: Analyze data of phase 2.
+        // TODO: Prepare for phase 3.
+    }
+
     public function getRenderSetupResult()
     {
         return $this->renderResult;
+    }
+
+    public function getNextPhaseNumber()
+    {
+        if (!isset($_POST["current_phase"])) {
+            return 0;
+        }
+
+        if (!is_numeric($_POST["current_phase"])) {
+            return 0;
+        }
+
+        $currentPhase = $_POST["current_phase"];
+
+        if ($currentPhase < 0 || $currentPhase >= self::MAX_SETUP_PHASES - 1) {
+            return 0;
+        }
+
+        return $_POST["current_phase"] + 1;
     }
 
     public function getSetupCardIcon()
