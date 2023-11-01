@@ -133,8 +133,9 @@ class PrivacyIdeaUtils implements PILog
             $piTokenType = strtolower($token["tokentype"]);
 
             if (!in_array($piTokenType, $allTokenTypes)) {
-                // Token is not supported by this plugin, remove it.
+                // Token is not supported by this plugin, remove it?
                 // TODO: Do a log here!
+                // See class_MFAUnknownToken.inc.
                 unset($tokens[$key]);
             } else {
                 $token = $this->mfaAccount->mfaTokens[$piTokenType];
