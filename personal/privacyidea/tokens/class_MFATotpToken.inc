@@ -91,16 +91,51 @@ class MFATotpToken implements MFAToken
     /** @return bool */
     private function preparePhase0()
     {
-        // TODO: Prepare for phase 0.
-
         return true;
     }
 
     /** @return bool */
     private function preparePhase1()
     {
-        // TODO: Analyze data of phase 0.
-        // TODO: Prepare for phase 1.
+        $tokenDescription = "";
+        if (isset($_POST["tokenDescription"])) {
+            $tokenDescription = $_POST["tokenDescription"];
+            $tokenDescription = trim($tokenDescription);
+        }
+
+        // Actually call utils to enroll TOTP token (in a 2 step process).
+        $tokenInfo = $this->utils->enrollTotpStep1(
+            $this->mfaAccount->getUid(),
+            mfaAccount::PI_USER_REALM,
+            $tokenDescription
+        );
+
+        if (isset($tokenInfo) && !empty($tokenInfo)) {
+            // TODO: Which should we use as default?
+            $type = "googleurl"; // This works for me.
+            // $type = "oathurl";
+            // $type = "otpkey";
+
+            // TODO: Replace 'issuer=privacyIDEA' with something else. :)
+            // This will be directly visible in the TOTP app.
+
+            $qrImage      = $tokenInfo[$type]["img"];
+            $qrImageValue = $tokenInfo[$type]["value"];
+            $tokenSerial  = $tokenInfo["serial"];
+
+            $this->smarty->assign("qrImage", $qrImage);
+            $this->smarty->assign("qrImageValue", $qrImageValue);
+            $this->smarty->assign("tokenSerial", $tokenSerial);
+            $this->smarty->assign("tokenDescription", $tokenDescription);
+        } else {
+            msg_dialog::display(
+                _("Internal error"),
+                _("Couldn't enroll token!") . "<br>" .
+                $this->utils->pleaseTryAgainMsg()
+            );
+        }
+
+        // $this->utils->piSendRequest(array(), array(), "DELETE", "/token/" . $tokenInfo["serial"]);
 
         return true;
     }
@@ -108,8 +143,12 @@ class MFATotpToken implements MFAToken
     /** @return bool */
     private function preparePhase2()
     {
-        // TODO: Analyze data of phase 1.
-        // TODO: Prepare for phase 2.
+        $tokenSerial = "";
+        if (isset($_POST["tokenSerial"])) {
+            // TODO: Make sure its a real token (sanitize it).
+            $tokenSerial = $_POST["tokenSerial"];
+            $this->smarty->assign("tokenSerial", $tokenSerial);
+        }
 
         return true;
     }
@@ -117,10 +156,36 @@ class MFATotpToken implements MFAToken
     /** @return bool */
     private function preparePhase3()
     {
-        // TODO: Analyze data of phase 2.
-        // TODO: Prepare for phase 3.
+        $mfaTOTPCode = "";
+        if (isset($_POST["mfaTOTPCode"])) {
+            $mfaTOTPCode = $_POST["mfaTOTPCode"];
+            // Remove everything which isn't a digit.
+            $mfaTOTPCode = preg_replace('~\D~', '', $mfaTOTPCode);
 
-        return true;
+            if (!is_numeric($mfaTOTPCode)) {
+                // Okay, $mfaTOTPCode is definitely borked.
+                msg_dialog::display(
+                    _("Internal error"),
+                    _("Given TOTP code is malformed and could not be read.") . "<br>" .
+                    $this->utils->pleaseTryAgainMsg()
+                );
+
+                return;
+            }
+        }
+
+        $tokenSerial = "";
+        if (isset($_POST["tokenSerial"])) {
+            // TODO: Make sure its a real token (sanitize it).
+            $tokenSerial = $_POST["tokenSerial"];
+        }
+
+        $resultArray = $this->utils->enrollTotpStep2($tokenSerial, $mfaTOTPCode);
+        if ($resultArray["result"]["status"]) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function getRenderSetupResult()
@@ -142,6 +207,20 @@ class MFATotpToken implements MFAToken
 
         if ($currentPhase < 0 || $currentPhase >= self::MAX_SETUP_PHASES - 1) {
             return 0;
+        }
+
+        // Special case for TOTP: Allow regenerating QR code.
+        if (isset($_POST["mfa_generate_totp_secret"])) {
+            // Make sure to provide needed variables again.
+            if (isset($_POST["tokenDescription"])) {
+                $this->smarty->assign("tokenDescription", $_POST["tokenDescription"]);
+            }
+            if (isset($_POST["tokenSerial"])) {
+                // Delete old token.
+                $this->utils->piSendRequest(array(), array(), "DELETE", "/token/" . $_POST["tokenSerial"]);
+            }
+
+            return $_POST["current_phase"];
         }
 
         return $_POST["current_phase"] + 1;

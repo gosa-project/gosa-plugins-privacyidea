@@ -50,7 +50,6 @@ interface MFAToken
      */
     public function getRenderSetupResult();
 
-
     /**
      * @return int Calculates and returns phase number of next phase.
      */
