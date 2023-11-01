@@ -255,7 +255,7 @@ class mfaAccount extends plugin
                     $this->mfaRequired[] = "by_user";
                 }
             } else {
-                array_diff($this->mfaRequired, ['by_user']);
+                $this->mfaRequired = array_diff($this->mfaRequired, array("by_user"));
             }
         }
     }
