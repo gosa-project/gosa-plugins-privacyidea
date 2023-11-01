@@ -30,6 +30,8 @@ interface MFAToken
     public function getSetupCardDescription();
     /** @return string Button text of setup card. */
     public function getSetupCardButtonText();
+    /** @return int Priority for rendering this setup card. */
+    public function getSetupCardPriority();
 
     /**
      * Contructor

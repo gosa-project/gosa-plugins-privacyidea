@@ -240,4 +240,9 @@ class MFAPaperToken implements MFAToken
     {
         return _("TAN-Liste hinzufügen");
     }
+
+    public function getSetupCardPriority()
+    {
+        return 2;
+    }
 }

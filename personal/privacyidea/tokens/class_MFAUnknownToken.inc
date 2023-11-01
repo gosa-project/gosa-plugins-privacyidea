@@ -31,43 +31,40 @@ class MFAUnknownToken implements MFAToken
     public function renderSetup()
     {
         die("Functions of MFAUnknownToken should not be called!!!");
-
-        return false;
     }
 
     public function getRenderSetupResult()
     {
         die("Functions of MFAUnknownToken should not be called!!!");
-        return "UNKNOWN";
     }
 
     public function getNextPhaseNumber()
     {
         die("Functions of MFAUnknownToken should not be called!!!");
-        return "UNKNOWN";
     }
 
     public function getSetupCardIcon()
     {
         die("Functions of MFAUnknownToken should not be called!!!");
-        return "UNKNOWN";
     }
 
     public function getSetupCardTitle()
     {
         die("Functions of MFAUnknownToken should not be called!!!");
-        return "UNKNOWN";
     }
 
     public function getSetupCardDescription()
     {
         die("Functions of MFAUnknownToken should not be called!!!");
-        return "UNKNOWN";
     }
 
     public function getSetupCardButtonText()
     {
         die("Functions of MFAUnknownToken should not be called!!!");
-        return "UNKNOWN";
+    }
+
+    public function getSetupCardPriority()
+    {
+        die("Functions of MFAUnknownToken should not be called!!!");
     }
 }

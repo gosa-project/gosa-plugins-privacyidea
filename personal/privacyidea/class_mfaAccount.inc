@@ -140,6 +140,19 @@ class mfaAccount extends plugin
             $this->smarty->assign("mfa_" . $tokenType . "_description", $token->getSetupCardDescription());
             $this->smarty->assign("mfa_" . $tokenType . "_button_text", $token->getSetupCardButtonText());
         }
+
+        // Sort $this->allowedTokenTypes by priority.
+        usort($this->allowedTokenTypes, function (mixed $a, mixed $b) {
+            $tokenA = $this->mfaTokens[$a];
+            $tokenB = $this->mfaTokens[$b];
+            $prioA = $tokenA->getSetupCardPriority();
+            $prioB = $tokenB->getSetupCardPriority();
+            if ($prioA == $prioB) {
+                return 0;
+            }
+            return ($prioA < $prioB) ? -1 : 1;
+        });
+
         $this->smarty->assign('tokenTypes', $this->allowedTokenTypes);
     }
 

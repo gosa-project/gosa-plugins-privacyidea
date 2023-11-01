@@ -127,4 +127,9 @@ class MFARegistrationToken implements MFAToken
     {
         return _("Wiederherstellungsschlüssel hinzufügen");
     }
+
+    public function getSetupCardPriority()
+    {
+        return 3;
+    }
 }

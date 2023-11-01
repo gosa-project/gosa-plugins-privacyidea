@@ -127,4 +127,9 @@ class MFAWebAuthnToken implements MFAToken
     {
         return _("Sicherheitsschlüssel hinzufügen");
     }
+
+    public function getSetupCardPriority()
+    {
+        return 0;
+    }
 }

@@ -248,4 +248,9 @@ class MFATotpToken implements MFAToken
     {
         return _("Authentifizierungsapp hinzufügen");
     }
+
+    public function getSetupCardPriority()
+    {
+        return 1;
+    }
 }
