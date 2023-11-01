@@ -7,7 +7,7 @@ Eine  Authentifizierungsapp auf Ihrem Smartphone generiert zeitbasierte Codes (T
 
 {* These hidden inputs should always get send via _POST, so that mfaAccount knows which type of token setup we want. *}
 <input type="hidden" id="add_token" name="add_token" value="yes">
-<input type="hidden" id="token_type" name="token_type" value="paper">
+<input type="hidden" id="token_type" name="token_type" value="totp">
 <input type="hidden" id="current_phase" name="current_phase" value="0">
 
 {* Use a little hack, remove 'add_token' input, so that mfaAccount doesn't think we are in a token setup. *}
