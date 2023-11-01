@@ -300,18 +300,23 @@ class mfaAccount extends plugin
 
         $this->prepareSetupCards();
 
-        $uid = "";
-        if (isset($this->attrs["uid"][0])) {
-            $uid = $this->attrs["uid"][0];
-        }
-
-        $tokens = $this->utils->getTokensOfUser($uid, mfaAccount::PI_USER_REALM);
+        $tokens = $this->utils->getTokensOfUser($this->getUid(), mfaAccount::PI_USER_REALM);
         $tokens = $this->utils->mapTokenTypes($tokens);
         // TODO: Sanity check in new function.
         $this->smarty->assign("tokens", $tokens);
 
         // Show introduction page…
         return $this->smarty->fetch(get_template_path("mfa_intro.tpl", true, dirname(__FILE__)));
+    }
+
+    /** @return string The uid of the current user. */
+    public function getUid()
+    {
+        if (isset($this->attrs["uid"][0])) {
+            return $this->attrs["uid"][0];
+        }
+
+        return "";
     }
 
     /**
