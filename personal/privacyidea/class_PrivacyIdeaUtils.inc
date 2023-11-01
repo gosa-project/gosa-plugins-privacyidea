@@ -137,7 +137,7 @@ class PrivacyIdeaUtils implements PILog
                 // TODO: Do a log here!
                 unset($tokens[$key]);
             } else {
-                $token = &$this->mfaAccount->mfaTokens[$piTokenType];
+                $token = $this->mfaAccount->mfaTokens[$piTokenType];
                 $tokens[$key]["MFATokenClass"] = $token;
             }
         }
