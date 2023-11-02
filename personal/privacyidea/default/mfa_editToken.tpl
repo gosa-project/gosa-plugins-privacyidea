@@ -87,6 +87,7 @@
     </div>
 </div>
 
+{if $editEnable}
 {* Remove 'add_token' from POST, so that mfaAccount doesn't think we are in a token setup anymore.
  * Which means we return to the mfa intro page. *}
     <button class="btn"
@@ -98,4 +99,10 @@
         name="edit_continue"
         type="submit">{t}Save{/t}
     </button>
+{else}
+    <button class="btn primary"
+        name="edit_continue"
+        type="submit">{t}Edit{/t}
+    </button>
+{/if}
 </div>
