@@ -19,7 +19,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *}
 
-<h1>{t}Verify TAN list{/t}</h1>
+<h2>{t}Verify TAN list{/t}</h2>
 
 <div class="section">
     <div class="row">

@@ -19,7 +19,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *}
 
-<h1>{t}Confirm security key setup{/t}</h1>
+<h2>{t}Confirm security key setup{/t}</h2>
 
 <div class="section">
     <p>{t escape=no 1=$tokenDescription}Please confirm the setup of the security key <b>%1</b>.{/t}</p>
