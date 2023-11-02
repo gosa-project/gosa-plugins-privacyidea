@@ -55,17 +55,23 @@ class MFARegistrationToken implements MFAToken
 
     public function renderSetup()
     {
-        $phaseNumber = $this->getNextPhaseNumber();
-        $templateFileName = "phase" . str_pad($phaseNumber, 2, "0", STR_PAD_LEFT) . ".tpl";
+        $currentPhase = $this->getCurrentPhaseNumber();
+        $nextPhaseNumber = $this->getNextPhaseNumber();
 
         $success = true;
-        switch ($phaseNumber) {
+        switch ($nextPhaseNumber) {
             default:
                 # PHASE 0 #
                 $success = $success && $this->preparePhase0();
                 break;
         }
 
+        if (!$success) {
+            // Oh, something did go wrong. Do not show next phase.
+            $nextPhaseNumber = $currentPhase;
+        }
+
+        $templateFileName = "phase" . str_pad($nextPhaseNumber, 2, "0", STR_PAD_LEFT) . ".tpl";
         $this->renderResult = $this->smarty->fetch(
             get_template_path($this->TEMPLATE_PREFIX . $templateFileName, true, dirname(__FILE__) . "/..")
         );
@@ -85,7 +91,8 @@ class MFARegistrationToken implements MFAToken
         return $this->renderResult;
     }
 
-    public function getNextPhaseNumber()
+    /** @return int Sanitized and cleaned $_POST['current_phase']. */
+    public function getCurrentPhaseNumber()
     {
         if (!isset($_POST["current_phase"])) {
             return 0;
@@ -101,7 +108,14 @@ class MFARegistrationToken implements MFAToken
             return 0;
         }
 
-        return $_POST["current_phase"] + 1;
+        return $currentPhase;
+    }
+
+    /** @return int Next phase. */
+    public function getNextPhaseNumber()
+    {
+        $currentPhase = $this->getCurrentPhaseNumber();
+        return $currentPhase + 1;
     }
 
     public function getSetupCardIcon()
