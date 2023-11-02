@@ -123,6 +123,17 @@
     </div>
 {/if}
 
+<style>
+.txtonlybtn {
+        background:none;
+        border:none;
+        margin:0;
+        padding:0;
+        cursor: pointer;
+        font-size: 1em;
+}
+</style>
+
 <hr class="divider">
 <h2>{t}Associated multifactor methods{/t}</h2>
 <div class="row">
@@ -145,24 +156,37 @@
                 {foreach from=$tokens key=$key item=$token}
                     <tr>
                         <td><input type="checkbox"></td>
-                        <td><a href="">{$token.serial}</a></td>
+                        <td><button class="txtonlybtn" type="submit" name="mfaTokenEdit">{$token.serial}</button></td>
                         <td>
                             {* TODO: Refactor getSetupCard{Icon,Title}, also mfa{tokenType}_{icon,title}.
                              * There are only available if in allowedTokenType or overriden by ACL.
                              * Make them a const in the MFA{Icon, Title}Token class. *}
-                            <a href=""><span class="material-icons">{$mfa_{$token.tokentype}_icon}</span>
-                            {$mfa_{$token.tokentype}_title}</a>
+                            {* TODO: Center text vertically *}
+                             <button class="txtonlybtn" type="submit" name="mfaTokenEdit">
+                                <span class="material-icons">{$mfa_{$token.tokentype}_icon}</span>
+                                {$mfa_{$token.tokentype}_title}
+                            </button>
                         </td>
-                        <td><a href="">{$token.description}</a></td>
+                        <td><button class="txtonlybtn" type="submit" name="mfaTokenEdit">{$token.description}</button></td>
                         <td>{$token.info.last_auth}</td>
                         <td>{$token.active}</td>
                         <td>{$token.failcount} / {$token.maxfail}</td>
                         <td>
-                            <a title="{t}Bearbeiten{/t}"   href="/mfa/Detail-Edit"><span class="material-icons">edit          </span></a>
-                            <a title="{t}Fehlerzähler zurücksetzen{/t}" href="#">  <span class="material-icons">restart_alt   </span></a>
-                            <a title="{t}Deaktivieren{/t}"              href="#">  <span class="material-icons">lock          </span></a>
-                            <a title="{t}Widerrufen{/t}"                href="#">  <span class="material-icons">cancel        </span></a>
-                            <a title="{t}Entfernen{/t}"                 href="#">  <span class="material-icons">delete_forever</span></a>
+                            <button class="txtonlybtn" type="submit" name="mfaTokenEdit" title="{t}Edit{/t}">
+                                <span class="material-icons">edit</span>
+                            </button>
+                            <button class="txtonlybtn" type="submit" name="mfaTokenResetCounter" title="{t}Reset error counter{/t}">
+                                <span class="material-icons">restart_alt</span>
+                            </button>
+                            <button class="txtonlybtn" type="submit" name="mfaTokenDeactivate" title="{t}Deactivate{/t}">
+                                <span class="material-icons">lock</span>
+                            </button>
+                            <button class="txtonlybtn" type="submit" name="mfaTokenRecall" title="{t}Recall{/t}">
+                                <span class="material-icons">cancel</span>
+                            </button>
+                            <button class="txtonlybtn" type="submit" name="mfaTokenRemove" title="{t}Remove{/t}">
+                                <span class="material-icons">delete_forever</span>
+                            </button>
                         </td>
                     </tr>
                 {/foreach}
