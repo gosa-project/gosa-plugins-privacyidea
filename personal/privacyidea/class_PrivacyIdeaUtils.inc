@@ -305,6 +305,14 @@ class PrivacyIdeaUtils implements PILog
      */
     public function piSendRequest(array $params, array $headers, $httpMethod, $endpoint)
     {
+        if (!$this->authenticate()) {
+            return array(
+                "result" => array(
+                    "status" => false
+                )
+            );
+        }
+
         $authTokenHeader = array("authorization:" . $this->authToken);
         if (!empty($headers)) {
             $fullHeaders = array_merge($headers, $authTokenHeader);
