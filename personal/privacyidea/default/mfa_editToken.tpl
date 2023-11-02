@@ -88,8 +88,10 @@
 </div>
 
 {if $editEnable}
-{* Remove 'add_token' from POST, so that mfaAccount doesn't think we are in a token setup anymore.
- * Which means we return to the mfa intro page. *}
+    <input type="hidden" id="editEnable" name="editEnable" value="yes">
+    {* Remove 'add_token' from POST, so that mfaAccount doesn't think we are in a token setup anymore.
+     * Which means we return to the mfa intro page. *}
+
     <button class="btn"
         onclick="document.getElementById('add_token').remove();"
         name="edit_cancel"
