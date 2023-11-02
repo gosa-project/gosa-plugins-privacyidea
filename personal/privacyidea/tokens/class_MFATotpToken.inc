@@ -55,11 +55,11 @@ class MFATotpToken implements MFAToken
 
     public function renderSetup()
     {
-        $phaseNumber = $this->getNextPhaseNumber();
-        $templateFileName = "phase" . str_pad($phaseNumber, 2, "0", STR_PAD_LEFT) . ".tpl";
+        $currentPhase = $this->getCurrentPhaseNumber();
+        $nextPhaseNumber = $this->getNextPhaseNumber();
 
         $success = true;
-        switch ($phaseNumber) {
+        switch ($nextPhaseNumber) {
             case 1:
                 # PHASE 1 #
                 $success = $success && $this->preparePhase1();
@@ -81,6 +81,12 @@ class MFATotpToken implements MFAToken
                 break;
         }
 
+        if (!$success) {
+            // Oh, something did go wrong. Do not show next phase.
+            $nextPhaseNumber = $currentPhase;
+        }
+
+        $templateFileName = "phase" . str_pad($nextPhaseNumber, 2, "0", STR_PAD_LEFT) . ".tpl";
         $this->renderResult = $this->smarty->fetch(
             get_template_path($this->TEMPLATE_PREFIX . $templateFileName, true, dirname(__FILE__) . "/..")
         );
@@ -133,6 +139,8 @@ class MFATotpToken implements MFAToken
                 _("Couldn't enroll token!") . "<br>" .
                 $this->utils->pleaseTryAgainMsg()
             );
+
+            return false;
         }
 
         // $this->utils->piSendRequest(array(), array(), "DELETE", "/token/" . $tokenInfo["serial"]);
@@ -193,7 +201,8 @@ class MFATotpToken implements MFAToken
         return $this->renderResult;
     }
 
-    public function getNextPhaseNumber()
+    /** @return int Sanitized and cleaned $_POST['current_phase']. */
+    public function getCurrentPhaseNumber()
     {
         if (!isset($_POST["current_phase"])) {
             return 0;
@@ -209,6 +218,14 @@ class MFATotpToken implements MFAToken
             return 0;
         }
 
+        return $currentPhase;
+    }
+
+    /** @return int Next phase. */
+    public function getNextPhaseNumber()
+    {
+        $currentPhase = $this->getCurrentPhaseNumber();
+
         // Special case for TOTP: Allow regenerating QR code.
         if (isset($_POST["mfa_generate_totp_secret"])) {
             // Make sure to provide needed variables again.
@@ -220,10 +237,10 @@ class MFATotpToken implements MFAToken
                 $this->utils->piSendRequest(array(), array(), "DELETE", "/token/" . $_POST["tokenSerial"]);
             }
 
-            return $_POST["current_phase"];
+            return $currentPhase;
         }
 
-        return $_POST["current_phase"] + 1;
+        return $currentPhase + 1;
     }
 
     public function getSetupCardIcon()
