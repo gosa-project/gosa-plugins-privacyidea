@@ -126,20 +126,19 @@ class MFARegistrationToken implements MFAToken
 
     public function getSetupCardTitle()
     {
-        return _("Wiederherstellungs­schlüssel");
+        return _("Recovery key");
     }
 
     public function getSetupCardDescription()
     {
-        return _("Wiederherstellungsschlüssel werden zur einmaligen Anmeldung " .
-            "verwendet und verfallen dann. Sie werden nur vergeben, wenn " .
-            "keine andere Methode zur Anmeldung verfügbar ist, z.B. bei " .
-            "Hardwareverlust.");
+        return _("A recovery key can be used exactly once for logging in. " .
+            "They are only issued if no other authentication method is " .
+            "available, e.g. in case of hardware loss.");
     }
 
     public function getSetupCardButtonText()
     {
-        return _("Wiederherstellungsschlüssel hinzufügen");
+        return _("Add recovery key");
     }
 
     public function getSetupCardPriority()

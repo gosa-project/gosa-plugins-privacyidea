@@ -66,22 +66,22 @@
         </div>        
 
         <div class="row">
-            <label class="col s3 m3">{t}Index der letzten genutzten TAN{/t}</label>
+            <label class="col s3 m3">{t}Last used TAN no.{/t}</label>
             <div class="col s9 m9 input-field"><input class="form-control" type="text" value="4" disabled></div>
         </div>
 
         <div class="row">
-            <label class="col s3 m3">{t}Anzahl Anmeldungen{/t}</label>
+            <label class="col s3 m3">{t}No. of login attempts{/t}</label>
             <div class="col s9 m9 input-field"><input class="form-control" type="text" value="2" disabled></div>
         </div>
 
         <div class="row">
-            <label class="col s3 m3">{t}Erfolgreiche Anmeldungen{/t}</label>
+            <label class="col s3 m3">{t}Successful logins{/t}</label>
             <div class="col s9 m9 input-field"><input class="form-control" type="text" value="2" disabled></div>
         </div>
 
         <div class="row">
-            <label class="col s3 m3">{t}Fehlerzähler (aktuell / maximal){/t}</label>
+            <label class="col s3 m3">{t}Field counter (current/max.){/t}</label>
             <div class="col s9 m9 input-field"><input class="form-control" type="text" value="{$token.failcount} / {$token.maxfail}" disabled></div>
         </div>      
     </div>
