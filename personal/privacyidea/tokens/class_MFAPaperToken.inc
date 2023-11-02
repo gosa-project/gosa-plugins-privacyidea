@@ -240,19 +240,19 @@ class MFAPaperToken implements MFAToken
 
     public function getSetupCardTitle()
     {
-        return _("TAN-Liste");
+        return _("TAN list");
     }
 
     public function getSetupCardDescription()
     {
-        return _("TAN-Listen werden ausgedruckt an einem sicheren Ort gelagert. " .
-            "Sie enthalten Einmalpasswörter, von denen für jeden Anmeldevorgang " .
-            "eines angegeben werden muss.");
+        return _("Lists with transaction authentication number (TAN) are " .
+            "printed out and stored in a secure location. A TAN is a one-time " .
+            "password and a TAN from the list has to be entered on each login.");
     }
 
     public function getSetupCardButtonText()
     {
-        return _("TAN-Liste hinzufügen");
+        return _("Add TAN list");
     }
 
     public function getSetupCardPriority()

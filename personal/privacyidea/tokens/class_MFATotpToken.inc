@@ -251,19 +251,19 @@ class MFATotpToken implements MFAToken
 
     public function getSetupCardTitle()
     {
-        return _("Authentifizierungsapp");
+        return _("Authentication app (TOTP)");
     }
 
     public function getSetupCardDescription()
     {
-        return _("Eine Authentifizierungsapp auf Ihrem Smartphone generiert " .
-            "zeitbasierte Codes (TOTP), die bei jeder Anmeldung abgelesen " .
-            "und eingegeben werden müssen.");
+        return _("An authentication app on your smartphone generates " .
+            "time-based one-time passwords (TOTP) which must be entered " .
+            "on each login.");
     }
 
     public function getSetupCardButtonText()
     {
-        return _("Authentifizierungsapp hinzufügen");
+        return _("Add authentication app");
     }
 
     public function getSetupCardPriority()
