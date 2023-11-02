@@ -19,7 +19,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *}
 
-<h1>{t}Set up authentication app (TOTP){/t}</h1>
+<h2>{t}Set up authentication app (TOTP){/t}</h2>
 
 <div class="section">
     <p>{t escape=no 1=$tokenDescription}Please set up your authentication app <b>%1</b> as follows:{/t}</p>
