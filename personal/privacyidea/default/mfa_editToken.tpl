@@ -91,11 +91,11 @@
  * Which means we return to the mfa intro page. *}
     <button class="btn"
         onclick="document.getElementById('add_token').remove();"
-        name="setup_cancel"
+        name="edit_cancel"
         type="submit">{t}Cancel{/t}
     </button>
     <button class="btn primary"
-        name="setup_continue"
+        name="edit_continue"
         type="submit">{t}Save{/t}
     </button>
 </div>
