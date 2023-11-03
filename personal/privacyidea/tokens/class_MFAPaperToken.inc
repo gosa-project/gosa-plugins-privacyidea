@@ -22,7 +22,7 @@
 
 require_once(dirname(__FILE__) . "/interfaces/interface_MFAToken.inc");
 
-class MFAPaperToken implements MFAToken
+class MFAPaperToken extends MFATokenHelper implements MFAToken
 {
     private string $renderResult = "";
     private string $TEMPLATE_PREFIX = "mfatype_paper/";
@@ -51,47 +51,6 @@ class MFAPaperToken implements MFAToken
         assert(get_class($this->config) == "config");
         assert(get_class($this->ldap)   == "LDAP" ||
                get_class($this->ldap)   == "ldapMultiplexer");
-    }
-
-    public function renderSetup()
-    {
-        $currentPhase = $this->getCurrentPhaseNumber();
-        $nextPhaseNumber = $this->getNextPhaseNumber();
-
-        $success = true;
-        switch ($nextPhaseNumber) {
-            case 1:
-                # PHASE 1 #
-                $success = $success && $this->preparePhase1();
-                break;
-
-            case 2:
-                # PHASE 2 #
-                $success = $success && $this->preparePhase2();
-                break;
-
-            case 3:
-                # PHASE 3 #
-                $success = $success && $this->preparePhase3();
-                break;
-
-            default:
-                # PHASE 0 #
-                $success = $success && $this->preparePhase0();
-                break;
-        }
-
-        if (!$success) {
-            // Oh, something did go wrong. Do not show next phase.
-            $nextPhaseNumber = $currentPhase;
-        }
-
-        $templateFileName = "phase" . str_pad($nextPhaseNumber, 2, "0", STR_PAD_LEFT) . ".tpl";
-        $this->renderResult = $this->smarty->fetch(
-            get_template_path($this->TEMPLATE_PREFIX . $templateFileName, true, dirname(__FILE__) . "/..")
-        );
-
-        return true;
     }
 
     /** @return bool */

@@ -22,15 +22,10 @@
 
 require_once(dirname(__FILE__) . "/interfaces/interface_MFAToken.inc");
 
-class MFAUnknownToken implements MFAToken
+class MFAUnknownToken extends MFATokenHelper implements MFAToken
 {
     public function __construct(&$mfaAccount)
     {
-    }
-
-    public function renderSetup()
-    {
-        die("Functions of MFAUnknownToken should not be called!!!");
     }
 
     public function getRenderSetupResult()
