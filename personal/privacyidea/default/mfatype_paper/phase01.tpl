@@ -25,10 +25,26 @@
     <p>{t escape=no 1=$tokenDescription}Please print the TAN list <b>%1</b>, one TAN from the list will be used in the next step to verify the list.{/t}</p>
 </div>
 
-<div class="section">
-    <p><b>{t}Keep this list secret.{/t}</b></p>
-    <p>{t}Please print it and then store it in a secure location.{/t}</p>
-    <button class="btn" type="button" id="mfaPaperPrint">{t}Print TAN list{/t}</button>
+<div class="row section">
+    <div class="col m12 l4">
+        <p><b>{t}Keep this list secret.{/t}</b></p>
+        <p>{t}Please print it and then store it in a secure location.{/t}</p>
+        <button class="btn" type="button" id="mfaPaperPrint">{t}Print TAN list{/t}</button>
+    </div>
+    <div class="col m12 l8" style="background-color: #dfdfdf; text-align:center;">
+        <video class="responsive-video" autoplay loop muted>
+            <source src="plugins/privacyidea/videos/tan.mp4" type="video/mp4">
+        </video>
+        <p xmlns:cc="http://creativecommons.org/ns#" style="text-align: right">&copy; 2023
+            <span property="cc:attributionName">Thomas Häpp, Universität Bonn</span>,
+            licensed under <a
+            href="http://creativecommons.org/licenses/by-sa/4.0/?ref=chooser-v1"
+            target="_blank" rel="license noopener noreferrer"
+            style="display:inline-block;">CC BY-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+            src="plugins/privacyidea/images/cc.svg"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+            src="plugins/privacyidea/images/by.svg"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+            src="plugins/privacyidea/images/sa.svg"></a></p>
+    </div>
 </div>
 <template id="mfaTanListHeadTemplate">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

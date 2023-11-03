@@ -21,22 +21,40 @@
 
 <h2>{t}Confirm security key setup{/t}</h2>
 
-<div class="section">
-    <p>{t escape=no 1=$tokenDescription}Please confirm the setup of the security key <b>%1</b>.{/t}</p>
-    <p>{t}Your browser or operating system will guide you through the setup of the security key.{/t}</p>
+<div class="section row">
+    <div class="col m12 l6">
+        <div class="section">
+            <p>{t escape=no 1=$tokenDescription}Please confirm the setup of the security key <b>%1</b>.{/t}</p>
+            <p>{t}Your browser or operating system will guide you through the setup of the security key.{/t}</p>
 
-    <ol>
-        <li>{t}Connect your security key to your computer, e.g. plug it into a USB port or place it near the computer&apos;s NFC reader.{/t}</li>
-        <li>{t}Initiate the setup by pressing the button below.{/t}</li>
-        <li>{t}Confirm the setup using a device-specific mechanism, e.g. by touching a sensor on the key.{/t}</li>
-        <li>{t}The browser will proceed to the next page if the setup has been sucessful.{/t}</li>
-    </ol>
-    <button class="btn primary"
-        name="mfa_webauthn_confirm"
-        type="submit">{t}Start setup{/t}</button>
+            <ol>
+                <li>{t}Connect your security key to your computer, e.g. plug it into a USB port or place it near the computer&apos;s NFC reader.{/t}</li>
+                <li>{t}Initiate the setup by pressing the button below.{/t}</li>
+                <li>{t}Confirm the setup using a device-specific mechanism, e.g. by touching a sensor on the key.{/t}</li>
+                <li>{t}The browser will proceed to the next page if the setup has been sucessful.{/t}</li>
+            </ol>
+            <button class="btn primary"
+                name="mfa_webauthn_confirm"
+                type="submit">{t}Start setup{/t}</button>
+        </div>
+
+        <div class="card-paneli red red-lighten4 text-red text-darken-4" id="mfaWebAuthnError"></div>
+    </div>
+    <div class="col m12 l6" style="background-color: #dfdfdf; text-align:center;">
+        <video class="responsive-video" autoplay loop muted>
+            <source src="plugins/privacyidea/videos/fido.mp4" type="video/mp4">
+        </video>
+        <p xmlns:cc="http://creativecommons.org/ns#" style="text-align: right">&copy; 2023
+            <span property="cc:attributionName">Thomas Häpp, Universität Bonn</span>,
+            licensed under <a
+            href="http://creativecommons.org/licenses/by-sa/4.0/?ref=chooser-v1"
+            target="_blank" rel="license noopener noreferrer"
+            style="display:inline-block;">CC BY-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+            src="plugins/privacyidea/images/cc.svg"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+            src="plugins/privacyidea/images/by.svg"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+            src="plugins/privacyidea/images/sa.svg"></a></p>
+    </div>
 </div>
-
-<div class="card-paneli red red-lighten4 text-red text-darken-4" id="mfaWebAuthnError"></div>
 
 <div class="section">
 {* These hidden inputs should always get send via _POST, so that mfaAccount knows which type of token setup we want. *}
