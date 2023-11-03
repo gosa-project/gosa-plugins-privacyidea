@@ -24,17 +24,16 @@ require_once(dirname(__FILE__) . "/interfaces/interface_MFAToken.inc");
 
 class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
 {
-    private string $renderResult = "";
-    private string $TEMPLATE_PREFIX = "mfatype_webauthn/";
     private PrivacyIdeaUtils $utils;
-    private Smarty $smarty;
     private config $config;
     private mfaAccount $mfaAccount;
     /** @var ldapMultiplexer|LDAP */
     private $ldap;
 
-    /** @var int Indicates how many phases the token setup has. */
-    public const MAX_SETUP_PHASES = 1;
+    public $MAX_SETUP_PHASES = 1;
+    public $TEMPLATE_PREFIX = "mfatype_webauthn/";
+
+    /* VARIABLES WHICH WILL BE NEEDED ACROSS PHASES */
 
     public function __construct(&$mfaAccount)
     {
@@ -54,42 +53,15 @@ class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
     }
 
     /** @return bool */
-    private function preparePhase0()
+    protected function evaluatePhase0()
     {
-        // TODO: Prepare for phase 0.
         return true;
     }
 
-    public function getRenderSetupResult()
+    /** @return bool */
+    protected function preparePhase0()
     {
-        return $this->renderResult;
-    }
-
-    /** @return int Sanitized and cleaned $_POST['current_phase']. */
-    public function getCurrentPhaseNumber()
-    {
-        if (!isset($_POST["current_phase"])) {
-            return 0;
-        }
-
-        if (!is_numeric($_POST["current_phase"])) {
-            return 0;
-        }
-
-        $currentPhase = $_POST["current_phase"];
-
-        if ($currentPhase < 0 || $currentPhase >= self::MAX_SETUP_PHASES - 1) {
-            return 0;
-        }
-
-        return $currentPhase;
-    }
-
-    /** @return int Next phase. */
-    public function getNextPhaseNumber()
-    {
-        $currentPhase = $this->getCurrentPhaseNumber();
-        return $currentPhase + 1;
+        return true;
     }
 
     public function getSetupCardIcon()

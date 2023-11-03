@@ -24,17 +24,22 @@ require_once(dirname(__FILE__) . "/interfaces/interface_MFAToken.inc");
 
 class MFAPaperToken extends MFATokenHelper implements MFAToken
 {
-    private string $renderResult = "";
-    private string $TEMPLATE_PREFIX = "mfatype_paper/";
     private PrivacyIdeaUtils $utils;
-    private Smarty $smarty;
     private config $config;
     private mfaAccount $mfaAccount;
     /** @var ldapMultiplexer|LDAP */
     private $ldap;
 
-    /** @var int Indicates how many phases the token setup has. */
-    public const MAX_SETUP_PHASES = 4;
+    public $MAX_SETUP_PHASES = 4;
+    public $TEMPLATE_PREFIX = "mfatype_paper/";
+
+    /* VARIABLES WHICH WILL BE NEEDED ACROSS PHASES */
+    /** @var string */
+    private $tokenDescription;
+    /** @var string */
+    private $tokenSerial;
+    /** @var string */
+    private $mfaVerificationTan;
 
     public function __construct(&$mfaAccount)
     {
@@ -54,37 +59,88 @@ class MFAPaperToken extends MFATokenHelper implements MFAToken
     }
 
     /** @return bool */
-    private function preparePhase0()
+    protected function evaluatePhase0()
+    {
+        $this->tokenDescription = "";
+        if (isset($_POST["tokenDescription"])) {
+            $this->tokenDescription = $_POST["tokenDescription"];
+            $this->tokenDescription = trim($this->tokenDescription);
+        } else {
+            // Empty descriptions are okay.
+        }
+
+        return true;
+    }
+
+    /** @return bool */
+    protected function evaluatePhase1()
+    {
+        $this->tokenSerial = "";
+
+        $tokenSerial = $this->utils->getPOSTTokenSerial();
+        if (!isset($tokenSerial) || empty($tokenSerial)) {
+            msg_dialog::display(
+                _("Internal error"),
+                _("Token serial wasn't given or was given malformed.") . "<br>" .
+                $this->utils->pleaseTryAgainMsg()
+            );
+
+            return false;
+        }
+
+        $this->tokenSerial = $tokenSerial;
+        return true;
+    }
+
+    /** @return bool */
+    protected function evaluatePhase2()
+    {
+        $this->mfaVerificationTan = "";
+
+        $mfaVerificationTan = $_POST["mfaVerificationTan"];
+        if (isset($mfaVerificationTan) && !empty($mfaVerificationTan)) {
+            // Remove everything which isn't a digit.
+            $mfaVerificationTan = preg_replace('~\D~', '', $mfaVerificationTan);
+
+            if (!is_numeric($mfaVerificationTan)) {
+                // Okay, $mfaTOTPCode is definitely borked.
+                msg_dialog::display(
+                    _("Internal error"),
+                    _("Given validation code was malformed. We couldn't verify your token.") . "<br>" .
+                    $this->utils->pleaseTryAgainMsg()
+                );
+
+                return false;
+            }
+        }
+
+        $this->mfaVerificationTan = $mfaVerificationTan;
+
+        return true;
+    }
+
+    /** @return bool */
+    protected function evaluatePhase3()
     {
         return true;
     }
 
     /** @return bool */
-    private function preparePhase1()
+    protected function preparePhase0()
     {
-        $tokenDescription = "";
-        if (isset($_POST["tokenDescription"])) {
-            $tokenDescription = $_POST["tokenDescription"];
-            $tokenDescription = trim($tokenDescription);
-        }
+        return true;
+    }
 
+    /** @return bool */
+    protected function preparePhase1()
+    {
         $tokenInfo = $this->utils->enrollPaperStep1(
             $this->mfaAccount->getUid(),
             mfaAccount::PI_USER_REALM,
-            $tokenDescription
+            $this->tokenDescription
         );
 
         if (isset($tokenInfo) && !empty($tokenInfo)) {
-            // TODO: Which should we use as default?
-            $type = "googleurl"; // This works for me.
-            // $type = "oathurl";
-            // $type = "otpkey";
-
-            // TODO: Replace 'issuer=privacyIDEA' with something else. :)
-            // This will be directly visible in the TOTP app.
-
-            // $qrImage      = $tokenInfo[$type]["img"];
-            // $qrImageValue = $tokenInfo[$type]["value"];
             $tokenSerial  = $tokenInfo["serial"];
             $tokenOTPs    = $tokenInfo["otps"];
             $tokenConfTAN = $tokenInfo["otps"][0];
@@ -95,100 +151,42 @@ class MFAPaperToken extends MFATokenHelper implements MFAToken
             $this->smarty->assign("mfaTanJSON", addslashes(json_encode($tokenOTPs)));
             $this->smarty->assign("mfaConfirmationTan", $tokenConfTAN);
             $this->smarty->assign("tokenSerial", $tokenSerial);
-            $this->smarty->assign("tokenDescription", $tokenDescription);
+            $this->smarty->assign("tokenDescription", $this->tokenDescription);
         } else {
             msg_dialog::display(
                 _("Internal error"),
                 _("Couldn't enroll token!") . "<br>" .
                 $this->utils->pleaseTryAgainMsg()
             );
-        }
 
-        return true;
-    }
-
-    /** @return bool */
-    private function preparePhase2()
-    {
-        $tokenSerial = "";
-        if (isset($_POST["tokenSerial"])) {
-            // TODO: Make sure its a real token (sanitize it).
-            $tokenSerial = $_POST["tokenSerial"];
-            $this->smarty->assign("tokenSerial", $tokenSerial);
-        }
-
-        return true;
-    }
-
-    /** @return bool */
-    private function preparePhase3()
-    {
-        $mfaVerificationTan = "";
-        if (isset($_POST["mfaVerificationTan"])) {
-            $mfaVerificationTan = $_POST["mfaVerificationTan"];
-            // Remove everything which isn't a digit.
-            $mfaVerificationTan = preg_replace('~\D~', '', $mfaVerificationTan);
-
-            if (!is_numeric($mfaVerificationTan)) {
-                // Okay, $mfaTOTPCode is definitely borked.
-                msg_dialog::display(
-                    _("Internal error"),
-                    _("Given TOTP code is malformed and could not be read.") . "<br>" .
-                    $this->utils->pleaseTryAgainMsg()
-                );
-
-                return;
-            }
-        }
-
-        $tokenSerial = "";
-        if (isset($_POST["tokenSerial"])) {
-            // TODO: Make sure its a real token (sanitize it).
-            $tokenSerial = $_POST["tokenSerial"];
-        } else {
-            return false;
-        }
-
-        $resultArray = $this->utils->enrollPaperStep2($tokenSerial, $mfaVerificationTan);
-        if ($resultArray["result"]["status"]) {
-            return true;
-        } else {
             return false;
         }
 
         return true;
     }
 
-    public function getRenderSetupResult()
+    /** @return bool */
+    protected function preparePhase2()
     {
-        return $this->renderResult;
+        $this->smarty->assign("tokenSerial", $this->tokenSerial);
+        return true;
     }
 
-    /** @return int Sanitized and cleaned $_POST['current_phase']. */
-    public function getCurrentPhaseNumber()
+    /** @return bool */
+    protected function preparePhase3()
     {
-        if (!isset($_POST["current_phase"])) {
-            return 0;
+        $resultArray = $this->utils->enrollPaperStep2($this->tokenSerial, $this->mfaVerificationTan);
+        if (!$resultArray["result"]["status"]) {
+            msg_dialog::display(
+                _("Internal error"),
+                _("Failed to execute step 2 of token enrollment.") . "<br>" .
+                $this->utils->pleaseTryAgainMsg()
+            );
+
+            return false;
         }
 
-        if (!is_numeric($_POST["current_phase"])) {
-            return 0;
-        }
-
-        $currentPhase = $_POST["current_phase"];
-
-        if ($currentPhase < 0 || $currentPhase >= self::MAX_SETUP_PHASES - 1) {
-            return 0;
-        }
-
-        return $currentPhase;
-    }
-
-    /** @return int Next phase. */
-    public function getNextPhaseNumber()
-    {
-        $currentPhase = $this->getCurrentPhaseNumber();
-        return $currentPhase + 1;
+        return true;
     }
 
     public function getSetupCardIcon()

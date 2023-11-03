@@ -33,7 +33,7 @@ class MFAUnknownToken extends MFATokenHelper implements MFAToken
         die("Functions of MFAUnknownToken should not be called!!!");
     }
 
-    public function getNextPhaseNumber()
+    public function getPOSTPhaseNumber()
     {
         die("Functions of MFAUnknownToken should not be called!!!");
     }

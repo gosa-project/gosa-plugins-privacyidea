@@ -53,7 +53,8 @@ interface MFAToken
     public function getRenderSetupResult();
 
     /**
-     * @return int Calculates and returns phase number of next phase.
+     * @return int|bool Sanitized and cleaned $_POST['current_phase'].
+     *                  Returns false if $_POST["current_phase"] is invalid.
      */
-    public function getNextPhaseNumber();
+    public function getPOSTPhaseNumber();
 }
