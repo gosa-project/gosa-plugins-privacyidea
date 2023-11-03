@@ -265,6 +265,18 @@ class PrivacyIdeaUtils implements PILog
         return $tokens;
     }
 
+    /** @return string Token serial */
+    public function getPOSTTokenSerial()
+    {
+        $tokenSerial = null;
+        if (isset($_POST["tokenSerial"])) {
+            // TODO: Make sure its a real token (sanitize it).
+            $tokenSerial = $_POST["tokenSerial"];
+        }
+
+        return $tokenSerial;
+    }
+
     /**
      * @param string $user Username/UID of user to request a list of tokens for.
      * @param string $userRealm
