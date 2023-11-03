@@ -407,15 +407,15 @@ class mfaAccount extends plugin
 
         $this->smarty->assign("mfaRequired", empty($this->mfaRequired) ? false : true);
 
-        // TODO: Change this variable to false, if a valid token has been detected.
-        $this->smarty->assign("showWarningNoTokenRegistered", (!empty($this->mfaRequired) && true));
-
         $this->prepareSetupCards();
 
         $tokens = $this->utils->getTokensOfUser($this->getUid(), mfaAccount::PI_USER_REALM);
         $tokens = $this->utils->mapTokenTypes($tokens);
         // TODO: Sanity check in new function.
         $this->smarty->assign("tokens", $tokens);
+
+        $showWarningNoTokenRegistered = !empty($this->mfaRequired) && empty($tokens);
+        $this->smarty->assign("showWarningNoTokenRegistered", $showWarningNoTokenRegistered);
 
         // Show introduction page…
         return $this->smarty->fetch(get_template_path("mfa_intro.tpl", true, dirname(__FILE__)));
