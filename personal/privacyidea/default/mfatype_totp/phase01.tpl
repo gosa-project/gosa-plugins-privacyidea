@@ -20,30 +20,46 @@
  *}
 <h2>{t}Set up authentication app (TOTP){/t}</h2>
 
-<div class="section">
-    <p>{t escape=no 1=$tokenDescription}Please set up your authentication app <b>%1</b> as follows:{/t}</p>
-    <ol>
-        <li>{t}Open your authentication app.{/t}</li>
-        <li>{t}Find an option to add a new account (this is often a button with a plus or QR code symbol).{/t}</li>
-        <li>{t}Scan the shown QR code.{/t}</li>
-    </ol>
-</div>
-
-<div class="section">
-    <div class="row">
-        {* <div class="col s12 m8 l4 xl3" id="qrcode"> *}
-        <div class="col s12 m8 l4 xl3" id="qrcode">
-            <img style="display: block; object-fit: contain; width: 100%; image-rendering: pixelated;" src="{$qrImage}" alt="{$qrImageValue}" />
+<div class="section row">
+    <div class="col m12 l4">
+        <div class="section row">
+            <p>{t escape=no 1=$tokenDescription}Please set up your authentication app <b>%1</b> as follows:{/t}</p>
+            <ol>
+                <li>{t}Open your authentication app.{/t}</li>
+                <li>{t}Find an option to add a new account (this is often a button with a plus or QR code symbol).{/t}</li>
+                <li>{t}Scan the shown QR code.{/t}</li>
+            </ol>
+        </div>
+        <div class="section row">
+            <div class="col s12 m8 l4 xl3" id="qrcode">
+                <img style="display: block; object-fit: contain; width: 100%; image-rendering: pixelated;" src="{$qrImage}" alt="{$qrImageValue}" />
+            </div>
+        </div>
+        <div class="section">
+            <p>{t}Please ensure nobody has seen the QR code. If unsure, generate a new code.{/t}</p>
+            <button class="btn primary"
+                name="mfa_generate_totp_secret"
+                type="submit">{t}Generate new QR code{/t}
+            </button>
+            {* Make sure to provide needed variables again. *}
+            <input type="hidden" id="tokenDescription" name="tokenDescription" value="{$tokenDescription}">
+            <input type="hidden" id="tokenSerial" name="tokenSerial" value="{$tokenSerial}">
         </div>
     </div>
-    <p>{t}Please ensure nobody has seen the QR code. If unsure, generate a new code.{/t}</p>
-    <button class="btn primary"
-        name="mfa_generate_totp_secret"
-        type="submit">{t}Generate new QR code{/t}
-    </button>
-    {* Make sure to provide needed variables again. *}
-    <input type="hidden" id="tokenDescription" name="tokenDescription" value="{$tokenDescription}">
-    <input type="hidden" id="tokenSerial" name="tokenSerial" value="{$tokenSerial}">
+    <div class="col m12 l8" style="background-color: #dfdfdf; text-align:center;">
+        <video class="responsive-video" autoplay loop muted>
+            <source src="plugins/privacyidea/videos/totp.mp4" type="video/mp4">
+        </video>
+        <p xmlns:cc="http://creativecommons.org/ns#" style="text-align: right">&copy; 2023
+            <span property="cc:attributionName">Thomas Häpp, Universität Bonn</span>,
+            licensed under <a
+            href="http://creativecommons.org/licenses/by-sa/4.0/?ref=chooser-v1"
+            target="_blank" rel="license noopener noreferrer"
+            style="display:inline-block;">CC BY-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+            src="plugins/privacyidea/images/cc.svg"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+            src="plugins/privacyidea/images/by.svg"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+            src="plugins/privacyidea/images/sa.svg"></a></p>
+    </div>
 </div>
 
 <div class="section">
