@@ -44,7 +44,7 @@
 
 {* Remove 'add_token' from POST, so that mfaAccount doesn't think we are in a token setup anymore.
  * Which means we return to the mfa intro page. *}
-    <button class="btn"
+    <button class="btn" formnovalidate
         onclick="document.getElementById('add_token').remove();"
         name="setup_cancel"
         type="submit">{t}Cancel{/t}
