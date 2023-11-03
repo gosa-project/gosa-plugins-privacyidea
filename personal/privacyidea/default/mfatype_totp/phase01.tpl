@@ -18,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *}
-
 <h2>{t}Set up authentication app (TOTP){/t}</h2>
 
 <div class="section">
@@ -32,8 +31,9 @@
 
 <div class="section">
     <div class="row">
+        {* <div class="col s12 m8 l4 xl3" id="qrcode"> *}
         <div class="col s12 m8 l4 xl3" id="qrcode">
-            <img style="max-height:200px; width:auto;" src="{$qrImage}" alt="{$qrImageValue}" />
+            <img style="display: block; object-fit: contain; width: 100%; image-rendering: pixelated;" src="{$qrImage}" alt="{$qrImageValue}" />
         </div>
     </div>
     <p>{t}Please ensure nobody has seen the QR code. If unsure, generate a new code.{/t}</p>
