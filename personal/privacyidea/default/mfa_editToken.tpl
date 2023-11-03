@@ -71,6 +71,8 @@
     </div>
 </div>
 
+<input type="hidden" id="tokenSerial" name="tokenSerial" value="{$token.serial}">
+
 <div class="row">
 {if $editEnable}
     <input type="hidden" id="editEnable" name="editEnable" value="yes">
@@ -78,17 +80,15 @@
      * Which means we return to the mfa intro page. *}
 
     <button class="btn" formnovalidate
-        onclick="document.getElementById('add_token').remove();"
-        name="edit_cancel"
         type="submit">{t}Cancel{/t}
     </button>
     <button class="btn primary"
-        name="edit_continue"
+        name="mfaTokenAction" value="mfaTokenSave"
         type="submit">{t}Save{/t}
     </button>
 {else}
     <button class="btn primary"
-        name="edit_continue"
+        name="mfaTokenAction" value="mfaTokenEdit"
         type="submit">{t}Edit{/t}
     </button>
 {/if}

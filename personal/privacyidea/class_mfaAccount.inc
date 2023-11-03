@@ -157,7 +157,7 @@ class mfaAccount extends plugin
     }
 
     /**
-     * Executes plugin logic, renders template, etc...
+     * Executes plugin logic, control flow, renders template, etc...
      * @return string Complete template, ideally loaded by Smarty to display to the user.
      */
     public function execute()
@@ -189,14 +189,16 @@ class mfaAccount extends plugin
         $this->updateAttrsAllowedTokenTypes();
 
         /*
-         * MFA Setup logic
+         * MFA control flow
          */
         $setup = null;
-        if (in_array_ics('add_token', array_keys($_POST))) {
+        $editToken = null;
+        $array_keys_post = array_keys($_POST);
+        if (in_array_ics('add_token', $array_keys_post)) {
             // Okay, user clicked on a button, which should add a token.
             // Starting MFA setup for this token type now.
             $token_type = "";
-            if (in_array_ics('token_type', array_keys($_POST))) {
+            if (in_array_ics('token_type', $array_keys_post)) {
                 $token_type = get_post("token_type");
             }
 
@@ -215,6 +217,20 @@ class mfaAccount extends plugin
             }
 
             $setup = $this->mfaTokens[$token_type];
+        } elseif (in_array_ics('mfaTokenAction', $array_keys_post)) {
+            $tokenSerial = $this->utils->getPOSTTokenSerial();
+            if (!isset($tokenSerial)) {
+                // Oops, user requested an action but no tokenSerial was given?
+                return $this->getMFAIntroTemplate();
+            }
+
+            $mfaTokenAction = $_POST["mfaTokenAction"];
+            if ($mfaTokenAction != "mfaTokenView" && $mfaTokenAction != "mfaTokenEdit") {
+                $this->executeTokenAction($mfaTokenAction, $tokenSerial);
+                return $this->getMFAIntroTemplate();
+            }
+
+            return $this->getTokenEditTemplate($mfaTokenAction);
         }
 
         // Either return template from a setup class or the MFA intro.
@@ -295,6 +311,88 @@ class mfaAccount extends plugin
             $this->allowedTokenTypes = array_map('strtolower', $this->allowedTokenTypes);
             $this->allowedTokenTypes = array_map('trim', $this->allowedTokenTypes);
         }
+    }
+
+    /**
+     * Execute an action $mfaTokenAction using token $tokenSerial.
+     * @param string $tokenSerial
+     * @param string $mfaTokenAction An action can be one of the following:
+     * - mfaTokenSave
+     * - mfaTokenResetCounter
+     * - mfaTokenDeactivate
+     * - mfaTokenRecall
+     * - mfaTokenRemove
+     */
+    private function executeTokenAction($mfaTokenAction, $tokenSerial)
+    {
+        assert(is_string($mfaTokenAction));
+        assert(is_string($tokenSerial));
+
+        switch ($mfaTokenAction) {
+            case 'mfaTokenSave':
+                $tokenDescription = "";
+                if (isset($_POST["tokenDescription"]) && !empty($_POST["tokenDescription"])) {
+                    $tokenDescription = $_POST["tokenDescription"];
+                    $tokenDescription = trim($tokenDescription);
+                } else {
+                    // Empty descriptions are okay.
+                }
+
+                $params = array();
+                $params["serial"] = $tokenSerial;
+                $params["description"] = $tokenDescription;
+
+                $this->utils->piSendRequest($params, array(), "POST", "/token/description");
+
+                break;
+
+            case 'mfaTokenResetCounter':
+                break;
+
+            case 'mfaTokenDeactivate':
+                break;
+
+            case 'mfaTokenRecall':
+                break;
+
+            case 'mfaTokenRemove':
+                break;
+
+            default:
+                // mfaTokenAction is malformed or not implemented yet.
+                msg_dialog::display(
+                    _("Internal error"),
+                    _("Selected token action is not implemented yet.") . "<br>" .
+                    $this->utils->pleaseTryAgainMsg()
+                );
+                break;
+        }
+    }
+
+    /**
+     * Prepares Smarty to show the mfa token edit page, renders and returns it.
+     * @return string Always returnes the token edit page for $token.
+     */
+    private function getTokenEditTemplate($mfaTokenAction)
+    {
+        $tokenSerial = $this->utils->getPOSTTokenSerial();
+        $tokens = $this->utils->getTokensOfUser($this->getUid(), mfaAccount::PI_USER_REALM, $tokenSerial);
+        $token = $tokens[0]; // We only want to execute an action on ONE token.
+
+        $editEnable = false;
+        $array_keys_post = array_keys($_POST);
+        if ($mfaTokenAction == 'mfaTokenEdit') {
+            $editEnable = true;
+        } elseif ($mfaTokenAction == 'mfaTokenView') {
+            // Nothing special to prepare...
+        }
+
+        $this->smarty->assign("token", $token);
+        $this->smarty->assign("tokenSerial", $tokenSerial);
+        $this->smarty->assign("editEnable", $editEnable);
+
+        // Show introduction page…
+        return $this->smarty->fetch(get_template_path("mfa_editToken.tpl", true, dirname(__FILE__)));
     }
 
     /**

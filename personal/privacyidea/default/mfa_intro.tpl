@@ -154,41 +154,46 @@
             </thead>
             <tbody>
                 {foreach from=$tokens key=$key item=$token}
+                    <form method="post">
+                    {* Indicate mfaAccount that we want to execute an action on a token *}
+                    <input type="hidden" id="tokenSerial" name="tokenSerial" value="{$token.serial}">
+                    <input type="hidden" name="php_c_check" value="1">
                     <tr>
                         <td><input type="checkbox"></td>
-                        <td><button class="txtonlybtn" type="submit" name="mfaTokenEdit">{$token.serial}</button></td>
+                        <td><button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenView">{$token.serial}</button></td>
                         <td>
                             {* TODO: Refactor getSetupCard{Icon,Title}, also mfa{tokenType}_{icon,title}.
                              * There are only available if in allowedTokenType or overriden by ACL.
                              * Make them a const in the MFA{Icon, Title}Token class. *}
                             {* TODO: Center text vertically *}
-                             <button class="txtonlybtn" type="submit" name="mfaTokenEdit">
+                             <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenView">
                                 <span class="material-icons">{$mfa_{$token.tokentype}_icon}</span>
                                 {$mfa_{$token.tokentype}_title}
                             </button>
                         </td>
-                        <td><button class="txtonlybtn" type="submit" name="mfaTokenEdit">{$token.description}</button></td>
+                        <td><button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenView">{$token.description}</button></td>
                         <td>{$token.info.last_auth}</td>
                         <td>{$token.active}</td>
                         <td>{$token.failcount} / {$token.maxfail}</td>
                         <td>
-                            <button class="txtonlybtn" type="submit" name="mfaTokenEdit" title="{t}Edit{/t}">
+                            <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenEdit" title="{t}Edit{/t}">
                                 <span class="material-icons">edit</span>
                             </button>
-                            <button class="txtonlybtn" type="submit" name="mfaTokenResetCounter" title="{t}Reset error counter{/t}">
+                            <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenResetCounter" title="{t}Reset error counter{/t}">
                                 <span class="material-icons">restart_alt</span>
                             </button>
-                            <button class="txtonlybtn" type="submit" name="mfaTokenDeactivate" title="{t}Deactivate{/t}">
+                            <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenDeactivate" title="{t}Deactivate{/t}">
                                 <span class="material-icons">lock</span>
                             </button>
-                            <button class="txtonlybtn" type="submit" name="mfaTokenRecall" title="{t}Recall{/t}">
+                            <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenRecall" title="{t}Recall{/t}">
                                 <span class="material-icons">cancel</span>
                             </button>
-                            <button class="txtonlybtn" type="submit" name="mfaTokenRemove" title="{t}Remove{/t}">
+                            <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenRemove" title="{t}Remove{/t}">
                                 <span class="material-icons">delete_forever</span>
                             </button>
                         </td>
                     </tr>
+                    </form>
                 {/foreach}
             </tbody>
         </table>
