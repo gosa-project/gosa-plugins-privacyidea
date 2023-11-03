@@ -356,6 +356,7 @@ class mfaAccount extends plugin
                 break;
 
             case 'mfaTokenRemove':
+                $this->utils->piSendRequest(array(), array(), "DELETE", "/token/" . $tokenSerial);
                 break;
 
             default:
