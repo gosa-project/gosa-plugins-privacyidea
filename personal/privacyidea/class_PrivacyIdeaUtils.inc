@@ -280,9 +280,10 @@ class PrivacyIdeaUtils implements PILog
     /**
      * @param string $user Username/UID of user to request a list of tokens for.
      * @param string $userRealm
+     * @param string $tokenSerial If specified, only ONE token will be returned (if available).
      * @return array Array of PI tokens (can be empty).
      */
-    public function getTokensOfUser($user, $userRealm)
+    public function getTokensOfUser($user, $userRealm, $tokenSerial = null)
     {
         if (!$this->authenticate()) {
             return array();
@@ -293,6 +294,11 @@ class PrivacyIdeaUtils implements PILog
             "realm"  => $userRealm,
             "sortby" => "count", // TODO: Sort somehow by last use.
         );
+
+        if (isset($tokenSerial) && !empty($tokenSerial)) {
+            $tokenSerial = trim($tokenSerial);
+            $params["serial"] = $tokenSerial;
+        }
 
         // $endpoint must be written like this or else we get a HTTP redirect.
         $requestAnswer = $this->piSendRequest($params, array(), "GET", $endpoint = "/token/");
