@@ -44,13 +44,9 @@
 <div class="row">
     <div class="col">
         <label>
-            {render acl=$wishMfaRequired_ACL}
-                <input name="wishMfaRequired" type="checkbox" {if $wishMfaRequired == "checked"}checked{/if}/>
-            {/render}
+            <input name="wishMfaRequired" type="checkbox" {if $mfaRequiredByUser == "checked"}checked{/if}/>
             <span>
-                {render acl=$wishMfaRequired_ACL}
-                    {t}Additional factors should always be asked voluntarily.{/t}
-                {/render}
+                {t}Additional factors should always be asked voluntarily.{/t}
             </span>
         </label>
     </div>
@@ -81,7 +77,6 @@
 
     <div class="row">
         {foreach $tokenTypes as $tokenType}
-            {render acl=$overrideAllowToken_{$tokenType}_ACL}
             {* TODO: Calculate based on token type count? *}
             <div class="col s12 m12 l6 xl3">
                 <div class="card large">
@@ -115,7 +110,6 @@
                     </div>
                 </div>
             </div>
-            {/render}
         {/foreach}
     </div>
 {else}

@@ -184,7 +184,7 @@ class mfaAccount extends plugin
         $providedACLs = $this->plInfo()['plProvidedAcls'];
         foreach ($providedACLs as $name => $transl) {
             $aclVal  = $this->getacl($name);
-            $aclName = "$name" . "_ACL";
+            $aclName = "$name" . "ACL";
             $this->smarty->assign($aclName, $aclVal);
         }
 
@@ -411,7 +411,7 @@ class mfaAccount extends plugin
     private function getMFAIntroTemplate()
     {
         $this->smarty->assign("mfaRequiredByRule", in_array("by_rule", $this->mfaRequired) ? "checked" : "");
-        $this->smarty->assign("wishMfaRequired", in_array("by_user", $this->mfaRequired) ? "checked" : "");
+        $this->smarty->assign("mfaRequiredByUser", in_array("by_user", $this->mfaRequired) ? "checked" : "");
 
         $this->smarty->assign("mfaRequired", empty($this->mfaRequired) ? false : true);
 
@@ -590,16 +590,8 @@ class mfaAccount extends plugin
             "plProperties"   => $properties,
             "plRequirements" => array ('onFailureDisablePlugin' => array (get_class())),
             "plProvidedAcls" => array (
-                "overrideAllowToken_webauthn"     => _("Override token type: WebAuthn. This allows the user to add a " .
-                                                       "token with this type."),
-                "overrideAllowToken_totp"         => _("Override token type: TOTP. This allows the user to add a " .
-                                                       "token with this type."),
-                "overrideAllowToken_paper"        => _("Override token type: Paper. This allows the user to add a " .
-                                                       "token with this type."),
-                "overrideAllowToken_registration" => _("Override token type: Registration. This allows the user to " .
-                                                       "add a token with this type."),
-                "wishMfaRequired" => _("Let the user decide if an additional factor should " .
-                                       "voluntarily always be required."),
+                "allowedTokenTypes" => _("MFA token types"),
+                "mfaRequired"       => _("Require MFA"),
             ),
             // TODO: Outsource ACLs overrideAllowToken_* to MFAToken classes!!
         ));
