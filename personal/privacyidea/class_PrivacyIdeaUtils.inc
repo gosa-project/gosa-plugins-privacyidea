@@ -443,6 +443,20 @@ class PrivacyIdeaUtils implements PILog
         return $this->getConfigStrValueInternal($key, true);
     }
 
+    /**
+     * @param string $key
+     * @return int Value from GOsa's config system.
+     */
+    public function getConfigIntValue($key)
+    {
+        $strValue = $this->getConfigStrValueInternal($key, true);
+
+        // Remove everything which isn't a digit (not even points or commas).
+        $strValue = preg_replace('~\D~', '', $strValue);
+
+        return intval($strValue);
+    }
+
     private function getConfigStrValueInternal($key, $debug_to_jsconsole = true)
     {
         assert(is_string($key));
