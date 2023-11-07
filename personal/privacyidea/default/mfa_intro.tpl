@@ -173,7 +173,7 @@
                         </td>
                         <td><button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenView">{$token.description}</button></td>
                         <td>{$token.info.last_auth}</td>
-                        <td>{$token.active}</td>
+                        <td>{$token.status}</td>
                         <td>{$token.failcount} / {$token.maxfail}</td>
                         <td>
                             <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenEdit" title="{t}Edit{/t}">
@@ -183,10 +183,16 @@
                             <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenResetCounter" title="{t}Reset error counter{/t}">
                                 <span class="material-icons">restart_alt</span>
                             </button>
-                            <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenDeactivate" title="{t}Deactivate{/t}">
+                        {if $token.active}
+                            <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenDisable" title="{t}Deactivate{/t}">
                                 <span class="material-icons">lock</span>
                             </button>
-                            <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenRecall" title="{t}Recall{/t}">
+                        {else}
+                            <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenEnable" title="{t}Activate{/t}">
+                                <span class="material-icons">lock_open</span>
+                            </button>
+                        {/if}
+                            <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenRevoke" title="{t}Revoke{/t}">
                                 <span class="material-icons">cancel</span>
                             </button>
                     {/if}

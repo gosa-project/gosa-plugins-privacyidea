@@ -319,8 +319,9 @@ class mfaAccount extends plugin
      * @param string $mfaTokenAction An action can be one of the following:
      * - mfaTokenSave
      * - mfaTokenResetCounter
-     * - mfaTokenDeactivate
-     * - mfaTokenRecall
+     * - mfaTokenDisable
+     * - mfaTokenEnable
+     * - mfaTokenRevoke
      * - mfaTokenRemove
      */
     private function executeTokenAction($mfaTokenAction, $tokenSerial)
@@ -347,12 +348,19 @@ class mfaAccount extends plugin
                 break;
 
             case 'mfaTokenResetCounter':
+                $this->utils->piSendRequest(array(), array(), "POST", "/token/reset/" . $tokenSerial);
                 break;
 
-            case 'mfaTokenDeactivate':
+            case 'mfaTokenDisable':
+                $this->utils->piSendRequest(array(), array(), "POST", "/token/disable/" . $tokenSerial);
                 break;
 
-            case 'mfaTokenRecall':
+            case 'mfaTokenEnable':
+                $this->utils->piSendRequest(array(), array(), "POST", "/token/enable/" . $tokenSerial);
+                break;
+
+            case 'mfaTokenRevoke':
+                $this->utils->piSendRequest(array(), array(), "POST", "/token/revoke/" . $tokenSerial);
                 break;
 
             case 'mfaTokenRemove':
