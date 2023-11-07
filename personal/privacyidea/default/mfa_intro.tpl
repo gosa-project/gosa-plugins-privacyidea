@@ -17,19 +17,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *}
-<h2>Multifactor authentication requirements</h2>
+<h2>{t}Multifactor authentication requirements{/t}</h2>
 <div class="row">
     <p>
         {t}Multifactor authentication protects your account from unauthorized access.{/t}
         {t}The current configuration for this account is that the use of MFA is {/t}
         <b>
             {if $mfaRequired}
-                {t}necessary{/t}
+                {t}required{/t}
             {else}
-                {t}not necessary{/t}
+                {t}not required{/t}
             {/if}
         </b>.<br>
-        {t}This happens due to organization policy or when you choose to do so:{/t}
+        {t}This happens due to organizational policy or user choice:{/t}
     </p>
 </div>
 
@@ -37,7 +37,7 @@
     <div class="col">
         <label>
             <input type="checkbox" {if $mfaRequiredByRule == "checked"}checked{/if} disabled>
-            <span>{t}Additional factor necessary due to organisation requirements.{/t}</span>
+            <span>{t}Additional factors required by organizational policy.{/t}</span>
         </label>
     </div>
 </div>
@@ -46,7 +46,7 @@
         <label>
             <input name="wishMfaRequired" type="checkbox" {if $mfaRequiredByUser == "checked"}checked{/if}/>
             <span>
-                {t}Additional factors should always be asked voluntarily.{/t}
+                {t}Always require additional factors.{/t}
             </span>
         </label>
     </div>
@@ -61,7 +61,7 @@
 
 <div class="row mt-1">
     <div class="col">
-        <button class="btn-small primary" name="edit_apply" type="submit">{t}Save settings above{/t}</button>
+        <button class="btn-small primary" name="edit_apply" type="submit">{t}Save settings{/t}</button>
     </div>
 </div>
 
