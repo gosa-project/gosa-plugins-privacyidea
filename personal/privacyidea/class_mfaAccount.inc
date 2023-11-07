@@ -603,6 +603,19 @@ class mfaAccount extends plugin
      */
     public static function getProperties()
     {
-        return array();
+        $ret_arr = array(
+            array(
+                "name"        => "amountOfPaperTokenOTPs",
+                "type"        => "int",
+                "check"       => "gosaProperty::isInteger",
+                "group"       => "privacyidea",
+                "default"     => "100",
+                "migrate"     => "",
+                "mandatory"   => true,
+                "description" => _("Amount of OTPs which will be printed on a single TAN list."),
+            ),
+        );
+
+        return $ret_arr;
     }
 }
