@@ -145,8 +145,18 @@ class MFAPaperToken extends MFATokenHelper implements MFAToken
             $tokenOTPs    = $tokenInfo["otps"];
             $tokenConfTAN = $tokenInfo["otps"][0];
 
+            $amountOfPaperTokenOTPs = $this->utils->getConfigIntValue("amountOfPaperTokenOTPs");
+
+            if ($amountOfPaperTokenOTPs == 0) {
+                // This is most likely an error. (Just disable paper tokens / TAN lists?!)
+                // Assume healthy default value.
+                // TODO: Log error message here (to console).
+                $amountOfPaperTokenOTPs = 20;
+            }
+
             // Cut first item. (It is used as a confirmation TAN.)
-            $tokenOTPs = array_splice($tokenOTPs, 1, count($tokenOTPs));
+            // Also have exactly $amountOfPaperTokenOTPs in $tokenOTPs.
+            $tokenOTPs = array_splice($tokenOTPs, 1, $amountOfPaperTokenOTPs);
 
             $this->smarty->assign("mfaTanJSON", addslashes(json_encode($tokenOTPs)));
             $this->smarty->assign("mfaConfirmationTan", $tokenConfTAN);
