@@ -200,6 +200,7 @@ class MFATotpToken extends MFATokenHelper implements MFAToken
     protected function preparePhase2()
     {
         $this->smarty->assign("tokenSerial", $this->tokenSerial);
+        $this->smarty->assign("needsVerifying", $this->needsVerifying);
         return true;
     }
 
