@@ -40,6 +40,8 @@ class MFATotpToken extends MFATokenHelper implements MFAToken
     private $tokenSerial;
     /** @var string */
     private $mfaVerificationTan;
+    /** @var string Token serial of a token, which needs verifying (rollout_state = 'verify'). */
+    private $needsVerifying;
 
     public function __construct(&$mfaAccount)
     {
@@ -104,6 +106,7 @@ class MFATotpToken extends MFATokenHelper implements MFAToken
         }
 
         $this->tokenSerial = $tokenSerial;
+
         return true;
     }
 
@@ -169,6 +172,10 @@ class MFATotpToken extends MFATokenHelper implements MFAToken
             return false;
         }
 
+        $this->needsVerifying = "";
+        if ($token["detail"]["rollout_state"] == "verify") {
+            $this->needsVerifying = $token["detail"]["serial"];
+        }
 
         $type = "googleurl"; // Use as default.
         // $type = "oathurl";
@@ -199,6 +206,10 @@ class MFATotpToken extends MFATokenHelper implements MFAToken
     /** @return bool */
     protected function preparePhase3()
     {
+        if ($this->needsVerifying != $this->tokenSerial) {
+            // Token doesn't actually need verifying.
+            return true;
+        }
 
         $resultArray = $this->utils->enrollTokenStep2($this->tokenSerial, $this->mfaVerificationTan, "totp");
         if (!$resultArray["result"]["status"]) {
