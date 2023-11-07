@@ -1,5 +1,6 @@
 # Installation
 
+## Install plugin in GOsa²
 After installation of the .deb package gosa-plugin-privacyidea, you
 need to add the following lines to /etc/gosa/gosa.conf (e.g. inside of
 the `<usertabs>` entry):
@@ -24,5 +25,11 @@ include /etc/ldap/schema/gosa/mfa.schema
 ```
 
 For the changes to take effect, restart your *http daemon* (e.g. the Apache web server)
-and your *LDAP server* (e.g. slapd). **Thank you** for using gosa-plugin-privacyidea.
+and your *LDAP server* (e.g. slapd).
+
+## PrivacyIDEA policies
+This plugin supports the 'verify_enrollment' policy. Please have a look at:
+https://privacyidea.readthedocs.io/en/latest/policies/enrollment.html?highlight=verify_enrollment#verify-enrollment
+
+**Thank you** for using gosa-plugin-privacyidea.
 You can contribute to this project at https://github.com/gosa-project/gosa-plugins-privacyidea/
