@@ -66,6 +66,7 @@
 </div>
 
 
+{render acl=$manageTokensACLorCurrentUser}
 <hr class="divider">
 <h2>{t}Add new multifactor token{/t}</h2>
 {if count($tokenTypes) > 0}
@@ -207,3 +208,4 @@
         <span>{t}Currently there are no multifactor methods associated.{/t}</span>
     {/if}
 </div>
+{/render}

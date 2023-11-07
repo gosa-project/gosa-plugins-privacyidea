@@ -160,6 +160,15 @@ class mfaAccount extends plugin
     }
 
     /**
+     * Check whether the currently logged in user is on his own usertab
+     */
+    private function isCurrentUserUsertab()
+    {
+        $parentName = is_object($this->parent) ? get_class($this->parent) : "";
+        return $parentName == "usertabs" && $this->ui->dn == $this->parent->dn;
+    }
+
+    /**
      * Executes plugin logic, control flow, renders template, etc...
      * @return string Complete template, ideally loaded by Smarty to display to the user.
      */
@@ -169,7 +178,7 @@ class mfaAccount extends plugin
         plugin::execute();
 
         // Always mark this as an account.
-        if (!$this->is_account && $this->acl_is_createable()) {
+        if (!$this->is_account && $this->acl_is_writeable()) {
             $this->is_account = true;
         }
 
@@ -198,6 +207,16 @@ class mfaAccount extends plugin
         $editToken = null;
         $array_keys_post = array_keys($_POST);
         if (in_array_ics('add_token', $array_keys_post)) {
+            if (!$this->isCurrentUserUsertab() && !$this->acl_is_writeable("manageTokens")) {
+                $setup = null;
+                msg_dialog::display(
+                    _("Insufficient permissions"),
+                    _("You are not allowed to add a new factor.") . "<br>" .
+                    $this->utils->pleaseTryAgainMsg()
+                );
+
+                return $this->getMFAIntroTemplate();
+            }
             // Okay, user clicked on a button, which should add a token.
             // Starting MFA setup for this token type now.
             $token_type = get_post("add_token");
@@ -218,6 +237,15 @@ class mfaAccount extends plugin
 
             $setup = $this->mfaTokens[$token_type];
         } elseif (in_array_ics('mfaTokenAction', $array_keys_post)) {
+            if (!$this->isCurrentUserUsertab() || !$this->acl_is_writable("manageTokens")) {
+                msg_dialog::display(
+                    _("Insufficient permissions"),
+                    _("You are not allowed to manage factors.") . "<br>" .
+                    $this->utils->pleaseTryAgainMsg()
+                );
+
+                return $this->getMFAIntroTemplate();
+            }
             $tokenSerial = $this->utils->getPOSTTokenSerial();
             if (!isset($tokenSerial)) {
                 // Oops, user requested an action but no tokenSerial was given?
@@ -415,6 +443,9 @@ class mfaAccount extends plugin
 
         $this->smarty->assign("mfaRequired", empty($this->mfaRequired) ? false : true);
 
+
+        $manageTokens = $this->isCurrentUserUsertab() ? ($this->read_only ? "r" : "rwcdm") : $this->getacl("manageTokens");
+        $this->smarty->assign("manageTokensACLorCurrentUser", $manageTokens);
         $tokens = $this->utils->getTokensOfUser($this->getUid(), mfaAccount::PI_USER_REALM);
         $this->smarty->assign("tokens", $tokens);
 
@@ -592,6 +623,7 @@ class mfaAccount extends plugin
             "plProvidedAcls" => array (
                 "allowedTokenTypes" => _("MFA token types"),
                 "mfaRequired"       => _("Require MFA"),
+                "manageTokens"      => _("Manage tokens of users"),
             ),
             // TODO: Outsource ACLs overrideAllowToken_* to MFAToken classes!!
         ));
