@@ -179,6 +179,7 @@
                             <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenEdit" title="{t}Edit{/t}">
                                 <span class="material-icons">edit</span>
                             </button>
+                    {if !$token.revoked}
                             <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenResetCounter" title="{t}Reset error counter{/t}">
                                 <span class="material-icons">restart_alt</span>
                             </button>
@@ -188,6 +189,7 @@
                             <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenRecall" title="{t}Recall{/t}">
                                 <span class="material-icons">cancel</span>
                             </button>
+                    {/if}
                             <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenRemove" title="{t}Remove{/t}">
                                 <span class="material-icons">delete_forever</span>
                             </button>
