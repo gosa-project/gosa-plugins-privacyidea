@@ -40,6 +40,8 @@ class MFAPaperToken extends MFATokenHelper implements MFAToken
     private $tokenSerial;
     /** @var string */
     private $mfaVerificationTan;
+    /** @var string Token serial of a token, which needs verifying (rollout_state = 'verify'). */
+    private $needsVerifying;
 
     public function __construct(&$mfaAccount)
     {
@@ -141,6 +143,11 @@ class MFAPaperToken extends MFATokenHelper implements MFAToken
             $this->tokenDescription
         );
 
+        $this->needsVerifying = "";
+        if ($token["detail"]["rollout_state"] == "verify") {
+            $this->needsVerifying = $token["detail"]["serial"];
+        }
+
         if (!isset($token) || empty($token)) {
             msg_dialog::display(
                 _("Internal error"),
@@ -186,6 +193,11 @@ class MFAPaperToken extends MFATokenHelper implements MFAToken
     /** @return bool */
     protected function preparePhase3()
     {
+        if ($this->needsVerifying != $this->tokenSerial) {
+            // Token doesn't actually need verifying.
+            return true;
+        }
+
         $resultArray = $this->utils->enrollTokenStep2($this->tokenSerial, $this->mfaVerificationTan, "paper");
         if (!$resultArray["result"]["status"]) {
             msg_dialog::display(
