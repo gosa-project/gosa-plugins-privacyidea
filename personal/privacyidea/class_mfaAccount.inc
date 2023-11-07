@@ -410,8 +410,6 @@ class mfaAccount extends plugin
         $this->prepareSetupCards();
 
         $tokens = $this->utils->getTokensOfUser($this->getUid(), mfaAccount::PI_USER_REALM);
-        $tokens = $this->utils->mapTokenTypes($tokens);
-        // TODO: Sanity check in new function.
         $this->smarty->assign("tokens", $tokens);
 
         $showWarningNoTokenRegistered = !empty($this->mfaRequired) && empty($tokens);

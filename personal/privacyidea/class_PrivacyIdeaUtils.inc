@@ -265,6 +265,44 @@ class PrivacyIdeaUtils implements PILog
         return $tokens;
     }
 
+    /**
+     * @param array $tokens
+     * @return array Sanitized tokens which are ready to be given to Smarty templates (UI).
+     */
+    public function prepareTokensForUI($tokens)
+    {
+        foreach ($tokens as $key => $token) {
+            $valid = true;
+
+            $mustBeValid = array('serial', 'active', 'description','revoked',
+                'maxfail', 'failcount', 'tokentype', 'user_realm', 'rollout_state');
+
+            foreach ($mustBeValid as $value) {
+                if (!isset($token[$value])) {
+                    // TODO: Log here that $value is not set in $token.
+                    $valid = false;
+                    break;
+                }
+            }
+
+            if (isset($token["rollout_state"]) && $token["rollout_state"] == "verify") {
+                $tokens[$key]["status"] = _("Not verified");
+            } elseif (isset($token["locked"]) && $token["locked"]) {
+                $tokens[$key]["status"] = _("Locked");
+            } elseif ($token["active"]) {
+                $tokens[$key]["status"] = _("Active");
+            } else {
+                $tokens[$key]["status"] = _("Deactivated");
+            }
+
+            if (!$valid) {
+                unset($tokens[$key]);
+            }
+        }
+
+        return $tokens;
+    }
+
     /** @return string Token serial */
     public function getPOSTTokenSerial()
     {
@@ -306,6 +344,9 @@ class PrivacyIdeaUtils implements PILog
         // Extract token information now.
         if ($requestAnswer["result"]["status"]) {
             $returnArray = $requestAnswer["result"]["value"]["tokens"];
+            $returnArray = $this->mapTokenTypes($returnArray);
+            $returnArray = $this->prepareTokensForUI($returnArray);
+
             return $returnArray;
         }
 
