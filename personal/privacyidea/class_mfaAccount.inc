@@ -137,7 +137,9 @@ class mfaAccount extends plugin
 
             $limitReachedMessage = $token->checkUserTokenLimit($tokenType);
             $this->smarty->assign("mfa_" . $tokenType . "_limitReachedMessage", $limitReachedMessage);
+        }
 
+        foreach ($this->mfaTokens as $tokenType => $token) {
             $this->smarty->assign("mfa_" . $tokenType . "_icon", $token->getSetupCardIcon());
             $this->smarty->assign("mfa_" . $tokenType . "_title", $token->getSetupCardTitle());
             $this->smarty->assign("mfa_" . $tokenType . "_description", $token->getSetupCardDescription());
@@ -196,6 +198,8 @@ class mfaAccount extends plugin
             $aclName = "$name" . "ACL";
             $this->smarty->assign($aclName, $aclVal);
         }
+
+        $this->smarty->assign("parent", $this->parent ? get_class($this->parent) : '');
 
         $this->updateAttrsMfaRequired();
         $this->updateAttrsAllowedTokenTypes();
@@ -284,9 +288,10 @@ class mfaAccount extends plugin
 
     /**
      * This function makes sure that $this->mfaRequired is always cleaned up.
-     * @param bool|null $wishMfaRequired
+     * @param bool|null $mfaRequiredByRule
+     * @param bool|null $mfaRequiredByUser
      */
-    private function updateAttrsMfaRequired($wishMfaRequired = null)
+    private function updateAttrsMfaRequired($mfaRequiredByRule = null, $mfaRequiredByUser = null)
     {
         // Keep $this->mfaRequired an array.
         if (!is_array($this->mfaRequired)) {
@@ -306,8 +311,17 @@ class mfaAccount extends plugin
             $this->mfaRequired = array_map('trim', $this->mfaRequired);
         }
 
-        if (isset($wishMfaRequired)) {
-            if ($wishMfaRequired) {
+        if (isset($mfaRequiredByRule)) {
+            if ($mfaRequiredByRule) {
+                if (!in_array("by_rule", $this->mfaRequired)) {
+                    $this->mfaRequired[] = "by_rule";
+                }
+            } else {
+                $this->mfaRequired = array_diff($this->mfaRequired, array("by_rule"));
+            }
+        }
+        if (isset($mfaRequiredByUser)) {
+            if ($mfaRequiredByUser) {
                 if (!in_array("by_user", $this->mfaRequired)) {
                     $this->mfaRequired[] = "by_user";
                 }
@@ -319,8 +333,9 @@ class mfaAccount extends plugin
 
     /**
      * This function makes sure that $this->allowedTokenTypes is always cleaned up.
+     * @param array|null $allowedTokenTypes
      */
-    private function updateAttrsAllowedTokenTypes()
+    private function updateAttrsAllowedTokenTypes($allowedTokenTypes = null)
     {
         // Keep $this->allowedTokenTypes an array.
         if (!is_array($this->allowedTokenTypes)) {
@@ -339,6 +354,15 @@ class mfaAccount extends plugin
             $this->allowedTokenTypes = array_map('strtolower', $this->allowedTokenTypes);
             $this->allowedTokenTypes = array_map('trim', $this->allowedTokenTypes);
         }
+
+        // ensure $allowedTokenTypes are valid
+        if (isset($allowedTokenTypes) && is_array($allowedTokenTypes)) {
+            $this->allowedTokenTypes = array_filter($allowedTokenTypes, function ($value) {
+                return array_key_exists($value, $this->mfaTokens);
+            });
+        }
+
+        $this->allowedTokenTypes = array_unique($this->allowedTokenTypes);
     }
 
     /**
@@ -443,9 +467,14 @@ class mfaAccount extends plugin
 
         $this->smarty->assign("mfaRequired", empty($this->mfaRequired) ? false : true);
 
+        $this->smarty->assign("allTokenTypes", array_keys($this->mfaTokens));
+
+        $mfaRequiredByUser = $this->isCurrentUserUsertab() ? ($this->read_only ? "r" : "rwcdm") : $this->getacl("mfaRequired");
+        $this->smarty->assign("mfaRequiredACLorCurrentUser", $mfaRequiredByUser);
 
         $manageTokens = $this->isCurrentUserUsertab() ? ($this->read_only ? "r" : "rwcdm") : $this->getacl("manageTokens");
         $this->smarty->assign("manageTokensACLorCurrentUser", $manageTokens);
+
         $tokens = $this->utils->getTokensOfUser($this->getUid(), mfaAccount::PI_USER_REALM);
         $this->smarty->assign("tokens", $tokens);
 
@@ -475,15 +504,15 @@ class mfaAccount extends plugin
     {
         plugin::save_object();
 
-        // If user clicked safe settings button.
+        // If user clicked save settings button.
         if (isset($_POST['edit_apply'])) {
-            $wishMfaRequired = false;
-            if (isset($_POST['wishMfaRequired'])) {
-                // TODO: Check for ACL! Is the user allowed to do this?
-                $wishMfaRequired = true;
-            }
+            $mfaRequiredByRule = $this->acl_is_writeable("mfaRequired") ? isset($_POST['mfaRequiredByRule']) : null;
+            $mfaRequiredByUser = $this->isCurrentUserUsertab() || $this->acl_is_writeable("mfaRequired") ? isset($_POST['mfaRequiredByUser']) : null;
+            $this->updateAttrsMfaRequired($mfaRequiredByRule, $mfaRequiredByUser);
 
-            $this->updateAttrsMfaRequired($wishMfaRequired);
+            if ($this->acl_is_writeable("allowedTokenTypes") && isset($_POST['allowedTokenTypes[]']) && is_array($_POST['allowedTokenTypes[]'])) {
+                $this->updateAttrsAllowedTokenTypes($_POST['allowedTokenTypes[]']);
+            }
         }
     }
 

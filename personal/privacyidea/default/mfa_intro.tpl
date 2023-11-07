@@ -33,27 +33,48 @@
     </p>
 </div>
 
+{render acl=$mfaRequiredACL}
 <div class="row">
     <div class="col">
         <label>
-            <input type="checkbox" {if $mfaRequiredByRule == "checked"}checked{/if} disabled>
+            <input name="mfaRequiredByRule" type="checkbox" {if $mfaRequiredByRule == "checked"}checked{/if}{if $parent != "roletabs"} disabled{/if}>
             <span>{t}Additional factors required by organizational policy.{/t}</span>
         </label>
     </div>
 </div>
+{/render}
+{render acl=$mfaRequiredACLorCurrentUser}
 <div class="row">
     <div class="col">
         <label>
-            <input name="wishMfaRequired" type="checkbox" {if $mfaRequiredByUser == "checked"}checked{/if}/>
+            <input name="mfaRequiredByUser" type="checkbox" {if $mfaRequiredByUser == "checked"}checked{/if}/>
             <span>
                 {t}Always require additional factors.{/t}
             </span>
         </label>
     </div>
 </div>
+{/render}
+
+{if $parent == "roletabs"}
+{render acl=$allowedTokenTypesACL}
+<h2>{t}Allowed factors{/t}</h2>
+<div class="row">
+    <div class="input field col s12">
+        <select name="allowedTokenTypes[]" multiple>
+            <option value="" disabled{if empty(tokenTypes)} selected{/if}>{t}Choose allowed factors{/t}</option>
+            {foreach $allTokenTypes as $tokenType}
+            <option value="{$tokenType}"{if in_array($tokenType, $tokenTypes)} selected{/if}>{$mfa_{$tokenType}_title}</option>
+            {/foreach}
+        </select>
+        <label></label>
+    </div>
+</div>
+{/render}
+{/if}
 
 {* If no token is registered, warn the user! *}
-{if $showWarningNoTokenRegistered}
+{if $parent == "usertabs" && $showWarningNoTokenRegistered}
 <div class="card-panel red lighten-4 red-text text-darken-4">
     <b>{t}Attention: {/t}</b>{t}You cannot log in again with this account because there is no multifactor method associated with it. Please add one of the available methods now.{/t}
 </div>
@@ -66,6 +87,7 @@
 </div>
 
 
+{if $parent == "usertabs"}
 {render acl=$manageTokensACLorCurrentUser}
 <hr class="divider">
 <h2>{t}Add new multifactor token{/t}</h2>
@@ -209,3 +231,4 @@
     {/if}
 </div>
 {/render}
+{/if}
