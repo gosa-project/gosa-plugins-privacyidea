@@ -118,119 +118,68 @@ class PrivacyIdeaUtils implements PILog
     }
 
     /**
-     * Enrolls a PI token with type 'paper'. in a 2-step-process. Step 1 (creation).
+     * Enrolls a PI token with type '$tokentype'. in a 2-step-process. Step 1 (creation).
      * @param string $username
      * @param string $realm
+     * @param string $tokenType Either one of: ('paper', 'totp')
      * @param string $description (Default is empty)
-     * @return array array(...)
+     * @return array Token array(...)
      */
-    public function enrollPaperStep1($username, $realm, $description = "")
+    public function enrollTokenStep1($username, $realm, $tokenType, $description = "")
     {
         assert('string' === gettype($username));
         assert(!empty($username));
         assert('string' === gettype($realm));
         assert('string' === gettype($description));
+        assert($tokenType == "paper" || $tokenType == "totp");
 
         $params["user"]        = $username;
         $params["realm"]       = $realm;
-        $params["genkey"]      = "1";
-        $params["2stepinit"]   = "1";
-        $params["type"]        = "paper";
+        $params["genkey"]      = true;
+        $params["type"]        = $tokenType;
         $params["description"] = $description;
 
         $requestAnswer = $this->piSendRequest($params, array(), "POST", "/token/init");
 
         if ($requestAnswer && $requestAnswer["result"]["status"]) {
-            return array(
-                "googleurl" => $requestAnswer["detail"]["googleurl"],
-                "oathurl"   => $requestAnswer["detail"]["oathurl"],
-                "otpkey"    => $requestAnswer["detail"]["otpkey"],
-                "otps"      => $requestAnswer["detail"]["otps"],
-                "serial"    => $requestAnswer["detail"]["serial"],
-            );
+            return $requestAnswer;
         } else {
             return array();
         }
     }
 
     /**
-     * Enrolls a PI token with type 'PAPER' in a 2-step-process. Step 2 (verify).
+     * Enrolls a PI token with type '$tokentype' in a 2-step-process. Step 2 (verify).
      * @param string $tokenSerial
      * @param string $tokenCode
-     * @return array array(...)
+     * @param string $tokenType Either one of: ('paper', 'totp')
+     * @return array Token array(...)
      */
-    public function enrollPaperStep2($tokenSerial, $tokenCode)
+    public function enrollTokenStep2($tokenSerial, $tokenCode, $tokenType)
     {
         assert('string' === gettype($tokenSerial));
         assert('string' === gettype($tokenCode));
         assert(!empty($tokenSerial));
         assert(!empty($tokenCode));
+        assert($tokenType == "paper" || $tokenType == "totp");
 
         $params = array();
+
+        // TODO: PrivacyIDEA could return different rollout_states in Step 1 (depending on different policies and PI
+        // server versions). We need to either give $params["otpkey"] or $params["verify"] based on that.
+        // $rollout_state = "verify";
+        // if ($rollout_state == "clientwait") {
+            // $params["otpkey"] = $tokenCode;
+        // } elseif ($rollout_state == "verify") {
+            // $params["verify"] = $tokenCode;
+        // }
+
+        // We only support 'verify_enrollment' policy for totp and hotp (paper).
+        $params["verify"] = $tokenCode;
         $params["serial"] = $tokenSerial;
-        $params["otpkey"] = $tokenCode;
-        $params["type"]   = "paper";
+        $params["type"]   = $tokenType;
 
-        // Call /token/init again to enroll TOTP token.
-        $resultArray = $this->piSendRequest($params, array(), "POST", "/token/init");
-
-        return $resultArray;
-    }
-
-    /**
-     * Enrolls a PI token with type 'TOTP' in a 2-step-process.
-     * @param string $username
-     * @param string $realm
-     * @param string $description (Default is empty)
-     * @return array array(...)
-     */
-    public function enrollTotpStep1($username, $realm, $description = "")
-    {
-        assert('string' === gettype($username));
-        assert(!empty($username));
-        assert('string' === gettype($realm));
-        assert('string' === gettype($description));
-
-        $params["user"]        = $username;
-        $params["realm"]       = $realm;
-        $params["genkey"]      = "1";
-        $params["2stepinit"]   = "1";
-        $params["type"]        = "totp";
-        $params["description"] = $description;
-
-        $requestAnswer = $this->piSendRequest($params, array(), "POST", "/token/init");
-
-        if ($requestAnswer && $requestAnswer["result"]["status"]) {
-            return array(
-                "googleurl" => $requestAnswer["detail"]["googleurl"],
-                "oathurl"   => $requestAnswer["detail"]["oathurl"],
-                "otpkey"    => $requestAnswer["detail"]["otpkey"],
-                "serial"    => $requestAnswer["detail"]["serial"],
-            );
-        } else {
-            return array();
-        }
-    }
-
-    /**
-     * Enrolls a PI token with type 'TOTP' in a 2-step-process. Step 2 (verify).
-     * @param string $tokenSerial
-     * @param string $tokenCode
-     * @return array array(...)
-     */
-    public function enrollTotpStep2($tokenSerial, $tokenCode)
-    {
-        assert('string' === gettype($tokenSerial));
-        assert('string' === gettype($tokenCode));
-        assert(!empty($tokenSerial));
-        assert(!empty($tokenCode));
-
-        $params = array();
-        $params["serial"] = $tokenSerial;
-        $params["otpkey"] = $tokenCode;
-        $params["type"]   = "totp";
-
-        // Call /token/init again to enroll TOTP token.
+        // Call /token/init again to enroll/verify TOTP token.
         $resultArray = $this->piSendRequest($params, array(), "POST", "/token/init");
 
         return $resultArray;

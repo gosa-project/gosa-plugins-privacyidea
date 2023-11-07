@@ -134,35 +134,14 @@ class MFAPaperToken extends MFATokenHelper implements MFAToken
     /** @return bool */
     protected function preparePhase1()
     {
-        $tokenInfo = $this->utils->enrollPaperStep1(
+        $token = $this->utils->enrollTokenStep1(
             $this->mfaAccount->getUid(),
             mfaAccount::PI_USER_REALM,
+            "paper",
             $this->tokenDescription
         );
 
-        if (isset($tokenInfo) && !empty($tokenInfo)) {
-            $tokenSerial  = $tokenInfo["serial"];
-            $tokenOTPs    = $tokenInfo["otps"];
-            $tokenConfTAN = $tokenInfo["otps"][0];
-
-            $amountOfPaperTokenOTPs = $this->utils->getConfigIntValue("amountOfPaperTokenOTPs");
-
-            if ($amountOfPaperTokenOTPs == 0) {
-                // This is most likely an error. (Just disable paper tokens / TAN lists?!)
-                // Assume healthy default value.
-                // TODO: Log error message here (to console).
-                $amountOfPaperTokenOTPs = 20;
-            }
-
-            // Cut first item. (It is used as a confirmation TAN.)
-            // Also have exactly $amountOfPaperTokenOTPs in $tokenOTPs.
-            $tokenOTPs = array_splice($tokenOTPs, 1, $amountOfPaperTokenOTPs);
-
-            $this->smarty->assign("mfaTanJSON", addslashes(json_encode($tokenOTPs)));
-            $this->smarty->assign("mfaConfirmationTan", $tokenConfTAN);
-            $this->smarty->assign("tokenSerial", $tokenSerial);
-            $this->smarty->assign("tokenDescription", $this->tokenDescription);
-        } else {
+        if (!isset($token) || empty($token)) {
             msg_dialog::display(
                 _("Internal error"),
                 _("Couldn't enroll token!") . "<br>" .
@@ -171,6 +150,28 @@ class MFAPaperToken extends MFATokenHelper implements MFAToken
 
             return false;
         }
+
+        $tokenSerial  = $token["detail"]["serial"];
+        $tokenOTPs    = $token["detail"]["otps"];
+        $tokenConfTAN = $token["detail"]["otps"][0];
+
+        $amountOfPaperTokenOTPs = $this->utils->getConfigIntValue("amountOfPaperTokenOTPs");
+
+        if ($amountOfPaperTokenOTPs == 0) {
+            // This is most likely an error. (Just disable paper tokens / TAN lists?!)
+            // Assume healthy default value.
+            // TODO: Log error message here (to console).
+            $amountOfPaperTokenOTPs = 20;
+        }
+
+        // Cut first item. (It is used as a confirmation TAN.)
+        // Also have exactly $amountOfPaperTokenOTPs in $tokenOTPs.
+        $tokenOTPs = array_splice($tokenOTPs, 1, $amountOfPaperTokenOTPs);
+
+        $this->smarty->assign("mfaTanJSON", addslashes(json_encode($tokenOTPs)));
+        $this->smarty->assign("mfaConfirmationTan", $tokenConfTAN);
+        $this->smarty->assign("tokenSerial", $tokenSerial);
+        $this->smarty->assign("tokenDescription", $this->tokenDescription);
 
         return true;
     }
@@ -185,7 +186,7 @@ class MFAPaperToken extends MFATokenHelper implements MFAToken
     /** @return bool */
     protected function preparePhase3()
     {
-        $resultArray = $this->utils->enrollPaperStep2($this->tokenSerial, $this->mfaVerificationTan);
+        $resultArray = $this->utils->enrollTokenStep2($this->tokenSerial, $this->mfaVerificationTan, "paper");
         if (!$resultArray["result"]["status"]) {
             msg_dialog::display(
                 _("Internal error"),

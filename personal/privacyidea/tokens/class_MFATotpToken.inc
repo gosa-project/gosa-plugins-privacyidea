@@ -152,30 +152,14 @@ class MFATotpToken extends MFATokenHelper implements MFAToken
         // TODO: Is serial set? it can be deleted.
 
         // Actually call utils to enroll TOTP token (in a 2 step process).
-        $tokenInfo = $this->utils->enrollTotpStep1(
+        $token = $this->utils->enrollTokenStep1(
             $this->mfaAccount->getUid(),
             mfaAccount::PI_USER_REALM,
+            "totp",
             $this->tokenDescription
         );
 
-        if (isset($tokenInfo) && !empty($tokenInfo)) {
-            // TODO: Which should we use as default?
-            $type = "googleurl"; // This works for me.
-            // $type = "oathurl";
-            // $type = "otpkey";
-
-            // TODO: Replace 'issuer=privacyIDEA' with something else. :)
-            // This will be directly visible in the TOTP app.
-
-            $qrImage      = $tokenInfo[$type]["img"];
-            $qrImageValue = $tokenInfo[$type]["value"];
-            $tokenSerial  = $tokenInfo["serial"];
-
-            $this->smarty->assign("qrImage", $qrImage);
-            $this->smarty->assign("qrImageValue", $qrImageValue);
-            $this->smarty->assign("tokenSerial", $tokenSerial);
-            $this->smarty->assign("tokenDescription", $this->tokenDescription);
-        } else {
+        if (!isset($token) || empty($token)) {
             msg_dialog::display(
                 _("Internal error"),
                 _("Couldn't enroll token!") . "<br>" .
@@ -184,6 +168,23 @@ class MFATotpToken extends MFATokenHelper implements MFAToken
 
             return false;
         }
+
+
+        $type = "googleurl"; // Use as default.
+        // $type = "oathurl";
+        // $type = "otpkey";
+
+        // TODO: Replace 'issuer=privacyIDEA' with something else. :)
+        // This will be directly visible in the TOTP app.
+
+        $qrImage      = $token["detail"][$type]["img"];
+        $qrImageValue = $token["detail"][$type]["value"];
+        $tokenSerial  = $token["detail"]["serial"];
+
+        $this->smarty->assign("qrImage", $qrImage);
+        $this->smarty->assign("qrImageValue", $qrImageValue);
+        $this->smarty->assign("tokenSerial", $tokenSerial);
+        $this->smarty->assign("tokenDescription", $this->tokenDescription);
 
         return true;
     }
@@ -198,14 +199,23 @@ class MFATotpToken extends MFATokenHelper implements MFAToken
     /** @return bool */
     protected function preparePhase3()
     {
-        $resultArray = $this->utils->enrollTotpStep2($this->tokenSerial, $this->mfaVerificationTan);
-        if (!$resultArray["result"]["status"]) {
-            msg_dialog::display(
-                _("Internal error"),
-                _("Failed to execute step 2 of token enrollment.") . "<br>" .
-                $this->utils->pleaseTryAgainMsg()
-            );
 
+        $resultArray = $this->utils->enrollTokenStep2($this->tokenSerial, $this->mfaVerificationTan, "totp");
+        if (!$resultArray["result"]["status"]) {
+            if (isset($resultArray["result"]["error"]["message"])) {
+                msg_dialog::display(
+                    _("Internal error"),
+                    _("Failed to execute step 2 of token enrollment.") . "<br>" .
+                    $this->utils->pleaseTryAgainMsg() . "<br>" .
+                    sprintf(_("PrivacyIDEA server error message: %s"), $resultArray["result"]["error"]["message"])
+                );
+            } else {
+                msg_dialog::display(
+                    _("Internal error"),
+                    _("Failed to execute step 2 of token enrollment.") . "<br>" .
+                    $this->utils->pleaseTryAgainMsg()
+                );
+            }
             return false;
         }
 
