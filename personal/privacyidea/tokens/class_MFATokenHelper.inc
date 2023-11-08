@@ -108,46 +108,14 @@ class MFATokenHelper
         return $this->renderResult;
     }
 
-    /**
-     * @param array $tokens
-     * @return array Token counts array ('all' => X, 'paper' => X, 'totp' => X...)
-     */
-    public function countUserTokens($tokens)
-    {
-        $allTokenTypes = array_keys($this->mfaAccount->mfaTokens);
-
-        // All tokens. Including deactivated and revoked ones...
-        // TODO: One could optimize this away by counting and caching this stuff
-        // on the first call to getTokensOfUser in the MFA intro.
-        $tokenCountAll = 0;
-        $tokenCounts = array();
-
-        foreach ($tokens as $key => $token) {
-            $tokenType = $token["tokentype"];
-            assert(in_array($tokenType, $allTokenTypes));
-
-            if (!in_array($tokenType, array_keys($tokenCounts))) {
-                $tokenCounts[$tokenType] = 0;
-            }
-
-            $tokenCounts[$tokenType]++;
-
-            $tokenCountAll++;
-        }
-
-        $tokenCounts["all"] = $tokenCountAll;
-        return $tokenCounts;
-    }
-
     public function checkUserTokenLimit($tokenType)
     {
-        // Get tokens
-        $user = $this->mfaAccount->getUid();
-        $tokens = $this->utils->getTokensOfUser($user, mfaAccount::PI_USER_REALM);
-
-        // Count tokens
-        $tokenCounts = $this->countUserTokens($tokens);
-        $tokenCountAll = $tokenCounts["all"];
+        if (empty($this->utils->tokenCounts)) {
+            // Get tokens
+            $user = $this->mfaAccount->getUid();
+            $tokens = $this->utils->getTokensOfUser($user, mfaAccount::PI_USER_REALM);
+            /* We don't need to count them anymore, getTokensOfUser() did that for us. */
+        }
 
         // Get limits
         $tokenLimitAll               = $this->utils->getConfigIntValue("TOKEN_LIMIT_ALL");
@@ -160,18 +128,18 @@ class MFATokenHelper
         /* START COMPARISONS */
         // Skip comparison if token limit is 0. That means there is no maximum limit for tokens.
         if ($tokenLimitAll != 0) {
-            if ($tokenCountAll >= $tokenLimitAll) {
+            if ($this->utils->tokenCounts["all"] >= $tokenLimitAll) {
                 return _("You have reached the limit on the number of tokens.");
             }
         }
 
         // Skip comparison if token limit is 0. That means there is no limit for this token specifically.
         if ($tokenLimits[$tokenType] != 0) {
-            if (!in_array($tokenType, array_keys($tokenCounts))) {
-                $tokenCounts[$tokenType] = 0;
+            if (!in_array($tokenType, array_keys($this->utils->tokenCounts))) {
+                $this->utils->tokenCounts[$tokenType] = 0;
             }
 
-            if ($tokenCounts[$tokenType] >= $tokenLimits[$tokenType]) {
+            if ($this->utils->tokenCounts[$tokenType] >= $tokenLimits[$tokenType]) {
                 return _("You have reached the limit for the number of tokens of this type.");
             }
         }

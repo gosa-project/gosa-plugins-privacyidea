@@ -40,6 +40,9 @@ class PrivacyIdeaUtils implements PILog
 
     private string $GOSA_SETTINGS_GROUP;
 
+    /** @var array Token counts array ('all' => X, 'paper' => X, 'totp' => X...) */
+    public $tokenCounts;
+
     /**
      * @var string $authToken The authentication token will be used with every API call to PrivacyIDEA.
      * https://privacyidea.readthedocs.io/en/latest/modules/api/auth.html
@@ -115,6 +118,36 @@ class PrivacyIdeaUtils implements PILog
         }
 
         return false;
+    }
+
+    /**
+     * Counts tokens and caches them in $this->tokenCount.
+     * @param array $tokens Tokens to count.
+     */
+    public function countUserTokens($tokens)
+    {
+        $allTokenTypes = array_keys($this->mfaAccount->mfaTokens);
+
+        // All tokens. Including deactivated and revoked ones...
+        // TODO: One could optimize this away by counting and caching this stuff
+        // on the first call to getTokensOfUser in the MFA intro.
+        $tokenCountAll = 0;
+        $this->tokenCounts = array();
+
+        foreach ($tokens as $key => $token) {
+            $tokenType = $token["tokentype"];
+            assert(in_array($tokenType, $allTokenTypes));
+
+            if (!in_array($tokenType, array_keys($this->tokenCounts))) {
+                $this->tokenCounts[$tokenType] = 0;
+            }
+
+            $this->tokenCounts[$tokenType]++;
+
+            $tokenCountAll++;
+        }
+
+        $this->tokenCounts["all"] = $tokenCountAll;
     }
 
     /**
@@ -295,6 +328,9 @@ class PrivacyIdeaUtils implements PILog
             $returnArray = $requestAnswer["result"]["value"]["tokens"];
             $returnArray = $this->mapTokenTypes($returnArray);
             $returnArray = $this->prepareTokensForUI($returnArray);
+
+            // Cache tokens countings.
+            $this->countUserTokens($returnArray);
 
             return $returnArray;
         }
