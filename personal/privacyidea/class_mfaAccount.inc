@@ -611,7 +611,62 @@ class mfaAccount extends plugin
      */
     public static function getProperties()
     {
-        $ret_arr = array(
+        $token_limits = array(
+            array(
+                "name"        => "TOKEN_LIMIT_ALL",
+                "type"        => "integer",
+                "check"       => "gosaProperty::isInteger",
+                "group"       => "privacyidea",
+                "default"     => "10",
+                "migrate"     => "",
+                "mandatory"   => true,
+                "description" => _("Users are only allowed to link a total of X tokens from the available MFA methods.")
+            ),
+            array(
+                "name"        => "TOKEN_LIMIT_PAPER",
+                "type"        => "integer",
+                "check"       => "gosaProperty::isInteger",
+                "group"       => "privacyidea",
+                "default"     => "6",
+                "migrate"     => "",
+                "mandatory"   => true,
+                "description" => _("Users are only allowed have a total of X paper tokens.")
+            ),
+            array(
+                "name"        => "TOKEN_LIMIT_TOTP",
+                "type"        => "integer",
+                "check"       => "gosaProperty::isInteger",
+                "group"       => "privacyidea",
+                "default"     => "6",
+                "migrate"     => "",
+                "mandatory"   => true,
+                "description" => _("Users are only allowed have a total of X TOTP tokens.")
+            ),
+            array(
+                "name"        => "TOKEN_LIMIT_WEBAUTHN",
+                "type"        => "integer",
+                "check"       => "gosaProperty::isInteger",
+                "group"       => "privacyidea",
+                "default"     => "4",
+                "migrate"     => "",
+                "mandatory"   => true,
+                "description" => _("Users are only allowed have a total of X WebAuthn tokens.")
+            ),
+            array(
+                "name"        => "TOKEN_LIMIT_REGISTRATION",
+                "type"        => "integer",
+                "check"       => "gosaProperty::isInteger",
+                "group"       => "privacyidea",
+                "default"     => "0",
+                "migrate"     => "",
+                "mandatory"   => true,
+                "description" => _("Users are only allowed have a total of X Registration tokens.")
+            ),
+            // Dear admin, 0 doesn't mean that the user can't create this token type but that there is no limit for
+            // this type. Please use allowedTokenTypes or it's ACL for this purpouse.
+        );
+
+        $misc = array(
             array(
                 "name"        => "amountOfPaperTokenOTPs",
                 "type"        => "integer",
@@ -624,6 +679,6 @@ class mfaAccount extends plugin
             ),
         );
 
-        return $ret_arr;
+        return array_merge($token_limits, $misc);
     }
 }
