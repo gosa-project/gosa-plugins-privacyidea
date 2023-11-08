@@ -107,6 +107,16 @@ class MFAPaperToken extends MFATokenHelper implements MFAToken
     /** @return bool */
     protected function preparePhase0()
     {
+        $limitReachedMessage = $this->checkUserTokenLimit("paper");
+        if (!empty($limitReachedMessage)) {
+            msg_dialog::display(
+                _("Internal error"),
+                $limitReachedMessage . "<br>" .
+                $this->utils->pleaseTryAgainMsg()
+            );
+            return false;
+        }
+
         return true;
     }
 

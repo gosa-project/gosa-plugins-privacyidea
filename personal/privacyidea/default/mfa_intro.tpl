@@ -89,26 +89,33 @@
                 <div class="card large">
                     <div class="card-content">
                         <i class="material-icons left">{$mfa_{$tokenType}_icon}</i>
-                        <span class="card-title">{t}{$mfa_{$tokenType}_title}{/t}</span>
+                        <span class="card-title">{$mfa_{$tokenType}_title}</span>
                         <p>
-                            {t}
                             {$mfa_{$tokenType}_description}
-                            {/t}
                         </p>
                     </div>
 
                     <div class="card-action">
-                        <input type="hidden" name="php_c_check" value="1">
-                        <button
-                            class="btn-small primary"
-                            {* Changing #token_type's value to $tokenType *}
-                            onclick="document.getElementById('token_type').value = '{$tokenType}';"
-                            name="add_token"
-                            value="yes"
-                            type="submit"
-                        >
-                            {t}{$mfa_{$tokenType}_button_text}{/t}
-                        </button>
+                        {if empty({$mfa_{$tokenType}_limitReachedMessage})}
+                            <button
+                                class="btn-small primary"
+                                {* Changing #token_type's value to $tokenType *}
+                                onclick="document.getElementById('token_type').value = '{$tokenType}';"
+                                name="add_token"
+                                value="yes"
+                                type="submit"
+                            >
+                            {$mfa_{$tokenType}_button_text}
+                            </button>
+                        {else}
+                            <button
+                                class="btn-small primary"
+                                title="{$mfa_{$tokenType}_limitReachedMessage}"
+                                disabled
+                            >
+                            {$mfa_{$tokenType}_button_text}
+                            </button>
+                        {/if}
                     </div>
                 </div>
             </div>

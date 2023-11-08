@@ -32,6 +32,12 @@ interface MFAToken
     public function getSetupCardButtonText();
     /** @return int Priority for rendering this setup card. */
     public function getSetupCardPriority();
+    /**
+     * Checks token limits (configured via GOsa properties).
+     * @param string $tokenType
+     * @return string Returns a translated limit-reached message.
+     */
+    public function checkUserTokenLimit($tokenType);
 
     /**
      * Contructor

@@ -135,6 +135,9 @@ class mfaAccount extends plugin
             // We should be able to map $tokenType to a MFAToken now.
             $token = $this->mfaTokens[$tokenType];
 
+            $limitReachedMessage = $token->checkUserTokenLimit($tokenType);
+            $this->smarty->assign("mfa_" . $tokenType . "_limitReachedMessage", $limitReachedMessage);
+
             $this->smarty->assign("mfa_" . $tokenType . "_icon", $token->getSetupCardIcon());
             $this->smarty->assign("mfa_" . $tokenType . "_title", $token->getSetupCardTitle());
             $this->smarty->assign("mfa_" . $tokenType . "_description", $token->getSetupCardDescription());
