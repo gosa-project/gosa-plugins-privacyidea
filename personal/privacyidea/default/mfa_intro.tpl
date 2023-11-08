@@ -191,34 +191,46 @@
                                 {$mfa_{$token.tokentype}_title}
                             </button>
                         </td>
-                        <td><button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenView">{$token.description}</button></td>
-                        <td>{$token.info.last_auth}</td>
-                        <td>{$token.status}</td>
-                        <td>{$token.failcount} / {$token.maxfail}</td>
+                        <td><button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenView">{if $tokenDescriptionACL|strstr:"r"}{$token.description}{else}{t}hidden{/t}{/if}</button></td>
+                        <td>{if $tokenLastUsedACL|strstr:"r"}{$token.info.last_auth}{else}{t}hidden{/t}{/if}</td>
+                        <td>{if $tokenStatusACL|strstr:"r"}{$token.status}{else}{t}hidden{/t}{/if}</td>
+                        <td>{if $tokenFailCountACL|strstr:"r"}{$token.failcount}{else}{t}hidden{/t}{/if}/{$token.maxfail}</td>
                         <td>
+                            {render acl=$tokenDescriptionACL}
                             <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenEdit" title="{t}Edit{/t}">
                                 <span class="material-icons">edit</span>
                             </button>
+                            {/render}
                     {if !$token.revoked}
+                            {render acl=$tokenFailCountACL}
                             <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenResetCounter" title="{t}Reset error counter{/t}">
                                 <span class="material-icons">restart_alt</span>
                             </button>
+                            {/render}
                         {if $token.active}
+                            {render acl=$tokenStatusACL}
                             <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenDisable" title="{t}Deactivate{/t}">
                                 <span class="material-icons">lock</span>
                             </button>
+                            {/render}
                         {else}
+                            {render acl=$tokenStatusACL}
                             <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenEnable" title="{t}Activate{/t}">
                                 <span class="material-icons">lock_open</span>
                             </button>
+                            {/render}
                         {/if}
+                            {render acl=$tokenRevocationACL}
                             <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenRevoke" title="{t}Revoke{/t}">
                                 <span class="material-icons">cancel</span>
                             </button>
+                            {/render}
                     {/if}
+                            {render acl=$tokenRemovalACL}
                             <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenRemove" title="{t}Remove{/t}">
                                 <span class="material-icons">delete_forever</span>
                             </button>
+                            {/render}
                         </td>
                     </tr>
                     </form>
