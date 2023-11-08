@@ -42,6 +42,7 @@ class mfaAccount extends plugin
      */
     public $mfaRequired;
     public $allowedTokenTypes;
+    public $effectiveTokenTypes;
 
     public $config = null;
     public $ldap   = null;
@@ -83,6 +84,8 @@ class mfaAccount extends plugin
         $this->allowedTokenTypes = $this->attrs['allowedTokenTypes'];
         $this->mfaRequired       = $this->attrs['mfaRequired'];
 
+        $this->effectiveTokenTypes = [];
+
         $this->ui = get_userinfo();
 
         stats::log(
@@ -115,20 +118,18 @@ class mfaAccount extends plugin
 
         $this->updateAttrsAllowedTokenTypes();
 
-        if (empty($this->allowedTokenTypes)) {
+        if (empty($this->effectiveTokenTypes)) {
             // TODO: No tokens allowed???
             // Figure out what we should do now.
         }
 
-        // TODO: Check if there are ACLs which override the token's allowance.
-
-        foreach ($this->allowedTokenTypes as $key => $tokenType) {
+        foreach ($this->effectiveTokenTypes as $key => $tokenType) {
             if (!in_array_ics($tokenType, $allRegisteredTokenTypes)) {
                 // Malformed LDAP data?!
                 // TODO: Log error message here.
 
                 // Don't show empty setup card.
-                unset($this->allowedTokenTypes[$key]);
+                unset($this->effectiveTokenTypes[$key]);
                 continue;
             }
 
@@ -146,8 +147,8 @@ class mfaAccount extends plugin
             $this->smarty->assign("mfa_" . $tokenType . "_button_text", $token->getSetupCardButtonText());
         }
 
-        // Sort $this->allowedTokenTypes by priority.
-        usort($this->allowedTokenTypes, function (mixed $a, mixed $b) {
+        // Sort $this->effectiveTokenTypes by priority.
+        usort($this->effectiveTokenTypes, function (mixed $a, mixed $b) {
             $tokenA = $this->mfaTokens[$a];
             $tokenB = $this->mfaTokens[$b];
             $prioA = $tokenA->getSetupCardPriority();
@@ -158,7 +159,7 @@ class mfaAccount extends plugin
             return ($prioA < $prioB) ? -1 : 1;
         });
 
-        $this->smarty->assign('tokenTypes', $this->allowedTokenTypes);
+        $this->smarty->assign('tokenTypes', $this->effectiveTokenTypes);
     }
 
     /**
@@ -228,7 +229,7 @@ class mfaAccount extends plugin
             // Detect if $token_type is not registered in $mfaTokens.
             // This probably means the user sent some garbage _POST request!
             // Just showing intro site again to avoid being susceptible for proxy hacks.
-            if (empty($token_type) || !in_array_ics($token_type, array_keys($this->mfaTokens))) {
+            if (empty($token_type) || !in_array_ics($token_type, $this->effectiveTokenTypes)) {
                 $setup = null;
                 msg_dialog::display(
                     _("Internal error"),
@@ -363,6 +364,26 @@ class mfaAccount extends plugin
         }
 
         $this->allowedTokenTypes = array_unique($this->allowedTokenTypes);
+
+        /*
+         * Determine the effectively allowed token types which is the union of
+         * types allowed via the LDAP attribute allowedTokenTypes and those
+         * allowed via ACLs
+         */
+        $tokenTypesAcls = array(
+            "paper"        => "tokenPaper",
+            "registration" => "tokenRegistration",
+            "webauthn"     => "tokenWebAuthn",
+            "totp"         => "tokenTotp",
+        );
+        $overrideTokenTypes = [];
+        foreach ($this->mfaTokens as $tokenType => $value) {
+            if (array_key_exists($tokenType, $tokenTypesAcls) && $this->acl_is_createable($tokenTypesAcls[$tokenType])) {
+                $overrideTokenTypes[] = $tokenType;
+            }
+        }
+
+        $this->effectiveTokenTypes = $this->allowedTokenTypes + $overrideTokenTypes;
     }
 
     /**
@@ -653,6 +674,10 @@ class mfaAccount extends plugin
                 "allowedTokenTypes" => _("MFA token types"),
                 "mfaRequired"       => _("Require MFA"),
                 "manageTokens"      => _("Manage tokens of users"),
+                "tokenPaper"        => _("TAN list"),
+                "tokenRegistration" => _("Recovery key"),
+                "tokenWebAuthn"     => _("Security key"),
+                "tokenTotp"         => _("Authentication app (TOTP)"),
             ),
             // TODO: Outsource ACLs overrideAllowToken_* to MFAToken classes!!
         ));
