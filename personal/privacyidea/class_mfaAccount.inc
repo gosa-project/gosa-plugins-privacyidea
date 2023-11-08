@@ -418,10 +418,10 @@ class mfaAccount extends plugin
 
         $this->smarty->assign("mfaRequired", empty($this->mfaRequired) ? false : true);
 
-        $this->prepareSetupCards();
-
         $tokens = $this->utils->getTokensOfUser($this->getUid(), mfaAccount::PI_USER_REALM);
         $this->smarty->assign("tokens", $tokens);
+
+        $this->prepareSetupCards();
 
         $showWarningNoTokenRegistered = !empty($this->mfaRequired) && empty($tokens);
         $this->smarty->assign("showWarningNoTokenRegistered", $showWarningNoTokenRegistered);
