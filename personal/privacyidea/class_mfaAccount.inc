@@ -404,6 +404,10 @@ class mfaAccount extends plugin
 
         switch ($mfaTokenAction) {
             case 'mfaTokenSave':
+                if (!$this->acl_is_writable("tokenDescription")) {
+                    break;
+                }
+
                 $tokenDescription = "";
                 if (isset($_POST["tokenDescription"]) && !empty($_POST["tokenDescription"])) {
                     $tokenDescription = $_POST["tokenDescription"];
@@ -418,37 +422,55 @@ class mfaAccount extends plugin
 
                 $this->utils->piSendRequest($params, array(), "POST", "/token/description");
 
-                break;
+                return;
 
             case 'mfaTokenResetCounter':
+                if (!$this->acl_is_writable("tokenFailCount")) {
+                    break;
+                }
+
                 $this->utils->piSendRequest(array(), array(), "POST", "/token/reset/" . $tokenSerial);
-                break;
+                return;
 
             case 'mfaTokenDisable':
+                if (!$this->acl_is_writable("tokenStatus")) {
+                    break;
+                }
+
                 $this->utils->piSendRequest(array(), array(), "POST", "/token/disable/" . $tokenSerial);
-                break;
+                return;
 
             case 'mfaTokenEnable':
+                if (!$this->acl_is_writable("tokenStatus")) {
+                    break;
+                }
+
                 $this->utils->piSendRequest(array(), array(), "POST", "/token/enable/" . $tokenSerial);
-                break;
+                return;
 
             case 'mfaTokenRevoke':
+                if (!$this->acl_is_writable("tokenRevocation")) {
+                    break;
+                }
+
                 $this->utils->piSendRequest(array(), array(), "POST", "/token/revoke/" . $tokenSerial);
-                break;
+                return;
 
             case 'mfaTokenRemove':
-                $this->utils->piSendRequest(array(), array(), "DELETE", "/token/" . $tokenSerial);
-                break;
+                if (!$this->acl_is_writable("tokenRemoval")) {
+                    break;
+                }
 
-            default:
-                // mfaTokenAction is malformed or not implemented yet.
-                msg_dialog::display(
-                    _("Internal error"),
-                    _("Selected token action is not implemented yet.") . "<br>" .
-                    $this->utils->pleaseTryAgainMsg()
-                );
-                break;
+                $this->utils->piSendRequest(array(), array(), "DELETE", "/token/" . $tokenSerial);
+                return;
         }
+
+        // mfaTokenAction is malformed or not implemented yet.
+        msg_dialog::display(
+            _("Internal error"),
+            _("Token action malformed or not allowed.") . "<br>" .
+            $this->utils->pleaseTryAgainMsg()
+        );
     }
 
     /**
@@ -678,6 +700,12 @@ class mfaAccount extends plugin
                 "tokenRegistration" => _("Recovery key"),
                 "tokenWebAuthn"     => _("Security key"),
                 "tokenTotp"         => _("Authentication app (TOTP)"),
+                "tokenDescription"  => _("Description"),
+                "tokenLastUsed"     => _("Last use"),
+                "tokenFailCount"    => _("Failed login counter"),
+                "tokenStatus"       => _("Status"),
+                "tokenRevocation"   => _("Revocation allowed"),
+                "tokenRemoval"      => _("Removal allowed"),
             ),
             // TODO: Outsource ACLs overrideAllowToken_* to MFAToken classes!!
         ));
