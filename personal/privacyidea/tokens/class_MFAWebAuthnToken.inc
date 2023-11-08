@@ -24,13 +24,25 @@ require_once(dirname(__FILE__) . "/interfaces/interface_MFAToken.inc");
 
 class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
 {
-    public $MAX_SETUP_PHASES = 1;
+    public $MAX_SETUP_PHASES = 3;
     public $TEMPLATE_PREFIX = "mfatype_webauthn/";
 
     /* VARIABLES WHICH WILL BE NEEDED ACROSS PHASES */
 
     /** @return bool */
     protected function evaluatePhase0()
+    {
+        return true;
+    }
+
+    /** @return bool */
+    protected function evaluatePhase1()
+    {
+        return true;
+    }
+
+    /** @return bool */
+    protected function evaluatePhase2()
     {
         return true;
     }
@@ -48,6 +60,18 @@ class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
             return false;
         }
 
+        return true;
+    }
+
+    /** @return bool */
+    protected function preparePhase1()
+    {
+        return true;
+    }
+
+    /** @return bool */
+    protected function preparePhase2()
+    {
         return true;
     }
 
