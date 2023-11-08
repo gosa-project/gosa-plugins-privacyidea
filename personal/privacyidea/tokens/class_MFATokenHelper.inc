@@ -108,32 +108,48 @@ class MFATokenHelper
         return $this->renderResult;
     }
 
-    public function checkUserTokenLimit($tokenType)
+    /**
+     * @param array $tokens
+     * @return array Token counts array ('all' => X, 'paper' => X, 'totp' => X...)
+     */
+    public function countUserTokens($tokens)
     {
         $allTokenTypes = array_keys($this->mfaAccount->mfaTokens);
 
-        $user = $this->mfaAccount->getUid();
-        $tokens = $this->utils->getTokensOfUser($user, mfaAccount::PI_USER_REALM);
-
         // All tokens. Including deactivated and revoked ones...
         // TODO: One could optimize this away by counting and caching this stuff
-        // one the first call to getTokensOfUser in the MFA intro.
+        // on the first call to getTokensOfUser in the MFA intro.
         $tokenCountAll = 0;
         $tokenCounts = array();
 
         foreach ($tokens as $key => $token) {
-            $_tokenType = $token["tokentype"];
-            assert(in_array($_tokenType, $allTokenTypes));
+            $tokenType = $token["tokentype"];
+            assert(in_array($tokenType, $allTokenTypes));
 
-            if (!in_array($_tokenType, array_keys($tokenCounts))) {
-                $tokenCounts[$_tokenType] = 0;
+            if (!in_array($tokenType, array_keys($tokenCounts))) {
+                $tokenCounts[$tokenType] = 0;
             }
 
-            $tokenCounts[$_tokenType]++;
+            $tokenCounts[$tokenType]++;
 
             $tokenCountAll++;
         }
 
+        $tokenCounts["all"] = $tokenCountAll;
+        return $tokenCounts;
+    }
+
+    public function checkUserTokenLimit($tokenType)
+    {
+        // Get tokens
+        $user = $this->mfaAccount->getUid();
+        $tokens = $this->utils->getTokensOfUser($user, mfaAccount::PI_USER_REALM);
+
+        // Count tokens
+        $tokenCounts = $this->countUserTokens($tokens);
+        $tokenCountAll = $tokenCounts["all"];
+
+        // Get limits
         $tokenLimitAll               = $this->utils->getConfigIntValue("TOKEN_LIMIT_ALL");
         $tokenLimits["paper"]        = $this->utils->getConfigIntValue("TOKEN_LIMIT_PAPER");
         $tokenLimits["totp"]         = $this->utils->getConfigIntValue("TOKEN_LIMIT_TOTP");
@@ -141,6 +157,7 @@ class MFATokenHelper
         $tokenLimits["registration"] = $this->utils->getConfigIntValue("TOKEN_LIMIT_REGISTRATION");
         assert(in_array($tokenType, array_keys($tokenLimits)));
 
+        /* START COMPARISONS */
         // Skip comparison if token limit is 0. That means there is no maximum limit for tokens.
         if ($tokenLimitAll != 0) {
             if ($tokenCountAll >= $tokenLimitAll) {
