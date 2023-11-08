@@ -614,10 +614,10 @@ class mfaAccount extends plugin
         $ret_arr = array(
             array(
                 "name"        => "amountOfPaperTokenOTPs",
-                "type"        => "int",
+                "type"        => "integer",
                 "check"       => "gosaProperty::isInteger",
                 "group"       => "privacyidea",
-                "default"     => "100",
+                "default"     => "20",
                 "migrate"     => "",
                 "mandatory"   => true,
                 "description" => _("Amount of OTPs which will be printed on a single TAN list."),
