@@ -47,11 +47,13 @@ class PrivacyIdeaUtils implements PILog
      * @var string $authToken The authentication token will be used with every API call to PrivacyIDEA.
      * https://privacyidea.readthedocs.io/en/latest/modules/api/auth.html
      */
-    // TODO: Make static or global or gosaSetting?
-    private string $authToken;
-    private string $authUsername = "";
-    private string $authPassword = "";
-    private string $authRealm    = "";
+    private $authToken;
+    /** @var string */
+    private $authUsername;
+    /** @var string */
+    private $authPassword;
+    /** @var string */
+    private $authRealm;
 
     /** @param mfaAccount $mfaAccount MFA Account class (likely parent) */
     public function __construct(&$mfaAccount)
@@ -62,10 +64,12 @@ class PrivacyIdeaUtils implements PILog
 
         $this->GOSA_SETTINGS_GROUP = get_class($mfaAccount);
 
-        // TODO: Load privacyIDEA server URL from settings.
-        $pi_server_url = "http://localhost:5000/";
+        $piServerUrl = $this->getConfigStrValue("PRIVACYIDEA_SERVER_URL");
+        $this->authUsername = $this->getConfigStrValue("SERVICE_ACC_USERNAME");
+        $this->authPassword = $this->getConfigStrValue("SERVICE_ACC_PASSWORD");
+        $this->authRealm    = $this->getConfigStrValue("SERVICE_ACC_REALM");
 
-        $this->pi = new PrivacyIDEA($_SERVER['HTTP_USER_AGENT'], $pi_server_url);
+        $this->pi = new PrivacyIDEA($_SERVER['HTTP_USER_AGENT'], $piServerUrl);
         $this->pi->logger = $this;
 
         $this->authenticate();
@@ -114,6 +118,12 @@ class PrivacyIdeaUtils implements PILog
             $this->authToken = $retString;
             return true;
         } else {
+            msg_dialog::display(
+                _("Internal Error"),
+                _("Could not get authentification token from PrivacyIDEA backend server.") . "<br>" .
+                _("Dear admin: Please ensure that the PrivacyIDEA service credentials are set correctly.") . "<br>" .
+                $this->pleaseTryAgainMsg()
+            );
             $this->authToken = "";
         }
 

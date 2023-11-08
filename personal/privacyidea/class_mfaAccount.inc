@@ -614,6 +614,49 @@ class mfaAccount extends plugin
      */
     public static function getProperties()
     {
+        $privacyidea_settings = array(
+            array(
+                "name"        => "PRIVACYIDEA_SERVER_URL",
+                "type"        => "string",
+                "check"       => "gosaProperty::isString",
+                "group"       => "privacyidea",
+                "default"     => "http://localhost:5000/",
+                "migrate"     => "",
+                "mandatory"   => true,
+                "description" => _("PrivacyIDEA server URL.")
+            ),
+            array(
+                "name"        => "SERVICE_ACC_USERNAME",
+                "type"        => "string",
+                "check"       => "gosaProperty::isString",
+                "group"       => "privacyidea",
+                "default"     => "username",
+                "migrate"     => "",
+                "mandatory"   => true,
+                "description" => _("PrivacyIDEA service account username. Used to authenticate against PrivacyIDEA.")
+            ),
+            array(
+                "name"        => "SERVICE_ACC_PASSWORD",
+                "type"        => "string",
+                "check"       => "gosaProperty::isString",
+                "group"       => "privacyidea",
+                "default"     => "password",
+                "migrate"     => "",
+                "mandatory"   => true,
+                "description" => _("PrivacyIDEA service account password. Used to authenticate against PrivacyIDEA.")
+            ),
+            array(
+                "name"        => "SERVICE_ACC_REALM",
+                "type"        => "string",
+                "check"       => "gosaProperty::isString",
+                "group"       => "privacyidea",
+                "default"     => "defrealm",
+                "migrate"     => "",
+                "mandatory"   => true,
+                "description" => _("PrivacyIDEA service account realm. Used to authenticate against PrivacyIDEA.")
+            ),
+        );
+
         $token_limits = array(
             array(
                 "name"        => "TOKEN_LIMIT_ALL",
@@ -682,6 +725,6 @@ class mfaAccount extends plugin
             ),
         );
 
-        return array_merge($token_limits, $misc);
+        return array_merge($privacyidea_settings, $token_limits, $misc);
     }
 }
