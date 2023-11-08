@@ -24,33 +24,10 @@ require_once(dirname(__FILE__) . "/interfaces/interface_MFAToken.inc");
 
 class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
 {
-    private PrivacyIdeaUtils $utils;
-    private config $config;
-    private mfaAccount $mfaAccount;
-    /** @var ldapMultiplexer|LDAP */
-    private $ldap;
-
     public $MAX_SETUP_PHASES = 1;
     public $TEMPLATE_PREFIX = "mfatype_webauthn/";
 
     /* VARIABLES WHICH WILL BE NEEDED ACROSS PHASES */
-
-    public function __construct(&$mfaAccount)
-    {
-        // Crashing is okay here, we want to find errors like this in early development.
-        assert(get_class($mfaAccount)  == "mfaAccount");
-        $this->mfaAccount = &$mfaAccount;
-
-        $this->utils  = $mfaAccount->utils;
-        $this->smarty = $mfaAccount->smarty;
-        $this->ldap   = $mfaAccount->ldap;
-        $this->config = $mfaAccount->config;
-        assert(get_class($this->utils)  == "PrivacyIdeaUtils");
-        assert(get_class($this->smarty) == "Smarty");
-        assert(get_class($this->config) == "config");
-        assert(get_class($this->ldap)   == "LDAP" ||
-               get_class($this->ldap)   == "ldapMultiplexer");
-    }
 
     /** @return bool */
     protected function evaluatePhase0()

@@ -27,14 +27,41 @@
  */
 class MFATokenHelper
 {
-    /** @var string */
-    public $renderResult = "";
+    /** @var PrivacyIdeaUtils */
+    public PrivacyIdeaUtils $utils;
+    /** @var config */
+    public $config;
+    /** @var mfaAccount */
+    public $mfaAccount;
+    /** @var ldapMultiplexer|LDAP */
+    public $ldap;
     /** @var Smarty */
     public $smarty;
+
+    /** @var string */
+    public $renderResult = "";
     /** @var string */
     public $TEMPLATE_PREFIX = "/";
     /** @var int Indicates how many phases the token setup has. */
     public $MAX_SETUP_PHASES = 0;
+
+    /** @param mfaAccount $mfaAccount */
+    public function __construct(&$mfaAccount)
+    {
+        // Crashing is okay here, we want to find errors like this in early development.
+        assert(get_class($mfaAccount)  == "mfaAccount");
+        $this->mfaAccount = &$mfaAccount;
+
+        $this->utils  = $mfaAccount->utils;
+        $this->smarty = $mfaAccount->smarty;
+        $this->ldap   = $mfaAccount->ldap;
+        $this->config = $mfaAccount->config;
+        assert(get_class($this->utils)  == "PrivacyIdeaUtils");
+        assert(get_class($this->smarty) == "Smarty");
+        assert(get_class($this->config) == "config");
+        assert(get_class($this->ldap)   == "LDAP" ||
+               get_class($this->ldap)   == "ldapMultiplexer");
+    }
 
     public function renderSetup()
     {
