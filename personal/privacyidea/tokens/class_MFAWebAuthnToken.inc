@@ -66,12 +66,36 @@ class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
     /** @return bool */
     protected function preparePhase1()
     {
+        $limitReachedMessage = $this->checkUserTokenLimit("webauthn");
+        if (!empty($limitReachedMessage)) {
+            msg_dialog::display(
+                _("Internal error"),
+                $limitReachedMessage . "<br>" .
+                $this->utils->pleaseTryAgainMsg()
+            );
+            return false;
+        }
+
         return true;
     }
 
     /** @return bool */
     protected function preparePhase2()
     {
+        // We just created a token in the phase before this one.
+        // So it may happen that we reach the token limit by now..
+        // But we don't want to create a new token here in phase 2 but we want
+        // to verify the existing one.
+        // TODO: Find a good solution to this problem.
+        // $limitReachedMessage = $this->checkUserTokenLimit("webauthn");
+        // if (!empty($limitReachedMessage)) {
+        //     msg_dialog::display(
+        //         _("Internal error"),
+        //         $limitReachedMessage . "<br>" .
+        //         $this->utils->pleaseTryAgainMsg()
+        //     );
+        //     return false;
+        // }
         return true;
     }
 

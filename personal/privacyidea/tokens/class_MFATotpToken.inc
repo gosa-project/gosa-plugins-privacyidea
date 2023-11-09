@@ -139,7 +139,15 @@ class MFATotpToken extends MFATokenHelper implements MFAToken
     /** @return bool */
     protected function preparePhase1()
     {
-        // TODO: Is serial set? it can be deleted.
+        $limitReachedMessage = $this->checkUserTokenLimit("totp");
+        if (!empty($limitReachedMessage)) {
+            msg_dialog::display(
+                _("Internal error"),
+                $limitReachedMessage . "<br>" .
+                $this->utils->pleaseTryAgainMsg()
+            );
+            return false;
+        }
 
         // Actually call utils to enroll TOTP token (in a 2 step process).
         $token = $this->utils->enrollTokenStep1(

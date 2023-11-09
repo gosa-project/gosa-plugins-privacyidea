@@ -110,7 +110,7 @@ class MFATokenHelper
 
     public function checkUserTokenLimit($tokenType)
     {
-        if (empty($this->utils->tokenCounts)) {
+        if (!isset($this->utils->tokenCounts) || empty($this->utils->tokenCounts)) {
             // Get tokens
             $user = $this->mfaAccount->getUid();
             $tokens = $this->utils->getTokensOfUser($user, mfaAccount::PI_USER_REALM);

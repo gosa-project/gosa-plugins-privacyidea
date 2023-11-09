@@ -184,11 +184,16 @@ class PrivacyIdeaUtils implements PILog
 
         $requestAnswer = $this->piSendRequest($params, array(), "POST", "/token/init");
 
-        if ($requestAnswer && $requestAnswer["result"]["status"]) {
-            return $requestAnswer;
-        } else {
+        if (!$requestAnswer || !$requestAnswer["result"]["status"]) {
             return array();
         }
+
+        // Refresh token countings cache.
+        // TODO: Use countUserTokens() but refactor it, so that it doesn't require $tokens.
+        //       and it should gather the tokens from endpoint /token/ itself.
+        $this->getTokensOfUser($this->mfaAccount->getUid(), mfaAccount::PI_USER_REALM);
+
+        return $requestAnswer;
     }
 
     /**
@@ -224,6 +229,11 @@ class PrivacyIdeaUtils implements PILog
 
         // Call /token/init again to enroll/verify TOTP token.
         $resultArray = $this->piSendRequest($params, array(), "POST", "/token/init");
+
+        // Refresh token countings cache.
+        // TODO: Use countUserTokens() but refactor it, so that it doesn't require $tokens.
+        //       and it should gather the tokens from endpoint /token/ itself.
+        $this->getTokensOfUser($this->mfaAccount->getUid(), mfaAccount::PI_USER_REALM);
 
         return $resultArray;
     }
@@ -339,8 +349,10 @@ class PrivacyIdeaUtils implements PILog
             $returnArray = $this->mapTokenTypes($returnArray);
             $returnArray = $this->prepareTokensForUI($returnArray);
 
-            // Cache tokens countings.
-            $this->countUserTokens($returnArray);
+            if (!isset($tokenSerial)) {
+                // Cache tokens countings.
+                $this->countUserTokens($returnArray);
+            }
 
             return $returnArray;
         }
