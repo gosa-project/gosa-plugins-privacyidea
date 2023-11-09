@@ -115,6 +115,11 @@ class MFATokenHelper
             $user = $this->mfaAccount->getUid();
             $tokens = $this->utils->getTokensOfUser($user, mfaAccount::PI_USER_REALM);
             /* We don't need to count them anymore, getTokensOfUser() did that for us. */
+
+            if (!isset($this->utils->tokenCounts) || empty($this->utils->tokenCounts)) {
+                // Probably no tokens available?
+                $this->utils->tokenCounts = array();
+            }
         }
 
         // Get limits
