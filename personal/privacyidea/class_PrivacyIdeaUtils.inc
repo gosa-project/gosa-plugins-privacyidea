@@ -78,14 +78,14 @@ class PrivacyIdeaUtils implements PILog
     public function piDebug($message)
     {
         echo "piDebug (" . date("H:i:s") . "): ";
-        echo "$message";
+        echo strip_tags("$message");
         echo "<br><br>";
     }
 
     public function piError($message)
     {
         echo "piError (" . date("H:i:s") . "): ";
-        echo "$message";
+        echo strip_tags("$message");
         echo "<br><br>";
     }
 
