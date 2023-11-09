@@ -413,9 +413,10 @@ function startWebAuthnSetup() {
                 <li>{t}Confirm the setup using a device-specific mechanism, e.g. by touching a sensor on the key.{/t}</li>
                 <li>{t}The browser will proceed to the next page if the setup has been sucessful.{/t}</li>
             </ol>
-            <button class="btn primary"
-                name="mfa_webauthn_confirm"
-                type="submit">{t}Start setup{/t}</button>
+            <a class="btn primary"
+                title="{t}Start the setup for your WebAuthn device.{/t}"
+                onclick="startWebAuthnSetup();">{t}Start setup{/t}
+            </a>
         </div>
 
         <div class="card-panel red lighten-4 red-text text-darken-4" id="mfaWebAuthnError"></div>
@@ -438,8 +439,10 @@ function startWebAuthnSetup() {
 
 <div class="section">
     <input type="hidden" id="current_phase" name="current_phase" value="1">
+    <input type="hidden" id="add_token" name="add_token" value="webauthn">
     <input type="hidden" id="tokenSerial" name="tokenSerial" value="{$tokenSerial}">
+    <input type="hidden" id="mfaWebAuthnRegisterResponse" name="mfaWebAuthnRegisterResponse" value="{* TO BE FILLED BY JAVASCRIPT *}">
 
     <button class="btn" formnovalidate type="submit">{t}Cancel{/t}</button>
-    <button class="btn primary" name="add_token" value="webauthn" type="submit">{t}Continue{/t}</button>
+    {* <button class="btn primary" name="add_token" value="webauthn" type="submit">{t}Continue{/t}</button> *}
 </div>

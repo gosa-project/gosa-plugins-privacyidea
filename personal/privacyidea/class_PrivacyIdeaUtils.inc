@@ -174,17 +174,30 @@ class PrivacyIdeaUtils implements PILog
         assert(!empty($username));
         assert('string' === gettype($realm));
         assert('string' === gettype($description));
-        assert($tokenType == "paper" || $tokenType == "totp");
+        assert($tokenType == "paper" || $tokenType == "totp" || $tokenType == "webauthn");
+
+        if ($tokenType != "webauthn") {
+            $params["genkey"] = true;
+        }
 
         $params["user"]        = $username;
         $params["realm"]       = $realm;
-        $params["genkey"]      = true;
         $params["type"]        = $tokenType;
         $params["description"] = $description;
 
         $requestAnswer = $this->piSendRequest($params, array(), "POST", "/token/init");
 
         if (!$requestAnswer || !$requestAnswer["result"]["status"]) {
+            if ($requestAnswer["result"]["error"]["code"] == 303) {
+                // ERROR 303 means "Missing enrollment policy for WebauthnToken: webauthn_relying_party_id"
+                msg_dialog::display(
+                    _("Internal error"),
+                    _("Could not execute step 1 of WebAuthn token enrollment: ") . "<br>" .
+                    $requestAnswer["result"]["error"]["message"] . "<br><br>" .
+                    $this->pleaseTryAgainMsg()
+                );
+            }
+
             return array();
         }
 
@@ -227,7 +240,7 @@ class PrivacyIdeaUtils implements PILog
         $params["serial"] = $tokenSerial;
         $params["type"]   = $tokenType;
 
-        // Call /token/init again to enroll/verify TOTP token.
+        // Call /token/init again to enroll/verify token.
         $resultArray = $this->piSendRequest($params, array(), "POST", "/token/init");
 
         // Refresh token countings cache.

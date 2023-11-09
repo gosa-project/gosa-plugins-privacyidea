@@ -28,16 +28,51 @@ class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
     public $TEMPLATE_PREFIX = "mfatype_webauthn/";
 
     /* VARIABLES WHICH WILL BE NEEDED ACROSS PHASES */
+    /** @var string */
+    private $tokenDescription;
+    /** @var string */
+    private $tokenSerial;
+    /** @var array webAuthnRegisterResponse Object */
+    private $mfaWebAuthnRegisterResponse;
 
     /** @return bool */
     protected function evaluatePhase0()
     {
+        $this->tokenDescription = "";
+        if (isset($_POST["tokenDescription"])) {
+            $this->tokenDescription = $_POST["tokenDescription"];
+            $this->tokenDescription = trim($this->tokenDescription);
+        } else {
+            // Empty descriptions are okay.
+        }
+
         return true;
     }
 
     /** @return bool */
     protected function evaluatePhase1()
     {
+        $tokenSerial = $this->utils->getPOSTTokenSerial();
+        if (!isset($tokenSerial) || empty($tokenSerial)) {
+            msg_dialog::display(
+                _("Internal error"),
+                _("Token serial wasn't given or was given malformed.") . "<br>" .
+                $this->utils->pleaseTryAgainMsg()
+            );
+
+            return false;
+        }
+        $this->tokenSerial = $tokenSerial;
+
+        $this->mfaWebAuthnRegisterResponse = "";
+        if (isset($_POST["mfaWebAuthnRegisterResponse"])) {
+            $mfaWebAuthnRegisterResponse = $_POST["mfaWebAuthnRegisterResponse"];
+            $this->mfaWebAuthnRegisterResponse = json_decode($mfaWebAuthnRegisterResponse, true);
+        } else {
+            // TODO: Error dialog here.
+            return false;
+        }
+
         return true;
     }
 
@@ -76,6 +111,53 @@ class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
             return false;
         }
 
+        $token = $this->utils->enrollTokenStep1(
+            $this->mfaAccount->getUid(),
+            mfaAccount::PI_USER_REALM,
+            "webauthn",
+            $this->tokenDescription
+        );
+
+        if (!isset($token) || empty($token)) {
+            msg_dialog::display(
+                _("Internal error"),
+                _("Couldn't enroll token!") . "<br>" .
+                $this->utils->pleaseTryAgainMsg()
+            );
+
+            return false;
+        }
+
+        if (!isset($token["detail"]["webAuthnRegisterRequest"])) {
+            msg_dialog::display(
+                _("Internal error"),
+                _("PrivacyIDEA server gave invalid/malformed webAuthnRegisterRequest data.") . "<br>" .
+                $this->utils->pleaseTryAgainMsg()
+            );
+
+            return false;
+        } else {
+            // TODO: Make a few sanity checks here.
+        }
+
+        $tokenSerial = $token["detail"]["serial"];
+        $webAuthnRegisterRequest = $token["detail"]["webAuthnRegisterRequest"];
+        // array_walk($webAuthnRegisterRequest, function (&$item, $key) {
+        //     if (is_array($item)) {
+        //         $item = addslashes(json_encode($item));
+        //     }
+        // });
+
+        // Please see: https://privacyidea.readthedocs.io/en/latest/modules/lib/tokentypes/webauthn.html
+        // before trying to debug any of this.
+
+        $this->smarty->assign(
+            "webAuthnRegisterRequestJSON",
+            addslashes(json_encode($webAuthnRegisterRequest))
+        );
+        $this->smarty->assign("tokenSerial", $tokenSerial);
+        $this->smarty->assign("tokenDescription", $this->tokenDescription);
+
         return true;
     }
 
@@ -96,7 +178,50 @@ class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
         //     );
         //     return false;
         // }
+
+        $resultArray = $this->enrollWebAuthnTokenStep2();
+
+        if (!$resultArray["result"]["status"]) {
+            if (isset($resultArray["result"]["error"]["message"])) {
+                msg_dialog::display(
+                    _("Internal error"),
+                    _("Failed to execute step 2 of token enrollment.") . "<br>" .
+                    $this->utils->pleaseTryAgainMsg() . "<br>" .
+                    sprintf(_("PrivacyIDEA server error message: %s"), $resultArray["result"]["error"]["message"])
+                );
+            } else {
+                msg_dialog::display(
+                    _("Internal error"),
+                    _("Failed to execute step 2 of token enrollment.") . "<br>" .
+                    $this->utils->pleaseTryAgainMsg()
+                );
+            }
+            return false;
+        }
+
         return true;
+    }
+
+    /**
+     * Enrolls a PI token with type '$tokentype' in a 2-step-process. Step 2 (verify).
+     * @return array Token array(...)
+     */
+    public function enrollWebAuthnTokenStep2()
+    {
+        $params = array();
+        $params["serial"] = $this->tokenSerial;
+        $params["type"] = "webauthn";
+        $params = array_merge($params, $this->mfaWebAuthnRegisterResponse);
+
+        // Call /token/init again to enroll/verify WebAuthn token.
+        $resultArray = $this->utils->piSendRequest($params, array(), "POST", "/token/init");
+
+        // Refresh token countings cache.
+        // TODO: Use countUserTokens() but refactor it, so that it doesn't require $tokens.
+        //       and it should gather the tokens from endpoint /token/ itself.
+        $this->utils->getTokensOfUser($this->mfaAccount->getUid(), mfaAccount::PI_USER_REALM);
+
+        return $resultArray;
     }
 
     public function getSetupCardIcon()

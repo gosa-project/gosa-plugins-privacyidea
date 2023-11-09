@@ -29,9 +29,6 @@
 </div>
 
 <div class="section">
-    <input type="hidden" id="current_phase" name="current_phase" value="2">
-    <input type="hidden" id="tokenSerial" name="tokenSerial" value="{$tokenSerial}">
-
-    <button class="btn" formnovalidate type="submit">{t}Cancel{/t}</button>
-    <button class="btn primary" name="add_token" value="webauthn" type="submit">{t}Continue{/t}</button>
+    <button class="btn primary" type="submit">{t}Back to overview{/t}
+    </button>
 </div>
