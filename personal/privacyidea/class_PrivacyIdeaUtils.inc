@@ -75,19 +75,19 @@ class PrivacyIdeaUtils implements PILog
         $this->authenticate();
     }
 
-    // public function piDebug($message)
-    // {
-    //     echo "piDebug (" . date("H:i:s") . "): ";
-    //     echo strip_tags("$message");
-    //     echo "<br><br>";
-    // }
+    public function piDebug($message)
+    {
+        echo "piDebug (" . date("H:i:s") . "): ";
+        echo strip_tags("$message");
+        echo "<br><br>";
+    }
 
-    // public function piError($message)
-    // {
-    //     echo "piError (" . date("H:i:s") . "): ";
-    //     echo strip_tags("$message");
-    //     echo "<br><br>";
-    // }
+    public function piError($message)
+    {
+        echo "piError (" . date("H:i:s") . "): ";
+        echo strip_tags("$message");
+        echo "<br><br>";
+    }
 
     /**
      * Requests a authentication token which will be stored in $this->authToken if successful.
