@@ -34,21 +34,9 @@
 </div>
 
 <div class="section">
-{* These hidden inputs should always get send via _POST, so that mfaAccount knows which type of token setup we want. *}
-    <input type="hidden" id="add_token" name="add_token" value="yes">
-    <input type="hidden" id="token_type" name="token_type" value="paper">
     <input type="hidden" id="current_phase" name="current_phase" value="2">
     <input type="hidden" id="tokenSerial" name="tokenSerial" value="{$tokenSerial}">
 
-{* Remove 'add_token' from POST, so that mfaAccount doesn't think we are in a token setup anymore.
- * Which means we return to the mfa intro page. *}
-    <button class="btn" formnovalidate
-        onclick="document.getElementById('add_token').remove();"
-        name="setup_cancel"
-        type="submit">{t}Cancel{/t}
-    </button>
-    <button class="btn primary"
-        name="setup_continue"
-        type="submit">{t}Continue{/t}
-    </button>
+    <button class="btn" formnovalidate type="submit">{t}Cancel{/t}</button>
+    <button class="btn primary" name="add_token" value="paper" type="submit">{t}Continue{/t}</button>
 </div>

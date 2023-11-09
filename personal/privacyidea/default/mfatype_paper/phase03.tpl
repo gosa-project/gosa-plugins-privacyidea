@@ -31,6 +31,6 @@
 </div>
 
 <div class="section">
-    <button class="btn primary" name="setup_continue" type="submit">{t}Back to overview{/t}
+    <button class="btn primary" type="submit">{t}Back to overview{/t}
     </button>
 </div>

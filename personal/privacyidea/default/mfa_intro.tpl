@@ -79,8 +79,6 @@
         </p>
     </div>
 
-    <input type="hidden" id="token_type" name="token_type" value="">
-
     <div class="row">
         {foreach $tokenTypes as $tokenType}
             {render acl=$overrideAllowToken_{$tokenType}_ACL}
@@ -99,10 +97,8 @@
                         {if empty({$mfa_{$tokenType}_limitReachedMessage})}
                             <button
                                 class="btn-small primary"
-                                {* Changing #token_type's value to $tokenType *}
-                                onclick="document.getElementById('token_type').value = '{$tokenType}';"
                                 name="add_token"
-                                value="yes"
+                                value="{$tokenType}"
                                 type="submit"
                             >
                             {$mfa_{$tokenType}_button_text}

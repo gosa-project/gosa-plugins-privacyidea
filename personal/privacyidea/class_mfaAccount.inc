@@ -200,10 +200,7 @@ class mfaAccount extends plugin
         if (in_array_ics('add_token', $array_keys_post)) {
             // Okay, user clicked on a button, which should add a token.
             // Starting MFA setup for this token type now.
-            $token_type = "";
-            if (in_array_ics('token_type', $array_keys_post)) {
-                $token_type = get_post("token_type");
-            }
+            $token_type = get_post("add_token");
 
             // Detect if $token_type is not registered in $mfaTokens.
             // This probably means the user sent some garbage _POST request!
