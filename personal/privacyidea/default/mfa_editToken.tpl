@@ -29,20 +29,20 @@
         <div class="row">
             <div class="input-field col s12 xl6">
                 {render acl=$tokenDescriptionACL}
-                <input type="text" name="tokenDescription" value="{if $tokenDescriptionACL|strstr:"r"}{$token.description}{else}{t}hidden{/t}{/if}"{if !$editEnable} disabled{/if}>
+                <input type="text" name="tokenDescription" value="{if strpos($tokenDescriptionACL, "r") !== false}{$token.description}{else}{t}hidden{/t}{/if}"{if !$editEnable} disabled{/if}>
                 {/render}
                 <label for="tokenDescription">{t}Description{/t}</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12 xl6">
-                <input type="text" name="tokenLastUsed" value="{if $tokenLastUsedACL|strstr:"r"}{$token.info.last_auth}{else}{t}hidden{/t}{/if}" disabled>
+                <input type="text" name="tokenLastUsed" value="{if strpos($tokenLastUsedACL, "r") !== false}{$token.info.last_auth}{else}{t}hidden{/t}{/if}" disabled>
                 <label for="tokenLastUsed">{t}Last use{/t}</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12 xl6">
-                <input type="text" name="tokenActive" value="{if $tokenStatusACL|strstr:"r"}{$token.active}{else}{t}hidden{/t}{/if}" disabled>
+                <input type="text" name="tokenActive" value="{if strpos($tokenStatusACL, "r") !== false}{$token.active}{else}{t}hidden{/t}{/if}" disabled>
                 <label for="tokenActive">{t}Status{/t}</label>
             </div>
         </div>
@@ -66,7 +66,7 @@
         </div>
         <div class="row">
             <div class="input-field col s12 xl6">
-                <input type="text" name="tokenFailedLogins" value="{if $tokenFailCountACL|strstr:"r"}{$token.failcount}{else}{t}hidden{/t}{/if}/{$token.maxfail}" disabled>
+                <input type="text" name="tokenFailedLogins" value="{if strpos($tokenFailCountACL, "r") !== false}{$token.failcount}{else}{t}hidden{/t}{/if}/{$token.maxfail}" disabled>
                 <label for="tokenFailedLogins">{t}Failed login counter (current/max.){/t}</label>
             </div>
         </div>
