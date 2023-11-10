@@ -33,7 +33,7 @@
     <div class="row">
         <div class="input-field col s12">
             <label for="tokenDescription">{t}Description{/t}</label>
-            <input type="text" id="tokenDescription" name="tokenDescription" size="60" maxlength="120">
+            <input type="text" id="tokenDescription" name="tokenDescription" size="60" maxlength="60">
             <span class="helper-text">{t}Please enter a meaningful description allowing you to recognize the used device and app. This description may be edited later.{/t}</span>
         </div>
     </div>
