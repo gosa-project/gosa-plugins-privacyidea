@@ -524,7 +524,10 @@ class mfaAccount extends plugin
         $manageTokens = $this->isCurrentUserUsertab() ? ($this->read_only ? "r" : "rwcdm") : $this->getacl("manageTokens");
         $this->smarty->assign("manageTokensACLorCurrentUser", $manageTokens);
 
-        $tokens = $this->utils->getTokensOfUser($this->getUid(), mfaAccount::PI_USER_REALM);
+        $parentName = is_object($this->parent) ? get_class($this->parent) : "";
+        if ($parentName != "roletabs") {
+            $tokens = $this->utils->getTokensOfUser($this->getUid(), mfaAccount::PI_USER_REALM);
+        }
         $this->smarty->assign("tokens", $tokens);
 
         $this->prepareSetupCards();
