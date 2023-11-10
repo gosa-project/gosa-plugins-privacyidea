@@ -412,6 +412,12 @@ class mfaAccount extends plugin
                 if (isset($_POST["tokenDescription"]) && !empty($_POST["tokenDescription"])) {
                     $tokenDescription = $_POST["tokenDescription"];
                     $tokenDescription = trim($tokenDescription);
+                    // cut off at 60 characters
+                    if (function_exists("mb_substr")) {
+                        $tokenDescription = mb_substr($s, 0, 60, "UTF-8");
+                    } else {
+                        $tokenDescription = substr($s, 0, 60);
+                    }
                 } else {
                     // Empty descriptions are okay.
                 }
