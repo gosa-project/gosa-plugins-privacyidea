@@ -181,7 +181,7 @@ class mfaAccount extends plugin
         plugin::execute();
 
         // Always mark this as an account.
-        if (!$this->is_account && $this->acl_is_writeable()) {
+        if (!$this->is_account && $this->acl_is_createable()) {
             $this->is_account = true;
         }
 
