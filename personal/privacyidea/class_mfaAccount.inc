@@ -719,7 +719,7 @@ class mfaAccount extends plugin
     {
         $privacyidea_settings = array(
             array(
-                "name"        => "PRIVACYIDEA_SERVER_URL",
+                "name"        => "privacyIdeaServerUrl",
                 "type"        => "string",
                 "check"       => "gosaProperty::isString",
                 "group"       => "privacyidea",
@@ -729,7 +729,7 @@ class mfaAccount extends plugin
                 "description" => _("PrivacyIDEA server URL.")
             ),
             array(
-                "name"        => "SERVICE_ACC_USERNAME",
+                "name"        => "serviceAccountUsername",
                 "type"        => "string",
                 "check"       => "gosaProperty::isString",
                 "group"       => "privacyidea",
@@ -739,7 +739,7 @@ class mfaAccount extends plugin
                 "description" => _("PrivacyIDEA service account username. Used to authenticate against PrivacyIDEA.")
             ),
             array(
-                "name"        => "SERVICE_ACC_PASSWORD",
+                "name"        => "serviceAccountPassword",
                 "type"        => "string",
                 "check"       => "gosaProperty::isString",
                 "group"       => "privacyidea",
@@ -749,7 +749,7 @@ class mfaAccount extends plugin
                 "description" => _("PrivacyIDEA service account password. Used to authenticate against PrivacyIDEA.")
             ),
             array(
-                "name"        => "SERVICE_ACC_REALM",
+                "name"        => "serviceAccountRealm",
                 "type"        => "string",
                 "check"       => "gosaProperty::isString",
                 "group"       => "privacyidea",
@@ -762,7 +762,7 @@ class mfaAccount extends plugin
 
         $token_limits = array(
             array(
-                "name"        => "TOKEN_LIMIT_ALL",
+                "name"        => "tokenLimitAll",
                 "type"        => "integer",
                 "check"       => "gosaProperty::isInteger",
                 "group"       => "privacyidea",
@@ -772,7 +772,7 @@ class mfaAccount extends plugin
                 "description" => _("Users are only allowed to link a total of X tokens from the available MFA methods.")
             ),
             array(
-                "name"        => "TOKEN_LIMIT_PAPER",
+                "name"        => "tokenLimitPaper",
                 "type"        => "integer",
                 "check"       => "gosaProperty::isInteger",
                 "group"       => "privacyidea",
@@ -782,7 +782,7 @@ class mfaAccount extends plugin
                 "description" => _("Users are only allowed have a total of X paper tokens.")
             ),
             array(
-                "name"        => "TOKEN_LIMIT_TOTP",
+                "name"        => "tokenLimitTotp",
                 "type"        => "integer",
                 "check"       => "gosaProperty::isInteger",
                 "group"       => "privacyidea",
@@ -792,7 +792,7 @@ class mfaAccount extends plugin
                 "description" => _("Users are only allowed have a total of X TOTP tokens.")
             ),
             array(
-                "name"        => "TOKEN_LIMIT_WEBAUTHN",
+                "name"        => "tokenLimitWebAuthn",
                 "type"        => "integer",
                 "check"       => "gosaProperty::isInteger",
                 "group"       => "privacyidea",
@@ -802,7 +802,7 @@ class mfaAccount extends plugin
                 "description" => _("Users are only allowed have a total of X WebAuthn tokens.")
             ),
             array(
-                "name"        => "TOKEN_LIMIT_REGISTRATION",
+                "name"        => "tokenLimitRegistration",
                 "type"        => "integer",
                 "check"       => "gosaProperty::isInteger",
                 "group"       => "privacyidea",

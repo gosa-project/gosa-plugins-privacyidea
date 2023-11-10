@@ -64,10 +64,10 @@ class PrivacyIdeaUtils implements PILog
 
         $this->GOSA_SETTINGS_GROUP = get_class($mfaAccount);
 
-        $piServerUrl = $this->getConfigStrValue("PRIVACYIDEA_SERVER_URL");
-        $this->authUsername = $this->getConfigStrValue("SERVICE_ACC_USERNAME");
-        $this->authPassword = $this->getConfigStrValue("SERVICE_ACC_PASSWORD");
-        $this->authRealm    = $this->getConfigStrValue("SERVICE_ACC_REALM");
+        $piServerUrl = $this->getConfigStrValue("privacyIdeaServerUrl");
+        $this->authUsername = $this->getConfigStrValue("serviceAccountUsername");
+        $this->authPassword = $this->getConfigStrValue("serviceAccountPassword");
+        $this->authRealm    = $this->getConfigStrValue("serviceAccountRealm");
 
         $this->pi = new PrivacyIDEA($_SERVER['HTTP_USER_AGENT'], $piServerUrl);
         // $this->pi->logger = $this; // Needs $this->piDebug() and $this->piError().

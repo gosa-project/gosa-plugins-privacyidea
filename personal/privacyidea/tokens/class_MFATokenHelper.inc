@@ -123,11 +123,11 @@ class MFATokenHelper
         }
 
         // Get limits
-        $tokenLimitAll               = $this->utils->getConfigIntValue("TOKEN_LIMIT_ALL");
-        $tokenLimits["paper"]        = $this->utils->getConfigIntValue("TOKEN_LIMIT_PAPER");
-        $tokenLimits["totp"]         = $this->utils->getConfigIntValue("TOKEN_LIMIT_TOTP");
-        $tokenLimits["webauthn"]     = $this->utils->getConfigIntValue("TOKEN_LIMIT_WEBAUTHN");
-        $tokenLimits["registration"] = $this->utils->getConfigIntValue("TOKEN_LIMIT_REGISTRATION");
+        $tokenLimitAll               = $this->utils->getConfigIntValue("tokenLimitAll");
+        $tokenLimits["paper"]        = $this->utils->getConfigIntValue("tokenLimitPaper");
+        $tokenLimits["totp"]         = $this->utils->getConfigIntValue("tokenLimitTotp");
+        $tokenLimits["webauthn"]     = $this->utils->getConfigIntValue("tokenLimitWebAuthn");
+        $tokenLimits["registration"] = $this->utils->getConfigIntValue("tokenLimitRegistration");
         assert(in_array($tokenType, array_keys($tokenLimits)));
 
         /* START COMPARISONS */
