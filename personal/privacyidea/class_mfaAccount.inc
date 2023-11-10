@@ -371,10 +371,10 @@ class mfaAccount extends plugin
          * allowed via ACLs
          */
         $tokenTypesAcls = array(
-            "paper"        => "tokenPaper",
-            "registration" => "tokenRegistration",
-            "webauthn"     => "tokenWebAuthn",
-            "totp"         => "tokenTotp",
+            "paper"        => "addTokenPaper",
+            "registration" => "addTokenRegistration",
+            "webauthn"     => "addTokenWebAuthn",
+            "totp"         => "addTokenTotp",
         );
         $overrideTokenTypes = [];
         foreach ($this->mfaTokens as $tokenType => $value) {
@@ -705,21 +705,21 @@ class mfaAccount extends plugin
             "plProperties"   => $properties,
             "plRequirements" => array ('onFailureDisablePlugin' => array (get_class())),
             "plProvidedAcls" => array (
-                "allowedTokenTypes" => _("MFA token types"),
-                "mfaRequired"       => _("Require MFA"),
-                "manageTokens"      => _("Manage tokens of users"),
-                "tokenPaper"        => _("TAN list"),
-                "tokenRegistration" => _("Recovery key"),
-                "tokenWebAuthn"     => _("Security key"),
-                "tokenTotp"         => _("Authentication app (TOTP)"),
-                "tokenDescription"  => _("Description"),
-                "tokenLastUsed"     => _("Last use"),
-                "tokenFailCount"    => _("Failed login counter"),
-                "tokenStatus"       => _("Status"),
-                "tokenRevocation"   => _("Revocation allowed"),
-                "tokenRemoval"      => _("Removal allowed"),
+                "allowedTokenTypes"    => _("MFA token types"),
+                "mfaRequired"          => _("Require MFA"),
+                "manageTokens"         => _("Manage tokens of users"),
+                "addTokenPaper"        => _("Add TAN list"),
+                "addTokenRegistration" => _("Add Recovery key"),
+                "addTokenWebAuthn"     => _("Add Security key"),
+                "addTokenTotp"         => _("Add Authentication app (TOTP)"),
+                "tokenDescription"     => _("Description"),
+                "tokenLastUsed"        => _("Last use"),
+                "tokenFailCount"       => _("Failed login counter"),
+                "tokenStatus"          => _("Status"),
+                "tokenRevocation"      => _("Revocation allowed"),
+                "tokenRemoval"         => _("Removal allowed"),
             ),
-            // TODO: Outsource ACLs overrideAllowToken_* to MFAToken classes!!
+            // TODO: Outsource addToken* ACLs into the specific MFAToken class (Create getACLInformation() func?)
         ));
     }
 
