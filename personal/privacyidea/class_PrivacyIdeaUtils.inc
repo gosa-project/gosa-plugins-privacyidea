@@ -71,8 +71,6 @@ class PrivacyIdeaUtils implements PILog
 
         $this->pi = new PrivacyIDEA($_SERVER['HTTP_USER_AGENT'], $piServerUrl);
         // $this->pi->logger = $this; // Needs $this->piDebug() and $this->piError().
-
-        $this->authenticate();
     }
 
     public function piDebug($message)
@@ -176,6 +174,10 @@ class PrivacyIdeaUtils implements PILog
         assert('string' === gettype($description));
         assert($tokenType == "paper" || $tokenType == "totp" || $tokenType == "webauthn");
 
+        if (!$this->authenticate()) {
+            return array();
+        }
+
         if ($tokenType != "webauthn") {
             $params["genkey"] = true;
         }
@@ -223,6 +225,10 @@ class PrivacyIdeaUtils implements PILog
         assert(!empty($tokenSerial));
         assert(!empty($tokenCode));
         assert($tokenType == "paper" || $tokenType == "totp");
+
+        if (!$this->authenticate()) {
+            return array("results" => array("status" => false));
+        }
 
         $params = array();
 
