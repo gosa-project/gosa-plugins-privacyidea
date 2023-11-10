@@ -521,8 +521,8 @@ class mfaAccount extends plugin
 
         $this->smarty->assign("allTokenTypes", array_keys($this->mfaTokens));
 
-        $mfaRequiredByUser = $this->isCurrentUserUsertab() ? ($this->read_only ? "r" : "rwcdm") : $this->getacl("mfaRequired");
-        $this->smarty->assign("mfaRequiredACLorCurrentUser", $mfaRequiredByUser);
+        $mfaRequiredByUser = $this->isCurrentUserUsertab() ? ($this->read_only ? "r" : "rwcdm") : $this->getacl("mfaRequiredByUser");
+        $this->smarty->assign("mfaRequiredByUserACLorCurrentUser", $mfaRequiredByUser);
 
         $manageTokens = $this->isCurrentUserUsertab() ? ($this->read_only ? "r" : "rwcdm") : $this->getacl("manageTokens");
         $this->smarty->assign("manageTokensACLorCurrentUser", $manageTokens);
@@ -561,8 +561,8 @@ class mfaAccount extends plugin
 
         // If user clicked save settings button.
         if (isset($_POST['edit_apply'])) {
-            $mfaRequiredByRule = $this->acl_is_writeable("mfaRequired") ? isset($_POST['mfaRequiredByRule']) : null;
-            $mfaRequiredByUser = $this->isCurrentUserUsertab() || $this->acl_is_writeable("mfaRequired") ? isset($_POST['mfaRequiredByUser']) : null;
+            $mfaRequiredByRule = $this->acl_is_writeable("mfaRequiredByRule") ? isset($_POST['mfaRequiredByRule']) : null;
+            $mfaRequiredByUser = $this->isCurrentUserUsertab() || $this->acl_is_writeable("mfaRequiredByUser") ? isset($_POST['mfaRequiredByUser']) : null;
             $this->updateAttrsMfaRequired($mfaRequiredByRule, $mfaRequiredByUser);
 
             if ($this->acl_is_writeable("allowedTokenTypes") && isset($_POST['allowedTokenTypes[]']) && is_array($_POST['allowedTokenTypes[]'])) {
@@ -706,7 +706,8 @@ class mfaAccount extends plugin
             "plRequirements" => array ('onFailureDisablePlugin' => array (get_class())),
             "plProvidedAcls" => array (
                 "allowedTokenTypes"    => _("MFA token types"),
-                "mfaRequired"          => _("Require MFA"),
+                "mfaRequiredByRule"    => _("Require MFA due to organizational policy"),
+                "mfaRequiredByUser"    => _("Require MFA due to user preference"),
                 "manageTokens"         => _("Manage tokens of users"),
                 "addTokenPaper"        => _("Add TAN list"),
                 "addTokenRegistration" => _("Add Recovery key"),

@@ -33,17 +33,17 @@
     </p>
 </div>
 
-{render acl=$mfaRequiredACL}
+{render acl=$mfaRequiredByRuleACL}
 <div class="row">
     <div class="col">
         <label>
-            <input name="mfaRequiredByRule" type="checkbox" {if $mfaRequiredByRule == "checked"}checked{/if}{if $parent != "roletabs"} disabled{/if}>
+            <input name="mfaRequiredByRule" type="checkbox" {if $mfaRequiredByRule == "checked"}checked{/if}>
             <span>{t}Additional factors required by organizational policy.{/t}</span>
         </label>
     </div>
 </div>
 {/render}
-{render acl=$mfaRequiredACLorCurrentUser}
+{render acl=$mfaRequiredByUserACLorCurrentUser}
 <div class="row">
     <div class="col">
         <label>
