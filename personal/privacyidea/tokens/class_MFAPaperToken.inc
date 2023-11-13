@@ -140,11 +140,6 @@ class MFAPaperToken extends MFATokenHelper implements MFAToken
             $this->tokenDescription
         );
 
-        $this->needsVerifying = "";
-        if ($token["detail"]["rollout_state"] == "verify") {
-            $this->needsVerifying = $token["detail"]["serial"];
-        }
-
         if (!isset($token) || empty($token)) {
             msg_dialog::display(
                 _("Internal error"),
@@ -153,6 +148,11 @@ class MFAPaperToken extends MFATokenHelper implements MFAToken
             );
 
             return false;
+        }
+
+        $this->needsVerifying = "";
+        if ($token["detail"]["rollout_state"] == "verify") {
+            $this->needsVerifying = $token["detail"]["serial"];
         }
 
         $tokenSerial  = $token["detail"]["serial"];
