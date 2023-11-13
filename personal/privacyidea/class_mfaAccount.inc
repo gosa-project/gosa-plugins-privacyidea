@@ -481,6 +481,9 @@ class mfaAccount extends plugin
     {
         $tokenSerial = $this->utils->getPOSTTokenSerial();
         $tokens = $this->utils->getTokensOfUser($this->getUid(), mfaAccount::PI_USER_REALM, $tokenSerial);
+        if (empty($tokens)) {
+            return $this->getMFAIntroTemplate();
+        }
         $token = $tokens[0]; // We only want to execute an action on ONE token.
 
         $editEnable = false;
