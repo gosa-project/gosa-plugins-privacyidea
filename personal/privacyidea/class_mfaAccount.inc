@@ -261,6 +261,47 @@ class mfaAccount extends plugin
             }
 
             return $this->getTokenEditTemplate($mfaTokenAction);
+        } elseif (in_array_ics('mfaTokenBatchAction', $array_keys_post)) {
+            if (!$this->acl_is_writeable("manageTokens")) {
+                msg_dialog::display(
+                    _("Insufficient permissions"),
+                    _("You are not allowed to manage factors.") . "<br>" .
+                    $this->utils->pleaseTryAgainMsg()
+                );
+
+                return $this->getMFAIntroTemplate();
+            }
+
+            $mfaTokenAction = $_POST["mfaTokenBatchAction"] ?? null;
+            switch ($mfaTokenAction) {
+            case 'mfaTokenResetCounter': // FALLTHROUGH
+            case 'mfaTokenDisable':      // FALLTHROUGH
+            case 'mfaTokenEnable':       // FALLTHROUGH
+            case 'mfaTokenRevoke':       // FALLTHROUGH
+            case 'mfaTokenRemove':
+                break;
+            default:
+                // invalid action
+                return $this->getMFAIntroTemplate();
+            }
+
+            $mfaTokenSerials = [];
+            if (isset($_POST['mfaTokenSerials']) && is_array($_POST['mfaTokenSerials'])) {
+                $mfaTokenSerials = $_POST['mfaTokenSerials'];
+                array_filter($mfaTokenSerials, $this->utils->isTokenSerialValid);
+            }
+            foreach ($mfaTokenSerials as $mfaTokenSerial) {
+                // Stop on first error
+                if (!$this->executeTokenAction($mfaTokenAction, $mfaTokenSerial)) {
+                    msg_dialog::display(
+                        _("Internal error"),
+                        sprintf(_("A batch operation failed on token '%s'. Skipping remaining operations."), $mfaTokenSerial) . "<br>" .
+                        $this->utils->pleaseTryAgainMsg()
+                    );
+                    break;
+                }
+            }
+            return $this->getMFAIntroTemplate();
         }
 
         // Either return template from a setup class or the MFA intro.
@@ -393,6 +434,7 @@ class mfaAccount extends plugin
      * - mfaTokenEnable
      * - mfaTokenRevoke
      * - mfaTokenRemove
+     * @return bool Wether the action succeeded
      */
     private function executeTokenAction($mfaTokenAction, $tokenSerial)
     {
@@ -425,7 +467,7 @@ class mfaAccount extends plugin
 
                 $this->utils->piSendRequest($params, array(), "POST", "/token/description");
 
-                return;
+                return true;
 
             case 'mfaTokenResetCounter':
                 if (!$this->acl_is_writeable("tokenFailCount")) {
@@ -433,7 +475,7 @@ class mfaAccount extends plugin
                 }
 
                 $this->utils->piSendRequest(array(), array(), "POST", "/token/reset/" . $tokenSerial);
-                return;
+                return true;
 
             case 'mfaTokenDisable':
                 if (!$this->acl_is_writeable("tokenStatus")) {
@@ -441,7 +483,7 @@ class mfaAccount extends plugin
                 }
 
                 $this->utils->piSendRequest(array(), array(), "POST", "/token/disable/" . $tokenSerial);
-                return;
+                return true;
 
             case 'mfaTokenEnable':
                 if (!$this->acl_is_writeable("tokenStatus")) {
@@ -449,7 +491,7 @@ class mfaAccount extends plugin
                 }
 
                 $this->utils->piSendRequest(array(), array(), "POST", "/token/enable/" . $tokenSerial);
-                return;
+                return true;
 
             case 'mfaTokenRevoke':
                 if (!$this->acl_is_writeable("tokenRevocation")) {
@@ -457,7 +499,7 @@ class mfaAccount extends plugin
                 }
 
                 $this->utils->piSendRequest(array(), array(), "POST", "/token/revoke/" . $tokenSerial);
-                return;
+                return true;
 
             case 'mfaTokenRemove':
                 if (!$this->acl_is_writeable("tokenRemoval")) {
@@ -465,7 +507,7 @@ class mfaAccount extends plugin
                 }
 
                 $this->utils->piSendRequest(array(), array(), "DELETE", "/token/" . $tokenSerial);
-                return;
+                return true;
         }
 
         // mfaTokenAction is malformed or not implemented yet.
