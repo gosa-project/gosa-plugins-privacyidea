@@ -598,8 +598,8 @@ class mfaAccount extends plugin
             $mfaRequiredByUser = $this->acl_is_writeable("mfaRequiredByUser") ? isset($_POST['mfaRequiredByUser']) : null;
             $this->updateAttrsMfaRequired($mfaRequiredByRule, $mfaRequiredByUser);
 
-            if ($this->acl_is_writeable("allowedTokenTypes") && isset($_POST['allowedTokenTypes[]']) && is_array($_POST['allowedTokenTypes[]'])) {
-                $this->updateAttrsAllowedTokenTypes($_POST['allowedTokenTypes[]']);
+            if ($this->acl_is_writeable("allowedTokenTypes") && isset($_POST['allowedTokenTypes']) && is_array($_POST['allowedTokenTypes'])) {
+                $this->updateAttrsAllowedTokenTypes($_POST['allowedTokenTypes']);
             }
         }
     }
