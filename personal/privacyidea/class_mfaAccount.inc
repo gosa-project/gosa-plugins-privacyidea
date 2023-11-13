@@ -163,15 +163,6 @@ class mfaAccount extends plugin
     }
 
     /**
-     * Check whether the currently logged in user is on his own usertab
-     */
-    private function isCurrentUserUsertab()
-    {
-        $parentName = is_object($this->parent) ? get_class($this->parent) : "";
-        return $parentName == "usertabs" && $this->ui->dn == $this->parent->dn;
-    }
-
-    /**
      * Executes plugin logic, control flow, renders template, etc...
      * @return string Complete template, ideally loaded by Smarty to display to the user.
      */
@@ -212,7 +203,7 @@ class mfaAccount extends plugin
         $editToken = null;
         $array_keys_post = array_keys($_POST);
         if (in_array_ics('add_token', $array_keys_post)) {
-            if (!$this->isCurrentUserUsertab() && !$this->acl_is_writeable("manageTokens")) {
+            if (!$this->acl_is_writeable("manageTokens")) {
                 $setup = null;
                 msg_dialog::display(
                     _("Insufficient permissions"),
@@ -242,7 +233,7 @@ class mfaAccount extends plugin
 
             $setup = $this->mfaTokens[$token_type];
         } elseif (in_array_ics('mfaTokenAction', $array_keys_post)) {
-            if (!$this->isCurrentUserUsertab() || !$this->acl_is_writable("manageTokens")) {
+            if (!$this->acl_is_writable("manageTokens")) {
                 msg_dialog::display(
                     _("Insufficient permissions"),
                     _("You are not allowed to manage factors.") . "<br>" .
@@ -521,12 +512,6 @@ class mfaAccount extends plugin
 
         $this->smarty->assign("allTokenTypes", array_keys($this->mfaTokens));
 
-        $mfaRequiredByUser = $this->isCurrentUserUsertab() ? ($this->read_only ? "r" : "rwcdm") : $this->getacl("mfaRequiredByUser");
-        $this->smarty->assign("mfaRequiredByUserACLorCurrentUser", $mfaRequiredByUser);
-
-        $manageTokens = $this->isCurrentUserUsertab() ? ($this->read_only ? "r" : "rwcdm") : $this->getacl("manageTokens");
-        $this->smarty->assign("manageTokensACLorCurrentUser", $manageTokens);
-
         $parentName = is_object($this->parent) ? get_class($this->parent) : "";
         if ($parentName != "roletabs") {
             $tokens = $this->utils->getTokensOfUser($this->getUid(), mfaAccount::PI_USER_REALM);
@@ -562,7 +547,7 @@ class mfaAccount extends plugin
         // If user clicked save settings button.
         if (isset($_POST['edit_apply'])) {
             $mfaRequiredByRule = $this->acl_is_writeable("mfaRequiredByRule") ? isset($_POST['mfaRequiredByRule']) : null;
-            $mfaRequiredByUser = $this->isCurrentUserUsertab() || $this->acl_is_writeable("mfaRequiredByUser") ? isset($_POST['mfaRequiredByUser']) : null;
+            $mfaRequiredByUser = $this->acl_is_writeable("mfaRequiredByUser") ? isset($_POST['mfaRequiredByUser']) : null;
             $this->updateAttrsMfaRequired($mfaRequiredByRule, $mfaRequiredByUser);
 
             if ($this->acl_is_writeable("allowedTokenTypes") && isset($_POST['allowedTokenTypes[]']) && is_array($_POST['allowedTokenTypes[]'])) {

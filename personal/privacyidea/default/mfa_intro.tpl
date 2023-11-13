@@ -43,7 +43,7 @@
     </div>
 </div>
 {/render}
-{render acl=$mfaRequiredByUserACLorCurrentUser}
+{render acl=$mfaRequiredByUserACL}
 <div class="row">
     <div class="col">
         <label>
@@ -88,7 +88,7 @@
 
 
 {if $parent == "usertabs"}
-{render acl=$manageTokensACLorCurrentUser}
+{render acl=$manageTokensACL}
 <hr class="divider">
 <h2>{t}Add new multifactor token{/t}</h2>
 {if count($tokenTypes) > 0}
