@@ -174,9 +174,8 @@
             </thead>
             <tbody>
                 {foreach from=$tokens key=$key item=$token}
-                    <form method="post">
                     {* Indicate mfaAccount that we want to execute an action on a token *}
-                    <input type="hidden" id="tokenSerial" name="tokenSerial" value="{$token.serial}">
+                    <input type="hidden" name="tokenSerial" value="{$token.serial}">
                     <input type="hidden" name="php_c_check" value="1">
                     <tr>
                         <td><input type="checkbox"></td>
@@ -233,7 +232,6 @@
                             {/render}
                         </td>
                     </tr>
-                    </form>
                 {/foreach}
             </tbody>
         </table>
