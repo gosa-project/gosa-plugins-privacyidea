@@ -321,15 +321,17 @@ class PrivacyIdeaUtils implements PILog
     }
 
     /** @return string Token serial */
+    public function isTokenSerialValid($tokenSerial)
+    {
+        // TODO: Make sure its a real token (sanitize it).
+        return !empty($tokenSerial) && is_string($tokenSerial);
+    }
+
+    /** @return string Token serial */
     public function getPOSTTokenSerial()
     {
-        $tokenSerial = null;
-        if (isset($_POST["tokenSerial"])) {
-            // TODO: Make sure its a real token (sanitize it).
-            $tokenSerial = $_POST["tokenSerial"];
-        }
-
-        return $tokenSerial;
+        $tokenSerial = $_POST["tokenSerial"] ?? null;
+        return $this->isTokenSerialValid($tokenSerial) ? $tokenSerial : null;
     }
 
     /**

@@ -156,13 +156,37 @@
 
 <hr class="divider">
 <h2>{t}Associated multifactor methods{/t}</h2>
-<div class="row">
     {if count($tokens) > 0}
-        <div class="col-md-12 col-xl-9">
-        <table class="table">
+    <div class="row">
+        <div class="col s2">
+            <fieldset id="mfaBatchOperation" style="border: none; padding: 0; margin: 0;">
+                <div class="input-field">
+                    <select id="mfaTokenBatchAction" name="mfaTokenBatchAction">
+                        <option value="" disabled selected>{t}Choose an action{/t}</option>
+                        {render acl=$tokenFailCountACL}
+                        <option value="mfaTokenResetCounter">{t}Reset error counter{/t}</option>
+                        {/render}
+                        {render acl=$tokenStatusACL}
+                        <option value="mfaTokenEnable">{t}Activate{/t}</option>
+                        <option value="mfaTokenDisable">{t}Deactivate{/t}</option>
+                        {/render}
+                        {render acl=$tokenRevocationACL}
+                        <option value="mfaTokenRevoke">{t}Revoke{/t}</option>
+                        {/render}
+                        {render acl=$tokenRemovalACL}
+                        <option value="mfaTokenRemove">{t}Remove{/t}</option>
+                        {/render}
+                    </select>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+        <table class="table" id="mfaTokenList">
             <thead>
                 <tr>
-                    <th style="width: 2%" ><input type="checkbox"></th>
+                    <th style="width: 2%" ><label><input type="checkbox" id="mfaTokensSelectAll"><span></span></label></th>
                     <th style="width: 5%" >{t}ID{/t}</th>
                     <th style="width: 20%">{t}Type{/t}</th>
                     <th>{t}Description{/t}</th>
@@ -178,7 +202,7 @@
                     <input type="hidden" name="tokenSerial" value="{$token.serial}">
                     <input type="hidden" name="php_c_check" value="1">
                     <tr>
-                        <td><input type="checkbox"></td>
+                        <td><label><input type="checkbox" name="mfaTokenSerials[]" value="{$token.serial}"><span></span></label></td>
                         <td><button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenView">{$token.serial}</button></td>
                         <td>
                             {* TODO: Refactor getSetupCard{Icon,Title}, also mfa{tokenType}_{icon,title}.
@@ -236,9 +260,33 @@
             </tbody>
         </table>
         </div>
+    </div>
+<script>
+(() => {
+function updateMfaBatchOperation()
+{
+    document.querySelector("#mfaBatchOperation").disabled =
+        document.querySelectorAll("input[name='mfaTokenSerials[]']:checked").length === 0;
+}
+
+document.querySelector("#mfaTokenList").addEventListener("change", (e) => {
+    if (e.target.id === "mfaTokensSelectAll") {
+        for (el of document.querySelectorAll("input[name='mfaTokenSerials[]']")) {
+            el.checked = e.target.checked;
+        }
+    } else if (e.target.name === "mfaTokenSerials[]") {
+        document.querySelector("#mfaTokensSelectAll").checked = false;
+    }
+    updateMfaBatchOperation();
+});
+document.querySelector("#mfaBatchOperation").addEventListener("change", (e) => {
+    e.target.form.submit();
+});
+updateMfaBatchOperation();
+})();
+</script>
     {else}
-        <span>{t}Currently there are no multifactor methods associated.{/t}</span>
+        <p>{t}Currently there are no multifactor methods associated.{/t}</p>
     {/if}
-</div>
 {/render}
 {/if}
