@@ -408,7 +408,7 @@ function startWebAuthnSetup() {
             <p>{t}Your browser or operating system will guide you through the setup of the security key.{/t}</p>
 
             <ol>
-                <li>{t}Connect your security key to your computer, e.g. plug it into a USB port or place it near the computer&apos;s NFC reader.{/t}</li>
+                <li>{t}Connect your security key to your computer, e.g. plug it into a USB port or place it near the computer's NFC reader.{/t}</li>
                 <li>{t}Initiate the setup by pressing the button below.{/t}</li>
                 <li>{t}Confirm the setup using a device-specific mechanism, e.g. by touching a sensor on the key.{/t}</li>
                 <li>{t}The browser will proceed to the next page if the setup has been sucessful.{/t}</li>

@@ -233,7 +233,7 @@ class mfaAccount extends plugin
 
             $setup = $this->mfaTokens[$token_type];
         } elseif (in_array_ics('mfaTokenAction', $array_keys_post)) {
-            if (!$this->acl_is_writable("manageTokens")) {
+            if (!$this->acl_is_writeable("manageTokens")) {
                 msg_dialog::display(
                     _("Insufficient permissions"),
                     _("You are not allowed to manage factors.") . "<br>" .
@@ -395,7 +395,7 @@ class mfaAccount extends plugin
 
         switch ($mfaTokenAction) {
             case 'mfaTokenSave':
-                if (!$this->acl_is_writable("tokenDescription")) {
+                if (!$this->acl_is_writeable("tokenDescription")) {
                     break;
                 }
 
@@ -422,7 +422,7 @@ class mfaAccount extends plugin
                 return;
 
             case 'mfaTokenResetCounter':
-                if (!$this->acl_is_writable("tokenFailCount")) {
+                if (!$this->acl_is_writeable("tokenFailCount")) {
                     break;
                 }
 
@@ -430,7 +430,7 @@ class mfaAccount extends plugin
                 return;
 
             case 'mfaTokenDisable':
-                if (!$this->acl_is_writable("tokenStatus")) {
+                if (!$this->acl_is_writeable("tokenStatus")) {
                     break;
                 }
 
@@ -438,7 +438,7 @@ class mfaAccount extends plugin
                 return;
 
             case 'mfaTokenEnable':
-                if (!$this->acl_is_writable("tokenStatus")) {
+                if (!$this->acl_is_writeable("tokenStatus")) {
                     break;
                 }
 
@@ -446,7 +446,7 @@ class mfaAccount extends plugin
                 return;
 
             case 'mfaTokenRevoke':
-                if (!$this->acl_is_writable("tokenRevocation")) {
+                if (!$this->acl_is_writeable("tokenRevocation")) {
                     break;
                 }
 
@@ -454,7 +454,7 @@ class mfaAccount extends plugin
                 return;
 
             case 'mfaTokenRemove':
-                if (!$this->acl_is_writable("tokenRemoval")) {
+                if (!$this->acl_is_writeable("tokenRemoval")) {
                     break;
                 }
 
