@@ -261,6 +261,13 @@ class mfaAccount extends plugin
             case 'mfaTokenDisable':      // FALLTHROUGH
             case 'mfaTokenRevoke':       // FALLTHROUGH
             case 'mfaTokenRemove':
+                $tokens = $this->utils->getTokensOfUser($this->getUid(), $this->userRealm);
+                $activeTokenSerials = $this->utils->getActiveTokenSerials($tokens);
+                if (count(array_diff($activeTokenSerials, array($tokenSerial))) == 0) {
+                    // prevent user from locking himself out
+                    return $this->getMFAIntroTemplate();
+                }
+
                 if (!isset($_POST['mfaTokenActionConfirm'])) {
                     // not confirmed yet by user
                     return $this->getMFAConfirmTemplate($mfaTokenAction, $tokenSerial);
@@ -303,6 +310,13 @@ class mfaAccount extends plugin
             case 'mfaTokenDisable':      // FALLTHROUGH
             case 'mfaTokenRevoke':       // FALLTHROUGH
             case 'mfaTokenRemove':
+                $tokens = $this->utils->getTokensOfUser($this->getUid(), $this->userRealm);
+                $activeTokenSerials = $this->utils->getActiveTokenSerials($tokens);
+                if (count(array_diff($activeTokenSerials, $mfaTokenSerials)) == 0) {
+                    // prevent user from locking himself out
+                    return $this->getMFAIntroTemplate();
+                }
+
                 if (!isset($_POST['mfaTokenActionConfirm'])) {
                     // not confirmed yet by user
                     return $this->getMFAConfirmTemplate($mfaTokenAction, $mfaTokenSerials);
@@ -591,6 +605,7 @@ class mfaAccount extends plugin
             $tokens = $this->utils->getTokensOfUser($this->getUid(), $this->userRealm);
         }
         $this->smarty->assign("tokens", $tokens);
+        $this->smarty->assign("activeTokenSerials", $this->utils->getActiveTokenSerials($tokens));
 
         $this->prepareSetupCards();
 

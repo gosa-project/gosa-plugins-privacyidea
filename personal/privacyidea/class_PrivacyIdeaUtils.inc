@@ -320,6 +320,21 @@ class PrivacyIdeaUtils implements PILog
         return $tokens;
     }
 
+    /**
+      * @param  array tokens obtained via getTokensOfUser()
+      * @return array serials of active tokens
+      */
+    public function getActiveTokenSerials($tokens)
+    {
+        return array_reduce($tokens, function ($result, $token) {
+            if (!(isset($token["rollout_state"]) && $token["rollout_state"] == "verify") &&
+                !(isset($token["locked"]) && $token["locked"]) && $token["active"]) {
+                $result[] = $token["serial"];
+            }
+            return $result;
+        },  []);
+    }
+
     /** @return string Token serial */
     public function isTokenSerialValid($tokenSerial)
     {

@@ -267,6 +267,23 @@ function updateMfaBatchOperation()
         document.querySelectorAll("input[name='mfaTokenSerials[]']:checked").length === 0;
 }
 
+function isTokenActionAllowed(action, tokenSerials) {
+    switch (action) {
+    case "mfaTokenDisable": // FALLTHROUGH
+    case "mfaTokenRevoke":  // FALLTHROUGH
+    case "mfaTokenRemove":
+        let activeTokenCount = ACTIVE_TOKEN_SERIALS.size;
+        for (tokenSerial of tokenSerials) {
+            if (ACTIVE_TOKEN_SERIALS.has(tokenSerial)) {
+                activeTokenCount--;
+            }
+        }
+        return activeTokenCount > 0;
+    default:
+        return true;
+    }
+}
+
 document.querySelector("#mfaTokenList").addEventListener("change", (e) => {
     if (e.target.id === "mfaTokensSelectAll") {
         for (el of document.querySelectorAll("input[name='mfaTokenSerials[]']")) {
@@ -277,9 +294,35 @@ document.querySelector("#mfaTokenList").addEventListener("change", (e) => {
     }
     updateMfaBatchOperation();
 });
+
 document.querySelector("#mfaBatchOperation").addEventListener("change", (e) => {
+    let data = new FormData(document.forms.mainform);
+    let tokenSerials = new Set(data.getAll("mfaTokenSerials[]"));
+    if (!isTokenActionAllowed(e.target.value, tokenSerials)) {
+        document.querySelector("#mfaTokenBatchAction").value = "";
+        alert("{t}At least one token needs to remain active.{/t}");
+        return;
+    }
+
     e.target.form.submit();
 });
+
+document.forms.mainform.addEventListener("submit", (e) => {
+    let data = new FormData(document.forms.mainform);
+    let tokenSerials = new Set([data.get("tokenSerial")]);
+    if (e.submitter.name === "mfaTokenAction" && !isTokenActionAllowed(e.submitter.value, tokenSerials)) {
+        e.preventDefault();
+        alert("{t}At least one token needs to remain active.{/t}");
+        return;
+    }
+});
+
+const ACTIVE_TOKEN_SERIALS = new Set([
+{foreach $activeTokenSerials as $tokenSerial}
+    "{$tokenSerial}",
+{/foreach}
+]);
+
 updateMfaBatchOperation();
 })();
 </script>
