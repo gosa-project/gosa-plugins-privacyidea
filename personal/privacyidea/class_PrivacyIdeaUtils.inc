@@ -206,7 +206,7 @@ class PrivacyIdeaUtils implements PILog
         // Refresh token countings cache.
         // TODO: Use countUserTokens() but refactor it, so that it doesn't require $tokens.
         //       and it should gather the tokens from endpoint /token/ itself.
-        $this->getTokensOfUser($this->mfaAccount->getUid(), mfaAccount::PI_USER_REALM);
+        $this->getTokensOfUser($this->mfaAccount->getUid(), $this->mfaAccount->userRealm);
 
         return $requestAnswer;
     }
@@ -252,7 +252,7 @@ class PrivacyIdeaUtils implements PILog
         // Refresh token countings cache.
         // TODO: Use countUserTokens() but refactor it, so that it doesn't require $tokens.
         //       and it should gather the tokens from endpoint /token/ itself.
-        $this->getTokensOfUser($this->mfaAccount->getUid(), mfaAccount::PI_USER_REALM);
+        $this->getTokensOfUser($this->mfaAccount->getUid(), $this->mfaAccounts->userRealm);
 
         return $resultArray;
     }

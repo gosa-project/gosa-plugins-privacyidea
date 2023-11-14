@@ -60,7 +60,7 @@ class mfaAccount extends plugin
     private $ldapinfo = null;
 
     /** @var string Used to find users in PrivacyIDEA */
-    public const PI_USER_REALM = "nwt-ldap";
+    public $userRealm;
 
     public function __construct(&$config, $dn = null)
     {
@@ -73,6 +73,8 @@ class mfaAccount extends plugin
 
         // Initialize utils class
         $this->utils = new PrivacyIdeaUtils($this);
+
+        $this->userRealm = $this->utils->getConfigStrValue("piUserRealm");
 
         // Initialize LDAP
         $this->ldap = $this->config->get_ldap_link();
@@ -481,7 +483,7 @@ class mfaAccount extends plugin
     private function getTokenEditTemplate($mfaTokenAction)
     {
         $tokenSerial = $this->utils->getPOSTTokenSerial();
-        $tokens = $this->utils->getTokensOfUser($this->getUid(), mfaAccount::PI_USER_REALM, $tokenSerial);
+        $tokens = $this->utils->getTokensOfUser($this->getUid(), $this->userRealm, $tokenSerial);
         if (empty($tokens)) {
             return $this->getMFAIntroTemplate();
         }
@@ -518,7 +520,7 @@ class mfaAccount extends plugin
 
         $parentName = is_object($this->parent) ? get_class($this->parent) : "";
         if ($parentName != "roletabs") {
-            $tokens = $this->utils->getTokensOfUser($this->getUid(), mfaAccount::PI_USER_REALM);
+            $tokens = $this->utils->getTokensOfUser($this->getUid(), $this->userRealm);
         }
         $this->smarty->assign("tokens", $tokens);
 
@@ -759,6 +761,16 @@ class mfaAccount extends plugin
                 "migrate"     => "",
                 "mandatory"   => true,
                 "description" => _("PrivacyIDEA service account realm. Used to authenticate against PrivacyIDEA.")
+            ),
+            array(
+                "name"        => "piUserRealm",
+                "type"        => "string",
+                "check"       => "gosaProperty::isString",
+                "group"       => "privacyidea",
+                "default"     => "defrealm",
+                "migrate"     => "",
+                "mandatory"   => true,
+                "description" => _("PrivacyIDEA user realm. Used to find users in PrivacyIDEA.")
             ),
         );
 

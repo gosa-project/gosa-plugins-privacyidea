@@ -113,7 +113,7 @@ class MFATokenHelper
         if (!isset($this->utils->tokenCounts) || empty($this->utils->tokenCounts)) {
             // Get tokens
             $user = $this->mfaAccount->getUid();
-            $tokens = $this->utils->getTokensOfUser($user, mfaAccount::PI_USER_REALM);
+            $tokens = $this->utils->getTokensOfUser($user, $this->mfaAccount->userRealm);
             /* We don't need to count them anymore, getTokensOfUser() did that for us. */
 
             if (!isset($this->utils->tokenCounts) || empty($this->utils->tokenCounts)) {
