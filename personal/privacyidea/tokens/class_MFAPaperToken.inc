@@ -159,7 +159,7 @@ class MFAPaperToken extends MFATokenHelper implements MFAToken
         $tokenOTPs    = $token["detail"]["otps"];
         $tokenConfTAN = $token["detail"]["otps"][0];
 
-        $amountOfPaperTokenOTPs = $this->utils->getConfigIntValue("amountOfPaperTokenOTPs");
+        $amountOfPaperTokenOTPs = $this->utils->getConfigIntValue("piAmountOfPaperTokenOTPs");
 
         if ($amountOfPaperTokenOTPs == 0) {
             // This is most likely an error. (Just disable paper tokens / TAN lists?!)

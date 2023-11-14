@@ -774,7 +774,7 @@ class mfaAccount extends plugin
 
         $token_limits = array(
             array(
-                "name"        => "tokenLimitAll",
+                "name"        => "piTokenLimitAll",
                 "type"        => "integer",
                 "check"       => "gosaProperty::isInteger",
                 "group"       => "privacyidea",
@@ -784,7 +784,7 @@ class mfaAccount extends plugin
                 "description" => _("Users are only allowed to link a total of X tokens from the available MFA methods.")
             ),
             array(
-                "name"        => "tokenLimitPaper",
+                "name"        => "piTokenLimitPaper",
                 "type"        => "integer",
                 "check"       => "gosaProperty::isInteger",
                 "group"       => "privacyidea",
@@ -794,7 +794,7 @@ class mfaAccount extends plugin
                 "description" => _("Users are only allowed have a total of X paper tokens.")
             ),
             array(
-                "name"        => "tokenLimitTotp",
+                "name"        => "piTokenLimitTotp",
                 "type"        => "integer",
                 "check"       => "gosaProperty::isInteger",
                 "group"       => "privacyidea",
@@ -804,7 +804,7 @@ class mfaAccount extends plugin
                 "description" => _("Users are only allowed have a total of X TOTP tokens.")
             ),
             array(
-                "name"        => "tokenLimitWebAuthn",
+                "name"        => "piTokenLimitWebAuthn",
                 "type"        => "integer",
                 "check"       => "gosaProperty::isInteger",
                 "group"       => "privacyidea",
@@ -814,7 +814,7 @@ class mfaAccount extends plugin
                 "description" => _("Users are only allowed have a total of X WebAuthn tokens.")
             ),
             array(
-                "name"        => "tokenLimitRegistration",
+                "name"        => "piTokenLimitRegistration",
                 "type"        => "integer",
                 "check"       => "gosaProperty::isInteger",
                 "group"       => "privacyidea",
@@ -829,7 +829,7 @@ class mfaAccount extends plugin
 
         $misc = array(
             array(
-                "name"        => "amountOfPaperTokenOTPs",
+                "name"        => "piAmountOfPaperTokenOTPs",
                 "type"        => "integer",
                 "check"       => "gosaProperty::isInteger",
                 "group"       => "privacyidea",
