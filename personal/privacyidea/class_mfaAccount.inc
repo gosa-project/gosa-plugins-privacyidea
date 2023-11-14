@@ -203,6 +203,10 @@ class mfaAccount extends plugin
         $editToken = null;
         $array_keys_post = array_keys($_POST);
         if (in_array_ics('add_token', $array_keys_post)) {
+            if (in_array_ics('cancel_setup', $array_keys_post)) {
+                return $this->getMFAIntroTemplate();
+            }
+
             if (!$this->acl_is_writeable("manageTokens")) {
                 $setup = null;
                 msg_dialog::display(
