@@ -67,7 +67,7 @@ class PrivacyIdeaUtils implements PILog
         $piServerUrl = $this->getConfigStrValue("piServer");
         $this->authUsername = $this->getConfigStrValue("piServiceAccount");
         $this->authPassword = $this->getConfigStrValue("piServicePass");
-        $this->authRealm    = $this->getConfigStrValue("piRealm");
+        $this->authRealm    = $this->getConfigStrValue("piServiceRealm");
 
         $this->pi = new PrivacyIDEA($_SERVER['HTTP_USER_AGENT'], $piServerUrl);
         // $this->pi->logger = $this; // Needs $this->piDebug() and $this->piError().

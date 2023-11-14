@@ -753,7 +753,7 @@ class mfaAccount extends plugin
                 "description" => _("PrivacyIDEA service account password. Used to authenticate against PrivacyIDEA.")
             ),
             array(
-                "name"        => "piRealm",
+                "name"        => "piServiceRealm",
                 "type"        => "string",
                 "check"       => "gosaProperty::isString",
                 "group"       => "privacyidea",
