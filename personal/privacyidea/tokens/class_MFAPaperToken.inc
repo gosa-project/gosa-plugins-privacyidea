@@ -135,7 +135,7 @@ class MFAPaperToken extends MFATokenHelper implements MFAToken
 
         $token = $this->utils->enrollTokenStep1(
             $this->mfaAccount->getUid(),
-            mfaAccount::PI_USER_REALM,
+            $this->mfaAccount->userRealm,
             "paper",
             $this->tokenDescription
         );

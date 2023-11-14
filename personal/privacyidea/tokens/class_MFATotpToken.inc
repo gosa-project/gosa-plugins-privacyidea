@@ -152,7 +152,7 @@ class MFATotpToken extends MFATokenHelper implements MFAToken
         // Actually call utils to enroll TOTP token (in a 2 step process).
         $token = $this->utils->enrollTokenStep1(
             $this->mfaAccount->getUid(),
-            mfaAccount::PI_USER_REALM,
+            $this->mfaAccount->userRealm,
             "totp",
             $this->tokenDescription
         );

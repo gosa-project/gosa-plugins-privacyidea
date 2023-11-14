@@ -113,7 +113,7 @@ class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
 
         $token = $this->utils->enrollTokenStep1(
             $this->mfaAccount->getUid(),
-            mfaAccount::PI_USER_REALM,
+            $this->mfaAccount->userRealm,
             "webauthn",
             $this->tokenDescription
         );
@@ -219,7 +219,7 @@ class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
         // Refresh token countings cache.
         // TODO: Use countUserTokens() but refactor it, so that it doesn't require $tokens.
         //       and it should gather the tokens from endpoint /token/ itself.
-        $this->utils->getTokensOfUser($this->mfaAccount->getUid(), mfaAccount::PI_USER_REALM);
+        $this->utils->getTokensOfUser($this->mfaAccount->getUid(), $this->mfaAccount->userRealm);
 
         return $resultArray;
     }
