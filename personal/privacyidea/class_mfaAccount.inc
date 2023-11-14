@@ -200,6 +200,8 @@ class mfaAccount extends plugin
 
         /*
          * MFA control flow
+         *
+         * TODO: refactor and split up into methods
          */
         $setup = null;
         $editToken = null;
@@ -255,12 +257,27 @@ class mfaAccount extends plugin
             }
 
             $mfaTokenAction = $_POST["mfaTokenAction"];
-            if ($mfaTokenAction != "mfaTokenView" && $mfaTokenAction != "mfaTokenEdit") {
-                $this->executeTokenAction($mfaTokenAction, $tokenSerial);
-                return $this->getMFAIntroTemplate();
+            switch ($mfaTokenAction) {
+            case 'mfaTokenDisable':      // FALLTHROUGH
+            case 'mfaTokenRevoke':       // FALLTHROUGH
+            case 'mfaTokenRemove':
+                if (!isset($_POST['mfaTokenActionConfirm'])) {
+                    // not confirmed yet by user
+                    return $this->getMFAConfirmTemplate($mfaTokenAction, $tokenSerial);
+                } else if ($_POST['mfaTokenActionConfirm'] !== "true") {
+                    // cancelled by user
+                    return $this->getMFAIntroTemplate();
+                }
+                break;
+            case "mfaTokenView":    // FALLTHROUGH
+            case "mfaTokenEdit":
+                return $this->getTokenEditTemplate($mfaTokenAction);
+            default:
+                break;
             }
 
-            return $this->getTokenEditTemplate($mfaTokenAction);
+            $this->executeTokenAction($mfaTokenAction, $tokenSerial);
+            return $this->getMFAIntroTemplate();
         } elseif (in_array_ics('mfaTokenBatchAction', $array_keys_post)) {
             if (!$this->acl_is_writeable("manageTokens")) {
                 msg_dialog::display(
@@ -272,24 +289,33 @@ class mfaAccount extends plugin
                 return $this->getMFAIntroTemplate();
             }
 
+            $mfaTokenSerials = [];
+            if (isset($_POST['mfaTokenSerials']) && is_array($_POST['mfaTokenSerials'])) {
+                $mfaTokenSerials = array_unique($_POST['mfaTokenSerials']);
+                array_filter($mfaTokenSerials, $this->utils->isTokenSerialValid);
+            }
+
             $mfaTokenAction = $_POST["mfaTokenBatchAction"] ?? null;
             switch ($mfaTokenAction) {
             case 'mfaTokenResetCounter': // FALLTHROUGH
+            case 'mfaTokenEnable':
+                break;
             case 'mfaTokenDisable':      // FALLTHROUGH
-            case 'mfaTokenEnable':       // FALLTHROUGH
             case 'mfaTokenRevoke':       // FALLTHROUGH
             case 'mfaTokenRemove':
+                if (!isset($_POST['mfaTokenActionConfirm'])) {
+                    // not confirmed yet by user
+                    return $this->getMFAConfirmTemplate($mfaTokenAction, $mfaTokenSerials);
+                } else if ($_POST['mfaTokenActionConfirm'] !== "true") {
+                    // cancelled by user
+                    return $this->getMFAIntroTemplate();
+                }
                 break;
             default:
                 // invalid action
                 return $this->getMFAIntroTemplate();
             }
 
-            $mfaTokenSerials = [];
-            if (isset($_POST['mfaTokenSerials']) && is_array($_POST['mfaTokenSerials'])) {
-                $mfaTokenSerials = $_POST['mfaTokenSerials'];
-                array_filter($mfaTokenSerials, $this->utils->isTokenSerialValid);
-            }
             foreach ($mfaTokenSerials as $mfaTokenSerial) {
                 // Stop on first error
                 if (!$this->executeTokenAction($mfaTokenAction, $mfaTokenSerial)) {
@@ -573,6 +599,46 @@ class mfaAccount extends plugin
 
         // Show introduction page…
         return $this->smarty->fetch(get_template_path("mfa_intro.tpl", true, dirname(__FILE__)));
+    }
+
+    private function getMFAConfirmTemplate($mfaTokenAction, $mfaTokens) {
+        assert((is_array($mfaTokens) && array_is_list($mfaTokens)) || is_string($mfaTokens));
+
+        $isBatch = is_array($mfaTokens);
+        $tokenCount = $isBatch ? count($mfaTokens) : 1;
+
+        $this->smarty->assign($isBatch ? "mfaTokenBatchAction" : "mfaTokenAction", $mfaTokenAction);
+        switch ($mfaTokenAction) {
+        case 'mfaTokenResetCounter':
+            $confirmationPrompt = ngettext("Reset the failed login counter for the following token?", "Reset the failed login counter for the following tokens?", $tokenCount);
+            break;
+        case 'mfaTokenDisable':
+            $confirmationPrompt = ngettext("Disable the following token?", "Disable the following tokens?", $tokenCount);
+            break;
+        case 'mfaTokenEnable':
+            $confirmationPrompt = ngettext("Enable the following token?", "Enable the following tokens?", $tokenCount);
+            break;
+        case 'mfaTokenRevoke':
+            $confirmationPrompt = ngettext("Revoke the following token?", "Revoke the following tokens?", $tokenCount);
+            break;
+        case 'mfaTokenRemove':
+            $confirmationPrompt = ngettext("Remove the following token?", "Remove the following tokens?", $tokenCount);
+            break;
+        default:
+            $confirmationPrompt = "";
+        }
+        $this->smarty->assign("confirmationPrompt", $confirmationPrompt);
+
+        $this->smarty->assign($isBatch ? "mfaTokenSerials" : "tokenSerial", $mfaTokens);
+
+        $tokens = $this->utils->getTokensOfUser($this->getUid(), $this->userRealm);
+        $serialsTokens = array_reduce($tokens, function ($result, $token) {
+            $result[$token["serial"]] = $token;
+            return $result;
+        }, []);
+        $this->smarty->assign("serialsTokens", $serialsTokens);
+
+        return $this->smarty->fetch(get_template_path("mfa_batchConfirm.tpl", true, dirname(__FILE__)));
     }
 
     /** @return string The uid of the current user. */
