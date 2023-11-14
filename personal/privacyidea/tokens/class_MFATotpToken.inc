@@ -214,7 +214,7 @@ class MFATotpToken extends MFATokenHelper implements MFAToken
                     _("Internal error"),
                     _("Failed to execute step 2 of token enrollment.") . "<br>" .
                     $this->utils->pleaseTryAgainMsg() . "<br>" .
-                    sprintf(_("PrivacyIDEA server error message: %s"), $resultArray["result"]["error"]["message"])
+                    sprintf(_("privacyIDEA server error message: %s"), $resultArray["result"]["error"]["message"])
                 );
             } else {
                 msg_dialog::display(
