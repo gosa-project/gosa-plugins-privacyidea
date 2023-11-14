@@ -38,8 +38,6 @@ class PrivacyIdeaUtils implements PILog
     // TODO: Replace with GOsa's development mode.
     private bool $ENABLE_DEBUG_JS_CONSOLE = true;
 
-    private string $GOSA_SETTINGS_GROUP;
-
     /** @var array Token counts array ('all' => X, 'paper' => X, 'totp' => X...) */
     public $tokenCounts;
 
@@ -61,8 +59,6 @@ class PrivacyIdeaUtils implements PILog
         assert(get_class($mfaAccount) == "mfaAccount");
         $this->mfaAccount = $mfaAccount;
         $this->config     = $mfaAccount->config;
-
-        $this->GOSA_SETTINGS_GROUP = get_class($mfaAccount);
 
         $piServerUrl = $this->getConfigStrValue("piServer");
         $this->authUsername = $this->getConfigStrValue("piServiceAccount");
@@ -489,7 +485,7 @@ class PrivacyIdeaUtils implements PILog
 
         // Get config value from LDAP-Tree, gosa config file (gosa.conf) or
         // defaults from class_schoolmgr.inc
-        $ret = $this->config->get_cfg_value($this->GOSA_SETTINGS_GROUP, $key);
+        $ret = $this->config->get_cfg_value("core", $key);
 
         if ($debug_to_jsconsole) {
             // Debug property to js console (if debugging is enabled!).
