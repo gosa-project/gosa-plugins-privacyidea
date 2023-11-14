@@ -1,5 +1,5 @@
 /*
- * This code has been adapted for the GOsa PrivacyIDEA plugin by
+ * This code has been adapted for the GOsa privacyIDEA plugin by
  * Daniel Teichmann <daniel.teichmann@das-netzwerkteam.de> but written by:
  *
  * 2020-02-11 Jean-Pierre Höhmann <jean-pierre.hoehmann@netknights.it>
@@ -311,7 +311,7 @@ var strToUtf8Arr = function(sDOMStr) {
 };
 
 /**
- * Create a new credential from a WebAuthnRegisterRequest (which comes from PrivacyIDEA backend server).
+ * Create a new credential from a WebAuthnRegisterRequest (which comes from privacyIDEA backend server).
  */
 function startWebAuthnSetup(WebAuthnRegisterRequestJSON) {
     var webAuthnRegisterRequest = JSON.parse(WebAuthnRegisterRequestJSON);

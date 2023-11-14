@@ -44,7 +44,7 @@ class PrivacyIdeaUtils implements PILog
     public $tokenCounts;
 
     /**
-     * @var string $authToken The authentication token will be used with every API call to PrivacyIDEA.
+     * @var string $authToken The authentication token will be used with every API call to privacyIDEA.
      * https://privacyidea.readthedocs.io/en/latest/modules/api/auth.html
      */
     private $authToken;
@@ -107,7 +107,7 @@ class PrivacyIdeaUtils implements PILog
         } catch (PIBadRequestException $e) {
             msg_dialog::display(
                 _("Internal error"),
-                _("Could not get authentification token from PrivacyIDEA backend server.") . "<br>" .
+                _("Could not get authentification token from privacyIDEA backend server.") . "<br>" .
                 $this->pleaseTryAgainMsg()
             );
         }
@@ -118,8 +118,8 @@ class PrivacyIdeaUtils implements PILog
         } else {
             msg_dialog::display(
                 _("Internal Error"),
-                _("Could not get authentification token from PrivacyIDEA backend server.") . "<br>" .
-                _("Dear admin: Please ensure that the PrivacyIDEA service credentials are set correctly.") . "<br>" .
+                _("Could not get authentification token from privacyIDEA backend server.") . "<br>" .
+                _("Dear admin: Please ensure that the privacyIDEA service credentials are set correctly.") . "<br>" .
                 $this->pleaseTryAgainMsg()
             );
             $this->authToken = "";
@@ -232,7 +232,7 @@ class PrivacyIdeaUtils implements PILog
 
         $params = array();
 
-        // TODO: PrivacyIDEA could return different rollout_states in Step 1 (depending on different policies and PI
+        // TODO: privacyIDEA could return different rollout_states in Step 1 (depending on different policies and PI
         // server versions). We need to either give $params["otpkey"] or $params["verify"] based on that.
         // $rollout_state = "verify";
         // if ($rollout_state == "clientwait") {
@@ -410,7 +410,7 @@ class PrivacyIdeaUtils implements PILog
         } catch (PIBadRequestException $e) {
             msg_dialog::display(
                 _("Internal error"),
-                _("Could not connect to PrivacyIDEA backend server.") . "<br>" .
+                _("Could not connect to privacyIDEA backend server.") . "<br>" .
                 $this->pleaseTryAgainMsg()
             );
 

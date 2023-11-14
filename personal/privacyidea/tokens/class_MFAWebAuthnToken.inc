@@ -131,7 +131,7 @@ class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
         if (!isset($token["detail"]["webAuthnRegisterRequest"])) {
             msg_dialog::display(
                 _("Internal error"),
-                _("PrivacyIDEA server gave invalid/malformed webAuthnRegisterRequest data.") . "<br>" .
+                _("privacyIDEA server gave invalid/malformed webAuthnRegisterRequest data.") . "<br>" .
                 $this->utils->pleaseTryAgainMsg()
             );
 
@@ -187,7 +187,7 @@ class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
                     _("Internal error"),
                     _("Failed to execute step 2 of token enrollment.") . "<br>" .
                     $this->utils->pleaseTryAgainMsg() . "<br>" .
-                    sprintf(_("PrivacyIDEA server error message: %s"), $resultArray["result"]["error"]["message"])
+                    sprintf(_("privacyIDEA server error message: %s"), $resultArray["result"]["error"]["message"])
                 );
             } else {
                 msg_dialog::display(

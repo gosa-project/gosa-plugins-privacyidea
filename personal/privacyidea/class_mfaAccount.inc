@@ -59,7 +59,7 @@ class mfaAccount extends plugin
     public $ui        = null;
     private $ldapinfo = null;
 
-    /** @var string Used to find users in PrivacyIDEA */
+    /** @var string Used to find users in privacyIDEA */
     public $userRealm;
 
     public function __construct(&$config, $dn = null)
@@ -108,7 +108,7 @@ class mfaAccount extends plugin
     }
 
     /**
-     * This function decides which PrivacyIDEA tokens should be displayed and
+     * This function decides which privacyIDEA tokens should be displayed and
      * prepares Smarty variables accordingly.
      */
     private function prepareSetupCards()
@@ -730,7 +730,7 @@ class mfaAccount extends plugin
                 "default"     => "http://localhost:5000/",
                 "migrate"     => "",
                 "mandatory"   => true,
-                "description" => _("PrivacyIDEA server URL.")
+                "description" => _("privacyIDEA server URL.")
             ),
             array(
                 "name"        => "piServiceAccount",
@@ -740,7 +740,7 @@ class mfaAccount extends plugin
                 "default"     => "username",
                 "migrate"     => "",
                 "mandatory"   => true,
-                "description" => _("PrivacyIDEA service account username. Used to authenticate against PrivacyIDEA.")
+                "description" => _("privacyIDEA service account username. Used to authenticate against privacyIDEA.")
             ),
             array(
                 "name"        => "piServicePass",
@@ -750,7 +750,7 @@ class mfaAccount extends plugin
                 "default"     => "password",
                 "migrate"     => "",
                 "mandatory"   => true,
-                "description" => _("PrivacyIDEA service account password. Used to authenticate against PrivacyIDEA.")
+                "description" => _("privacyIDEA service account password. Used to authenticate against privacyIDEA.")
             ),
             array(
                 "name"        => "piRealm",
@@ -760,7 +760,7 @@ class mfaAccount extends plugin
                 "default"     => "defrealm",
                 "migrate"     => "",
                 "mandatory"   => true,
-                "description" => _("PrivacyIDEA service account realm. Used to authenticate against PrivacyIDEA.")
+                "description" => _("privacyIDEA service account realm. Used to authenticate against privacyIDEA.")
             ),
             array(
                 "name"        => "piUserRealm",
@@ -770,7 +770,7 @@ class mfaAccount extends plugin
                 "default"     => "defrealm",
                 "migrate"     => "",
                 "mandatory"   => true,
-                "description" => _("PrivacyIDEA user realm. Used to find users in PrivacyIDEA.")
+                "description" => _("privacyIDEA user realm. Used to find users in privacyIDEA.")
             ),
         );
 
