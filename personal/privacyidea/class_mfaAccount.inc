@@ -731,7 +731,7 @@ class mfaAccount extends plugin
     {
         $privacyidea_settings = array(
             array(
-                "name"        => "privacyIdeaServerUrl",
+                "name"        => "piServer",
                 "type"        => "string",
                 "check"       => "gosaProperty::isString",
                 "group"       => "privacyidea",
@@ -741,7 +741,7 @@ class mfaAccount extends plugin
                 "description" => _("PrivacyIDEA server URL.")
             ),
             array(
-                "name"        => "serviceAccountUsername",
+                "name"        => "piServiceAccount",
                 "type"        => "string",
                 "check"       => "gosaProperty::isString",
                 "group"       => "privacyidea",
@@ -751,7 +751,7 @@ class mfaAccount extends plugin
                 "description" => _("PrivacyIDEA service account username. Used to authenticate against PrivacyIDEA.")
             ),
             array(
-                "name"        => "serviceAccountPassword",
+                "name"        => "piServicePass",
                 "type"        => "string",
                 "check"       => "gosaProperty::isString",
                 "group"       => "privacyidea",
@@ -761,7 +761,7 @@ class mfaAccount extends plugin
                 "description" => _("PrivacyIDEA service account password. Used to authenticate against PrivacyIDEA.")
             ),
             array(
-                "name"        => "serviceAccountRealm",
+                "name"        => "piRealm",
                 "type"        => "string",
                 "check"       => "gosaProperty::isString",
                 "group"       => "privacyidea",
