@@ -476,8 +476,10 @@ class mfaAccount extends plugin
             "totp"         => "addTokenTotp",
         );
         $overrideTokenTypes = [];
-        foreach ($this->mfaTokens as $tokenType => $value) {
-            if (array_key_exists($tokenType, $tokenTypesAcls) && (($this->acl_is_writeable("addTokenAny") || $this->acl_is_writeable($tokenTypesAcls[$tokenType]))) {
+        foreach ($this->mfaTokens as $tokenType => $tokenType) {
+            assert(array_key_exists($tokenType, $tokenTypesAcls));
+
+            if ($this->acl_is_writeable("addTokenAny") || $this->acl_is_writeable($tokenTypesAcls[$tokenType])) {
                 $overrideTokenTypes[] = $tokenType;
             }
         }
