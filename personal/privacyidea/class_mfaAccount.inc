@@ -456,7 +456,7 @@ class mfaAccount extends plugin
         );
         $overrideTokenTypes = [];
         foreach ($this->mfaTokens as $tokenType => $value) {
-            if (array_key_exists($tokenType, $tokenTypesAcls) && $this->acl_is_createable($tokenTypesAcls[$tokenType])) {
+            if (array_key_exists($tokenType, $tokenTypesAcls) && $this->acl_is_writeable($tokenTypesAcls[$tokenType])) {
                 $overrideTokenTypes[] = $tokenType;
             }
         }
