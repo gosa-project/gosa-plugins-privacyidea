@@ -174,7 +174,7 @@ class mfaAccount extends plugin
             if (is_subclass_of($o, "management")) {
                 $o->setSkipFooter($skip);
                 break;
-            } else if (!property_exists($o, "parent")) {
+            } else if (!property_exists($o ?? "", "parent")) {
                 break;
             }
             $o = $o->parent;
