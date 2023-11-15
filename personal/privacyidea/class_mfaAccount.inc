@@ -616,6 +616,11 @@ class mfaAccount extends plugin
         return $this->smarty->fetch(get_template_path("mfa_intro.tpl", true, dirname(__FILE__)));
     }
 
+    /**
+     * Prepares Smarty to show the MFA confirmation page for destructive
+     * actions, renders and returns it.
+     * @return string Always returnes the MFA confirmation page template.
+     */
     private function getMFAConfirmTemplate($mfaTokenAction, $mfaTokens) {
         assert((is_array($mfaTokens) && array_is_list($mfaTokens)) || is_string($mfaTokens));
 
