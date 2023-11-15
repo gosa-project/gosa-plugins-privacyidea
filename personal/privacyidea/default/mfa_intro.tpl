@@ -186,13 +186,13 @@
             <thead>
                 <tr>
                     <th style="width: 2%" ><label><input type="checkbox" id="mfaTokensSelectAll"><span></span></label></th>
-                    <th style="width: 5%" >{t}ID{/t}</th>
-                    <th style="width: 20%">{t}Type{/t}</th>
+                    <th style="width: 6%;" >{t}ID{/t}</th>
+                    <th style="width: 15%">{t}Type{/t}</th>
                     <th>{t}Description{/t}</th>
-                    <th style="width: 15%">{t}Last use{/t}</th>
-                    <th style="width: 5%" >{t}Status{/t}</th>
-                    <th style="width: 5%" >{t}Error counter{/t}</th>
-                    <th style="width: 10%">{t}Actions{/t}</th>
+                    <th style="width: 16%">{t}Last use{/t}</th>
+                    <th style="width: 6%" >{t}Status{/t}</th>
+                    <th style="width: 6%" >{t}Error counter{/t}</th>
+                    <th style="width: 11%">{t}Actions{/t}</th>
                 </tr>
             </thead>
             <tbody>
@@ -202,7 +202,10 @@
                     <input type="hidden" name="php_c_check" value="1">
                     <tr>
                         <td><label><input type="checkbox" name="mfaTokenSerials[]" value="{$token.serial}"><span></span></label></td>
-                        <td><button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenView">{$token.serial}</button></td>
+                        <td><button style="font-size: 0.8em;" class="txtonlybtn" type="submit"
+                                    name="mfaTokenAction" value="mfaTokenView">
+                            {$token.serial}
+                        </button></td>
                         <td>
                             {* TODO: Refactor getSetupCard{Icon,Title}, also mfa{tokenType}_{icon,title}.
                              * There are only available if in allowedTokenType or overriden by ACL.
