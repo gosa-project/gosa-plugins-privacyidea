@@ -165,6 +165,23 @@ class mfaAccount extends plugin
     }
 
     /**
+     * Skips the footer with buttons
+     */
+    private function skipFooter($skip)
+    {
+        $o = $this;
+        while (true) {
+            if (is_subclass_of($o, "management")) {
+                $o->setSkipFooter($skip);
+                break;
+            } else if (!property_exists($o, "parent")) {
+                break;
+            }
+            $o = $o->parent;
+        }
+    }
+
+    /**
      * Executes plugin logic, control flow, renders template, etc...
      * @return string Complete template, ideally loaded by Smarty to display to the user.
      */
@@ -270,6 +287,7 @@ class mfaAccount extends plugin
 
                 if (!isset($_POST['mfaTokenActionConfirm'])) {
                     // not confirmed yet by user
+                    $this->skipFooter(true);
                     return $this->getMFAConfirmTemplate($mfaTokenAction, $tokenSerial);
                 } else if ($_POST['mfaTokenActionConfirm'] !== "true") {
                     // cancelled by user
@@ -278,6 +296,7 @@ class mfaAccount extends plugin
                 break;
             case "mfaTokenView":    // FALLTHROUGH
             case "mfaTokenEdit":
+                $this->skipFooter(true);
                 return $this->getTokenEditTemplate($mfaTokenAction);
             default:
                 break;
@@ -319,6 +338,7 @@ class mfaAccount extends plugin
 
                 if (!isset($_POST['mfaTokenActionConfirm'])) {
                     // not confirmed yet by user
+                    $this->skipFooter(true);
                     return $this->getMFAConfirmTemplate($mfaTokenAction, $mfaTokenSerials);
                 } else if ($_POST['mfaTokenActionConfirm'] !== "true") {
                     // cancelled by user
@@ -349,6 +369,8 @@ class mfaAccount extends plugin
             $renderSuccess = $setup->renderSetup();
 
             if ($renderSuccess) {
+                echo("<pre>setup</pre>");
+                $this->skipFooter(true);
                 return $setup->getRenderSetupResult();
             } else {
                 // Oof, something did go terribly wrong.
