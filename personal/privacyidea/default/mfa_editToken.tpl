@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *}
-<h2>{t escape=no 1=$mfa_{$token.tokentype}_icon 2=$mfa_{$token.tokentype}_title}<i class="material-icons">%1</i> %2 details{/t}</h2>
+<h2><i class="material-icons">{$mfa_{$token.tokentype}_icon}</i> {t 1=$mfa_{$token.tokentype}_title}%1 - Details{/t}</h2>
 <div class="row">
     <div class="col s12">
         <div class="row">
@@ -29,7 +29,7 @@
         <div class="row">
             <div class="input-field col s12 xl6">
                 {render acl=$tokenDescriptionACL}
-                <input type="text" name="tokenDescription" value="{if strpos($tokenDescriptionACL, "r") !== false}{$token.description}{else}{t}hidden{/t}{/if}"{if !$editEnable} disabled{/if}>
+                <input type="text" name="tokenDescription" value="{if strpos($tokenDescriptionACL, "r") !== false}{$token.description}{else}{t}not shown{/t}{/if}"{if !$editEnable} disabled{/if}>
                 {/render}
                 <label for="tokenDescription">{t}Description{/t}</label>
             </div>
@@ -37,7 +37,7 @@
         {if !empty($token.info.last_auth)}
         <div class="row">
             <div class="input-field col s12 xl6">
-                <input type="text" name="tokenLastUsed" value="{if strpos($tokenLastUsedACL, "r") !== false}{$token.info.last_auth}{else}{t}hidden{/t}{/if}" disabled>
+                <input type="text" name="tokenLastUsed" value="{if strpos($tokenLastUsedACL, "r") !== false}{$token.info.last_auth}{else}{t}not shown{/t}{/if}" disabled>
                 <label for="tokenLastUsed">{t}Last use{/t}</label>
             </div>
         </div>
@@ -45,6 +45,7 @@
         <div class="row">
             <div class="input-field col s12 xl6">
                 <input type="text" name="tokenActive" value="{if strpos($tokenStatusACL, "r") !== false}{$token.status}{else}{t}hidden{/t}{/if}" disabled>
+                <input type="text" name="tokenActive" value="{if strpos($tokenStatusACL, "r") !== false}{$token.active}{else}{t}not shown{/t}{/if}" disabled>
                 <label for="tokenActive">{t}Status{/t}</label>
             </div>
         </div>
@@ -69,8 +70,8 @@
         </div> *}
         <div class="row">
             <div class="input-field col s12 xl6">
-                <input type="text" name="tokenFailedLogins" value="{if strpos($tokenFailCountACL, "r") !== false}{$token.failcount}{else}{t}hidden{/t}{/if}/{$token.maxfail}" disabled>
-                <label for="tokenFailedLogins">{t}Failed login counter (current/max.){/t}</label>
+                <input type="text" name="tokenFailedLogins" value="{if strpos($tokenFailCountACL, "r") !== false}{$token.failcount}{else}{t}not shown{/t}{/if}/{$token.maxfail}" disabled>
+                <label for="tokenFailedLogins">{t}Login failure counter (current / max.){/t}</label>
             </div>
         </div>
     </div>
