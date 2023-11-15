@@ -34,15 +34,17 @@
                 <label for="tokenDescription">{t}Description{/t}</label>
             </div>
         </div>
+        {if !empty($token.info.last_auth)}
         <div class="row">
             <div class="input-field col s12 xl6">
                 <input type="text" name="tokenLastUsed" value="{if strpos($tokenLastUsedACL, "r") !== false}{$token.info.last_auth}{else}{t}hidden{/t}{/if}" disabled>
                 <label for="tokenLastUsed">{t}Last use{/t}</label>
             </div>
         </div>
+        {/if}
         <div class="row">
             <div class="input-field col s12 xl6">
-                <input type="text" name="tokenActive" value="{if strpos($tokenStatusACL, "r") !== false}{$token.active}{else}{t}hidden{/t}{/if}" disabled>
+                <input type="text" name="tokenActive" value="{if strpos($tokenStatusACL, "r") !== false}{$token.status}{else}{t}hidden{/t}{/if}" disabled>
                 <label for="tokenActive">{t}Status{/t}</label>
             </div>
         </div>
