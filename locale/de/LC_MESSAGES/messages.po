@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-15 21:47+0100\n"
+"POT-Creation-Date: 2023-11-15 22:52+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Mike Gabriel <mike.gabriel@das-netzwerkteam.de>\n"
 "Language-Team: \n"
@@ -52,7 +52,7 @@ msgstr ""
 #: personal/privacyidea/default/mfatype_registration/phase00.tpl:45
 #: personal/privacyidea/default/mfatype_webauthn/phase01.tpl:71
 #: personal/privacyidea/default/mfatype_webauthn/phase00.tpl:43
-#: personal/privacyidea/default/mfa_editToken.tpl:86
+#: personal/privacyidea/default/mfa_editToken.tpl:89
 #: personal/privacyidea/default/mfa_batchConfirm.tpl:38
 #: personal/privacyidea/default/mfatype_totp/phase02.tpl:40
 #: personal/privacyidea/default/mfatype_totp/phase01.tpl:68
@@ -336,27 +336,27 @@ msgid "Choose an action"
 msgstr "Aktion auswählen"
 
 #: personal/privacyidea/default/mfa_intro.tpl:170
-#: personal/privacyidea/default/mfa_intro.tpl:237
+#: personal/privacyidea/default/mfa_intro.tpl:238
 msgid "Reset error counter"
 msgstr "Fehlerzähler zurücksetzen"
 
 #: personal/privacyidea/default/mfa_intro.tpl:173
-#: personal/privacyidea/default/mfa_intro.tpl:249
+#: personal/privacyidea/default/mfa_intro.tpl:250
 msgid "Activate"
 msgstr "Aktivieren"
 
 #: personal/privacyidea/default/mfa_intro.tpl:174
-#: personal/privacyidea/default/mfa_intro.tpl:243
+#: personal/privacyidea/default/mfa_intro.tpl:244
 msgid "Deactivate"
 msgstr "Deaktivieren"
 
 #: personal/privacyidea/default/mfa_intro.tpl:177
-#: personal/privacyidea/default/mfa_intro.tpl:255
+#: personal/privacyidea/default/mfa_intro.tpl:256
 msgid "Revoke"
 msgstr "Zurückziehen"
 
 #: personal/privacyidea/default/mfa_intro.tpl:180
-#: personal/privacyidea/default/mfa_intro.tpl:261
+#: personal/privacyidea/default/mfa_intro.tpl:262
 msgid "Remove"
 msgstr "Löschen"
 
@@ -369,13 +369,13 @@ msgid "Type"
 msgstr "Typ"
 
 #: personal/privacyidea/default/mfa_intro.tpl:196
-#: personal/privacyidea/default/mfa_editToken.tpl:40
+#: personal/privacyidea/default/mfa_editToken.tpl:41
 #: personal/privacyidea/class_mfaAccount.inc:867
 msgid "Last use"
 msgstr "Letzte Verwendung"
 
 #: personal/privacyidea/default/mfa_intro.tpl:197
-#: personal/privacyidea/default/mfa_editToken.tpl:46
+#: personal/privacyidea/default/mfa_editToken.tpl:48
 #: personal/privacyidea/class_mfaAccount.inc:869
 msgid "Status"
 msgstr "Status"
@@ -388,28 +388,28 @@ msgstr "Fehlerzähler"
 msgid "Actions"
 msgstr "Aktionen"
 
-#: personal/privacyidea/default/mfa_intro.tpl:224
-#: personal/privacyidea/default/mfa_intro.tpl:226
+#: personal/privacyidea/default/mfa_intro.tpl:225
 #: personal/privacyidea/default/mfa_intro.tpl:227
 #: personal/privacyidea/default/mfa_intro.tpl:228
+#: personal/privacyidea/default/mfa_intro.tpl:229
 #: personal/privacyidea/default/mfa_editToken.tpl:32
-#: personal/privacyidea/default/mfa_editToken.tpl:39
-#: personal/privacyidea/default/mfa_editToken.tpl:45
-#: personal/privacyidea/default/mfa_editToken.tpl:69
+#: personal/privacyidea/default/mfa_editToken.tpl:40
+#: personal/privacyidea/default/mfa_editToken.tpl:47
+#: personal/privacyidea/default/mfa_editToken.tpl:72
 msgid "not shown"
 msgstr "nicht angezeigt"
 
-#: personal/privacyidea/default/mfa_intro.tpl:231
-#: personal/privacyidea/default/mfa_editToken.tpl:95
+#: personal/privacyidea/default/mfa_intro.tpl:232
+#: personal/privacyidea/default/mfa_editToken.tpl:98
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: personal/privacyidea/default/mfa_intro.tpl:313
-#: personal/privacyidea/default/mfa_intro.tpl:325
+#: personal/privacyidea/default/mfa_intro.tpl:315
+#: personal/privacyidea/default/mfa_intro.tpl:327
 msgid "At least one token needs to remain active."
 msgstr "Mindestens ein Token muss aktiviert bleiben."
 
-#: personal/privacyidea/default/mfa_intro.tpl:340
+#: personal/privacyidea/default/mfa_intro.tpl:342
 msgid "Currently there are no multifactor methods associated."
 msgstr "Zur Zeit sind keine Multifaktor-Methoden verknüpft."
 
@@ -421,23 +421,23 @@ msgstr "%1 - Details"
 msgid "Serial"
 msgstr "lfd. Nummer"
 
-#: personal/privacyidea/default/mfa_editToken.tpl:52
-msgid "Index of last used TAN"
-msgstr "Index der zuletzt genutzten TAN"
+#: personal/privacyidea/default/mfa_editToken.tpl:55
+msgid "Last used TAN no."
+msgstr "Zuletzt verwendete TAN-Nr."
 
-#: personal/privacyidea/default/mfa_editToken.tpl:58
+#: personal/privacyidea/default/mfa_editToken.tpl:61
 msgid "No. of login attempts"
 msgstr "Anzahl Anmeldungen"
 
-#: personal/privacyidea/default/mfa_editToken.tpl:64
+#: personal/privacyidea/default/mfa_editToken.tpl:67
 msgid "Successful logins"
 msgstr "Erfolgreiche Anmeldungen"
 
-#: personal/privacyidea/default/mfa_editToken.tpl:70
+#: personal/privacyidea/default/mfa_editToken.tpl:73
 msgid "Login failure counter (current / max.)"
 msgstr "Fehlerzähler Benutzeranmeldung (aktuell/maximal)"
 
-#: personal/privacyidea/default/mfa_editToken.tpl:90
+#: personal/privacyidea/default/mfa_editToken.tpl:93
 msgid "Save"
 msgstr "Speichern"
 
@@ -693,7 +693,7 @@ msgstr ""
 
 #: personal/privacyidea/class_PrivacyIdeaUtils.inc:106
 #: personal/privacyidea/class_PrivacyIdeaUtils.inc:202
-#: personal/privacyidea/class_PrivacyIdeaUtils.inc:460
+#: personal/privacyidea/class_PrivacyIdeaUtils.inc:467
 #: personal/privacyidea/tokens/class_MFAPaperToken.inc:62
 #: personal/privacyidea/tokens/class_MFAPaperToken.inc:87
 #: personal/privacyidea/tokens/class_MFAPaperToken.inc:113
@@ -761,11 +761,11 @@ msgstr "Aktiv"
 msgid "Deactivated"
 msgstr "Deaktiviert"
 
-#: personal/privacyidea/class_PrivacyIdeaUtils.inc:461
+#: personal/privacyidea/class_PrivacyIdeaUtils.inc:468
 msgid "Could not connect to privacyIDEA backend server."
 msgstr "Verbindung mit dem privacyIDEA Backend-Server nicht möglich."
 
-#: personal/privacyidea/class_PrivacyIdeaUtils.inc:490
+#: personal/privacyidea/class_PrivacyIdeaUtils.inc:497
 msgid ""
 "Please try logging out and logging in again and contact your system "
 "administrator, if the problem persists. Thank you."
@@ -1056,7 +1056,7 @@ msgstr "privacyIDEA Server-URL"
 
 #: personal/privacyidea/class_mfaAccount.inc:902
 msgid ""
-"privacyIDEA service account username. Used to authenticate against "
+"privacyIDEA service account username. Used to authenticate GOsa² against "
 "privacyIDEA."
 msgstr ""
 "privacyIDEA Benutzername des Servicekontos. Wird genutzt um GOsa² gegen "
@@ -1064,7 +1064,7 @@ msgstr ""
 
 #: personal/privacyidea/class_mfaAccount.inc:912
 msgid ""
-"privacyIDEA service account password. Used to authenticate against "
+"privacyIDEA service account password. Used to authenticate GOsa² against "
 "privacyIDEA."
 msgstr ""
 "privacyIDEA Passwort des Servicekontos. Wird genutzt um GOsa² gegen "
@@ -1072,7 +1072,8 @@ msgstr ""
 
 #: personal/privacyidea/class_mfaAccount.inc:922
 msgid ""
-"privacyIDEA service account realm. Used to authenticate against privacyIDEA."
+"privacyIDEA service account realm. Used to authenticate GOsa² against "
+"privacyIDEA."
 msgstr ""
 "privacyIDEA Realm des Servicekontos. Wird genutzt um GOsa² gegen privacyIDEA "
 "zu authentifizieren."
@@ -1116,6 +1117,9 @@ msgstr ""
 #: personal/privacyidea/class_mfaAccount.inc:1000
 msgid "Amount of OTPs which will be printed on a single TAN list."
 msgstr "Anzahl an Einmalpasswörter, die auf eine TAN-Liste gedruckt werden."
+
+#~ msgid "Index of last used TAN"
+#~ msgstr "Index der zuletzt genutzten TAN"
 
 #~ msgid "hidden"
 #~ msgstr "nicht angezeigt"
