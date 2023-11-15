@@ -899,7 +899,7 @@ class mfaAccount extends plugin
                 "default"     => "username",
                 "migrate"     => "",
                 "mandatory"   => true,
-                "description" => _("privacyIDEA service account username. Used to authenticate against privacyIDEA.")
+                "description" => _("privacyIDEA service account username. Used to authenticate GOsa² against privacyIDEA.")
             ),
             array(
                 "name"        => "piServicePass",
@@ -909,7 +909,7 @@ class mfaAccount extends plugin
                 "default"     => "password",
                 "migrate"     => "",
                 "mandatory"   => true,
-                "description" => _("privacyIDEA service account password. Used to authenticate against privacyIDEA.")
+                "description" => _("privacyIDEA service account password. Used to authenticate GOsa² against privacyIDEA.")
             ),
             array(
                 "name"        => "piServiceRealm",
@@ -919,7 +919,7 @@ class mfaAccount extends plugin
                 "default"     => "defrealm",
                 "migrate"     => "",
                 "mandatory"   => true,
-                "description" => _("privacyIDEA service account realm. Used to authenticate against privacyIDEA.")
+                "description" => _("privacyIDEA service account realm. Used to authenticate GOsa² against privacyIDEA.")
             ),
             array(
                 "name"        => "piUserRealm",
