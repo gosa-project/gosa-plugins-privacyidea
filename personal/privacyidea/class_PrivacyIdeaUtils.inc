@@ -132,9 +132,9 @@ class PrivacyIdeaUtils implements PILog
     {
         $allTokenTypes = array_keys($this->mfaAccount->mfaTokens);
 
+        // TODO: Don't count mfa types with limit = 0 into tokenCountAll!!!
+
         // All tokens. Including deactivated and revoked ones...
-        // TODO: One could optimize this away by counting and caching this stuff
-        // on the first call to getTokensOfUser in the MFA intro.
         $tokenCountAll = 0;
         $this->tokenCounts = array();
 
@@ -158,7 +158,7 @@ class PrivacyIdeaUtils implements PILog
      * Enrolls a PI token with type '$tokentype'. in a 2-step-process. Step 1 (creation).
      * @param string $username
      * @param string $realm
-     * @param string $tokenType Either one of: ('paper', 'totp')
+     * @param string $tokenType Either one of: ('paper', 'totp', 'webauthn')
      * @param string $description (Default is empty)
      * @return array Token array(...)
      */
