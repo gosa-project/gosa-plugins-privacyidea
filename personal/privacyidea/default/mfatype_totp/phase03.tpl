@@ -22,12 +22,12 @@
 <h2>{t}Authentication app (TOTP) added{/t}</h2>
 
 <div class="card-panel green lighten-4 green-text text-darken-4">
-    {t escape=no 1=$tokenDescription}The authentication app <b>%1</b> was successfully added and can now be used.{/t}
+    {t escape=no 1=$tokenDescription}The authentication app <b>%1</b> was successfully added to this account and can now be used.{/t}
 </div>
 
 <div class="section">
     <p>{t}Please ensure that nobody other than yourself is able to access this factor.{/t}</p>
-    <p>{t}Please take precautions in case your device is damaged or lost and set up at least two different factors.{/t}
+    <p>{t}Please take precautions against your smartphone being damaged or lost and set up at least one more factor as fallback.{/t}
     </p>
 </div>
 

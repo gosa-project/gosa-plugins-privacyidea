@@ -150,7 +150,7 @@ h2 {
         <button value="Print page" onClick="window.print()">Print page</button>
     </aside>
     <div id="mfaTanPage">
-        <h1>{t escape=no 1=$tokenDescription}TAN list <b>%1</b> (<time id="mfaTanListTimestamp"></time>){/t}</h1>
+        <h1>{t escape=no 1=$tokenDescription}TAN list <b>%1</b>{/t} (<time id="mfaTanListTimestamp"></time>)</h1>
         <p>{t}If you just generated this list you will need to confirm it by entering the confirmation TAN on the website from which you downloaded this list.{/t}</p>
         <p><span id="mfaConfirmationLabel">{t}Confirmation TAN:{/t}</span> <span id="mfaConfirmationTan"></span></p>
         <h2>TAN</h2>
