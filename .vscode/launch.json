@@ -8,8 +8,8 @@
                 "port": 9003,
                 // server -> local
                 "pathMappings": {
-                        "/usr/share/gosa/plugins/privacyidea": "${workspaceRoot}",
-                        "/usr/share/gosa": "${workspaceRoot}/../gosa-core/",
+                        "/usr/share/gosa/plugins/": "${workspaceRoot}",
+                        "/usr/share/gosa": "${workspaceRoot}/../../gosa-core/gosa-core.salsa/",
                 },
                 "postDebugTask": "sleep-task",
                 "log": true,
