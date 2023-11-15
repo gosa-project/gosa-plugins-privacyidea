@@ -22,7 +22,7 @@
 <h2>{t}Recovery key added{/t}</h2>
 
 <div class="card-panel green lighten-4 green-text text-darken-4">
-    {t escape=no 1=$tokenDescription}The recovery key <b>%1</b> was successfully added to this account and can now be used for logging in one time only.{/t}
+    {t escape=no 1=$tokenDescription}The recovery key <b>%1</b> was successfully added and can now be used for logging in one time only.{/t}
 </div>
 
 <div class="card-panel clue lighten-4 blue-text text-darken-4">
@@ -34,7 +34,7 @@
 
 <div class="section">
     <p>{t}Please ensure that nobody other than yourself is able to access this factor.{/t}</p>
-    <p>{t}Recovery keys are fallback factors. Please make sure you have at least one factor configured for daily use.{/t}</p>
+    <p>{t}Please take precautions in case your device is damaged or lost and set up at least two different factors.{/t}</p>
 </div>
 
 <div class="section">

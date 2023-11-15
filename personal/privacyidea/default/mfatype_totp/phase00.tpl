@@ -25,7 +25,7 @@
     <p>{t}An authentication app on your smartphone generates time-based one-time passwords (TOTP) which must be entered on each login.{/t}</p>
     <p>{t}Setting up the authentication app requires multiple steps:{/t}</p>
     <ol>
-        <li>{t}Install and open a suitable TOTP authentication app{/t}.</li>
+        <li>{t}Install and open a suitable TOTP authentication app.{/t}</li>
         <li>{t}Assign meaningful description for the smartphone and app.{/t}</li>
         <li>{t}Scan a displayed QR code with the app.{/t}</li>
         <li>{t}Verify the setup with a generated code.{/t}</li>

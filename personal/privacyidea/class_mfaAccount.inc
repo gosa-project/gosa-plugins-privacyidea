@@ -244,7 +244,7 @@ class mfaAccount extends plugin
             if (!$this->acl_is_writeable("manageTokens")) {
                 msg_dialog::display(
                     _("Insufficient permissions"),
-                    _("You are not allowed to manage MFA factors.") . "<br>" .
+                    _("You are not allowed to manage factors.") . "<br>" .
                     $this->utils->pleaseTryAgainMsg()
                 );
 
