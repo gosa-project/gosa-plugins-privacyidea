@@ -252,7 +252,7 @@ msgstr "Vorgaben zur Multifaktor-Authentifizierung"
 msgid ""
 "Multifactor authentication protects your account from unauthorized access."
 msgstr ""
-"Multifaktor-Authentifizierung schützt Ihre Uni-ID vor unbefugten Zugriffen."
+"Multifaktor-Authentifizierung schützt Ihr Konto vor unbefugten Zugriffen."
 
 #: personal/privacyidea/default/mfa_intro.tpl:25
 msgid "The current configuration for this account is that the use of MFA is "
@@ -298,7 +298,7 @@ msgid ""
 "You cannot log in again with this account because there is no multifactor "
 "method associated with it. Please add one of the available methods now."
 msgstr ""
-"Sie können sich nicht erneut mit dieser Uni-ID anmelden, da sie keine "
+"Sie können sich nicht erneut mit diesem Konto anmelden, da sie keine "
 "anwendbare Multifaktor-Methode verknüpft haben. Bitte fügen Sie jetzt eine "
 "der verfügbaren Methoden hinzu."
 
