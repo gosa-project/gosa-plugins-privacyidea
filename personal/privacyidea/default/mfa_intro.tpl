@@ -73,7 +73,7 @@
 {/render}
 
 {* If no token is registered, warn the user! *}
-{if $parent == "usertabs" && $showWarningNoTokenRegistered}
+{if ($parent == "usertabs" || $parent == "") && $showWarningNoTokenRegistered}
 <div class="card-panel red lighten-4 red-text text-darken-4">
     <b>{t}Attention: {/t}</b>{t}You cannot log in again with this account because there is no multifactor method associated with it. Please add one of the available methods now.{/t}
 </div>
@@ -90,7 +90,7 @@
 </div>
 
 
-{if $parent == "usertabs"}
+{if $parent == "usertabs" || $parent == ""}
 {render acl=$manageTokensACL}
 <hr class="divider">
 <h2>{t}Add new multifactor token{/t}</h2>
