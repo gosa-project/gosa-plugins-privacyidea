@@ -216,7 +216,9 @@
                                 {$mfa_{$token.tokentype}_title}
                             </button>
                         </td>
-                        <td><button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenView">{if strpos($tokenDescriptionACL, "r") !== false}{$token.description}{else}{t}hidden{/t}{/if}</button></td>
+                        <td><button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenView">
+                            {if strpos($tokenDescriptionACL, "r") !== false}{$token.description}{else}{t}not shown{/t}{/if}
+                        </button></td>
                         <td>{if strpos($tokenLastUsedACL, "r") !== false}{$token.info.last_auth}{else}{t}hidden{/t}{/if}</td>
                         <td>{if strpos($tokenStatusACL, "r") !== false}{$token.status}{else}{t}hidden{/t}{/if}</td>
                         <td>{if strpos($tokenFailCountACL, "r") !== false}{$token.failcount}{else}{t}hidden{/t}{/if}/{$token.maxfail}</td>
