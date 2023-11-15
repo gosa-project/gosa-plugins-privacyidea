@@ -133,7 +133,12 @@ class PrivacyIdeaUtils implements PILog
     {
         $allTokenTypes = array_keys($this->mfaAccount->mfaTokens);
 
-        // TODO: Don't count mfa types with limit = 0 into tokenCountAll!!!
+        // Get limits
+        $tokenLimits = array();
+        $tokenLimits["paper"]        = $this->getConfigIntValue("piTokenLimitPaper");
+        $tokenLimits["totp"]         = $this->getConfigIntValue("piTokenLimitTotp");
+        $tokenLimits["webauthn"]     = $this->getConfigIntValue("piTokenLimitWebAuthn");
+        $tokenLimits["registration"] = $this->getConfigIntValue("piTokenLimitRegistration");
 
         // All tokens. Including deactivated and revoked ones...
         $tokenCountAll = 0;
@@ -142,6 +147,7 @@ class PrivacyIdeaUtils implements PILog
         foreach ($tokens as $key => $token) {
             $tokenType = $token["tokentype"];
             assert(in_array($tokenType, $allTokenTypes));
+            assert(in_array($tokenType, array_keys($tokenLimits)));
 
             if (!in_array($tokenType, array_keys($this->tokenCounts))) {
                 $this->tokenCounts[$tokenType] = 0;
@@ -149,7 +155,10 @@ class PrivacyIdeaUtils implements PILog
 
             $this->tokenCounts[$tokenType]++;
 
-            $tokenCountAll++;
+            if ($tokenLimits[$tokenType] != 0) {
+                // Only increase if this specific token type has a limit at all.
+                $tokenCountAll++;
+            }
         }
 
         $this->tokenCounts["all"] = $tokenCountAll;
