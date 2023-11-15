@@ -48,7 +48,7 @@
     </div>
     <div class="col m12 l8" style="background-color: #dfdfdf; text-align:center;">
         <video class="responsive-video" autoplay loop muted>
-            <source src="plugins/privacyidea/videos/totp.mp4" type="video/mp4">
+            <source src="videos/totp.mp4" type="video/mp4">
         </video>
         <p xmlns:cc="http://creativecommons.org/ns#" style="text-align: right">&copy; 2023
             <span property="cc:attributionName">Thomas Häpp, Universität Bonn</span>,
@@ -56,9 +56,9 @@
             href="http://creativecommons.org/licenses/by-sa/4.0/?ref=chooser-v1"
             target="_blank" rel="license noopener noreferrer"
             style="display:inline-block;">CC BY-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
-            src="plugins/privacyidea/images/cc.svg"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
-            src="plugins/privacyidea/images/by.svg"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
-            src="plugins/privacyidea/images/sa.svg"></a></p>
+            src="images/cc.svg"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+            src="images/by.svg"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+            src="images/sa.svg"></a></p>
     </div>
 </div>
 
