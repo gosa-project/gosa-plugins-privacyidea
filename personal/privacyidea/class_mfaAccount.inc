@@ -369,7 +369,6 @@ class mfaAccount extends plugin
             $renderSuccess = $setup->renderSetup();
 
             if ($renderSuccess) {
-                echo("<pre>setup</pre>");
                 $this->skipFooter(true);
                 return $setup->getRenderSetupResult();
             } else {
