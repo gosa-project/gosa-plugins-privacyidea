@@ -80,6 +80,8 @@ class MFARegistrationToken extends MFATokenHelper implements MFAToken
             return false;
         }
 
+        // TODO: Refactor all of this. use $this->utils->enrollTokenStep1
+
         $params["user"]        = $this->mfaAccount->getUid();
         $params["realm"]       = $this->mfaAccount->userRealm;
         $params["type"]        = "registration";
@@ -96,6 +98,14 @@ class MFARegistrationToken extends MFATokenHelper implements MFAToken
             );
             return false;
         }
+
+        new log(
+            "modify",
+            "users/" . get_class($this),
+            $this->mfaAccount->dn,
+            array(),
+            sprintf(_("User enrolled new token with type %s."), "registration")
+        );
 
         // Refresh token countings cache.
         // TODO: Use countUserTokens() but refactor it, so that it doesn't require $tokens.

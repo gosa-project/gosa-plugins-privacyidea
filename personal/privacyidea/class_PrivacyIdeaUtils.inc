@@ -209,6 +209,14 @@ class PrivacyIdeaUtils implements PILog
             return array();
         }
 
+        new log(
+            "modify",
+            "users/" . get_class($this),
+            $this->mfaAccount->dn,
+            array(),
+            sprintf(_("User enrolled new token with type %s."), $tokenType)
+        );
+
         // Refresh token countings cache.
         // TODO: Use countUserTokens() but refactor it, so that it doesn't require $tokens.
         //       and it should gather the tokens from endpoint /token/ itself.
@@ -255,6 +263,14 @@ class PrivacyIdeaUtils implements PILog
         // Call /token/init again to enroll/verify token.
         $resultArray = $this->piSendRequest($params, array(), "POST", "/token/init");
 
+        new log(
+            "modify",
+            "users/" . get_class($this),
+            $this->mfaAccount->dn,
+            array(),
+            sprintf(_("User verified new token with type %s."), $tokenType)
+        );
+
         // Refresh token countings cache.
         // TODO: Use countUserTokens() but refactor it, so that it doesn't require $tokens.
         //       and it should gather the tokens from endpoint /token/ itself.
@@ -279,9 +295,14 @@ class PrivacyIdeaUtils implements PILog
             $piTokenType = strtolower($token["tokentype"]);
 
             if (!in_array($piTokenType, $allTokenTypes)) {
-                // Token is not supported by this plugin, remove it?
-                // TODO: Do a log here!
-                // See class_MFAUnknownToken.inc.
+                new log(
+                    "modify",
+                    "users/" . get_class($this),
+                    $this->mfaAccount->dn,
+                    array(),
+                    sprintf(_("Encountered unsupported token type with serial %s."), $token['serial'])
+                );
+
                 unset($tokens[$key]);
             } else {
                 $token = $this->mfaAccount->mfaTokens[$piTokenType];
@@ -306,7 +327,20 @@ class PrivacyIdeaUtils implements PILog
 
             foreach ($mustBeValid as $value) {
                 if (!isset($token[$value])) {
-                    // TODO: Log here that $value is not set in $token.
+                    if (isset($token['serial'])) {
+                        new log(
+                            "modify",
+                            "users/" . get_class($this),
+                            $this->mfaAccount->dn,
+                            array(),
+                            sprintf(
+                                _("privacyIDEA sent malformed data, '%s' is missing for token with serial %s."),
+                                $value,
+                                $token['serial']
+                            ),
+                        );
+                    }
+
                     $valid = false;
                     break;
                 }
@@ -352,7 +386,7 @@ class PrivacyIdeaUtils implements PILog
      */
     public function isTokenSerialValid($tokenSerial)
     {
-        // TODO: Make sure its a real token (sanitize it).
+        // TODO: Make sure its a real token (sanitize it) (see prepareTokensForUI).
         return !empty($tokenSerial) && is_string($tokenSerial);
     }
 

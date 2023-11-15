@@ -127,9 +127,6 @@ class mfaAccount extends plugin
 
         foreach ($this->effectiveTokenTypes as $key => $tokenType) {
             if (!in_array_ics($tokenType, $allRegisteredTokenTypes)) {
-                // Malformed LDAP data?!
-                // TODO: Log error message here.
-
                 // Don't show empty setup card.
                 unset($this->effectiveTokenTypes[$key]);
                 continue;
@@ -529,6 +526,13 @@ class mfaAccount extends plugin
                 $params["description"] = $tokenDescription;
 
                 $this->utils->piSendRequest($params, array(), "POST", "/token/description");
+                new log(
+                    "modify",
+                    "users/" . get_class($this),
+                    $this->dn,
+                    array(),
+                    sprintf(_("User changed description of token %s."), $tokenSerial)
+                );
 
                 return true;
 
@@ -538,6 +542,13 @@ class mfaAccount extends plugin
                 }
 
                 $this->utils->piSendRequest(array(), array(), "POST", "/token/reset/" . $tokenSerial);
+                new log(
+                    "modify",
+                    "users/" . get_class($this),
+                    $this->dn,
+                    array(),
+                    sprintf(_("User resetted token %s."), $tokenSerial)
+                );
                 return true;
 
             case 'mfaTokenDisable':
@@ -546,6 +557,13 @@ class mfaAccount extends plugin
                 }
 
                 $this->utils->piSendRequest(array(), array(), "POST", "/token/disable/" . $tokenSerial);
+                new log(
+                    "modify",
+                    "users/" . get_class($this),
+                    $this->dn,
+                    array(),
+                    sprintf(_("User disabled token %s."), $tokenSerial)
+                );
                 return true;
 
             case 'mfaTokenEnable':
@@ -554,6 +572,13 @@ class mfaAccount extends plugin
                 }
 
                 $this->utils->piSendRequest(array(), array(), "POST", "/token/enable/" . $tokenSerial);
+                new log(
+                    "modify",
+                    "users/" . get_class($this),
+                    $this->dn,
+                    array(),
+                    sprintf(_("User enabled token %s."), $tokenSerial)
+                );
                 return true;
 
             case 'mfaTokenRevoke':
@@ -562,6 +587,13 @@ class mfaAccount extends plugin
                 }
 
                 $this->utils->piSendRequest(array(), array(), "POST", "/token/revoke/" . $tokenSerial);
+                new log(
+                    "modify",
+                    "users/" . get_class($this),
+                    $this->dn,
+                    array(),
+                    sprintf(_("User revoked token %s."), $tokenSerial)
+                );
                 return true;
 
             case 'mfaTokenRemove':
@@ -570,6 +602,13 @@ class mfaAccount extends plugin
                 }
 
                 $this->utils->piSendRequest(array(), array(), "DELETE", "/token/" . $tokenSerial);
+                new log(
+                    "remove",
+                    "users/" . get_class($this),
+                    $this->dn,
+                    array(),
+                    sprintf(_("User removed token %s."), $tokenSerial)
+                );
                 return true;
         }
 
@@ -717,6 +756,14 @@ class mfaAccount extends plugin
                     $this->updateAttrsAllowedTokenTypes($_POST['allowedTokenTypes']);
                 }
             }
+
+            new log(
+                "modify",
+                "users/" . get_class($this),
+                $this->dn,
+                array(),
+                _("MFA attributes of user changed."),
+            );
         }
     }
 

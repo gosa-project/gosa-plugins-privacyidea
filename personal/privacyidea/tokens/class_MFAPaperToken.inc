@@ -164,7 +164,16 @@ class MFAPaperToken extends MFATokenHelper implements MFAToken
         if ($amountOfPaperTokenOTPs == 0) {
             // This is most likely an error. (Just disable paper tokens / TAN lists?!)
             // Assume healthy default value.
-            // TODO: Log error message here (to console).
+
+            new log(
+                "modify",
+                "users/" . get_class($this),
+                $this->mfaAccount->dn,
+                array(),
+                _("While trying to setup paper token: piAmountOfPaperTokenOTPs was set to 0. This isn't expected and " .
+                  "should be modified via gosa.conf or propertyEditor."),
+            );
+
             $amountOfPaperTokenOTPs = 20;
         }
 
