@@ -616,9 +616,12 @@ class mfaAccount extends plugin
      */
     private function getMFAIntroTemplate()
     {
-        $this->smarty->assign("userExists", $this->utils->userExists($this->getUid(), $this->userRealm));
+        if (in_array('attributesEdit', array_keys($_POST))) {
+            $this->smarty->assign("attributesEditMode", true);
+        }
 
-        $this->smarty->assign("mfaRequiredByRule", in_array("by_rule", $this->mfaRequired) ? "checked" : "");
+        $this->smarty->assign("userExists", $this->utils->userExists($this->getUid(), $this->userRealm));
+	$this->smarty->assign("mfaRequiredByRule", in_array("by_rule", $this->mfaRequired) ? "checked" : "");
         $this->smarty->assign("mfaRequiredByUser", in_array("by_user", $this->mfaRequired) ? "checked" : "");
 
         $this->smarty->assign("mfaRequired", empty($this->mfaRequired) ? false : true);
