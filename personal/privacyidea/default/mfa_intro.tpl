@@ -38,7 +38,7 @@
 <div class="row">
     <div class="col">
         <label>
-            <input name="mfaRequiredByRule" type="checkbox" {if $mfaRequiredByRule == "checked"}checked{/if}>
+            <input name="mfaRequiredByRule" type="checkbox" {if !$attributesEditMode}disabled{/if} {if $mfaRequiredByRule == "checked"}checked{/if}>
             <span>{t}Additional factors required by organizational policy.{/t}</span>
         </label>
     </div>
@@ -48,7 +48,7 @@
 <div class="row">
     <div class="col">
         <label>
-            <input name="mfaRequiredByUser" type="checkbox" {if $mfaRequiredByUser == "checked"}checked{/if}/>
+            <input name="mfaRequiredByUser" type="checkbox" {if !$attributesEditMode}disabled{/if} {if $mfaRequiredByUser == "checked"}checked{/if}/>
             <span>
                 {t}Always require additional factors.{/t}
             </span>
@@ -61,7 +61,7 @@
 <h2>{t}Allowed factors{/t}</h2>
 <div class="row">
     <div class="input field col s12">
-        <select name="allowedTokenTypes[]" multiple>
+            <select name="allowedTokenTypes[]" {if !$attributesEditMode}disabled{/if} multiple>
             <option value="" disabled{if empty(tokenTypes)} selected{/if}>{t}Choose allowed factors{/t}</option>
             {foreach $allTokenTypes as $tokenType}
             <option value="{$tokenType}"{if in_array($tokenType, $tokenTypes)} selected{/if}>{$mfa_{$tokenType}_title}</option>
@@ -81,7 +81,11 @@
 
 <div class="row mt-1">
     <div class="col">
-        <button class="btn-small primary" name="edit_apply" type="submit">{t}Save settings{/t}</button>
+        {if $attributesEditMode}
+            <button class="btn-small primary" name="edit_apply" type="submit">{t}Save settings{/t}</button>
+        {else}
+            <button class="btn-small primary" name="attributesEdit" type="submit">{t}Edit settings{/t}</button>
+        {/if}
     </div>
 </div>
 
