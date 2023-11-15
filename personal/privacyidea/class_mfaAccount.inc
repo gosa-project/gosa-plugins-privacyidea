@@ -484,7 +484,7 @@ class mfaAccount extends plugin
             }
         }
 
-        $this->effectiveTokenTypes = $this->allowedTokenTypes + $overrideTokenTypes;
+        $this->effectiveTokenTypes = array_unique(array_merge($this->allowedTokenTypes, $overrideTokenTypes));
     }
 
     /**
