@@ -44,7 +44,6 @@
         {/if}
         <div class="row">
             <div class="input-field col s12 xl6">
-                <input type="text" name="tokenActive" value="{if strpos($tokenStatusACL, "r") !== false}{$token.status}{else}{t}hidden{/t}{/if}" disabled>
                 <input type="text" name="tokenActive" value="{if strpos($tokenStatusACL, "r") !== false}{$token.active}{else}{t}not shown{/t}{/if}" disabled>
                 <label for="tokenActive">{t}Status{/t}</label>
             </div>
