@@ -21,11 +21,15 @@
 
 <h2>{t}Recovery key added{/t}</h2>
 
-<div class="card-panel green lighten-4 green-text text-darken-4">{t escape=no 1=$tokenDescription}The recovery key <b>%1</b> was successfully added and can now be used for logging in one time only.{/t}</div>
+<div class="card-panel green lighten-4 green-text text-darken-4">
+    {t escape=no 1=$tokenDescription}The recovery key <b>%1</b> was successfully added and can now be used for logging in one time only.{/t}
+</div>
 
 <div class="card-panel clue lighten-4 blue-text text-darken-4">
-    <p>{t escape=no 1=$mfaRecoveryKey}The recovery key value is <b>%1</b>.{/t}<p>
-    <p><a href="" title="{t}Download as PDF{/t}">{t}Download as PDF{/t}</a></p>
+    <p>{t escape=no 1=$mfaRecoveryKey}The recovery key value is <b>%1</b>{*No dot here pls.*}{/t}<p>
+    <p><a href="data:application/pdf;base64,{$mfaRecoveryKeyPDF_BASE64}" download>
+        {t}Download as PDF{/t}<span style="font-size: 20px;" class="material-icons">file_download</span>
+    </a></p>
 </div>
 
 <div class="section">
@@ -35,7 +39,6 @@
 
 <div class="section">
     <input type="hidden" id="current_phase" name="current_phase" value="1">
-    <input type="hidden" id="tokenSerial" name="tokenSerial" value="{$tokenSerial}">
 
     <button class="btn" formnovalidate type="submit">{t}Cancel{/t}</button>
     <button class="btn primary" name="add_token" value="registration" type="submit">{t}Continue{/t}</button>

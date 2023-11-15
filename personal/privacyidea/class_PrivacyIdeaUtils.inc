@@ -21,8 +21,9 @@
  */
 
 // This is a dirty hack for development purposes.
-// Make sure to require 'privacyidea/privacyidea-php-client' via composer and
-// then copy ./vendor/privacyidea/ to /usr/share/gosa/.
+// Make sure to require 'privacyidea/privacyidea-php-client' and 'setasign/tfpdf' via composer in /usr/share/gosa/ and
+// locally. Add excludeFromAutoload files where necessary
+require_once("/usr/share/gosa/vendor/setasign/tfpdf/tfpdf.php");
 require_once("/usr/share/gosa/vendor/privacyidea/privacyidea-php-client/src/PrivacyIDEA.php");
 require_once("/usr/share/gosa/vendor/privacyidea/privacyidea-php-client/src/PIResponse.php");
 require_once("/usr/share/gosa/vendor/privacyidea/privacyidea-php-client/src/PILog.php");
