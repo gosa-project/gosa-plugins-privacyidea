@@ -27,7 +27,7 @@
             <ol>
                 <li>{t}Open your authentication app.{/t}</li>
                 <li>{t}Find an option to add a new account (this is often a button with a plus or QR code symbol).{/t}</li>
-                <li>{t}Scan the shown QR code.{/t}</li>
+                <li>{t}Scan the shown QR code with your authentication app.{/t}</li>
             </ol>
         </div>
         <div class="section row">

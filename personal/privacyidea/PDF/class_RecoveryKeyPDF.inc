@@ -33,12 +33,13 @@
         $this->__construct('P', 'mm', 'A4');
 
         // Instanciation of inherited class
-        $this->SetTitle(_("GOsa multifactor authentication recovery key"));
+        $this->SetTitle(_("Multifactor authentication recovery key"));
         $this->SetAuthor(_("Automatically generated"));
         $this->SetCompression(true);
         $this->SetCreator("GOsa");
+        /* FIXME: Describe better what account this is */
         $this->SetSubject(sprintf(_("This document contains information about " .
-            "your recovery key for your GOsa account %s."), $uid));
+            "a multifactor authentication recovery key for your account %s."), $uid));
         $this->AliasNbPages();
 
         // Add first page
@@ -60,13 +61,13 @@
         $this->SetFont('Arial', '', 10);
         $this->Cell(12, 10, sprintf(_("Dear %s %s,"), $givenname, $sn));
         $this->Ln(12);
-        $this->WriteHTML(sprintf(_("A recovery key has been created for your GOsa account '%s'."), $uid), 10);
+        $this->WriteHTML(sprintf(_("A recovery key has been created for your account '%s'."), $uid), 10);
         $this->Ln(6);
-        $this->WriteHTML(_("You can use this key besides your password to authenticate yourself one time only."), 10);
+        $this->WriteHTML(_("You can use this key one time only as a second factor when logging into our system."), 10);
         $this->Ln(12);
         $this->WriteHTML(sprintf(_("Your recovery key is: <b>%s</b>"), $mfaRecoveryKey), 10);
         $this->Ln(24);
-        $this->WriteHTML(_("Greetings"), 10);
+        $this->WriteHTML(_("Best regards"), 10);
     }
 
     public function PutLink($URL, $txt)

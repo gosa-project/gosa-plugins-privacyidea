@@ -223,9 +223,9 @@
                         <td><button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenView">
                             {if strpos($tokenDescriptionACL, "r") !== false}{$token.description}{else}{t}not shown{/t}{/if}
                         </button></td>
-                        <td>{if strpos($tokenLastUsedACL, "r") !== false}{$token.info.last_auth}{else}{t}hidden{/t}{/if}</td>
-                        <td>{if strpos($tokenStatusACL, "r") !== false}{$token.status}{else}{t}hidden{/t}{/if}</td>
-                        <td>{if strpos($tokenFailCountACL, "r") !== false}{$token.failcount}{else}{t}hidden{/t}{/if}/{$token.maxfail}</td>
+                        <td>{if strpos($tokenLastUsedACL, "r") !== false}{$token.info.last_auth}{else}{t}not shown{/t}{/if}</td>
+                        <td>{if strpos($tokenStatusACL, "r") !== false}{$token.status}{else}{t}not shown{/t}{/if}</td>
+                        <td>{if strpos($tokenFailCountACL, "r") !== false}{$token.failcount}{else}{t}not shown{/t}{/if}/{$token.maxfail}</td>
                         <td>
                             {render acl=$tokenDescriptionACL}
                             <button class="txtonlybtn" type="submit" name="mfaTokenAction" value="mfaTokenEdit" title="{t}Edit{/t}">

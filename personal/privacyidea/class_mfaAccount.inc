@@ -261,7 +261,7 @@ class mfaAccount extends plugin
             if (!$this->acl_is_writeable("manageTokens")) {
                 msg_dialog::display(
                     _("Insufficient permissions"),
-                    _("You are not allowed to manage factors.") . "<br>" .
+                    _("You are not allowed to manage MFA factors.") . "<br>" .
                     $this->utils->pleaseTryAgainMsg()
                 );
 
@@ -308,7 +308,7 @@ class mfaAccount extends plugin
             if (!$this->acl_is_writeable("manageTokens")) {
                 msg_dialog::display(
                     _("Insufficient permissions"),
-                    _("You are not allowed to manage factors.") . "<br>" .
+                    _("You are not allowed to manage MFA factors.") . "<br>" .
                     $this->utils->pleaseTryAgainMsg()
                 );
 
@@ -857,7 +857,7 @@ class mfaAccount extends plugin
                 "allowedTokenTypes"    => _("MFA token types"),
                 "mfaRequiredByRule"    => _("Require MFA due to organizational policy"),
                 "mfaRequiredByUser"    => _("Require MFA due to user preference"),
-                "manageTokens"         => _("Manage tokens of users"),
+                "manageTokens"         => _("Manage tokens"),
                 "addTokenAny"          => _("Add any type of token"),
                 "addTokenPaper"        => _("Add TAN list"),
                 "addTokenRegistration" => _("Add Recovery key"),
