@@ -456,7 +456,7 @@ class mfaAccount extends plugin
         );
         $overrideTokenTypes = [];
         foreach ($this->mfaTokens as $tokenType => $value) {
-            if (array_key_exists($tokenType, $tokenTypesAcls) && $this->acl_is_writeable($tokenTypesAcls[$tokenType])) {
+            if (array_key_exists($tokenType, $tokenTypesAcls) && (($this->acl_is_writeable("addTokenAny") || $this->acl_is_writeable($tokenTypesAcls[$tokenType]))) {
                 $overrideTokenTypes[] = $tokenType;
             }
         }
@@ -828,6 +828,7 @@ class mfaAccount extends plugin
                 "mfaRequiredByRule"    => _("Require MFA due to organizational policy"),
                 "mfaRequiredByUser"    => _("Require MFA due to user preference"),
                 "manageTokens"         => _("Manage tokens of users"),
+                "addTokenAny"          => _("Add any type of token"),
                 "addTokenPaper"        => _("Add TAN list"),
                 "addTokenRegistration" => _("Add Recovery key"),
                 "addTokenWebAuthn"     => _("Add Security key"),
