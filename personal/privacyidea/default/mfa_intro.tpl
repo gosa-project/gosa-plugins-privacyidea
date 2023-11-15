@@ -56,7 +56,6 @@
 </div>
 {/render}
 
-{if $parent == "roletabs"}
 {render acl=$allowedTokenTypesACL}
 <h2>{t}Allowed factors{/t}</h2>
 <div class="row">
@@ -71,7 +70,6 @@
     </div>
 </div>
 {/render}
-{/if}
 
 {* If no token is registered, warn the user! *}
 {if $parent == "usertabs" && $showWarningNoTokenRegistered}
