@@ -17,6 +17,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *}
+<fieldset style="border: none; padding: 0; margin: 0;" {if !$userExists}disabled{/if}>
 <h2>{t}Multifactor authentication requirements{/t}</h2>
 <div class="row">
     <p>
@@ -331,3 +332,4 @@ updateMfaBatchOperation();
     {/if}
 {/render}
 {/if}
+</fieldset>

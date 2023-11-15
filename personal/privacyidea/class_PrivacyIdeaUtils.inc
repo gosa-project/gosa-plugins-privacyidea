@@ -395,6 +395,29 @@ class PrivacyIdeaUtils implements PILog
         return array();
     }
 
+    public function userExists($user, $userRealm)
+    {
+        if (!$this->authenticate()) {
+            return false;
+        }
+
+        $params = array(
+            "realm"  => $userRealm,
+        );
+
+        $requestAnswer = $this->piSendRequest($params, array(), "GET", $endpoint = "/user/");
+        if (!$requestAnswer["result"]["status"]) {
+            return false;
+        }
+
+        foreach ($requestAnswer["result"]["value"] as $userInfo) {
+            if ($userInfo["username"] == $user) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Send a request to an endpoint with the specified parameters and headers.
      *
