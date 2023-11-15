@@ -620,7 +620,7 @@ class mfaAccount extends plugin
             $this->smarty->assign("attributesEditMode", true);
         }
 
-        $this->smarty->assign("userExists", $this->utils->userExists($this->getUid(), $this->userRealm));
+        $this->smarty->assign("userExists", ($this->orig_dn != "new"));
         $this->smarty->assign("mfaRequiredByRule", in_array("by_rule", $this->mfaRequired) ? "checked" : "");
         $this->smarty->assign("mfaRequiredByUser", in_array("by_user", $this->mfaRequired) ? "checked" : "");
 

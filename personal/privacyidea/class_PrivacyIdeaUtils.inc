@@ -408,6 +408,9 @@ class PrivacyIdeaUtils implements PILog
 
     public function userExists($user, $userRealm)
     {
+
+        /* Only use if really really necessary... See below. */
+
         if (!$this->authenticate()) {
             return false;
         }
@@ -416,6 +419,7 @@ class PrivacyIdeaUtils implements PILog
             "realm"  => $userRealm,
         );
 
+        /* WARNING: This call is very costly on large user databases in privacyIDEA. */
         $requestAnswer = $this->piSendRequest($params, array(), "GET", $endpoint = "/user/");
         if (!$requestAnswer["result"]["status"]) {
             return false;
@@ -426,6 +430,7 @@ class PrivacyIdeaUtils implements PILog
                 return true;
             }
         }
+
         return false;
     }
 
