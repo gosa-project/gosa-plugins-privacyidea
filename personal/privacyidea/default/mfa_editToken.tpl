@@ -46,24 +46,25 @@
                 <label for="tokenActive">{t}Status{/t}</label>
             </div>
         </div>
-        <div class="row">
+        {* This data isn't provided by privacyIDEA?! *}
+        {* <div class="row">
             <div class="input-field col s12 xl6">
-                <input type="text" name="tokenTANIndex" value="4{* FIXME *}" disabled>
+                <input type="text" name="tokenTANIndex" value="4" disabled>
                 <label for="tokenLastTANIndex">{t}Last used TAN no.{/t}</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12 xl6">
-                <input type="text" name="tokenLoginAttempts" value="2{* FIXME *}" disabled>
+                <input type="text" name="tokenLoginAttempts" value="2" disabled>
                 <label for="tokenLoginAttempts">{t}No. of login attempts{/t}</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12 xl6">
-                <input type="text" name="tokenSuccessfulLogins" value="2{* FIXME *}" disabled>
+                <input type="text" name="tokenSuccessfulLogins" value="2" disabled>
                 <label for="tokenSuccessfulLogins">{t}Successful logins{/t}</label>
             </div>
-        </div>
+        </div> *}
         <div class="row">
             <div class="input-field col s12 xl6">
                 <input type="text" name="tokenFailedLogins" value="{if strpos($tokenFailCountACL, "r") !== false}{$token.failcount}{else}{t}hidden{/t}{/if}/{$token.maxfail}" disabled>
