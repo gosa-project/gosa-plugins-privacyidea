@@ -96,7 +96,7 @@
 {render acl=$manageTokensACL}
 <hr class="divider">
 <h2>{t}Add new multifactor token{/t}</h2>
-{if count($tokenTypes) > 0}
+{if count($effectiveTokenTypes) > 0}
     <div class="row">
         <p>
         {t}Here you can add a new login method for your account. You can choose between different methods below.{/t}
@@ -104,13 +104,18 @@
     </div>
 
     <div class="row">
-        {foreach $tokenTypes as $tokenType}
+        {foreach $effectiveTokenTypes as $tokenType}
             {* TODO: Calculate based on token type count? *}
             <div class="col s12 m12 l6 xl3">
                 <div class="card large">
                     <div class="card-content">
                         <i class="material-icons left">{$mfa_{$tokenType}_icon}</i>
-                        <span class="card-title">{$mfa_{$tokenType}_title}</span>
+                        <span class="card-title">{$mfa_{$tokenType}_title}
+                        {if (!in_array($tokenType, $tokenTypes))}
+                            {t}[admin]{/t}
+                        {/if}
+                        </span>
+
                         <p>
                             {$mfa_{$tokenType}_description}
                         </p>

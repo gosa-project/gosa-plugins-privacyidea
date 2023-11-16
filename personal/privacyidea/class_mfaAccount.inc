@@ -682,6 +682,8 @@ class mfaAccount extends plugin
 
             $showWarningNoTokenRegistered = !empty($this->mfaRequired) && empty($tokens);
             $this->smarty->assign("showWarningNoTokenRegistered", $showWarningNoTokenRegistered);
+
+            $this->smarty->assign('effectiveTokenTypes', $this->effectiveTokenTypes);
         } else {
             $this->smarty->assign('tokenTypes', array_keys($this->mfaTokens));
             $this->smarty->assign("attributesEditMode", true);
