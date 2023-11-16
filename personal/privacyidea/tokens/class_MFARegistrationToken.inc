@@ -139,12 +139,6 @@ class MFARegistrationToken extends MFATokenHelper implements MFAToken
         return true;
     }
 
-    public function getSetupCardIcon()
-    {
-        // Materialize Icon class.
-        return "password";
-    }
-
     public function getSetupCardTitle()
     {
         return _("Recovery key");

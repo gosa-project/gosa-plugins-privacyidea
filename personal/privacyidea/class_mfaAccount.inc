@@ -140,7 +140,6 @@ class mfaAccount extends plugin
         }
 
         foreach ($this->mfaTokens as $tokenType => $token) {
-            $this->smarty->assign("mfa_" . $tokenType . "_icon", $token->getSetupCardIcon());
             $this->smarty->assign("mfa_" . $tokenType . "_title", $token->getSetupCardTitle());
             $this->smarty->assign("mfa_" . $tokenType . "_description", $token->getSetupCardDescription());
             $this->smarty->assign("mfa_" . $tokenType . "_button_text", $token->getSetupCardButtonText());

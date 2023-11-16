@@ -219,12 +219,6 @@ class MFAPaperToken extends MFATokenHelper implements MFAToken
         return true;
     }
 
-    public function getSetupCardIcon()
-    {
-        // Materialize Icon class.
-        return "receipt";
-    }
-
     public function getSetupCardTitle()
     {
         return _("TAN list");

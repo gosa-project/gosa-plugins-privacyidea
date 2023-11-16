@@ -226,12 +226,6 @@ class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
         return $resultArray;
     }
 
-    public function getSetupCardIcon()
-    {
-        // Materialize Icon class.
-        return "usb";
-    }
-
     public function getSetupCardTitle()
     {
         return _("Security key");

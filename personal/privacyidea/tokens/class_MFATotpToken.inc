@@ -229,12 +229,6 @@ class MFATotpToken extends MFATokenHelper implements MFAToken
         return true;
     }
 
-    public function getSetupCardIcon()
-    {
-        // Materialize Icon class.
-        return "smartphone";
-    }
-
     public function getSetupCardTitle()
     {
         return _("Authentication app (TOTP)");

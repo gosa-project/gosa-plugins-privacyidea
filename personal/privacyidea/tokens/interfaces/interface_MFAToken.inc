@@ -22,8 +22,6 @@
 
 interface MFAToken
 {
-    /** @return string Icon class/name/path wathever the template needs. */
-    public function getSetupCardIcon();
     /** @return string Title of setup card. */
     public function getSetupCardTitle();
     /** @return string Description of setup card. */

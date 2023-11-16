@@ -18,6 +18,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *}
 
+{* Define materialize icons *}
+{$mfa_registration_icon=password}
+{$mfa_paper_icon=receipt}
+{$mfa_totp_icon=smartphone}
+{$mfa_webauthn_icon=usb}
+
 <h2>{$confirmationPrompt}</h2>
 {if isset($mfaTokenAction)}
     <input type="hidden" name="mfaTokenAction" value="{$mfaTokenAction}">
