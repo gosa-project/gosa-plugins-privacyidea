@@ -217,148 +217,153 @@ class mfaAccount extends plugin
          *
          * TODO: refactor and split up into methods
          */
-        $setup = null;
-        $editToken = null;
-        $array_keys_post = array_keys($_POST);
-        if (in_array_ics('add_token', $array_keys_post)) {
-            if (in_array_ics('cancel_setup', $array_keys_post)) {
-                return $this->getMFAIntroTemplate();
-            }
+        $show_mfa_manager  = ($this->parent != "roletabs");
+        $show_mfa_manager &= (!in_array('attributesEdit', array_keys($_POST)));
 
-            if (!$this->acl_is_writeable("manageTokens")) {
-                $setup = null;
-                msg_dialog::display(
-                    _("Insufficient permissions"),
-                    _("You are not allowed to add a new factor.") . "<br>" .
-                    $this->utils->pleaseTryAgainMsg()
-                );
-
-                return $this->getMFAIntroTemplate();
-            }
-            // Okay, user clicked on a button, which should add a token.
-            // Starting MFA setup for this token type now.
-            $token_type = get_post("add_token");
-
-            // Detect if $token_type is not registered in $mfaTokens.
-            // This probably means the user sent some garbage _POST request!
-            // Just showing intro site again to avoid being susceptible for proxy hacks.
-            if (empty($token_type) || !in_array_ics($token_type, $this->effectiveTokenTypes)) {
-                $setup = null;
-                msg_dialog::display(
-                    _("Internal error"),
-                    _("Could not process POST data of your request.") . "<br>" .
-                    $this->utils->pleaseTryAgainMsg()
-                );
-
-                return $this->getMFAIntroTemplate();
-            }
-
-            $setup = $this->mfaTokens[$token_type];
-        } elseif (in_array_ics('mfaTokenAction', $array_keys_post)) {
-            if (!$this->acl_is_writeable("manageTokens")) {
-                msg_dialog::display(
-                    _("Insufficient permissions"),
-                    _("You are not allowed to manage MFA factors.") . "<br>" .
-                    $this->utils->pleaseTryAgainMsg()
-                );
-
-                return $this->getMFAIntroTemplate();
-            }
-            $tokenSerial = $this->utils->getPOSTTokenSerial();
-            if (!isset($tokenSerial)) {
-                // Oops, user requested an action but no tokenSerial was given?
-                return $this->getMFAIntroTemplate();
-            }
-
-            $mfaTokenAction = $_POST["mfaTokenAction"];
-            switch ($mfaTokenAction) {
-            case 'mfaTokenDisable':      // FALLTHROUGH
-            case 'mfaTokenRevoke':       // FALLTHROUGH
-            case 'mfaTokenRemove':
-                $tokens = $this->utils->getTokensOfUser($this->getUid(), $this->userRealm);
-                $activeTokenSerials = $this->utils->getActiveTokenSerials($tokens);
-                if (count(array_diff($activeTokenSerials, array($tokenSerial))) == 0) {
-                    // prevent user from locking himself out
+        if ($show_mfa_manager) {
+            $setup = null;
+            $editToken = null;
+            $array_keys_post = array_keys($_POST);
+            if (in_array_ics('add_token', $array_keys_post)) {
+                if (in_array_ics('cancel_setup', $array_keys_post)) {
                     return $this->getMFAIntroTemplate();
                 }
 
-                if (!isset($_POST['mfaTokenActionConfirm'])) {
-                    // not confirmed yet by user
-                    $this->skipFooter(true);
-                    return $this->getMFAConfirmTemplate($mfaTokenAction, $tokenSerial);
-                } else if ($_POST['mfaTokenActionConfirm'] !== "true") {
-                    // cancelled by user
-                    return $this->getMFAIntroTemplate();
-                }
-                break;
-            case "mfaTokenView":    // FALLTHROUGH
-            case "mfaTokenEdit":
-                $this->skipFooter(true);
-                return $this->getTokenEditTemplate($mfaTokenAction);
-            default:
-                break;
-            }
-
-            $this->executeTokenAction($mfaTokenAction, $tokenSerial);
-            return $this->getMFAIntroTemplate();
-        } elseif (in_array_ics('mfaTokenBatchAction', $array_keys_post)) {
-            if (!$this->acl_is_writeable("manageTokens")) {
-                msg_dialog::display(
-                    _("Insufficient permissions"),
-                    _("You are not allowed to manage MFA factors.") . "<br>" .
-                    $this->utils->pleaseTryAgainMsg()
-                );
-
-                return $this->getMFAIntroTemplate();
-            }
-
-            $mfaTokenSerials = [];
-            if (isset($_POST['mfaTokenSerials']) && is_array($_POST['mfaTokenSerials'])) {
-                $mfaTokenSerials = array_unique($_POST['mfaTokenSerials']);
-                array_filter($mfaTokenSerials, $this->utils->isTokenSerialValid);
-            }
-
-            $mfaTokenAction = $_POST["mfaTokenBatchAction"] ?? null;
-            switch ($mfaTokenAction) {
-            case 'mfaTokenResetCounter': // FALLTHROUGH
-            case 'mfaTokenEnable':
-                break;
-            case 'mfaTokenDisable':      // FALLTHROUGH
-            case 'mfaTokenRevoke':       // FALLTHROUGH
-            case 'mfaTokenRemove':
-                $tokens = $this->utils->getTokensOfUser($this->getUid(), $this->userRealm);
-                $activeTokenSerials = $this->utils->getActiveTokenSerials($tokens);
-                if (count(array_diff($activeTokenSerials, $mfaTokenSerials)) == 0) {
-                    // prevent user from locking himself out
-                    return $this->getMFAIntroTemplate();
-                }
-
-                if (!isset($_POST['mfaTokenActionConfirm'])) {
-                    // not confirmed yet by user
-                    $this->skipFooter(true);
-                    return $this->getMFAConfirmTemplate($mfaTokenAction, $mfaTokenSerials);
-                } else if ($_POST['mfaTokenActionConfirm'] !== "true") {
-                    // cancelled by user
-                    return $this->getMFAIntroTemplate();
-                }
-                break;
-            default:
-                // invalid action
-                return $this->getMFAIntroTemplate();
-            }
-
-            foreach ($mfaTokenSerials as $mfaTokenSerial) {
-                // Stop on first error
-                if (!$this->executeTokenAction($mfaTokenAction, $mfaTokenSerial)) {
+                if (!$this->acl_is_writeable("manageTokens")) {
+                    $setup = null;
                     msg_dialog::display(
-                        _("Internal error"),
-                        sprintf(_("A batch operation failed on token '%s'. Skipping remaining operations."), $mfaTokenSerial) . "<br>" .
+                        _("Insufficient permissions"),
+                        _("You are not allowed to add a new factor.") . "<br>" .
                         $this->utils->pleaseTryAgainMsg()
                     );
+
+                    return $this->getMFAIntroTemplate();
+                }
+                // Okay, user clicked on a button, which should add a token.
+                // Starting MFA setup for this token type now.
+                $token_type = get_post("add_token");
+
+                // Detect if $token_type is not registered in $mfaTokens.
+                // This probably means the user sent some garbage _POST request!
+                // Just showing intro site again to avoid being susceptible for proxy hacks.
+                if (empty($token_type) || !in_array_ics($token_type, $this->effectiveTokenTypes)) {
+                    $setup = null;
+                    msg_dialog::display(
+                        _("Internal error"),
+                        _("Could not process POST data of your request.") . "<br>" .
+                        $this->utils->pleaseTryAgainMsg()
+                    );
+
+                    return $this->getMFAIntroTemplate();
+                }
+
+                $setup = $this->mfaTokens[$token_type];
+            } elseif (in_array_ics('mfaTokenAction', $array_keys_post)) {
+                if (!$this->acl_is_writeable("manageTokens")) {
+                    msg_dialog::display(
+                        _("Insufficient permissions"),
+                        _("You are not allowed to manage MFA factors.") . "<br>" .
+                        $this->utils->pleaseTryAgainMsg()
+                    );
+
+                    return $this->getMFAIntroTemplate();
+                }
+                $tokenSerial = $this->utils->getPOSTTokenSerial();
+                if (!isset($tokenSerial)) {
+                    // Oops, user requested an action but no tokenSerial was given?
+                    return $this->getMFAIntroTemplate();
+                }
+
+                $mfaTokenAction = $_POST["mfaTokenAction"];
+                switch ($mfaTokenAction) {
+                case 'mfaTokenDisable':      // FALLTHROUGH
+                case 'mfaTokenRevoke':       // FALLTHROUGH
+                case 'mfaTokenRemove':
+                    $tokens = $this->utils->getTokensOfUser($this->getUid(), $this->userRealm);
+                    $activeTokenSerials = $this->utils->getActiveTokenSerials($tokens);
+                    if (count(array_diff($activeTokenSerials, array($tokenSerial))) == 0) {
+                        // prevent user from locking himself out
+                        return $this->getMFAIntroTemplate();
+                    }
+
+                    if (!isset($_POST['mfaTokenActionConfirm'])) {
+                        // not confirmed yet by user
+                        $this->skipFooter(true);
+                        return $this->getMFAConfirmTemplate($mfaTokenAction, $tokenSerial);
+                    } else if ($_POST['mfaTokenActionConfirm'] !== "true") {
+                        // cancelled by user
+                        return $this->getMFAIntroTemplate();
+                    }
+                    break;
+                case "mfaTokenView":    // FALLTHROUGH
+                case "mfaTokenEdit":
+                    $this->skipFooter(true);
+                    return $this->getTokenEditTemplate($mfaTokenAction);
+                default:
                     break;
                 }
+
+                $this->executeTokenAction($mfaTokenAction, $tokenSerial);
+                return $this->getMFAIntroTemplate();
+            } elseif (in_array_ics('mfaTokenBatchAction', $array_keys_post)) {
+                if (!$this->acl_is_writeable("manageTokens")) {
+                    msg_dialog::display(
+                        _("Insufficient permissions"),
+                        _("You are not allowed to manage MFA factors.") . "<br>" .
+                        $this->utils->pleaseTryAgainMsg()
+                    );
+
+                    return $this->getMFAIntroTemplate();
+                }
+
+                $mfaTokenSerials = [];
+                if (isset($_POST['mfaTokenSerials']) && is_array($_POST['mfaTokenSerials'])) {
+                    $mfaTokenSerials = array_unique($_POST['mfaTokenSerials']);
+                    array_filter($mfaTokenSerials, $this->utils->isTokenSerialValid);
+                }
+
+                $mfaTokenAction = $_POST["mfaTokenBatchAction"] ?? null;
+                switch ($mfaTokenAction) {
+                case 'mfaTokenResetCounter': // FALLTHROUGH
+                case 'mfaTokenEnable':
+                    break;
+                case 'mfaTokenDisable':      // FALLTHROUGH
+                case 'mfaTokenRevoke':       // FALLTHROUGH
+                case 'mfaTokenRemove':
+                    $tokens = $this->utils->getTokensOfUser($this->getUid(), $this->userRealm);
+                    $activeTokenSerials = $this->utils->getActiveTokenSerials($tokens);
+                    if (count(array_diff($activeTokenSerials, $mfaTokenSerials)) == 0) {
+                        // prevent user from locking himself out
+                        return $this->getMFAIntroTemplate();
+                    }
+
+                    if (!isset($_POST['mfaTokenActionConfirm'])) {
+                        // not confirmed yet by user
+                        $this->skipFooter(true);
+                        return $this->getMFAConfirmTemplate($mfaTokenAction, $mfaTokenSerials);
+                    } else if ($_POST['mfaTokenActionConfirm'] !== "true") {
+                        // cancelled by user
+                        return $this->getMFAIntroTemplate();
+                    }
+                break;
+                default:
+                    // invalid action
+                    return $this->getMFAIntroTemplate();
+                }
+
+                foreach ($mfaTokenSerials as $mfaTokenSerial) {
+                    // Stop on first error
+                    if (!$this->executeTokenAction($mfaTokenAction, $mfaTokenSerial)) {
+                        msg_dialog::display(
+                            _("Internal error"),
+                            sprintf(_("A batch operation failed on token '%s'. Skipping remaining operations."), $mfaTokenSerial) . "<br>" .
+                            $this->utils->pleaseTryAgainMsg()
+                        );
+                        break;
+                    }
+                }
+                return $this->getMFAIntroTemplate();
             }
-            return $this->getMFAIntroTemplate();
         }
 
         // Either return template from a setup class or the MFA intro.
@@ -670,14 +675,20 @@ class mfaAccount extends plugin
         $parentName = is_object($this->parent) ? get_class($this->parent) : "";
         if ($parentName != "roletabs") {
             $tokens = $this->utils->getTokensOfUser($this->getUid(), $this->userRealm);
+            $this->smarty->assign("tokens", $tokens);
+            $this->smarty->assign("activeTokenSerials", $this->utils->getActiveTokenSerials($tokens));
+
+            $this->prepareSetupCards();
+
+            $showWarningNoTokenRegistered = !empty($this->mfaRequired) && empty($tokens);
+            $this->smarty->assign("showWarningNoTokenRegistered", $showWarningNoTokenRegistered);
+        } else {
+            $this->smarty->assign('tokenTypes', array_keys($this->mfaTokens));
+            $this->smarty->assign("attributesEditMode", true);
+            foreach ($this->mfaTokens as $tokenType => $token) {
+                $this->smarty->assign("mfa_" . $tokenType . "_title", $token->getSetupCardTitle());
+            }
         }
-        $this->smarty->assign("tokens", $tokens);
-        $this->smarty->assign("activeTokenSerials", $this->utils->getActiveTokenSerials($tokens));
-
-        $this->prepareSetupCards();
-
-        $showWarningNoTokenRegistered = !empty($this->mfaRequired) && empty($tokens);
-        $this->smarty->assign("showWarningNoTokenRegistered", $showWarningNoTokenRegistered);
 
         // Show introduction page…
         return $this->smarty->fetch(get_template_path("mfa_intro.tpl", true, dirname(__FILE__)));

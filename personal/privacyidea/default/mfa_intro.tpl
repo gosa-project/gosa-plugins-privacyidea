@@ -61,7 +61,7 @@
 <h2>{t}Allowed factors{/t}</h2>
 <div class="row">
     <div class="input field col s12">
-        <select name="allowedTokenTypes[]" {if !$attributesEditMode}disabled{/if} multiple>
+        <select name="allowedTokenTypes[]" {if !$attributesEditMode && $parent!="roletabs"}disabled{/if} multiple>
             <option value="" disabled{if empty(tokenTypes)} selected{/if}>{t}Choose allowed factors{/t}</option>
             {foreach $allTokenTypes as $tokenType}
             <option value="{$tokenType}"{if in_array($tokenType, $tokenTypes)} selected{/if}>{$mfa_{$tokenType}_title}</option>
@@ -79,6 +79,7 @@
 </div>
 {/if}
 
+{if ($parent != "roletabs")}
 <div class="row mt-1">
     <div class="col">
         {if $attributesEditMode}
@@ -88,9 +89,10 @@
         {/if}
     </div>
 </div>
+{/if}
 
 
-{if $parent == "usertabs" || $parent == ""}
+{if ($parent == "usertabs" || $parent == "") &&  !$attributesEditMode}
 {render acl=$manageTokensACL}
 <hr class="divider">
 <h2>{t}Add new multifactor token{/t}</h2>
