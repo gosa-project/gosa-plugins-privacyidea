@@ -427,7 +427,7 @@ class PrivacyIdeaUtils implements PILog
         // Extract token information now.
         if ($requestAnswer["result"]["status"]) {
             $returnArray = $requestAnswer["result"]["value"]["tokens"];
-            $returnArray = $this->mapTokenTypes($returnArray);
+            // $returnArray = $this->mapTokenTypes($returnArray);
             $returnArray = $this->prepareTokensForUI($returnArray);
 
             if (!isset($tokenSerial)) {
