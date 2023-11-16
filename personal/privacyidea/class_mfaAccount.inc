@@ -516,9 +516,9 @@ class mfaAccount extends plugin
                     $tokenDescription = trim($tokenDescription);
                     // cut off at 60 characters
                     if (function_exists("mb_substr")) {
-                        $tokenDescription = mb_substr($s, 0, 60, "UTF-8");
+                        $tokenDescription = mb_substr($tokenDescription, 0, 60, "UTF-8");
                     } else {
-                        $tokenDescription = substr($s, 0, 60);
+                        $tokenDescription = substr($tokenDescription, 0, 60);
                     }
                 } else {
                     // Empty descriptions are okay.
