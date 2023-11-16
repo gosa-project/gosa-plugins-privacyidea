@@ -109,6 +109,10 @@ class mfaAccount extends plugin
         $this->mfaTokens['totp']         = new MFATotpToken($this);
         $this->mfaTokens['paper']        = new MFAPaperToken($this);
         $this->mfaTokens['registration'] = new MFARegistrationToken($this);
+
+        // Detect initial account state - This value will be overridden later in the code.
+        //  - We may inherit our account state from a role.
+        $this->initially_was_account = $this->is_account;
     }
 
     /**
