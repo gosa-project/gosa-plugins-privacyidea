@@ -64,6 +64,7 @@
 </div>
 {/render}
 
+{if $allowedTokenTypesACL}
 {render acl=$allowedTokenTypesACL}
 <h2>{t}Allowed factors{/t}</h2>
 <div class="row">
@@ -78,6 +79,7 @@
     </div>
 </div>
 {/render}
+{/if}
 
 {* If no token is registered, warn the user! *}
 {if ($parent == "usertabs" || $parent == "") && $showWarningNoTokenRegistered}
@@ -100,6 +102,7 @@
 
 
 {if ($parent == "usertabs" || $parent == "") &&  !$attributesEditMode}
+{if $manageTokensACL}
 {render acl=$manageTokensACL}
 <hr class="divider">
 <h2>{t}Add new multifactor token{/t}</h2>
@@ -356,5 +359,6 @@ updateMfaBatchOperation();
         <p>{t}Currently there are no multifactor methods associated.{/t}</p>
     {/if}
 {/render}
+{/if}
 {/if}
 </fieldset>
