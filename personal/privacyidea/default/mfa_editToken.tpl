@@ -17,6 +17,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *}
+
+{* Define materialize icons *}
+{$mfa_registration_icon=password}
+{$mfa_paper_icon=receipt}
+{$mfa_totp_icon=smartphone}
+{$mfa_webauthn_icon=usb}
+
 <h2><i class="material-icons">{$mfa_{$token.tokentype}_icon}</i> {t 1=$mfa_{$token.tokentype}_title}%1 - Details{/t}</h2>
 <div class="row">
     <div class="col s12">
