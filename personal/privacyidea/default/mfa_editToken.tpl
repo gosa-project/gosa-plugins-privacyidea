@@ -96,12 +96,12 @@
         type="submit">{t}Cancel{/t}
     </button>
     <button class="btn primary"
-        name="mfaTokenAction" value="mfaTokenSave"
+        name="mfaTokenAction[mfaTokenSave]" value="{$token.serial}"
         type="submit">{t}Save{/t}
     </button>
 {else}
     <button class="btn primary"
-        name="mfaTokenAction" value="mfaTokenEdit"
+        name="mfaTokenAction[mfaTokenEdit]" value="{$token.serial}"
         type="submit">{t}Edit{/t}
     </button>
 {/if}
