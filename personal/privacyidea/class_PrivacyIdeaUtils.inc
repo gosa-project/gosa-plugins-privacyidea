@@ -368,6 +368,17 @@ class PrivacyIdeaUtils implements PILog
                 $tokens[$key]["status"] = _("Deactivated");
             }
 
+            // Convert PI date to browser compatible datetime.
+            // See: https://developer.mozilla.org/en-US/docs/Web/HTML/Date_and_time_formats#local_date_and_time_strings
+            // Can be used by the browser to convert to localized datetime.
+            if (isset($token['info']['last_auth'])) {
+                $piString = $token['info']['last_auth'];
+                $dateTimeObject = new DateTime($piString, new DateTimeZone('UTC'));
+
+                $dateTimeString = $dateTimeObject->format("Y-m-d\TH:m:s");
+                $tokens[$key]['info']['last_auth'] = $dateTimeString;
+            }
+
             if (!$valid) {
                 unset($tokens[$key]);
             }
