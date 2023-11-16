@@ -214,7 +214,7 @@ class PrivacyIdeaUtils implements PILog
             "users/" . get_class($this),
             $this->mfaAccount->dn,
             array(),
-            sprintf(_("User enrolled new token with type %s."), $tokenType)
+            sprintf("A new token of type '%s' has been enrolled for user '%s'.", $tokenType, $this->mfaAccount->getUid())
         );
 
         // Refresh token countings cache.
@@ -268,7 +268,7 @@ class PrivacyIdeaUtils implements PILog
             "users/" . get_class($this),
             $this->mfaAccount->dn,
             array(),
-            sprintf(_("User verified new token with type %s."), $tokenType)
+            sprintf("New token of type '%s' has been verified for user '%s'.", $tokenType, $this->mfaAcount->getUid())
         );
 
         // Refresh token countings cache.
@@ -300,7 +300,7 @@ class PrivacyIdeaUtils implements PILog
                     "users/" . get_class($this),
                     $this->mfaAccount->dn,
                     array(),
-                    sprintf(_("Encountered unsupported token type with serial %s."), $token['serial'])
+                    sprintf("WARNING: Encountered unsupported token type '%s' with serial '%s'.", $piTokenType, $token['serial'])
                 );
 
                 unset($tokens[$key]);
@@ -334,7 +334,7 @@ class PrivacyIdeaUtils implements PILog
                             $this->mfaAccount->dn,
                             array(),
                             sprintf(
-                                _("privacyIDEA sent malformed data, '%s' is missing for token with serial %s."),
+                                "privacyIDEA sent malformed data, '%s' is missing from token with serial %s.",
                                 $value,
                                 $token['serial']
                             ),

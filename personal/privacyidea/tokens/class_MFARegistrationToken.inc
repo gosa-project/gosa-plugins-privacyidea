@@ -104,7 +104,7 @@ class MFARegistrationToken extends MFATokenHelper implements MFAToken
             "users/" . get_class($this),
             $this->mfaAccount->dn,
             array(),
-            sprintf(_("User enrolled new token with type %s."), "registration")
+            sprintf("A new token of type '%s' has been enrolled for user '%s'.", "registration", $this->mfaAccount->getUid())
         );
 
         // Refresh token countings cache.

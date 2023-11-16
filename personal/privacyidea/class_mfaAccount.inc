@@ -533,7 +533,7 @@ class mfaAccount extends plugin
                     "users/" . get_class($this),
                     $this->dn,
                     array(),
-                    sprintf(_("User changed description of token %s."), $tokenSerial)
+                    sprintf("Description of token '%s' associated with user '%s' has been updated.", $tokenSerial, $this->getUid())
                 );
 
                 return true;
@@ -549,7 +549,7 @@ class mfaAccount extends plugin
                     "users/" . get_class($this),
                     $this->dn,
                     array(),
-                    sprintf(_("User resetted token %s."), $tokenSerial)
+                    sprintf("Error counter of token '%s' associated with user '%s' has been reset.", $tokenSerial, $this->getUid())
                 );
                 return true;
 
@@ -564,7 +564,7 @@ class mfaAccount extends plugin
                     "users/" . get_class($this),
                     $this->dn,
                     array(),
-                    sprintf(_("User disabled token %s."), $tokenSerial)
+                    sprintf("Token '%s' associated with user '%s' has been disabled."), $tokenSerial, $this->getUid())
                 );
                 return true;
 
@@ -579,7 +579,7 @@ class mfaAccount extends plugin
                     "users/" . get_class($this),
                     $this->dn,
                     array(),
-                    sprintf(_("User enabled token %s."), $tokenSerial)
+                    sprintf("Token '%s' associated with user '%s' has been enabled.", $tokenSerial, $this->getUid())
                 );
                 return true;
 
@@ -594,7 +594,7 @@ class mfaAccount extends plugin
                     "users/" . get_class($this),
                     $this->dn,
                     array(),
-                    sprintf(_("User revoked token %s."), $tokenSerial)
+                    sprintf("Token '%s' associated with user '%s' has been revoked.", $tokenSerial, $this->getUid())
                 );
                 return true;
 
@@ -609,7 +609,7 @@ class mfaAccount extends plugin
                     "users/" . get_class($this),
                     $this->dn,
                     array(),
-                    sprintf(_("User removed token %s."), $tokenSerial)
+                    sprintf("Token '%s' associated with user '%s' has been removed.", $tokenSerial, $this->getUid())
                 );
                 return true;
         }
@@ -775,7 +775,7 @@ class mfaAccount extends plugin
                 "users/" . get_class($this),
                 $this->dn,
                 array(),
-                _("MFA attributes of user changed."),
+                sprintf("mfaService LDAP attributes of user '%s' have been updated.", $this->getUid()),
             );
         }
     }

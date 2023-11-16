@@ -170,8 +170,8 @@ class MFAPaperToken extends MFATokenHelper implements MFAToken
                 "users/" . get_class($this),
                 $this->mfaAccount->dn,
                 array(),
-                _("While trying to setup paper token: piAmountOfPaperTokenOTPs was set to 0. This isn't expected and " .
-                  "should be modified via gosa.conf or propertyEditor."),
+                "While trying to setup a paper token: piAmountOfPaperTokenOTPs is configured as 0. This isn't expected and " .
+                "should be modified to a value greater than zero (e.g. 20) via gosa.conf or propertyEditor.",
             );
 
             $amountOfPaperTokenOTPs = 20;
