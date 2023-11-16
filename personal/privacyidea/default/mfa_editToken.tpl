@@ -44,29 +44,35 @@
         {/if}
         <div class="row">
             <div class="input-field col s12 xl6">
-                <input type="text" name="tokenActive" value="{if strpos($tokenStatusACL, "r") !== false}{$token.active}{else}{t}not shown{/t}{/if}" disabled>
-                <label for="tokenActive">{t}Status{/t}</label>
+                <input type="text" name="tokenStatus" value="{if strpos($tokenStatusACL, "r") !== false}{$token.status}{else}{t}not shown{/t}{/if}" disabled>
+                <label for="tokenStatus">{t}Status{/t}</label>
             </div>
         </div>
-        {* This data isn't provided by privacyIDEA?! *}
+        {* TODO: This data isn't provided by privacyIDEA?! *}
         {* <div class="row">
             <div class="input-field col s12 xl6">
                 <input type="text" name="tokenTANIndex" value="4" disabled>
                 <label for="tokenLastTANIndex">{t}Last used TAN no.{/t}</label>
             </div>
-        </div>
+        </div> *}
+        {if empty($token.info.count_auth)}
+            {$token.info.count_auth=_('Never used before')}
+        {/if}
         <div class="row">
             <div class="input-field col s12 xl6">
-                <input type="text" name="tokenLoginAttempts" value="2" disabled>
+                <input type="text" name="tokenLoginAttempts" value="{if strpos($tokenCountAuthACL, "r") !== false}{$token.info.count_auth}{else}{t}not shown{/t}{/if}" disabled>
                 <label for="tokenLoginAttempts">{t}No. of login attempts{/t}</label>
             </div>
         </div>
+        {if empty($token.info.count_auth_success)}
+            {$token.info.count_auth_success=_('Never used before')}
+        {/if}
         <div class="row">
             <div class="input-field col s12 xl6">
-                <input type="text" name="tokenSuccessfulLogins" value="2" disabled>
+                <input type="text" name="tokenSuccessfulLogins" value="{if strpos($tokenCountAuthSuccessACL, "r") !== false}{$token.info.count_auth_success}{else}{t}not shown{/t}{/if}" disabled>
                 <label for="tokenSuccessfulLogins">{t}Successful logins{/t}</label>
             </div>
-        </div> *}
+        </div>
         <div class="row">
             <div class="input-field col s12 xl6">
                 <input type="text" name="tokenFailedLogins" value="{if strpos($tokenFailCountACL, "r") !== false}{$token.failcount}{else}{t}not shown{/t}{/if}/{$token.maxfail}" disabled>
