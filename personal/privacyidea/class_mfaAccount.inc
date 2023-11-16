@@ -157,8 +157,6 @@ class mfaAccount extends plugin
             }
             return ($prioA < $prioB) ? -1 : 1;
         });
-
-        $this->smarty->assign('tokenTypes', $this->effectiveTokenTypes);
     }
 
     /**
@@ -679,6 +677,8 @@ class mfaAccount extends plugin
             $this->smarty->assign("activeTokenSerials", $this->utils->getActiveTokenSerials($tokens));
 
             $this->prepareSetupCards();
+
+            $this->smarty->assign('tokenTypes', $this->allowedTokenTypes);
 
             $showWarningNoTokenRegistered = !empty($this->mfaRequired) && empty($tokens);
             $this->smarty->assign("showWarningNoTokenRegistered", $showWarningNoTokenRegistered);
