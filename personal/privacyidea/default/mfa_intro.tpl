@@ -61,7 +61,7 @@
 <h2>{t}Allowed factors{/t}</h2>
 <div class="row">
     <div class="input field col s12">
-            <select name="allowedTokenTypes[]" {if !$attributesEditMode}disabled{/if} multiple>
+        <select name="allowedTokenTypes[]" {if !$attributesEditMode}disabled{/if} multiple>
             <option value="" disabled{if empty(tokenTypes)} selected{/if}>{t}Choose allowed factors{/t}</option>
             {foreach $allTokenTypes as $tokenType}
             <option value="{$tokenType}"{if in_array($tokenType, $tokenTypes)} selected{/if}>{$mfa_{$tokenType}_title}</option>
