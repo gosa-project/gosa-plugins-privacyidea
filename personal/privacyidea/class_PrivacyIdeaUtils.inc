@@ -268,7 +268,7 @@ class PrivacyIdeaUtils implements PILog
             "users/" . get_class($this),
             $this->mfaAccount->dn,
             array(),
-            sprintf("New token of type '%s' has been verified for user '%s'.", $tokenType, $this->mfaAcount->getUid())
+            sprintf("New token of type '%s' has been verified for user '%s'.", $tokenType, $this->mfaAccount->getUid())
         );
 
         // Refresh token countings cache.
