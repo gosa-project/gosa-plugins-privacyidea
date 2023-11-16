@@ -692,7 +692,7 @@ class mfaAccount extends plugin
 
             $this->smarty->assign('effectiveTokenTypes', $this->effectiveTokenTypes);
         } else {
-            $this->smarty->assign('tokenTypes', array_keys($this->mfaTokens));
+            $this->smarty->assign('tokenTypes', $this->allowedTokenTypes);
             $this->smarty->assign("attributesEditMode", true);
             foreach ($this->mfaTokens as $tokenType => $token) {
                 $this->smarty->assign("mfa_" . $tokenType . "_title", $token->getSetupCardTitle());
