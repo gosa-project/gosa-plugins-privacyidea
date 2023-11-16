@@ -564,7 +564,7 @@ class mfaAccount extends plugin
                     "users/" . get_class($this),
                     $this->dn,
                     array(),
-                    sprintf("Token '%s' associated with user '%s' has been disabled."), $tokenSerial, $this->getUid())
+                    sprintf("Token '%s' associated with user '%s' has been disabled.", $tokenSerial, $this->getUid())
                 );
                 return true;
 
