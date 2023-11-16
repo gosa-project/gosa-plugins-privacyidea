@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-16 20:59+0100\n"
+"POT-Creation-Date: 2023-11-16 22:07+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Mike Gabriel <mike.gabriel@das-netzwerkteam.de>\n"
 "Language-Team: \n"
@@ -52,7 +52,7 @@ msgstr ""
 #: personal/privacyidea/default/mfatype_registration/phase00.tpl:45
 #: personal/privacyidea/default/mfatype_webauthn/phase01.tpl:71
 #: personal/privacyidea/default/mfatype_webauthn/phase00.tpl:43
-#: personal/privacyidea/default/mfa_editToken.tpl:102
+#: personal/privacyidea/default/mfa_editToken.tpl:96
 #: personal/privacyidea/default/mfa_batchConfirm.tpl:44
 #: personal/privacyidea/default/mfatype_totp/phase02.tpl:40
 #: personal/privacyidea/default/mfatype_totp/phase01.tpl:68
@@ -104,11 +104,11 @@ msgstr ""
 
 #: personal/privacyidea/default/mfatype_registration/phase00.tpl:33
 #: personal/privacyidea/default/mfatype_webauthn/phase00.tpl:33
-#: personal/privacyidea/default/mfa_intro.tpl:209
+#: personal/privacyidea/default/mfa_intro.tpl:212
 #: personal/privacyidea/default/mfa_editToken.tpl:41
 #: personal/privacyidea/default/mfatype_totp/phase00.tpl:35
 #: personal/privacyidea/default/mfatype_paper/phase00.tpl:34
-#: personal/privacyidea/class_mfaAccount.inc:926
+#: personal/privacyidea/class_mfaAccount.inc:934
 msgid "Description"
 msgstr "Beschreibung"
 
@@ -281,19 +281,19 @@ msgstr "Zusätzlicher Faktor notwendig aufgrund von Organisationsrichtlinien."
 msgid "Always require additional factors."
 msgstr "Zusätzlicher Faktor soll freiwillig immer abgefragt werden."
 
-#: personal/privacyidea/default/mfa_intro.tpl:68
+#: personal/privacyidea/default/mfa_intro.tpl:69
 msgid "Allowed factors"
 msgstr "Zugelassen Faktoren"
 
-#: personal/privacyidea/default/mfa_intro.tpl:72
+#: personal/privacyidea/default/mfa_intro.tpl:73
 msgid "Choose allowed factors"
 msgstr "Zugelassene Faktoren auswählen"
 
-#: personal/privacyidea/default/mfa_intro.tpl:85
+#: personal/privacyidea/default/mfa_intro.tpl:87
 msgid "Attention: "
 msgstr "Achtung:"
 
-#: personal/privacyidea/default/mfa_intro.tpl:85
+#: personal/privacyidea/default/mfa_intro.tpl:87
 msgid ""
 "You cannot log in again with this account because there is no multifactor "
 "method associated with it. Please add one of the available methods now."
@@ -302,19 +302,19 @@ msgstr ""
 "anwendbare Multifaktor-Methode verknüpft haben. Bitte fügen Sie jetzt eine "
 "der verfügbaren Methoden hinzu."
 
-#: personal/privacyidea/default/mfa_intro.tpl:93
+#: personal/privacyidea/default/mfa_intro.tpl:95
 msgid "Save settings"
 msgstr "Einstellungen speichern"
 
-#: personal/privacyidea/default/mfa_intro.tpl:95
+#: personal/privacyidea/default/mfa_intro.tpl:97
 msgid "Edit settings"
 msgstr "Einstellungen bearbeiten"
 
-#: personal/privacyidea/default/mfa_intro.tpl:105
+#: personal/privacyidea/default/mfa_intro.tpl:108
 msgid "Add new multifactor token"
 msgstr "Neue Multifaktor-Methode hinzufügen"
 
-#: personal/privacyidea/default/mfa_intro.tpl:109
+#: personal/privacyidea/default/mfa_intro.tpl:112
 msgid ""
 "Here you can add a new login method for your account. You can choose between "
 "different methods below."
@@ -322,100 +322,100 @@ msgstr ""
 "Hier können Sie eine neue Anmeldemethode für Ihr Konto hinzufügen. Sie "
 "können dabei zwischen den folgenden  Methoden auswählen."
 
-#: personal/privacyidea/default/mfa_intro.tpl:122
+#: personal/privacyidea/default/mfa_intro.tpl:125
 msgid "[admin]"
 msgstr "[Admin]"
 
-#: personal/privacyidea/default/mfa_intro.tpl:158
+#: personal/privacyidea/default/mfa_intro.tpl:161
 msgid "You are not allowed to configure any additional multifactor tokens."
 msgstr ""
 "Sie haben keine Berechtigung zusätzliche Multifactor-Tokens einzurichten."
 
-#: personal/privacyidea/default/mfa_intro.tpl:175
+#: personal/privacyidea/default/mfa_intro.tpl:178
 msgid "Associated multifactor methods"
 msgstr "Verknüpfte Multifaktor-Methoden"
 
-#: personal/privacyidea/default/mfa_intro.tpl:182
+#: personal/privacyidea/default/mfa_intro.tpl:185
 msgid "Choose an action"
 msgstr "Aktion auswählen"
 
-#: personal/privacyidea/default/mfa_intro.tpl:184
-#: personal/privacyidea/default/mfa_intro.tpl:252
+#: personal/privacyidea/default/mfa_intro.tpl:187
+#: personal/privacyidea/default/mfa_intro.tpl:255
 msgid "Reset error counter"
 msgstr "Fehlerzähler zurücksetzen"
 
-#: personal/privacyidea/default/mfa_intro.tpl:187
-#: personal/privacyidea/default/mfa_intro.tpl:264
+#: personal/privacyidea/default/mfa_intro.tpl:190
+#: personal/privacyidea/default/mfa_intro.tpl:267
 msgid "Activate"
 msgstr "Aktivieren"
 
-#: personal/privacyidea/default/mfa_intro.tpl:188
-#: personal/privacyidea/default/mfa_intro.tpl:258
+#: personal/privacyidea/default/mfa_intro.tpl:191
+#: personal/privacyidea/default/mfa_intro.tpl:261
 msgid "Deactivate"
 msgstr "Deaktivieren"
 
-#: personal/privacyidea/default/mfa_intro.tpl:191
-#: personal/privacyidea/default/mfa_intro.tpl:270
+#: personal/privacyidea/default/mfa_intro.tpl:194
+#: personal/privacyidea/default/mfa_intro.tpl:273
 msgid "Revoke"
 msgstr "Zurückziehen"
 
-#: personal/privacyidea/default/mfa_intro.tpl:194
-#: personal/privacyidea/default/mfa_intro.tpl:276
+#: personal/privacyidea/default/mfa_intro.tpl:197
+#: personal/privacyidea/default/mfa_intro.tpl:279
 msgid "Remove"
 msgstr "Löschen"
 
-#: personal/privacyidea/default/mfa_intro.tpl:207
+#: personal/privacyidea/default/mfa_intro.tpl:210
 msgid "ID"
 msgstr "ID"
 
-#: personal/privacyidea/default/mfa_intro.tpl:208
+#: personal/privacyidea/default/mfa_intro.tpl:211
 msgid "Type"
 msgstr "Typ"
 
-#: personal/privacyidea/default/mfa_intro.tpl:210
+#: personal/privacyidea/default/mfa_intro.tpl:213
 #: personal/privacyidea/default/mfa_editToken.tpl:48
-#: personal/privacyidea/class_mfaAccount.inc:927
+#: personal/privacyidea/class_mfaAccount.inc:935
 msgid "Last use"
 msgstr "Letzte Verwendung"
 
-#: personal/privacyidea/default/mfa_intro.tpl:211
+#: personal/privacyidea/default/mfa_intro.tpl:214
 #: personal/privacyidea/default/mfa_editToken.tpl:55
-#: personal/privacyidea/class_mfaAccount.inc:929
+#: personal/privacyidea/class_mfaAccount.inc:937
 msgid "Status"
 msgstr "Status"
 
-#: personal/privacyidea/default/mfa_intro.tpl:212
+#: personal/privacyidea/default/mfa_intro.tpl:215
 msgid "Error counter"
 msgstr "Fehlerzähler"
 
-#: personal/privacyidea/default/mfa_intro.tpl:213
+#: personal/privacyidea/default/mfa_intro.tpl:216
 msgid "Actions"
 msgstr "Aktionen"
 
-#: personal/privacyidea/default/mfa_intro.tpl:239
-#: personal/privacyidea/default/mfa_intro.tpl:241
 #: personal/privacyidea/default/mfa_intro.tpl:242
-#: personal/privacyidea/default/mfa_intro.tpl:243
+#: personal/privacyidea/default/mfa_intro.tpl:244
+#: personal/privacyidea/default/mfa_intro.tpl:245
+#: personal/privacyidea/default/mfa_intro.tpl:246
 #: personal/privacyidea/default/mfa_editToken.tpl:39
 #: personal/privacyidea/default/mfa_editToken.tpl:47
 #: personal/privacyidea/default/mfa_editToken.tpl:54
-#: personal/privacyidea/default/mfa_editToken.tpl:70
+#: personal/privacyidea/default/mfa_editToken.tpl:67
+#: personal/privacyidea/default/mfa_editToken.tpl:73
 #: personal/privacyidea/default/mfa_editToken.tpl:79
-#: personal/privacyidea/default/mfa_editToken.tpl:85
 msgid "not shown"
 msgstr "nicht angezeigt"
 
-#: personal/privacyidea/default/mfa_intro.tpl:246
-#: personal/privacyidea/default/mfa_editToken.tpl:111
+#: personal/privacyidea/default/mfa_intro.tpl:249
+#: personal/privacyidea/default/mfa_editToken.tpl:105
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: personal/privacyidea/default/mfa_intro.tpl:329
-#: personal/privacyidea/default/mfa_intro.tpl:341
+#: personal/privacyidea/default/mfa_intro.tpl:332
+#: personal/privacyidea/default/mfa_intro.tpl:344
 msgid "At least one token needs to remain active."
 msgstr "Mindestens ein Token muss aktiviert bleiben."
 
-#: personal/privacyidea/default/mfa_intro.tpl:356
+#: personal/privacyidea/default/mfa_intro.tpl:359
 msgid "Currently there are no multifactor methods associated."
 msgstr "Zur Zeit sind keine Multifaktor-Methoden verknüpft."
 
@@ -431,19 +431,24 @@ msgstr "lfd. Nummer"
 msgid "Last used TAN no."
 msgstr "Zuletzt verwendete TAN-Nr."
 
-#: personal/privacyidea/default/mfa_editToken.tpl:71
+#: personal/privacyidea/default/mfa_editToken.tpl:67
+#: personal/privacyidea/default/mfa_editToken.tpl:73
+msgid "Never used before"
+msgstr "Noch niemals verwendet"
+
+#: personal/privacyidea/default/mfa_editToken.tpl:68
 msgid "No. of login attempts"
 msgstr "Anzahl Anmeldungen"
 
-#: personal/privacyidea/default/mfa_editToken.tpl:80
+#: personal/privacyidea/default/mfa_editToken.tpl:74
 msgid "Successful logins"
 msgstr "Erfolgreiche Anmeldungen"
 
-#: personal/privacyidea/default/mfa_editToken.tpl:86
+#: personal/privacyidea/default/mfa_editToken.tpl:80
 msgid "Login failure counter (current / max.)"
 msgstr "Fehlerzähler Benutzeranmeldung (aktuell/maximal)"
 
-#: personal/privacyidea/default/mfa_editToken.tpl:106
+#: personal/privacyidea/default/mfa_editToken.tpl:100
 msgid "Save"
 msgstr "Speichern"
 
@@ -632,7 +637,7 @@ msgstr "Bestätigungs-TAN:"
 
 #: personal/privacyidea/default/mfatype_paper/phase00.tpl:22
 #: personal/privacyidea/tokens/class_MFAPaperToken.inc:236
-#: personal/privacyidea/class_mfaAccount.inc:922
+#: personal/privacyidea/class_mfaAccount.inc:930
 msgid "Add TAN list"
 msgstr "TAN-Liste hinzufügen"
 
@@ -723,10 +728,10 @@ msgstr ""
 #: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:133
 #: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:189
 #: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:196
-#: personal/privacyidea/class_mfaAccount.inc:249
-#: personal/privacyidea/class_mfaAccount.inc:355
-#: personal/privacyidea/class_mfaAccount.inc:376
-#: personal/privacyidea/class_mfaAccount.inc:619
+#: personal/privacyidea/class_mfaAccount.inc:257
+#: personal/privacyidea/class_mfaAccount.inc:363
+#: personal/privacyidea/class_mfaAccount.inc:384
+#: personal/privacyidea/class_mfaAccount.inc:627
 msgid "Internal error"
 msgstr "Interner Fehler"
 
@@ -929,41 +934,41 @@ msgstr "Multifaktor-Authentifizierung"
 msgid "Manage Multifactor authentication"
 msgstr "Multifaktor-Authentifizierung verwalten"
 
-#: personal/privacyidea/class_mfaAccount.inc:232
-#: personal/privacyidea/class_mfaAccount.inc:261
-#: personal/privacyidea/class_mfaAccount.inc:308
+#: personal/privacyidea/class_mfaAccount.inc:240
+#: personal/privacyidea/class_mfaAccount.inc:269
+#: personal/privacyidea/class_mfaAccount.inc:316
 msgid "Insufficient permissions"
 msgstr "Unzureichende Berechtigungen"
 
-#: personal/privacyidea/class_mfaAccount.inc:233
+#: personal/privacyidea/class_mfaAccount.inc:241
 msgid "You are not allowed to add a new factor."
 msgstr "Es ist Ihnen nicht gestattet, einen neuen Faktor hinzuzufügen."
 
-#: personal/privacyidea/class_mfaAccount.inc:250
+#: personal/privacyidea/class_mfaAccount.inc:258
 msgid "Could not process POST data of your request."
 msgstr "Konnte die Daten des POST-Requests nicht abarbeiten."
 
-#: personal/privacyidea/class_mfaAccount.inc:262
-#: personal/privacyidea/class_mfaAccount.inc:309
+#: personal/privacyidea/class_mfaAccount.inc:270
+#: personal/privacyidea/class_mfaAccount.inc:317
 msgid "You are not allowed to manage MFA factors."
 msgstr "Es ist Ihnen nicht gestattet, MFA Faktoren zu verwalten."
 
-#: personal/privacyidea/class_mfaAccount.inc:356
+#: personal/privacyidea/class_mfaAccount.inc:364
 #, php-format
 msgid "A batch operation failed on token '%s'. Skipping remaining operations."
 msgstr ""
 "Eine Stapelverarbeitung ist fehlgeschlagen für Token '%s'. Überspringe "
 "weitere Operationen."
 
-#: personal/privacyidea/class_mfaAccount.inc:377
+#: personal/privacyidea/class_mfaAccount.inc:385
 msgid "Could not load/render template for MFA setup."
 msgstr "Konnte die Vorlage für das MFA-Setup nicht laden/darstellen."
 
-#: personal/privacyidea/class_mfaAccount.inc:620
+#: personal/privacyidea/class_mfaAccount.inc:628
 msgid "Token action malformed or not allowed."
 msgstr "Token-Aktion ungültig oder nicht zulässig."
 
-#: personal/privacyidea/class_mfaAccount.inc:713
+#: personal/privacyidea/class_mfaAccount.inc:721
 msgid "Reset the failed login counter for the following token?"
 msgid_plural "Reset the failed login counter for the following tokens?"
 msgstr[0] ""
@@ -971,104 +976,104 @@ msgstr[0] ""
 msgstr[1] ""
 "Den Fehlerzähler für Anmeldeversuche für die folgende Tokens zurücksetzen?"
 
-#: personal/privacyidea/class_mfaAccount.inc:716
+#: personal/privacyidea/class_mfaAccount.inc:724
 msgid "Disable the following token?"
 msgid_plural "Disable the following tokens?"
 msgstr[0] "Das folgende Token deaktivieren?"
 msgstr[1] "Die folgenden Tokens deaktivieren?"
 
-#: personal/privacyidea/class_mfaAccount.inc:719
+#: personal/privacyidea/class_mfaAccount.inc:727
 msgid "Enable the following token?"
 msgid_plural "Enable the following tokens?"
 msgstr[0] "Das folgende Token aktivieren?"
 msgstr[1] "Die folgenden Tokens aktivieren?"
 
-#: personal/privacyidea/class_mfaAccount.inc:722
+#: personal/privacyidea/class_mfaAccount.inc:730
 msgid "Revoke the following token?"
 msgid_plural "Revoke the following tokens?"
 msgstr[0] "Das folgende Token widerrufen?"
 msgstr[1] "Die folgenden Tokens widerrufen?"
 
-#: personal/privacyidea/class_mfaAccount.inc:725
+#: personal/privacyidea/class_mfaAccount.inc:733
 msgid "Remove the following token?"
 msgid_plural "Remove the following tokens?"
 msgstr[0] "Das folgende Token entfernen?"
 msgstr[1] "Die folgenden Tokens entfernen?"
 
-#: personal/privacyidea/class_mfaAccount.inc:807
-#: personal/privacyidea/class_mfaAccount.inc:847
+#: personal/privacyidea/class_mfaAccount.inc:815
+#: personal/privacyidea/class_mfaAccount.inc:855
 msgid "LDAP error"
 msgstr "LDAP-Fehler"
 
-#: personal/privacyidea/class_mfaAccount.inc:906
+#: personal/privacyidea/class_mfaAccount.inc:914
 msgid "MFA"
 msgstr "MFA"
 
-#: personal/privacyidea/class_mfaAccount.inc:907
+#: personal/privacyidea/class_mfaAccount.inc:915
 msgid "Multifactor Authentification"
 msgstr "Multifaktor-Authentifizierung"
 
-#: personal/privacyidea/class_mfaAccount.inc:911
+#: personal/privacyidea/class_mfaAccount.inc:919
 msgid "My account"
 msgstr "Mein Konto"
 
-#: personal/privacyidea/class_mfaAccount.inc:917
+#: personal/privacyidea/class_mfaAccount.inc:925
 msgid "MFA token types"
 msgstr "MFA-Tokentypen"
 
-#: personal/privacyidea/class_mfaAccount.inc:918
+#: personal/privacyidea/class_mfaAccount.inc:926
 msgid "Require MFA due to organizational policy"
 msgstr "MFA erforderlich aufgrund Organisationsrichtlinien"
 
-#: personal/privacyidea/class_mfaAccount.inc:919
+#: personal/privacyidea/class_mfaAccount.inc:927
 msgid "Require MFA due to user preference"
 msgstr "MFA erforderlich durch Benutzerwahl"
 
-#: personal/privacyidea/class_mfaAccount.inc:920
+#: personal/privacyidea/class_mfaAccount.inc:928
 msgid "Manage tokens"
 msgstr "Tokens verwalten"
 
-#: personal/privacyidea/class_mfaAccount.inc:921
+#: personal/privacyidea/class_mfaAccount.inc:929
 msgid "Add any type of token"
 msgstr "Jeglichen Token-Typ hinzufügen"
 
-#: personal/privacyidea/class_mfaAccount.inc:923
+#: personal/privacyidea/class_mfaAccount.inc:931
 msgid "Add Recovery key"
 msgstr "Wiederherstellungsschlüssel hinzufügen"
 
-#: personal/privacyidea/class_mfaAccount.inc:924
+#: personal/privacyidea/class_mfaAccount.inc:932
 msgid "Add Security key"
 msgstr "Sicherheitsschlüssel hinzufügen"
 
-#: personal/privacyidea/class_mfaAccount.inc:925
+#: personal/privacyidea/class_mfaAccount.inc:933
 msgid "Add Authentication app (TOTP)"
 msgstr "Authentifizierungsapp (TOTP) hinzufügen"
 
-#: personal/privacyidea/class_mfaAccount.inc:928
+#: personal/privacyidea/class_mfaAccount.inc:936
 msgid "Failed login counter"
 msgstr "Zähler für fehlerhafte Anmeldungen"
 
-#: personal/privacyidea/class_mfaAccount.inc:930
+#: personal/privacyidea/class_mfaAccount.inc:938
 msgid "Authentication count"
 msgstr "Anmeldungszähler"
 
-#: personal/privacyidea/class_mfaAccount.inc:931
+#: personal/privacyidea/class_mfaAccount.inc:939
 msgid "Successful authentication count"
 msgstr "Zähler für erfolgreiche Anmeldungen"
 
-#: personal/privacyidea/class_mfaAccount.inc:932
+#: personal/privacyidea/class_mfaAccount.inc:940
 msgid "Revocation allowed"
 msgstr "Widerrufen erlaubt"
 
-#: personal/privacyidea/class_mfaAccount.inc:933
+#: personal/privacyidea/class_mfaAccount.inc:941
 msgid "Removal allowed"
 msgstr "Löschen erlaubt"
 
-#: personal/privacyidea/class_mfaAccount.inc:954
+#: personal/privacyidea/class_mfaAccount.inc:962
 msgid "privacyIDEA server URL."
 msgstr "privacyIDEA Server-URL"
 
-#: personal/privacyidea/class_mfaAccount.inc:964
+#: personal/privacyidea/class_mfaAccount.inc:972
 msgid ""
 "privacyIDEA service account username. Used to authenticate GOsa² against "
 "privacyIDEA."
@@ -1076,7 +1081,7 @@ msgstr ""
 "privacyIDEA Benutzername des Servicekontos. Wird genutzt um GOsa² gegen "
 "privacyIDEA zu authentifizieren."
 
-#: personal/privacyidea/class_mfaAccount.inc:974
+#: personal/privacyidea/class_mfaAccount.inc:982
 msgid ""
 "privacyIDEA service account password. Used to authenticate GOsa² against "
 "privacyIDEA."
@@ -1084,7 +1089,7 @@ msgstr ""
 "privacyIDEA Passwort des Servicekontos. Wird genutzt um GOsa² gegen "
 "privacyIDEA zu authentifizieren."
 
-#: personal/privacyidea/class_mfaAccount.inc:984
+#: personal/privacyidea/class_mfaAccount.inc:992
 msgid ""
 "privacyIDEA service account realm. Used to authenticate GOsa² against "
 "privacyIDEA."
@@ -1092,13 +1097,13 @@ msgstr ""
 "privacyIDEA Realm des Servicekontos. Wird genutzt um GOsa² gegen privacyIDEA "
 "zu authentifizieren."
 
-#: personal/privacyidea/class_mfaAccount.inc:994
+#: personal/privacyidea/class_mfaAccount.inc:1002
 msgid "privacyIDEA user realm. Used to find users in privacyIDEA."
 msgstr ""
 "privacyIDEA Benutzer-Realm. Wird genutzt um Benutzer in privacyIDEA zu "
 "finden."
 
-#: personal/privacyidea/class_mfaAccount.inc:1007
+#: personal/privacyidea/class_mfaAccount.inc:1015
 msgid ""
 "Users are only allowed to link a total of X tokens from the available MFA "
 "methods."
@@ -1106,29 +1111,29 @@ msgstr ""
 "Benutzern ist es nicht erlaubt, mehr als eine Gesamtanzahl von X Tokens "
 "(alle MFA-Methoden) zu konfigurieren."
 
-#: personal/privacyidea/class_mfaAccount.inc:1017
+#: personal/privacyidea/class_mfaAccount.inc:1025
 msgid "Users are only allowed have a total of X paper tokens."
 msgstr ""
 "Benutzern ist es nicht erlaubt, mehr als X TAN-Listen Tokens zu "
 "konfigurieren."
 
-#: personal/privacyidea/class_mfaAccount.inc:1027
+#: personal/privacyidea/class_mfaAccount.inc:1035
 msgid "Users are only allowed have a total of X TOTP tokens."
 msgstr ""
 "Benutzern ist es nicht erlaubt, mehr als X TOTP Tokens zu konfigurieren."
 
-#: personal/privacyidea/class_mfaAccount.inc:1037
+#: personal/privacyidea/class_mfaAccount.inc:1045
 msgid "Users are only allowed have a total of X WebAuthn tokens."
 msgstr ""
 "Benutzern ist es nicht erlaubt, mehr als X WebAuthn Tokens zu konfigurieren."
 
-#: personal/privacyidea/class_mfaAccount.inc:1047
+#: personal/privacyidea/class_mfaAccount.inc:1055
 msgid "Users are only allowed have a total of X Registration tokens."
 msgstr ""
 "Benutzern ist es nicht erlaubt, mehr als X Wiederherstellungsschlüssel "
 "Tokens zu konfigurieren."
 
-#: personal/privacyidea/class_mfaAccount.inc:1062
+#: personal/privacyidea/class_mfaAccount.inc:1070
 msgid "Amount of OTPs which will be printed on a single TAN list."
 msgstr "Anzahl an Einmalpasswörter, die auf eine TAN-Liste gedruckt werden."
 
