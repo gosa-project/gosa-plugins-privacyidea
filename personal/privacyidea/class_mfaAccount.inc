@@ -273,13 +273,22 @@ class mfaAccount extends plugin
 
                     return $this->getMFAIntroTemplate();
                 }
-                $tokenSerial = $this->utils->getPOSTTokenSerial();
-                if (!isset($tokenSerial)) {
-                    // Oops, user requested an action but no tokenSerial was given?
-                    return $this->getMFAIntroTemplate();
+
+                // Idea: refactor this to use multiple mfaTokenActions.
+                // if count($mfaTokenActions) > 1, then this could be treated as a batch operation.
+                $mfaTokenActions = $_POST["mfaTokenAction"];
+                if (!is_array($mfaTokenActions) || count($mfaTokenActions) != 1) {
+                    return $this->getMFAIntroTemplate(); // Got malformed data, straight to MFA intro again.
+                } else {
+                    $mfaTokenAction = array_keys($mfaTokenActions)[0]; // Get the mfaTokenAction type.
+                    $tokenSerial    = $mfaTokenActions[$mfaTokenAction]; // Get the tokenSerial part.
+
+                    if (!isset($tokenSerial) || !$this->utils->isTokenSerialValid($tokenSerial)) {
+                        // Oops, user requested an action but no tokenSerial was given?
+                        return $this->getMFAIntroTemplate();
+                    }
                 }
 
-                $mfaTokenAction = $_POST["mfaTokenAction"];
                 switch ($mfaTokenAction) {
                     case 'mfaTokenDisable':      // FALLTHROUGH
                     case 'mfaTokenRevoke':       // FALLTHROUGH
@@ -303,7 +312,7 @@ class mfaAccount extends plugin
                     case "mfaTokenView":    // FALLTHROUGH
                     case "mfaTokenEdit":
                         $this->skipFooter(true);
-                        return $this->getTokenEditTemplate($mfaTokenAction);
+                        return $this->getTokenEditTemplate($mfaTokenAction, $tokenSerial);
                     default:
                         break;
                 }
@@ -632,11 +641,12 @@ class mfaAccount extends plugin
 
     /**
      * Prepares Smarty to show the mfa token edit page, renders and returns it.
+     * @param string $mfaTokenAction
+     * @param string $tokenSerial
      * @return string Always returnes the token edit page for $token.
      */
-    private function getTokenEditTemplate($mfaTokenAction)
+    private function getTokenEditTemplate($mfaTokenAction, $tokenSerial)
     {
-        $tokenSerial = $this->utils->getPOSTTokenSerial();
         $tokens = $this->utils->getTokensOfUser($this->getUid(), $this->userRealm, $tokenSerial);
         if (empty($tokens)) {
             return $this->getMFAIntroTemplate();
