@@ -381,8 +381,9 @@ class PrivacyIdeaUtils implements PILog
         }, array());
     }
 
-    /** @param string Token serial
-     *  @return bool Whether token is valid
+    /**
+     * @param string $tokenSerial serial
+     * @return bool Whether token is valid
      */
     public function isTokenSerialValid($tokenSerial)
     {
