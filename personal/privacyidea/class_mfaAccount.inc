@@ -62,9 +62,13 @@ class mfaAccount extends plugin
     /** @var string Used to find users in privacyIDEA */
     public $userRealm;
 
+    public $orig_dn = "";
+
     public function __construct(&$config, $dn = null)
     {
         plugin::__construct($config, $dn);
+
+        $this->orig_dn = $dn;
 
         $this->initTime = microtime(true);
 
