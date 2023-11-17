@@ -2,19 +2,56 @@
 
 ## Install plugin in GOsa²
 After installation of the .deb package gosa-plugin-privacyidea, you
-need to add the following lines to /etc/gosa/gosa.conf (e.g. inside of
-the `<usertabs>` entry):
+need to adjust /etc/gosa/gosa.conf as shown by this patch:
 
-```xml
-     <!-- privacyIDEA Plugin -->
-     <tab class="mfaAccount" name="Multifactor Auth"/>
 ```
-
-also add the following inside of the `<MyAccountTabs>` entry:
-
-```xml
-     <!-- privacyIDEA Plugin -->
-     <tab class="mfaAccount" name="Multifactor Auth"/>
+diff --git a/contrib/gosa.conf b/contrib/gosa.conf
+index 6e7e908b4..113e8d689 100644
+--- a/contrib/gosa.conf
++++ b/contrib/gosa.conf
+@@ -105,6 +105,7 @@
+   <usertabs>
+      <tab class="user" name="Generic" />
+      <tab class="posixAccount" name="POSIX" />
++     <tab class="mfaAccount" name="Multifactor Authentication" />
+      <tab class="sambaAccount" name="Samba" />
+      <tab class="netatalk" name="Netatalk" />
+      <tab class="mailAccount" name="Mail" />
+@@ -121,6 +122,7 @@
+   <!-- User dialog -->
+   <MyAccountTabs>
+      <tab class="user" name="Generic" />
++     <tab class="mfaAccount" name="Multifactor Authentication" />
+      <tab class="posixAccount" name="POSIX" />
+      <tab class="sambaAccount" name="Samba" />
+      <tab class="netatalk" name="Netatalk" />
+@@ -288,6 +290,7 @@
+   <!-- Role tabs -->
+   <roletabs>
+     <tab class="roleGeneric" name="Generic"/>
++    <tab class="mfaAccount" name="Multifactor Authentication" />
+     <tab class="DynamicLdapGroup" name="Dynamic object" />
+   </roletabs>
+ 
+@@ -387,6 +390,18 @@
+         forceSSL="false"
+         forceGlobals="true"
+         ignoreLdapProperties="false"
++        piServer="https://my.privacyidea.tld"
++        piServiceRealm="<admin-realm>"
++        piServiceAccount="<pi-admin-for-gosa>"
++        piServicePass="<password>"
++        piUserRealm="<user-realm>"
++        piTokenOrigin="https://my.gosasite.tld"
++        piTokenLimitAll="10"
++        piTokenLimitPaper="6"
++        piTokenLimitTotp="6"
++        piTokenLimitWebAuthn="4"
++        piTokenLimitRegistration="0"
++        piAmountOfPaperTokenOTPs="20"
+ {if $cv.rfc2307bis}
+         rfc2307bis="true"
+ {else}
 ```
 
 also please add these lines to `/etc/ldap/slapd.conf` under the `## gosa:`
