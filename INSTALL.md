@@ -1,6 +1,7 @@
 # Installation
 
 ## Install plugin in GOsa²
+
 After installation of the .deb package gosa-plugin-privacyidea, you
 need to adjust /etc/gosa/gosa.conf as shown by this patch:
 
@@ -54,17 +55,21 @@ index 6e7e908b4..113e8d689 100644
  {else}
 ```
 
-also please add these lines to `/etc/ldap/slapd.conf` under the `## gosa:`
-section at the beginning of the file:
+Also make sure to load the mfaService schema (see contrib/ folder) by
+adding these lines to `/etc/ldap/slapd.conf` under the `## gosa:` section
+at the beginning of the file:
+
 ```bash
 # privacyIDEA Plugin
 include /etc/ldap/schema/gosa/mfa.schema
 ```
 
-For the changes to take effect, restart your *http daemon* (e.g. the Apache web server)
-and your *LDAP server* (e.g. slapd).
+For the changes to take effect, restart your *http daemon* (e.g. the
+Apache web server) and your *LDAP server* (e.g. slapd). Already logged in
+users need to logout and login again.
 
 ## privacyIDEA policies
+
 This plugin supports the 'verify_enrollment' policy. Please have a look at:
 https://privacyidea.readthedocs.io/en/latest/policies/enrollment.html?highlight=verify_enrollment#verify-enrollment
 
