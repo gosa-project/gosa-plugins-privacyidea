@@ -146,7 +146,13 @@ class PrivacyIdeaUtils implements PILog
 
         foreach ($tokens as $key => $token) {
             $tokenType = $token["tokentype"];
-            assert(in_array($tokenType, $allTokenTypes));
+
+            if (!in_array($tokenType, $allTokenTypes)) {
+                // We do not support this tokenType.
+                continue;
+            }
+
+            // We support tokenType, but we forgot to add it in tokenLimits.
             assert(in_array($tokenType, array_keys($tokenLimits)));
 
             if (!in_array($tokenType, array_keys($this->tokenCounts))) {
@@ -321,6 +327,12 @@ class PrivacyIdeaUtils implements PILog
     {
         foreach ($tokens as $key => $token) {
             $valid = true;
+
+            if (!in_array($token['tokentype'], array_keys($this->mfaAccount->mfaTokens))) {
+                // We do not support this token. Don't show it.
+                unset($tokens[$key]);
+                continue;
+            }
 
             $mustBeValid = array('serial', 'active', 'description','revoked',
                 'maxfail', 'failcount', 'tokentype', 'user_realm', 'rollout_state');
