@@ -51,6 +51,7 @@
     </div>
 </div>
 {/render}
+{if ($parent != "roletabs")}
 {render acl=$mfaRequiredByUserACL}
 <div class="row">
     <div class="col">
@@ -63,6 +64,7 @@
     </div>
 </div>
 {/render}
+{/if}
 
 {if $allowedTokenTypesACL}
 {render acl=$allowedTokenTypesACL}
