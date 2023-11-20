@@ -122,7 +122,7 @@
                         <i class="material-icons left">{$mfa_{$tokenType}_icon}</i>
                         <span class="card-title">{$mfa_{$tokenType}_title}
                         {if (!in_array($tokenType, $tokenTypes))}
-                            {t}[admin]{/t}
+                            <i class="material-icons" title="{t}Overridden by ACL{/t}">error_outline</i>
                         {/if}
                         </span>
 
