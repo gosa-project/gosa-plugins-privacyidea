@@ -93,7 +93,7 @@
 <script>
 (() => {
 const el = document.querySelector("#tokenLastUsed");
-if (el.value.match(/[^0-9]/)) {
+if (el.value.match(/^[0-9]/)) {
     const d = new Date(el.value);
     el.value = d.toLocaleString();
 }
