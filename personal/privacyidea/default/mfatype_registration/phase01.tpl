@@ -38,8 +38,6 @@
 </div>
 
 <div class="section">
-    <input type="hidden" id="current_phase" name="current_phase" value="1">
-
-    <button class="btn" formnovalidate type="submit">{t}Cancel{/t}</button>
-    <button class="btn primary" name="add_token" value="registration" type="submit">{t}Continue{/t}</button>
+    <button class="btn primary" type="submit">{t}Back to overview{/t}
+    </button>
 </div>
