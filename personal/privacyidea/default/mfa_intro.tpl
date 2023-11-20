@@ -176,6 +176,9 @@
 .invisible {
         visibility: hidden;
 }
+.line-through {
+        text-decoration: line-through;
+}
 </style>
 
 <hr class="divider">
@@ -224,7 +227,7 @@
                 {foreach from=$tokens key=$key item=$token}
                     <tr>
                         <td><label><input type="checkbox" name="mfaTokenSerials[]" value="{$token.serial}"><span></span></label></td>
-                        <td><button style="font-size: 0.8em;" class="txtonlybtn" type="submit"
+                        <td><button style="font-size: 0.8em;" class="txtonlybtn{if $token.revoked} line-through{/if}" type="submit"
                                     name="mfaTokenAction[mfaTokenView]" value="{$token.serial}">
                             {$token.serial}
                         </button></td>
@@ -233,20 +236,20 @@
                              * There are only available if in allowedTokenType or overriden by ACL.
                              * Make them a const in the MFA{Icon, Title}Token class. *}
                             {* TODO: Center text vertically *}
-                             <button class="txtonlybtn" type="submit" name="mfaTokenAction[mfaTokenView]" value="{$token.serial}">
+                             <button class="txtonlybtn{if $token.revoked} line-through{/if}" type="submit" name="mfaTokenAction[mfaTokenView]" value="{$token.serial}">
                                 <span class="material-icons">{$mfa_{$token.tokentype}_icon}</span>
                                 {$mfa_{$token.tokentype}_title}
                             </button>
                         </td>
-                        <td><button class="txtonlybtn" type="submit" name="mfaTokenAction[mfaTokenView]" value="{$token.serial}">
+                        <td><button class="txtonlybtn{if $token.revoked} line-through{/if}" type="submit" name="mfaTokenAction[mfaTokenView]" value="{$token.serial}">
                             {if strpos($tokenDescriptionACL, "r") !== false}{$token.description}{else}{t}not shown{/t}{/if}
                         </button></td>
                         <td>
                             {if strpos($tokenLastUsedACL, "r") !== false}
                                 {if !empty($token.info.last_auth)}
-                                    <time class="tokenLastUsed" datetime="{$token.info.last_auth}">{$token.info.last_auth}</time>
+                                    <time class="tokenLastUsed{if $token.revoked} line-through{/if}" datetime="{$token.info.last_auth}">{$token.info.last_auth}</time>
                                 {else}
-                                    {t}Never used before{/t}
+                                    <span class="{if $token.revoked} line-through{/if}">{t}Never used before{/t}</span>
                                 {/if}
                             {else}
                                 {t}not shown{/t}
