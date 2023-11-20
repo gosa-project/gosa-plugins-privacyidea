@@ -214,33 +214,43 @@
     <div class="row">
         <div class="col s12">
         <table class="table" id="mfaTokenList">
+            <colgroup>
+                <col style="width: 2%;">
+                <col style="width: 6%;">
+                <col style="width: 15%">
+                <col style="width: auto;">
+                <col style="width: 16%">
+                <col style="width: 6%">
+                <col style="width: 6%">
+                <col style="width: 11%">
+            </colgroup>
             <thead>
                 <tr>
-                    <th style="width: 2%" ><label><input type="checkbox" id="mfaTokensSelectAll"><span></span></label></th>
-                    <th style="width: 6%;" >{t}ID{/t}</th>
-                    <th style="width: 15%">{t}Type{/t}</th>
-                    <th>{t}Description{/t}</th>
-                    <th style="width: 16%">{t}Last use{/t}</th>
-                    <th style="width: 6%" >{t}Status{/t}</th>
-                    <th style="width: 6%" >{t}Error counter{/t}</th>
-                    <th style="width: 11%">{t}Actions{/t}</th>
+                    <th class="align-top"><label><input type="checkbox" id="mfaTokensSelectAll"><span></span></label></th>
+                    <th class="align-top">{t}ID{/t}</th>
+                    <th class="align-top">{t}Type{/t}</th>
+                    <th class="align-top">{t}Description{/t}</th>
+                    <th class="align-top">{t}Last use{/t}</th>
+                    <th class="align-top">{t}Status{/t}</th>
+                    <th class="align-top">{t}Error counter{/t}</th>
+                    <th class="align-top">{t}Actions{/t}</th>
                 </tr>
             </thead>
             <tbody>
                 {foreach from=$tokens key=$key item=$token}
                     <tr>
                         <td class="align-top"><label><input type="checkbox" name="mfaTokenSerials[]" value="{$token.serial}"><span></span></label></td>
-                        <td class="align-top"><button style="font-size: 0.8em;" class="txtonlybtn{if $token.revoked} line-through{/if}" type="submit"
-                                    name="mfaTokenAction[mfaTokenView]" value="{$token.serial}">
-                            {$token.serial}
-                        </button></td>
+                        <td class="align-top" style="overflow-wrap: break-word;">
+                            <button class="txtonlybtn{if $token.revoked} line-through{/if}" type="submit"
+                             name="mfaTokenAction[mfaTokenView]" value="{$token.serial}">{$token.serial}</button>
+                        </td>
                         <td class="align-top">
                             {* TODO: Refactor getSetupCard{Icon,Title}, also mfa{tokenType}_{icon,title}.
                              * There are only available if in allowedTokenType or overriden by ACL.
                              * Make them a const in the MFA{Icon, Title}Token class. *}
                             {* TODO: Center text vertically *}
                              <button class="txtonlybtn{if $token.revoked} line-through{/if}" type="submit" name="mfaTokenAction[mfaTokenView]" value="{$token.serial}">
-                                <span class="material-icons">{$mfa_{$token.tokentype}_icon}</span>
+                                <span class="material-icons" style="font-size: inherit;">{$mfa_{$token.tokentype}_icon}</span>
                                 {$mfa_{$token.tokentype}_title}
                             </button>
                         </td>
