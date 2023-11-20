@@ -67,17 +67,16 @@
 {if $allowedTokenTypesACL}
 {render acl=$allowedTokenTypesACL}
 <h2>{t}Allowed factors{/t}</h2>
+{foreach $allTokenTypes as $tokenType}
 <div class="row">
     <div class="input field col s12">
-        <select name="allowedTokenTypes[]" {if !$attributesEditMode && $parent!="roletabs"}disabled{/if} multiple>
-            <option value="" disabled{if empty(tokenTypes)} selected{/if}>{t}Choose allowed factors{/t}</option>
-            {foreach $allTokenTypes as $tokenType}
-            <option value="{$tokenType}"{if in_array($tokenType, $tokenTypes)} selected{/if}>{$mfa_{$tokenType}_title}</option>
-            {/foreach}
-        </select>
-        <label></label>
+        <label>
+            <input type="checkbox" name="allowedTokenTypes[]" value="{$tokenType}"{if in_array($tokenType, $tokenTypes)} checked{/if}{if !$attributesEditMode && $parent!="roletabs"}disabled{/if}>
+            <span>{$mfa_{$tokenType}_title}</span>
+        </label>
     </div>
 </div>
+{/foreach}
 {/render}
 {/if}
 
