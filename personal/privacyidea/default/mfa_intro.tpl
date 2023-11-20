@@ -178,6 +178,9 @@
 .line-through {
         text-decoration: line-through;
 }
+.align-top {
+        vertical-align: top;
+}
 </style>
 
 <hr class="divider">
@@ -225,12 +228,12 @@
             <tbody>
                 {foreach from=$tokens key=$key item=$token}
                     <tr>
-                        <td><label><input type="checkbox" name="mfaTokenSerials[]" value="{$token.serial}"><span></span></label></td>
-                        <td><button style="font-size: 0.8em;" class="txtonlybtn{if $token.revoked} line-through{/if}" type="submit"
+                        <td class="align-top"><label><input type="checkbox" name="mfaTokenSerials[]" value="{$token.serial}"><span></span></label></td>
+                        <td class="align-top"><button style="font-size: 0.8em;" class="txtonlybtn{if $token.revoked} line-through{/if}" type="submit"
                                     name="mfaTokenAction[mfaTokenView]" value="{$token.serial}">
                             {$token.serial}
                         </button></td>
-                        <td>
+                        <td class="align-top">
                             {* TODO: Refactor getSetupCard{Icon,Title}, also mfa{tokenType}_{icon,title}.
                              * There are only available if in allowedTokenType or overriden by ACL.
                              * Make them a const in the MFA{Icon, Title}Token class. *}
@@ -240,10 +243,10 @@
                                 {$mfa_{$token.tokentype}_title}
                             </button>
                         </td>
-                        <td><button class="txtonlybtn{if $token.revoked} line-through{/if}" type="submit" name="mfaTokenAction[mfaTokenView]" value="{$token.serial}">
+                        <td class="align-top"><button class="txtonlybtn{if $token.revoked} line-through{/if}" type="submit" name="mfaTokenAction[mfaTokenView]" value="{$token.serial}">
                             {if strpos($tokenDescriptionACL, "r") !== false}{$token.description}{else}{t}not shown{/t}{/if}
                         </button></td>
-                        <td>
+                        <td class="align-top">
                             {if strpos($tokenLastUsedACL, "r") !== false}
                                 {if !empty($token.info.last_auth)}
                                     <time class="tokenLastUsed{if $token.revoked} line-through{/if}" datetime="{$token.info.last_auth}">{$token.info.last_auth}</time>
@@ -254,9 +257,9 @@
                                 {t}not shown{/t}
                             {/if}
                         </td>
-                        <td>{if strpos($tokenStatusACL, "r") !== false}{$token.status}{else}{t}not shown{/t}{/if}</td>
-                        <td>{if strpos($tokenFailCountACL, "r") !== false}{$token.failcount}{else}{t}not shown{/t}{/if}/{$token.maxfail}</td>
-                        <td>
+                        <td class="align-top">{if strpos($tokenStatusACL, "r") !== false}{$token.status}{else}{t}not shown{/t}{/if}</td>
+                        <td class="align-top">{if strpos($tokenFailCountACL, "r") !== false}{$token.failcount}{else}{t}not shown{/t}{/if}/{$token.maxfail}</td>
+                        <td class="align-top">
                             {render acl=$tokenDescriptionACL}
                             <button class="txtonlybtn{if strpos($tokenDescriptionACL, "w") === false} invisible{/if}" type="submit" name="mfaTokenAction[mfaTokenEdit]" value="{$token.serial}" title="{t}Edit{/t}">
                                 <span class="material-icons">edit</span>
