@@ -24,6 +24,15 @@
 {$mfa_totp_icon=smartphone}
 {$mfa_webauthn_icon=usb}
 
+{assign var=tokenLastUsed value="{t}not shown{/t}"}
+{if strpos($tokenLastUsedACL, "r") !== false}
+    {if !empty($token.info.last_auth)}
+        {assign var=tokenLastUsed value=$token.info.last_auth}
+    {else}
+        {assign var=tokenLastUsed value="{t}Never used before{/t}"}
+    {/if}
+{/if}
+
 <h2><i class="material-icons">{$mfa_{$token.tokentype}_icon}</i> {t 1=$mfa_{$token.tokentype}_title}%1 - Details{/t}</h2>
 <div class="row">
     <div class="col s12">
@@ -41,14 +50,12 @@
                 <label for="tokenDescription">{t}Description{/t}</label>
             </div>
         </div>
-        {if !empty($token.info.last_auth)}
         <div class="row">
             <div class="input-field col s12 xl6">
-                <input type="text" name="tokenLastUsed" value="{if strpos($tokenLastUsedACL, "r") !== false}{$token.info.last_auth}{else}{t}not shown{/t}{/if}" disabled>
+                <input type="text" id="tokenLastUsed" name="tokenLastUsed" value="{$tokenLastUsed}" disabled>
                 <label for="tokenLastUsed">{t}Last use{/t}</label>
             </div>
         </div>
-        {/if}
         <div class="row">
             <div class="input-field col s12 xl6">
                 <input type="text" name="tokenStatus" value="{if strpos($tokenStatusACL, "r") !== false}{$token.status}{else}{t}not shown{/t}{/if}" disabled>
@@ -82,6 +89,16 @@
         </div>
     </div>
 </div>
+
+<script>
+(() => {
+const el = document.querySelector("#tokenLastUsed");
+if (el.value.match(/[^0-9]/)) {
+    const d = new Date(el.value);
+    el.value = d.toLocaleString();
+}
+})();
+</script>
 
 <input type="hidden" id="tokenSerial" name="tokenSerial" value="{$token.serial}">
 

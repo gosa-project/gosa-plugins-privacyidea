@@ -237,7 +237,17 @@
                         <td><button class="txtonlybtn" type="submit" name="mfaTokenAction[mfaTokenView]" value="{$token.serial}">
                             {if strpos($tokenDescriptionACL, "r") !== false}{$token.description}{else}{t}not shown{/t}{/if}
                         </button></td>
-                        <td>{if strpos($tokenLastUsedACL, "r") !== false}{$token.info.last_auth}{else}{t}not shown{/t}{/if}</td>
+                        <td>
+                            {if strpos($tokenLastUsedACL, "r") !== false}
+                                {if !empty($token.info.last_auth)}
+                                    <time class="tokenLastUsed" datetime="{$token.info.last_auth}">{$token.info.last_auth}</time>
+                                {else}
+                                    {t}Never used before{/t}
+                                {/if}
+                            {else}
+                                {t}not shown{/t}
+                            {/if}
+                        </td>
                         <td>{if strpos($tokenStatusACL, "r") !== false}{$token.status}{else}{t}not shown{/t}{/if}</td>
                         <td>{if strpos($tokenFailCountACL, "r") !== false}{$token.failcount}{else}{t}not shown{/t}{/if}/{$token.maxfail}</td>
                         <td>
@@ -348,6 +358,11 @@ const ACTIVE_TOKEN_SERIALS = new Set([
 ]);
 
 updateMfaBatchOperation();
+
+for (let el of document.querySelectorAll(".tokenLastUsed")) {
+    const d = new Date(el.dateTime);
+    el.textContent = d.toLocaleString();
+}
 })();
 </script>
     {else}
