@@ -142,14 +142,9 @@ class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
 
         $tokenSerial = $token["detail"]["serial"];
         $webAuthnRegisterRequest = $token["detail"]["webAuthnRegisterRequest"];
-        // array_walk($webAuthnRegisterRequest, function (&$item, $key) {
-        //     if (is_array($item)) {
-        //         $item = addslashes(json_encode($item));
-        //     }
-        // });
 
         // Please see: https://privacyidea.readthedocs.io/en/latest/modules/lib/tokentypes/webauthn.html
-        // before trying to debug any of this.
+        // before proceeding. :)
 
         $this->smarty->assign(
             "webAuthnRegisterRequestJSON",
