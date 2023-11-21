@@ -93,6 +93,7 @@
 <div class="row mt-1">
     <div class="col">
         {if $attributesEditMode}
+            <button class="btn-small" name="" type="submit">{t}Cancel{/t}</button>
             <button class="btn-small primary" name="edit_apply" type="submit">{t}Save settings{/t}</button>
         {else}
             <button class="btn-small primary" name="attributesEdit" type="submit">{t}Edit settings{/t}</button>

@@ -676,9 +676,7 @@ class mfaAccount extends plugin
      */
     private function getMFAIntroTemplate()
     {
-        if (in_array('attributesEdit', array_keys($_POST))) {
-            $this->smarty->assign("attributesEditMode", true);
-        }
+        $this->smarty->assign("attributesEditMode", in_array('attributesEdit', array_keys($_POST)));
 
         $this->smarty->assign("userExists", ($this->orig_dn != "new"));
         $this->smarty->assign("mfaRequiredByRule", in_array("by_rule", $this->mfaRequired) ? "checked" : "");
