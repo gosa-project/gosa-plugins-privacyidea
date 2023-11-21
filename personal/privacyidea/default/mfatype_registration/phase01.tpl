@@ -26,7 +26,7 @@
 </div>
 
 <div class="card-panel clue lighten-4 blue-text text-darken-4">
-    <p>{t escape=no 1=$mfaRecoveryKey}The recovery key value is <b>%1</b>{*No dot here pls.*}{/t}<p>
+    <p>{t escape=no 1=$mfaRecoveryKey}The recovery key value is: <b>%1</b>{/t}<p>
     <p><a href="data:application/pdf;base64,{$mfaRecoveryKeyPDF_BASE64}" download>
         {t}Download as PDF{/t}<span style="font-size: 20px;" class="material-icons">file_download</span>
     </a></p>
