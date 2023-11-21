@@ -935,21 +935,31 @@ class mfaAccount extends plugin
             "plProperties"   => $properties,
             "plRequirements" => array ('onFailureDisablePlugin' => array (get_class())),
             "plProvidedAcls" => array (
+                # GOsa R+W
                 "allowedTokenTypes"     => _("MFA token types"),
+
+                # GOsa R+W
                 "mfaRequiredByRule"     => _("Require MFA due to organizational policy"),
                 "mfaRequiredByUser"     => _("Require MFA due to user preference"),
+
+                # GOsa R+W
                 "manageTokens"          => _("Manage tokens"),
-                "addTokenAny"           => _("Add any type of token"),
-                "addTokenPaper"         => _("Add TAN list"),
-                "addTokenRegistration"  => _("Add Recovery key"),
-                "addTokenWebAuthn"      => _("Add Security key"),
-                "addTokenTotp"          => _("Add Authentication app (TOTP)"),
+                # GOsa W
+                "addTokenAny"           => _("Add any type of token")            . "&nbsp;(" . _("write-only") . ") ",
+                "addTokenPaper"         => _("Add TAN list")                     . "&nbsp;(" . _("write-only") . ") ",
+                "addTokenRegistration"  => _("Add Recovery key")                 . "&nbsp;(" . _("write-only") . ") ",
+                "addTokenWebAuthn"      => _("Add Security key")                 . "&nbsp;(" . _("write-only") . ") ",
+                "addTokenTotp"          => _("Add Authentication app (TOTP)")    . "&nbsp;(" . _("write-only") . ") ",
+
+                # GOsa R+W (PI read only means that it can't be set/resetted or changed in any way via privacyIDEA API.)
                 "tokenDescription"      => _("Description"),
-                "tokenLastUsed"         => _("Last use"),
                 "tokenFailCount"        => _("Failed login counter"),
-                "tokenStatus"           => _("Status"),
-                "tokenCountAuth"        => _("Authentication count"),
-                "tokenCountAuthSuccess" => _("Successful authentication count"),
+                "tokenLastUsed"         => _("Last use")                        . "&nbsp;(" . _("PI read-only") . ") ",
+                "tokenStatus"           => _("Status")                          . "&nbsp;(" . _("PI read-only") . ") ",
+                "tokenCountAuth"        => _("Authentication count")            . "&nbsp;(" . _("PI read-only") . ") ",
+                "tokenCountAuthSuccess" => _("Successful authentication count") . "&nbsp;(" . _("PI read-only") . ") ",
+
+                # GOsa R+W
                 "tokenRevocation"       => _("Revocation allowed"),
                 "tokenRemoval"          => _("Removal allowed"),
             ),
