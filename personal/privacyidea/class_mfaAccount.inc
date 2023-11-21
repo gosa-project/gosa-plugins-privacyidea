@@ -224,7 +224,11 @@ class mfaAccount extends plugin
          * TODO: refactor and split up into methods
          */
         $show_mfa_manager  = $parentName != "roletabs";
-        $show_mfa_manager &= (!in_array('attributesEdit', array_keys($_POST)));
+        $this->skipFooter(false);
+        if (in_array('attributesEdit', array_keys($_POST))) {
+            $show_mfa_manager = false;
+            $this->skipFooter(true);
+        }
 
         if ($show_mfa_manager) {
             $setup = null;
