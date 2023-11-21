@@ -600,8 +600,8 @@ class PrivacyIdeaUtils implements PILog
     {
         assert(is_string($key));
 
-        // Get config value from LDAP-Tree, gosa config file (gosa.conf) or
-        // defaults from class_schoolmgr.inc
+        // Get config value from LDAP tree, gosa config file (gosa.conf) or
+        // defaults from class_mfaAccount.inc
         $ret = $this->config->get_cfg_value("core", $key);
 
         if ($debug_to_jsconsole) {
