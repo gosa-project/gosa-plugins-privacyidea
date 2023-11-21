@@ -43,8 +43,6 @@
                 onclick='startWebAuthnSetup("{$webAuthnRegisterRequestJSON}");'>{t}Start setup{/t}
             </a>
         </div>
-
-        <div class="card-panel red lighten-4 red-text text-darken-4" id="mfaWebAuthnError"></div>
     </div>
     <div class="col m12 l6" style="background-color: #dfdfdf; text-align:center;">
         <video class="responsive-video" autoplay loop muted>
