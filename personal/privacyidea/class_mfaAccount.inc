@@ -975,6 +975,16 @@ class mfaAccount extends plugin
                 "description" => _("privacyIDEA server URL.")
             ),
             array(
+                "name"        => "piTokenOrigin",
+                "type"        => "string",
+                "check"       => "gosaProperty::isString",
+                "group"       => "core",
+                "default"     => "https://gosa.example.org/",
+                "migrate"     => "",
+                "mandatory"   => false,
+                "description" => _("Protocol + FQDN. Used to set Origin: headers for privacyIDEA where needed.")
+            ),
+            array(
                 "name"        => "piServiceAccount",
                 "type"        => "string",
                 "check"       => "gosaProperty::isString",
