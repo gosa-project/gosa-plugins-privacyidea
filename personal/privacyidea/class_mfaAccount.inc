@@ -212,7 +212,8 @@ class mfaAccount extends plugin
             $this->smarty->assign($aclName, $aclVal);
         }
 
-        $this->smarty->assign("parent", $this->parent ? get_class($this->parent) : '');
+        $parentName = is_object($this->parent) ? get_class($this->parent) : '';
+        $this->smarty->assign("parent", $parentName);
 
         $this->updateAttrsMfaRequired();
         $this->updateAttrsAllowedTokenTypes();
@@ -222,7 +223,7 @@ class mfaAccount extends plugin
          *
          * TODO: refactor and split up into methods
          */
-        $show_mfa_manager  = ($this->parent != "roletabs");
+        $show_mfa_manager  = $parentName != "roletabs";
         $show_mfa_manager &= (!in_array('attributesEdit', array_keys($_POST)));
 
         if ($show_mfa_manager) {
