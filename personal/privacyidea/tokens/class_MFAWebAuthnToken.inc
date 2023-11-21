@@ -211,12 +211,19 @@ class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
     public function enrollWebAuthnTokenStep2()
     {
         $params = array();
+        $headers = array();
+
         $params["serial"] = $this->tokenSerial;
         $params["type"] = "webauthn";
         $params = array_merge($params, $this->mfaWebAuthnRegisterResponse);
 
+        $tokenOrigin = $this->utils->getConfigStrValue("piTokenOrigin");
+        if (isset($tokenOrigin) && !empty($tokenOrigin)) {
+            $headers = array("Origin: " . $tokenOrigin);
+        }
+
         // Call /token/init again to enroll/verify WebAuthn token.
-        $resultArray = $this->utils->piSendRequest($params, array(), "POST", "/token/init");
+        $resultArray = $this->utils->piSendRequest($params, $headers, "POST", "/token/init");
 
         // Refresh token countings cache.
         // TODO: Use countUserTokens() but refactor it, so that it doesn't require $tokens.
