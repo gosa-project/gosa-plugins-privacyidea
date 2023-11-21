@@ -32,6 +32,10 @@
         global $config;
         $this->__construct('P', 'mm', 'A4');
 
+        // Add all used variants of Unicode font (uses UTF-8).
+        $this->AddFont('DejaVu', '', 'DejaVuSans.ttf', true);
+        $this->AddFont('DejaVu', 'B', 'DejaVuSans-Bold.ttf', true);
+
         // Instanciation of inherited class
         $this->SetTitle(_("Multifactor authentication recovery key"));
         $this->SetAuthor(_("Automatically generated"));
@@ -55,10 +59,10 @@
 
         $this->Ln(15);
 
-        $this->SetFont('Arial', 'B', 10);
+        $this->SetFont('DejaVu', 'B', 10);
         $this->Cell(12, 10, _("Subject: Recovery key"));
         $this->Ln(12);
-        $this->SetFont('Arial', '', 10);
+        $this->SetFont('DejaVu', '', 10);
         $this->Cell(12, 10, sprintf(_("Dear %s %s,"), $givenname, $sn));
         $this->Ln(12);
         $this->WriteHTML(sprintf(_("A recovery key has been created for your account '%s'."), $uid), 10);
