@@ -73,7 +73,7 @@
 <div class="row">
     <div class="input field col s12">
         <label>
-            <input type="checkbox" name="allowedTokenTypes[]" value="{$tokenType}"{if in_array($tokenType, $tokenTypes)} checked{/if}{if !$attributesEditMode && $parent!="roletabs"}disabled{/if}>
+            <input type="checkbox" name="allowedTokenTypes[]" value="{$tokenType}"{if in_array($tokenType, $tokenTypes)} checked{/if}{if !$attributesEditMode && $parent!="roletabs"} disabled{/if}>
             <span>{$mfa_{$tokenType}_title}</span>
         </label>
     </div>
