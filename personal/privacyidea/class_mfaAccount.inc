@@ -167,19 +167,38 @@ class mfaAccount extends plugin
     }
 
     /**
-     * Skips the footer with buttons
+     * Get the ancestor of the plugin which is either directly an instance of
+     * given class name or a descendant thereof.
+     * @param string $className
+     * @return object|null Instance, if found.
      */
-    private function skipFooter($skip)
+    private function getParentIsA($className)
     {
+        assert(is_string($className));
+
         $o = $this;
         while (true) {
-            if (is_subclass_of($o, "management")) {
-                $o->setSkipFooter($skip);
-                break;
+            if (is_a($o, $className)) {
+                return $o;
             } elseif (!property_exists($o ?? "", "parent")) {
                 break;
             }
             $o = $o->parent;
+        }
+        return null;
+    }
+
+    /**
+     * Skips the footer with buttons
+     * @param bool $skip
+     */
+    private function skipFooter($skip)
+    {
+        assert(is_bool($skip));
+
+        $management = $this->getParentIsA("management");
+        if ($management !== null) {
+            $o->setSkipFooter($skip);
         }
     }
 
@@ -191,6 +210,18 @@ class mfaAccount extends plugin
     {
         /* Call parent execute */
         plugin::execute();
+
+        // The apply action is handled automatically if we are a child of a
+        // management object, otherwise saving changed settings has to be
+        // handled manually
+        if (array_key_exists('edit_apply', $_POST)) {
+            $management = $this->getParentIsA("management");
+            if ($management === null) {
+                $this->save_object();
+                unset($_POST['edit_apply']);
+                return $this->execute();
+            }
+        }
 
         // Always mark this as an account.
         if (!$this->is_account && $this->acl_is_writeable("")) {
