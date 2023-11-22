@@ -27,7 +27,7 @@ msgstr ""
 
 #: personal/privacyidea/default/mfatype_registration/phase01.tpl:29
 msgid "The recovery key value is: <b>%1</b>"
-msgstr "Der Wiederherstellungsschlüssel lautet: <b>%s</b>"
+msgstr "Der Wiederherstellungsschlüssel lautet: <b>%1</b>"
 
 #: personal/privacyidea/default/mfatype_registration/phase01.tpl:31
 msgid "Download as PDF"
