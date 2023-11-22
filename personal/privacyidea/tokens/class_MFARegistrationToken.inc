@@ -116,10 +116,17 @@ class MFARegistrationToken extends MFATokenHelper implements MFAToken
 
         require_once(dirname(__FILE__) . "/../PDF/class_RecoveryKeyPDF.inc");
 
+        /* Get givenName and sn via UID */
+        $ldap = $this->config->get_ldap_link();
+        $ldap->cd($this->config->current['BASE']);
+        $uid = $this->mfaAccount->getUid();
+        $ldap->search("(uid=$uid)", array("givenName", "sn"));
+        $attributes = $ldap->fetch();
+
         $infoPage = new RecoveryKeyPDF();
         $infoPage->RecoveryKeyPDF(
-            $this->mfaAccount->givenName,
-            $this->mfaAccount->sn,
+            $attributes["givenName"][0],
+            $attributes["sn"][0],
             $this->mfaAccount->getUid(),
             $mfaRecoveryKey
         );
