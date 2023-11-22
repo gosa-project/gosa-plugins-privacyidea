@@ -19,6 +19,22 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *}
 
+<style>
+.txtonlybtn {
+    background:none;
+    border:none;
+    margin:0;
+    padding:0;
+    cursor: pointer;
+    font-size: 1em;
+    color: inherit;
+}
+
+.txtonlybtn:hover {
+    color: var(--bs-link-hover-color);
+}
+</style>
+
 <h2>{t}Recovery key added{/t}</h2>
 
 <div class="card-panel green lighten-4 green-text text-darken-4">
@@ -26,10 +42,10 @@
 </div>
 
 <div class="card-panel clue lighten-4 blue-text text-darken-4">
-    <p>{t escape=no 1=$mfaRecoveryKey}The recovery key value is: <b>%1</b>{/t}<p>
-    <p><a href="data:application/pdf;base64,{$mfaRecoveryKeyPDF_BASE64}" download>
-        {t}Download as PDF{/t}<span style="font-size: 20px;" class="material-icons">file_download</span>
-    </a></p>
+    <p>{t escape=no 1=$mfaRecoveryKey}The recovery key value is: <b>%1</b>{/t}</p>
+    <p><button class="txtonlybtn" name="add_token" value="registration" type="submit">
+        <span class="material-icons">file_download</span>{t}Download as PDF{/t}
+    </button></p>
 </div>
 
 <div class="section">
@@ -38,6 +54,6 @@
 </div>
 
 <div class="section">
-    <button class="btn primary" type="submit">{t}Back to overview{/t}
-    </button>
+    <input type="hidden" id="current_phase" name="current_phase" value="1">
+    <button class="btn primary" type="submit">{t}Back to overview{/t}</button>
 </div>
