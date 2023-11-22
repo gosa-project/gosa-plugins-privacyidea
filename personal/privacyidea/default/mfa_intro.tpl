@@ -42,8 +42,10 @@
         </b>.<br>
         {t}This happens due to organizational policy or user choice:{/t}
     </p>
+{/if}
 </div>
 
+{if !$mfaRequiredByRuleACL && !$mfaRequiredByUserACL && !$allowedTokenTypesACL && !$manageTokensACL}
 {if $mfaRequiredByRuleACL}
 {render acl=$mfaRequiredByRuleACL}
 <div class="row">
