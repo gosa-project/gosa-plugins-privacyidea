@@ -192,10 +192,30 @@ class mfaAccount extends plugin
         /* Call parent execute */
         plugin::execute();
 
-        // Always mark this as an account.
         if (!$this->is_account && $this->acl_is_writeable("")) {
             $this->is_account = true;
         }
+
+        /* Do we represent a valid mfaAccount? */
+        if (!$this->is_account) {
+            switch ($theme) {
+            case 'classic':
+                // TODO: implement for classic theme
+                $display = "";
+                break;
+            default:
+                $display = " <div class='card-panel red lighten-4 red-text text-darken-4 valign-wrapper'>
+                                <p><i style='font-size: 2em; margin-right: 1em;' class='material-icons'>error_outline</i> " . msgPool::noValidExtension(_($this->plHeadline)) . "</p>
+                            </div>";
+            }
+            if ($this->parent === null) {
+                $display .= back_to_main();
+            }
+            return ($display);
+        }
+
+        /* In 'MyAccount' mode, we must remove write acls if we are not in editing mode. */
+        $skipWrite = (!isset($this->parent) || !$this->parent) && !session::is_set('edit');
 
         /* Log view */
         if ($this->is_account && !$this->view_logged) {
@@ -207,7 +227,7 @@ class mfaAccount extends plugin
         // UI elements based on ACLs.
         $providedACLs = $this->plInfo()['plProvidedAcls'];
         foreach ($providedACLs as $name => $transl) {
-            $aclVal  = $this->getacl($name);
+            $aclVal  = $this->getacl($name, $skipWrite);
             $aclName = "$name" . "ACL";
             $this->smarty->assign($aclName, $aclVal);
         }
