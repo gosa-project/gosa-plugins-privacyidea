@@ -192,10 +192,69 @@ class mfaAccount extends plugin
         /* Call parent execute */
         plugin::execute();
 
-        // Always mark this as an account.
         if (!$this->is_account && $this->acl_is_writeable("")) {
             $this->is_account = true;
         }
+
+        // Act on account stat changes
+        $display = "";
+        if ($this->parent instanceof roletabs || $this->parent instanceof uniBonnAccountTabs) {
+            if (isset($_POST['modify_state'])) {
+                if ($this->is_account && $this->acl_is_removeable()) {
+                    $this->is_account = false;
+                } elseif (!$this->is_account && $this->acl_is_createable()) {
+                    $obj = $this->parent->by_object['accountAuth'];
+                    if ($obj->is_account) {
+                        $this->is_account = true;
+                    }
+                }
+            }
+            if ($this->is_account) {
+                $display = $this->show_disable_header(
+                    msgPool::removeFeaturesButton(_("Multifactor Authentication")),
+                    msgPool::featuresEnabled(_("Multifactor Authentication"))
+                );
+            } else {
+                $obj = $this->parent->by_object['accountAuth'];
+                if ($obj->is_account) {
+                    $display = $this->show_enable_header(
+                        msgPool::addFeaturesButton(_("Multifactor Authentication")),
+                        msgPool::featuresDisabled(_("Multifactor Authentication"))
+                    );
+                } else {
+                    $display = $this->show_enable_header(
+                        msgPool::addFeaturesButton(_("Multifactor Authentication")),
+                        msgPool::featuresDisabled(_("Multifactor Authentication"), array(_("Authentification"))),
+                        true
+                    );
+                }
+
+                return ($display);
+            }
+        }
+
+
+        /* Do we represent a valid mfaAccount? */
+        if (!$this->is_account) {
+            $display = "<div class='container-fluid only-error content-wrapper'>
+                        <div class='row attention'>
+                            <div class='col-sm-2 attention-icon'>
+                                <i class='bi bi-exclamation-octagon'></i>
+                            </div>
+
+                            <div class='col-sm-10 attention-content'>
+                                <p>" . msgPool::noValidExtension(_($this->plHeadline)) . "</p>
+                            </div>
+                        </div>
+                       </div>";
+            if ($this->parent === null) {
+                $display .= back_to_main();
+            }
+            return ($display);
+        }
+
+        /* In 'MyAccount' mode, we must remove write acls if we are not in editing mode. */
+        $skipWrite = (!isset($this->parent) || !$this->parent) && !session::is_set('edit');
 
         /* Log view */
         if ($this->is_account && !$this->view_logged) {
@@ -207,7 +266,7 @@ class mfaAccount extends plugin
         // UI elements based on ACLs.
         $providedACLs = $this->plInfo()['plProvidedAcls'];
         foreach ($providedACLs as $name => $transl) {
-            $aclVal  = $this->getacl($name);
+            $aclVal  = $this->getacl($name, $skipWrite);
             $aclName = "$name" . "ACL";
             $this->smarty->assign($aclName, $aclVal);
         }
