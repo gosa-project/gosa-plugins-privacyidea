@@ -27,6 +27,9 @@
 <fieldset style="border: none; padding: 0; margin: 0;" {if !$userExists}disabled{/if}>
 <h2>{t}Multifactor authentication requirements{/t}</h2>
 <div class="row">
+{if !$mfaRequiredByRuleACL && !$mfaRequiredByUserACL && !$allowedTokenTypesACL && !$manageTokensACL}
+    <p>{t}Insufficient permissions for viewing or editing this user's multifactor authentication properties.{/t}</p>
+{else}
     <p>
         {t}Multifactor authentication protects your account from unauthorized access.{/t}
         {t}The current configuration for this account is that the use of MFA is {/t}
@@ -388,6 +391,7 @@ for (let el of document.querySelectorAll(".tokenLastUsed")) {
         <p>{t}Currently there are no multifactor methods associated.{/t}</p>
     {/if}
 {/render}
+{/if}
 {/if}
 {/if}
 </fieldset>
