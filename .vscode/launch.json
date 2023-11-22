@@ -8,8 +8,10 @@
                 "port": 9003,
                 // server -> local
                 "pathMappings": {
-                        "/usr/share/gosa/plugins/": "${workspaceRoot}",
-                        "/usr/share/gosa": "${workspaceRoot}/../../gosa-core/gosa-core.salsa/",
+                    "/usr/share/gosa/vendor/privacyidea/privacyidea-php-client": "${workspaceRoot}/vendor/privacyidea/privacyidea-php-client",
+                    "/usr/share/gosa/vendor/setasign/tfpdf": "${workspaceRoot}/vendor/setasign/tfpdf/",
+                    "/usr/share/gosa/plugins/": "${workspaceRoot}",
+                    "/usr/share/gosa": "${workspaceRoot}/../../gosa-core/gosa-core.salsa/",
                 },
                 "postDebugTask": "sleep-task",
                 "log": true,

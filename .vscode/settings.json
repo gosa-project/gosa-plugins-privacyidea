@@ -32,6 +32,7 @@
     "intelephense.environment.includePaths": [
         "../gosa-core/include/",
         "vendor/privacyidea/privacyidea-php-client/src",
-        "vendor/smarty/smarty/libs/"
+        "vendor/smarty/smarty/libs/",
+        "vendor/setasign/tfpdf/",
     ],
 }
