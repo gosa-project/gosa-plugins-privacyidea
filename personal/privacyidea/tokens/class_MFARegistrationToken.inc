@@ -24,12 +24,14 @@ require_once(dirname(__FILE__) . "/interfaces/interface_MFAToken.inc");
 
 class MFARegistrationToken extends MFATokenHelper implements MFAToken
 {
-    public $MAX_SETUP_PHASES = 2;
+    public $MAX_SETUP_PHASES = 3;
     public $TEMPLATE_PREFIX = "mfatype_registration/";
 
     /* VARIABLES WHICH WILL BE NEEDED ACROSS PHASES */
     /** @var string */
     private $tokenDescription;
+    /** @var string */
+    private $mfaRecoveryKey;
 
     /** @return bool */
     protected function evaluatePhase0()
@@ -47,6 +49,13 @@ class MFARegistrationToken extends MFATokenHelper implements MFAToken
 
     /** @return bool */
     protected function evaluatePhase1()
+    {
+        return true;
+    }
+
+
+    /** @return bool */
+    protected function evaluatePhase2()
     {
         return true;
     }
@@ -112,7 +121,20 @@ class MFARegistrationToken extends MFATokenHelper implements MFAToken
         //       and it should gather the tokens from endpoint /token/ itself.
         $this->utils->getTokensOfUser($this->mfaAccount->getUid(), $this->mfaAccount->userRealm);
 
-        $mfaRecoveryKey = $requestAnswer["detail"]["registrationcode"];
+        $this->mfaRecoveryKey = $requestAnswer["detail"]["registrationcode"];
+
+        $this->smarty->assign("tokenDescription", $this->tokenDescription);
+        $this->smarty->assign("mfaRecoveryKey", $this->mfaRecoveryKey);
+
+        return true;
+    }
+
+    /** @return bool */
+    protected function preparePhase2()
+    {
+        if (!isset($this->mfaRecoveryKey) || empty($this->mfaRecoveryKey)) {
+            return false;
+        }
 
         require_once(dirname(__FILE__) . "/../PDF/class_RecoveryKeyPDF.inc");
 
@@ -131,17 +153,10 @@ class MFARegistrationToken extends MFATokenHelper implements MFAToken
             $mfaRecoveryKey
         );
 
+        ob_end_clean(); // Clean (erase) the output buffer and turn off output buffering.
+        // TODO: Token description could be neat for pdfFileName too.
         $pdfFileName = sprintf(_("recovery_key_%s.pdf"), $this->mfaAccount->getUid());
-        $output = $infoPage->output('S', $pdfFileName, true);
-
-        $this->smarty->assign("tokenDescription", $this->tokenDescription);
-        $this->smarty->assign("mfaRecoveryKeyPDF_BASE64", base64_encode($output));
-        $this->smarty->assign("mfaRecoveryKeyPDF_fileName", $pdfFileName);
-        $this->smarty->assign("mfaRecoveryKey", $mfaRecoveryKey);
-
-        // DEBUG DEBUG DEBUG
-        // $pdfFilePath = sys_get_temp_dir() . PATH_SEPARATOR . $pdfFileName;
-        // file_put_contents($pdfFilePath, $output);
+        $infoPage->output('D', $pdfFileName, true);
 
         return true;
     }
