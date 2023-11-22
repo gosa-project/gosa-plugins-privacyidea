@@ -192,6 +192,8 @@ class mfaAccount extends plugin
         /* Call parent execute */
         plugin::execute();
 
+        $this->uid = $this->getUid();
+
         if (!$this->is_account && $this->acl_is_writeable("")) {
             $this->is_account = true;
         }
@@ -790,7 +792,12 @@ class mfaAccount extends plugin
             return $this->attrs["uid"][0];
         }
 
-        return "";
+        // fall back to logged in user
+        if (!isset($this->parent)) {
+            return $this->ui->uid;
+        }
+
+        assert(false, "could not determine UID");
     }
 
     /**
@@ -852,7 +859,7 @@ class mfaAccount extends plugin
         }
 
         /* Optionally execute a command after we are done */
-        $this->handle_post_events("remove", array("uid" => $this->uid));
+        $this->handle_post_events("remove", array("uid" => $this->getUid()));
     }
 
     /**
