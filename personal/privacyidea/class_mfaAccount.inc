@@ -64,6 +64,9 @@ class mfaAccount extends plugin
 
     public $orig_dn = "";
 
+    // Indicate to parent that its footer should be hidden
+    public $skipFooter    = false;
+
     public function __construct(&$config, $dn = null)
     {
         plugin::__construct($config, $dn);
@@ -167,23 +170,6 @@ class mfaAccount extends plugin
     }
 
     /**
-     * Skips the footer with buttons
-     */
-    private function skipFooter($skip)
-    {
-        $o = $this;
-        while (true) {
-            if (is_subclass_of($o, "management")) {
-                $o->setSkipFooter($skip);
-                break;
-            } elseif (!property_exists($o ?? "", "parent")) {
-                break;
-            }
-            $o = $o->parent;
-        }
-    }
-
-    /**
      * Executes plugin logic, control flow, renders template, etc...
      * @return string Complete template, ideally loaded by Smarty to display to the user.
      */
@@ -283,10 +269,9 @@ class mfaAccount extends plugin
          * TODO: refactor and split up into methods
          */
         $show_mfa_manager  = $parentName != "roletabs";
-        $this->skipFooter(false);
         if (in_array('attributesEdit', array_keys($_POST))) {
             $show_mfa_manager = false;
-            $this->skipFooter(true);
+            $this->skipFooter = true;
         }
 
         if ($show_mfa_manager) {
@@ -366,7 +351,7 @@ class mfaAccount extends plugin
 
                         if (!isset($_POST['mfaTokenActionConfirm'])) {
                             // not confirmed yet by user
-                            $this->skipFooter(true);
+                            $this->skipFooter = true;
                             return $this->getMFAConfirmTemplate($mfaTokenAction, $tokenSerial);
                         } elseif ($_POST['mfaTokenActionConfirm'] !== "true") {
                             // cancelled by user
@@ -375,7 +360,7 @@ class mfaAccount extends plugin
                         break;
                     case "mfaTokenView":    // FALLTHROUGH
                     case "mfaTokenEdit":
-                        $this->skipFooter(true);
+                        $this->skipFooter = true;
                         return $this->getTokenEditTemplate($mfaTokenAction, $tokenSerial);
                     default:
                         break;
@@ -417,7 +402,7 @@ class mfaAccount extends plugin
 
                         if (!isset($_POST['mfaTokenActionConfirm'])) {
                             // not confirmed yet by user
-                            $this->skipFooter(true);
+                            $this->skipFooter = true;
                             return $this->getMFAConfirmTemplate($mfaTokenAction, $mfaTokenSerials);
                         } elseif ($_POST['mfaTokenActionConfirm'] !== "true") {
                             // cancelled by user
@@ -449,7 +434,7 @@ class mfaAccount extends plugin
             $renderSuccess = $setup->renderSetup();
 
             if ($renderSuccess) {
-                $this->skipFooter(true);
+                $this->skipFooter = true;
                 return $setup->getRenderSetupResult();
             } else {
                 // Oof, something did go terribly wrong.
