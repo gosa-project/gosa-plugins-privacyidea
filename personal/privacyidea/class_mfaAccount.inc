@@ -192,8 +192,8 @@ class mfaAccount extends plugin
         /* Call parent execute */
         plugin::execute();
 
-        if (!$this->is_account && $this->acl_is_writeable("")) {
-            $this->is_account = true;
+        if (!isset($this->parent)) {
+            $this->uid = $this->ui->uid;
         }
 
         // Act on account stat changes
@@ -828,7 +828,7 @@ class mfaAccount extends plugin
             return $this->attrs["uid"][0];
         }
 
-        return "";
+        return $this->ui->uid;
     }
 
     /**
