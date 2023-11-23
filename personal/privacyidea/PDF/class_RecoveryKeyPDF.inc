@@ -37,7 +37,7 @@
         $this->AddFont('DejaVu', 'B', 'DejaVuSans-Bold.ttf', true);
 
         // Instanciation of inherited class
-        $this->SetTitle(_("Multifactor authentication recovery key"));
+        $this->SetTitle(iconv("UTF-8", "ASCII//TRANSLIT", _("Multifactor authentication recovery key")));
         $this->SetAuthor(_("Automatically generated"));
         $this->SetCompression(true);
         $this->SetCreator("GOsa");
