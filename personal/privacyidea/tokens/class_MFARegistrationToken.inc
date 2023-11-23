@@ -142,9 +142,14 @@ class MFARegistrationToken extends MFATokenHelper implements MFAToken
         $ldap = $this->config->get_ldap_link();
         $ldap->cd($this->config->current['BASE']);
         $uid = $this->mfaAccount->getUid();
-        $ldap->search("(uid=$uid)", array("sn", "givenName", "academicTitle"));
+        $ldap->search("(uid=$uid)", array("sn", "givenName", "academicTitle", "seeAlso"));
         $attributes = $ldap->fetch();
 
+        if (!(isset($attributes["sn"][0])) && !(isset($attributes["givenName"][0])) && isset($attributes["seeAlso"][0])) {
+            $person_dn = $attributes["seeAlso"][0];
+            $ldap->cat($person_dn, array("sn", "givenName", "academicTitle"));
+            $attributes = $ldap->fetch();
+        }
         $sn = isset($attributes["sn"][0]) ? $attributes["sn"][0] : "";
         $gn = isset($attributes["givenName"][0]) ? $attributes["givenName"][0] : "";
         $at = isset($attributes["academicTitle"][0]) ? $attributes["academicTitle"][0] : "";
