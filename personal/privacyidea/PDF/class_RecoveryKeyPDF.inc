@@ -27,7 +27,7 @@
     public $U;
     public $B;
 
-    public function RecoveryKeyPDF($sn, $givenname, $academictitle, $uid, $mfaRecoveryKey)
+    public function RecoveryKeyPDF($sn, $givenname, $academictitle, $address, $uid, $mfaRecoveryKey)
     {
         global $config;
         $this->__construct('P', 'mm', 'A4');
@@ -56,6 +56,11 @@
 
         $this->SetX(20);
         $this->SetY(60);
+
+        $this->SetFont('DejaVu', '', 10);
+        $this->Ln();
+        $this->Write(5, $address);
+        $this->Ln();
 
         $this->Ln(15);
 
