@@ -780,7 +780,7 @@ class mfaAccount extends plugin
         plugin::save_object();
 
         // If user clicked save settings button.
-        if (isset($_POST['edit_apply'])) {
+        if (isset($_POST['edit_apply']) || isset($_POST['edit_finish'])) {
             $mfaRequiredByRule = $this->acl_is_writeable("mfaRequiredByRule") ? isset($_POST['mfaRequiredByRule']) : null;
             $mfaRequiredByUser = $this->acl_is_writeable("mfaRequiredByUser") ? isset($_POST['mfaRequiredByUser']) : null;
             $this->updateAttrsMfaRequired($mfaRequiredByRule, $mfaRequiredByUser);
