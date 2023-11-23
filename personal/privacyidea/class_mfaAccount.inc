@@ -992,7 +992,7 @@ class mfaAccount extends plugin
                 "default"     => "https://gosa.example.org/",
                 "migrate"     => "",
                 "mandatory"   => false,
-                "description" => _("Protocol + FQDN. Used to set Origin: headers for privacyIDEA where needed.")
+                "description" => _("Protocol + FQDN. Used to set Origin: header for privacyIDEA where needed.")
             ),
             array(
                 "name"        => "piServiceAccount",
