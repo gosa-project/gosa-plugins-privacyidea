@@ -129,6 +129,62 @@ class MFARegistrationToken extends MFATokenHelper implements MFAToken
         return true;
     }
 
+    /**
+     * Builds address string out of LDAP attributes.
+     * @param array $attributes
+     * @return string
+     */
+    protected function buildAddress($attributes)
+    {
+        $sn            = isset($attributes["sn"][0])            ? trim($attributes["sn"][0])            : "";
+        $givenName     = isset($attributes["givenName"][0])     ? trim($attributes["givenName"][0])     : "";
+
+        $homePostalAddress = isset($attributes["homePostalAddress"][0]) ? trim($attributes["homePostalAddress"][0]) : "";
+        $workPostalAddress = isset($attributes["postalAddress"][0])     ? trim($attributes["postalAddress"][0])     : "";
+
+        $address = "-" . _("personally") . "-\n";
+
+        if (!empty($academicTitle)) {
+            $address .= $academicTitle . " ";
+        }
+
+        $address .= "$givenName $sn\n";
+
+        if (!empty($workPostalAddress)) {
+            $address .= $workPostalAddress;
+            return $address;
+        } elseif (!empty($homePostalAddress)) {
+            $address .= $homePostalAddress;
+            return $address;
+        }
+
+        // Downstream specific, shouldn't interfere with GOsa² usptream.
+        $academicTitle = isset($attributes["academicTitle"][0]) ? trim($attributes["academicTitle"][0]) : "";
+        $addressAddon  = isset($attributes["addressAddon"][0])  ? trim($attributes["addressAddon"][0])  : "";
+        $street        = isset($attributes["street"][0])        ? trim($attributes["street"][0])        : "";
+        $postalCode    = isset($attributes["postalCode"][0])    ? trim($attributes["postalCode"][0])    : "";
+        $l             = isset($attributes["l"][0])             ? trim($attributes["l"][0])             : "";
+        $description = "";
+        $ou = "";
+
+        if (!empty($description)) {
+            if (!empty($ou)) {
+                $address .= "$description ($ou)\n";
+            } else {
+                $address .= "$description\n";
+            }
+        }
+
+        if (!empty($addressAddon)) {
+            $address .= "$addressAddon\n";
+        }
+
+        $address .= "$street\n";
+        $address .= "$postalCode $l";
+
+        return trim($address);
+    }
+
     /** @return bool */
     protected function preparePhase2()
     {
@@ -142,23 +198,35 @@ class MFARegistrationToken extends MFATokenHelper implements MFAToken
         $ldap = $this->config->get_ldap_link();
         $ldap->cd($this->config->current['BASE']);
         $uid = $this->mfaAccount->getUid();
-        $ldap->search("(uid=$uid)", array("sn", "givenName", "academicTitle", "seeAlso"));
+        $ldap->search(
+            "(uid=$uid)",
+            array("sn", "givenName", "academicTitle", "seeAlso", "homePostalAddress", "postalAddress")
+        );
         $attributes = $ldap->fetch();
 
-        if (!(isset($attributes["sn"][0])) && !(isset($attributes["givenName"][0])) && isset($attributes["seeAlso"][0])) {
+        $uid_dn = $attributes['dn'];
+        $person_dn = "";
+        if (
+            !isset($attributes["givenName"][0]) &&
+            !isset($attributes["sn"][0]) &&
+            isset($attributes["seeAlso"][0]) && !empty($attributes["seeAlso"][0])
+        ) {
             $person_dn = $attributes["seeAlso"][0];
-            $ldap->cat($person_dn, array("sn", "givenName", "academicTitle"));
+            $ldap->cat(
+                $person_dn,
+                array("sn", "givenName", "academicTitle", "addressAddon", "street", "postalCode", "l")
+            );
             $attributes = $ldap->fetch();
         }
-        $sn = isset($attributes["sn"][0]) ? $attributes["sn"][0] : "";
-        $gn = isset($attributes["givenName"][0]) ? $attributes["givenName"][0] : "";
-        $at = isset($attributes["academicTitle"][0]) ? $attributes["academicTitle"][0] : "";
+
+        $address = $this->buildAddress($attributes);
 
         $infoPage = new RecoveryKeyPDF();
         $infoPage->RecoveryKeyPDF(
             $sn,
-            $gn,
-            $at,
+            $givenName,
+            $academicTitle,
+            $address,
             $this->mfaAccount->getUid(),
             $this->mfaRecoveryKey
         );
