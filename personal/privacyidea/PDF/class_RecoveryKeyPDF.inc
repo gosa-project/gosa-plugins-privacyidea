@@ -69,7 +69,7 @@
         $this->Ln(6);
         $this->WriteHTML(_("You can use this key one time only as a second factor when logging into our system."), 10);
         $this->Ln(12);
-        $this->WriteHTML(sprintf(_("Your recovery key is: <b>%s</b>"), $mfaRecoveryKey), 10);
+        $this->WriteHTML(sprintf(_("Your recovery key is: <b>%s</b>"), htmlspecialchars($mfaRecoveryKey)), 10);
         $this->Ln(24);
         $this->WriteHTML(_("Best regards"), 10);
     }
