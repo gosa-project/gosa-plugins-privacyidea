@@ -160,7 +160,7 @@ class MFARegistrationToken extends MFATokenHelper implements MFAToken
             $gn,
             $at,
             $this->mfaAccount->getUid(),
-            $mfaRecoveryKey
+            $this->mfaRecoveryKey
         );
 
         ob_end_clean(); // Clean (erase) the output buffer and turn off output buffering.
