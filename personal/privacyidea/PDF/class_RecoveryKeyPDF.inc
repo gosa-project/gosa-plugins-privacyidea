@@ -27,7 +27,7 @@
     public $U;
     public $B;
 
-    public function RecoveryKeyPDF($givenname, $sn, $uid, $mfaRecoveryKey)
+    public function RecoveryKeyPDF($sn, $givenname, $academictitle, $uid, $mfaRecoveryKey)
     {
         global $config;
         $this->__construct('P', 'mm', 'A4');
@@ -63,7 +63,7 @@
         $this->Cell(12, 10, _("Subject: Recovery key"));
         $this->Ln(12);
         $this->SetFont('DejaVu', '', 10);
-        $this->Cell(12, 10, sprintf(_("Dear %s %s,"), $givenname, $sn));
+        $this->WriteHTML(sprintf(_("Dear %s,"), $this->Salutation($sn, $givenname, $academictitle)));
         $this->Ln(12);
         $this->WriteHTML(sprintf(_("A recovery key has been created for your account '%s'."), $uid), 10);
         $this->Ln(6);
@@ -154,4 +154,17 @@
             $this->HREF='';
         }
     }
+
+    public function Salutation($sn, $givenname, $academictitle)
+    {
+        $greeter = "";
+
+        if (!empty($academictitle)) {
+            $greeter .= $academictitle . " ";
+        }
+
+        $greeter .= "$givenname $sn";
+        return $greeter;
+    }
+
 }
