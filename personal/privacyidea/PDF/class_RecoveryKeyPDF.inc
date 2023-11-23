@@ -63,7 +63,7 @@
         $this->Cell(12, 10, _("Subject: Recovery key"));
         $this->Ln(12);
         $this->SetFont('DejaVu', '', 10);
-        $this->WriteHTML(sprintf(_("Dear %s,"), $this->Salutation($sn, $givenname, $academictitle)));
+        $this->WriteHTML($this->Salutation($sn, $givenname, $academictitle));
         $this->Ln(12);
         $this->WriteHTML(sprintf(_("A recovery key has been created for your account '%s'."), $uid), 10);
         $this->Ln(6);
@@ -155,7 +155,7 @@
         }
     }
 
-    public function Salutation($sn, $givenname, $academictitle)
+    public function PersonNameAndTitle($sn, $givenname, $academictitle)
     {
         $greeter = "";
 
@@ -165,6 +165,13 @@
 
         $greeter .= "$givenname $sn";
         return $greeter;
+    }
+
+
+    public function Salutation($sn, $givenname, $academictitle)
+    {
+        $greeter = $this->PersonNameAndTitle($sn, $givenname, $academictitle);
+        return sprintf(_("Dear %s"), $greeter);
     }
 
 }
