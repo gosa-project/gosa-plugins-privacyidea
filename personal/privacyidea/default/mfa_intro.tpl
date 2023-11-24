@@ -207,8 +207,8 @@
                         <option value="mfaTokenResetCounter">{t}Reset error counter{/t}</option>
                         {/render}
                         {render acl=$tokenStatusACL}
-                        <option value="mfaTokenEnable">{t}Activate{/t}</option>
-                        <option value="mfaTokenDisable">{t}Deactivate{/t}</option>
+                        <option value="mfaTokenActivate">{t}Activate{/t}</option>
+                        <option value="mfaTokenDeactivate">{t}Deactivate{/t}</option>
                         {/render}
                         {render acl=$tokenRevocationACL}
                         <option value="mfaTokenRevoke">{t}Revoke{/t}</option>
@@ -293,13 +293,13 @@
                             {/render}
                         {if $token.active}
                             {render acl=$tokenStatusACL}
-                            <button class="txtonlybtn{if $token.revoked || strpos($tokenStatusACL, "w") === false} invisible{/if}" type="submit" name="mfaTokenAction[mfaTokenDisable]" value=_{$token.serial}" title="{t}Deactivate{/t}">
+                            <button class="txtonlybtn{if $token.revoked || strpos($tokenStatusACL, "w") === false} invisible{/if}" type="submit" name="mfaTokenAction[mfaTokenDeactivate]" value=_{$token.serial}" title="{t}Deactivate{/t}">
                                 <span class="material-icons">lock</span>
                             </button>
                             {/render}
                         {else}
                             {render acl=$tokenStatusACL}
-                            <button class="txtonlybtn{if $token.revoked || strpos($tokenStatusACL, "w") === false} invisible{/if}" type="submit" name="mfaTokenAction[mfaTokenEnable]" value="{$token.serial}" title="{t}Activate{/t}">
+                            <button class="txtonlybtn{if $token.revoked || strpos($tokenStatusACL, "w") === false} invisible{/if}" type="submit" name="mfaTokenAction[mfaTokenActivate]" value="{$token.serial}" title="{t}Activate{/t}">
                                 <span class="material-icons">lock_open</span>
                             </button>
                             {/render}
@@ -331,8 +331,8 @@ function updateMfaBatchOperation()
 
 function isTokenActionAllowed(action, tokenSerials) {
     switch (action) {
-    case "mfaTokenDisable": // FALLTHROUGH
-    case "mfaTokenRevoke":  // FALLTHROUGH
+    case "mfaTokenDeactivate": // FALLTHROUGH
+    case "mfaTokenRevoke":     // FALLTHROUGH
     case "mfaTokenRemove":
         let activeTokenCount = ACTIVE_TOKEN_SERIALS.size;
         for (tokenSerial of tokenSerials) {

@@ -295,13 +295,14 @@ class mfaAccount extends plugin
                 }
 
                 switch ($mfaTokenAction) {
-                    case 'mfaTokenDisable':      // FALLTHROUGH
+                    case 'mfaTokenDeactivate':   // FALLTHROUGH
                     case 'mfaTokenRevoke':       // FALLTHROUGH
                     case 'mfaTokenRemove':
                         $tokens = $this->utils->getTokensOfUser($this->getUid(), $this->userRealm);
                         $activeTokenSerials = $this->utils->getActiveTokenSerials($tokens);
                         if (count(array_diff($activeTokenSerials, array($tokenSerial))) == 0) {
                             // prevent user from locking himself out
+                            // TODO: Error message dialog here.
                             return $this->getMFAIntroTemplate();
                         }
 
@@ -344,9 +345,9 @@ class mfaAccount extends plugin
                 $mfaTokenAction = $_POST["mfaTokenBatchAction"] ?? null;
                 switch ($mfaTokenAction) {
                     case 'mfaTokenResetCounter': // FALLTHROUGH
-                    case 'mfaTokenEnable':
+                    case 'mfaTokenActivate':
                         break;
-                    case 'mfaTokenDisable':      // FALLTHROUGH
+                    case 'mfaTokenDeactivate':   // FALLTHROUGH
                     case 'mfaTokenRevoke':       // FALLTHROUGH
                     case 'mfaTokenRemove':
                         $tokens = $this->utils->getTokensOfUser($this->getUid(), $this->userRealm);
@@ -514,8 +515,8 @@ class mfaAccount extends plugin
      * @param string $mfaTokenAction An action can be one of the following:
      * - mfaTokenSave
      * - mfaTokenResetCounter
-     * - mfaTokenDisable
-     * - mfaTokenEnable
+     * - mfaTokenDeactivate
+     * - mfaTokenActivate
      * - mfaTokenRevoke
      * - mfaTokenRemove
      * @return bool Wether the action succeeded
@@ -575,7 +576,7 @@ class mfaAccount extends plugin
                 );
                 return true;
 
-            case 'mfaTokenDisable':
+            case 'mfaTokenDeactivate':
                 if (!$this->acl_is_writeable("tokenStatus")) {
                     break;
                 }
@@ -590,7 +591,7 @@ class mfaAccount extends plugin
                 );
                 return true;
 
-            case 'mfaTokenEnable':
+            case 'mfaTokenActivate':
                 if (!$this->acl_is_writeable("tokenStatus")) {
                     break;
                 }
@@ -733,10 +734,10 @@ class mfaAccount extends plugin
             case 'mfaTokenResetCounter':
                 $confirmationPrompt = ngettext("Reset the failed login counter for the following token?", "Reset the failed login counter for the following tokens?", $tokenCount);
                 break;
-            case 'mfaTokenDisable':
+            case 'mfaTokenDeactivate':
                 $confirmationPrompt = ngettext("Disable the following token?", "Disable the following tokens?", $tokenCount);
                 break;
-            case 'mfaTokenEnable':
+            case 'mfaTokenActivate':
                 $confirmationPrompt = ngettext("Enable the following token?", "Enable the following tokens?", $tokenCount);
                 break;
             case 'mfaTokenRevoke':
