@@ -232,11 +232,6 @@ class mfaAccount extends plugin
          * TODO: refactor and split up into methods
          */
         $show_mfa_manager  = $parentName != "roletabs";
-        if (in_array('attributesEdit', array_keys($_POST))) {
-            $show_mfa_manager = false;
-            $this->skipFooter = true;
-        }
-
         if ($show_mfa_manager) {
             $setup = null;
             $editToken = null;
@@ -688,8 +683,6 @@ class mfaAccount extends plugin
      */
     private function getMFAIntroTemplate()
     {
-        $this->smarty->assign("attributesEditMode", in_array('attributesEdit', array_keys($_POST)));
-
         $this->smarty->assign("userExists", ($this->orig_dn != "new"));
         $this->smarty->assign("mfaRequiredByRule", in_array("by_rule", $this->mfaRequired) ? "checked" : "");
         $this->smarty->assign("mfaRequiredByUser", in_array("by_user", $this->mfaRequired) ? "checked" : "");
@@ -714,7 +707,6 @@ class mfaAccount extends plugin
             $this->smarty->assign('effectiveTokenTypes', $this->effectiveTokenTypes);
         } else {
             $this->smarty->assign('tokenTypes', $this->allowedTokenTypes);
-            $this->smarty->assign("attributesEditMode", true);
             foreach ($this->mfaTokens as $tokenType => $token) {
                 $this->smarty->assign("mfa_" . $tokenType . "_title", $token->getSetupCardTitle());
             }
