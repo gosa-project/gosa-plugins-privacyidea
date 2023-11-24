@@ -219,7 +219,7 @@
             </fieldset>
         </div>
     </div>
-    {$tokensEditable=(strpos($tokenFailCountACL, "w") !== false || strpos($tokenStatusACL, "w") !== false || strpos($tokenRevocationACL, "w") !== false || strpos($tokenRemovalACL, "w") !== false)}
+    {$tokensEditable=(strpos($tokenFailCountACL, "w") !== false || strpos($tokenDeactivationACL, "w") !== false ||  strpos($tokenActivationACL, "w") !== false || strpos($tokenRevocationACL, "w") !== false || strpos($tokenRemovalACL, "w") !== false)}
     <div class="row">
         <div class="col s12">
         <table class="table" id="mfaTokenList">
@@ -292,13 +292,13 @@
                             {/render}
                         {if $token.active}
                             {render acl=$tokenDeactivationACL}
-                            <button class="txtonlybtn{if $token.revoked || strpos($tokenStatusACL, "w") === false}{/if}" type="submit" name="mfaTokenAction[mfaTokenDisable]" value=_{$token.serial}" title="{t}Deactivate{/t}">
+                            <button class="txtonlybtn{if $token.revoked || strpos($tokenDeactivationACL, "w") === false}{/if}" type="submit" name="mfaTokenAction[mfaTokenDeactivate]" value=_{$token.serial}" title="{t}Deactivate{/t}">
                                 <span class="material-icons">lock</span>
                             </button>
                             {/render}
                         {else}
                             {render acl=$tokenActivationACL}
-                            <button class="txtonlybtn{if $token.revoked || strpos($tokenStatusACL, "w") === false}{/if}" type="submit" name="mfaTokenAction[mfaTokenEnable]" value="{$token.serial}" title="{t}Activate{/t}">
+                            <button class="txtonlybtn{if $token.revoked || strpos($tokenActivationACL, "w") === false}{/if}" type="submit" name="mfaTokenAction[mfaTokenActivate]" value="{$token.serial}" title="{t}Activate{/t}">
                                 <span class="material-icons">lock_open</span>
                             </button>
                             {/render}
