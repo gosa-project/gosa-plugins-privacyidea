@@ -179,6 +179,8 @@ class mfaAccount extends plugin
         /* Before using smarty get the up-to-date handle */
         $this->smarty = get_smarty();
 
+        $parentName = is_object($this->parent) ? get_class($this->parent) : '';
+
         /* Call parent execute */
         parent::execute();
 
@@ -209,7 +211,7 @@ class mfaAccount extends plugin
         }
 
         /* In 'MyAccount' mode, we must remove write acls if we are not in editing mode. */
-        $skipWrite = (!isset($this->parent) || !$this->parent) && !session::is_set('edit');
+        $skipWrite = $parentName != "roletabs" && !session::is_set('edit');
 
         /* Log view */
         if ($this->is_account && !$this->view_logged) {
@@ -221,7 +223,16 @@ class mfaAccount extends plugin
         // UI elements based on ACLs.
         $providedACLs = $this->plInfo()['plProvidedAcls'];
         foreach ($providedACLs as $name => $transl) {
-            $aclVal  = $this->getacl($name, $skipWrite);
+            switch ($name) {
+            case "allowedTokenTypes":   // FALLTHROUGH
+            case "mfaRequiredByRule":   // FALLTHROUGH
+            case "mfaRequiredByUser":
+                $mfaSkipWrite = $skipWrite;
+                break;
+            default:
+                $mfaSkipWrite = false;
+            }
+            $aclVal  = $this->getacl($name, $mfaSkipWrite);
             $aclName = "$name" . "ACL";
             $this->smarty->assign($aclName, $aclVal);
         }
@@ -229,7 +240,6 @@ class mfaAccount extends plugin
         $this->smarty->assign("currentUserUID", $this->ui->uid);
         $this->smarty->assign("currentObjectUID", $this->attrs["uid"][0] ?? '');
 
-        $parentName = is_object($this->parent) ? get_class($this->parent) : '';
         $this->smarty->assign("parent", $parentName);
 
         $this->updateAttrsMfaRequired();
