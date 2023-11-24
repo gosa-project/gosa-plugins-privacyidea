@@ -281,35 +281,35 @@
                         <td>{if strpos($tokenFailCountACL, "r") !== false}{$token.failcount}{else}{t}not shown{/t}{/if}/{$token.maxfail}</td>
                         <td>
                             {render acl=$tokenDescriptionACL}
-                            <button class="txtonlybtn{if $token.revoked || strpos($tokenDescriptionACL, "w") === false}{/if}" type="submit" name="mfaTokenAction[mfaTokenEdit]" value="{$token.serial}" title="{t}Edit{/t}">
+                            <button class="txtonlybtn" type="submit" name="mfaTokenAction[mfaTokenEdit]" value="{$token.serial}" title="{t}Edit{/t}">
                                 <span class="material-icons">edit</span>
                             </button>
                             {/render}
                             {render acl=$tokenFailCountResetACL}
-                            <button class="txtonlybtn{if $token.revoked || strpos($tokenFailCountACL, "w") === false}{/if}" type="submit" name="mfaTokenAction[mfaTokenResetCounter]" value="{$token.serial}" title="{t}Reset error counter{/t}">
+                            <button class="txtonlybtn" type="submit" name="mfaTokenAction[mfaTokenResetCounter]" value="{$token.serial}" title="{t}Reset error counter{/t}">
                                 <span class="material-icons">restart_alt</span>
                             </button>
                             {/render}
                         {if $token.active}
                             {render acl=$tokenDeactivationACL}
-                            <button class="txtonlybtn{if $token.revoked || strpos($tokenDeactivationACL, "w") === false}{/if}" type="submit" name="mfaTokenAction[mfaTokenDeactivate]" value=_{$token.serial}" title="{t}Deactivate{/t}">
+                            <button class="txtonlybtn" type="submit" name="mfaTokenAction[mfaTokenDeactivate]" value=_{$token.serial}" title="{t}Deactivate{/t}">
                                 <span class="material-icons">lock</span>
                             </button>
                             {/render}
                         {else}
                             {render acl=$tokenActivationACL}
-                            <button class="txtonlybtn{if $token.revoked || strpos($tokenActivationACL, "w") === false}{/if}" type="submit" name="mfaTokenAction[mfaTokenActivate]" value="{$token.serial}" title="{t}Activate{/t}">
+                            <button class="txtonlybtn" type="submit" name="mfaTokenAction[mfaTokenActivate]" value="{$token.serial}" title="{t}Activate{/t}">
                                 <span class="material-icons">lock_open</span>
                             </button>
                             {/render}
                         {/if}
                             {render acl=$tokenRevocationACL}
-                            <button class="txtonlybtn{if $token.revoked || strpos($tokenRevocationACL, "w") === false}{/if}" type="submit" name="mfaTokenAction[mfaTokenRevoke]" value="{$token.serial}" title="{t}Revoke{/t}">
+                            <button class="txtonlybtn" type="submit" name="mfaTokenAction[mfaTokenRevoke]" value="{$token.serial}" title="{t}Revoke{/t}">
                                 <span class="material-icons">cancel</span>
                             </button>
                             {/render}
                             {render acl=$tokenRemovalACL}
-                            <button class="txtonlybtn{if $token.revoked || strpos($tokenRemovalACL, "w") === false}{/if}" type="submit" name="mfaTokenAction[mfaTokenRemove]" value="{$token.serial}" title="{t}Remove{/t}">
+                            <button class="txtonlybtn" type="submit" name="mfaTokenAction[mfaTokenRemove]" value="{$token.serial}" title="{t}Remove{/t}">
                                 <span class="material-icons">delete_forever</span>
                             </button>
                             {/render}
