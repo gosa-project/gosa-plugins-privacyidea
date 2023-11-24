@@ -567,7 +567,7 @@ class mfaAccount extends plugin
                 return true;
 
             case 'mfaTokenResetCounter':
-                if (!$this->acl_is_writeable("tokenFailCount")) {
+                if (!$this->acl_is_writeable("tokenFailCountReset")) {
                     break;
                 }
 
@@ -962,25 +962,26 @@ class mfaAccount extends plugin
 
                 # GOsa W
                 // TODO: Outsource addToken* ACLs into the specific MFAToken class (Create getACLInformation() func?)
-                "addTokenAny"           => _("Add any type of token")            . $writeOnly,
-                "addTokenPaper"         => _("Add TAN list")                     . $writeOnly,
-                "addTokenRegistration"  => _("Add Recovery key")                 . $writeOnly,
-                "addTokenWebAuthn"      => _("Add Security key")                 . $writeOnly,
-                "addTokenTotp"          => _("Add Authentication app (TOTP)")    . $writeOnly,
+                "addTokenAny"           => _("Add any type of token")           . $writeOnly,
+                "addTokenPaper"         => _("Add TAN list")                    . $writeOnly,
+                "addTokenRegistration"  => _("Add Recovery key")                . $writeOnly,
+                "addTokenWebAuthn"      => _("Add Security key")                . $writeOnly,
+                "addTokenTotp"          => _("Add Authentication app (TOTP)")   . $writeOnly,
 
                 # GOsa R+W
                 "tokenDescription"      => _("Description"),                    # R + W (editing description)
-                "tokenFailCount"        => _("Failed login counter"),           # R + W (resetting counter)
+                "tokenFailCount"        => _("Failed login counter")            . $piReadOnly,
                 "tokenLastUsed"         => _("Last use")                        . $piReadOnly,
                 "tokenStatus"           => _("Status")                          . $piReadOnly,
                 "tokenCountAuth"        => _("Authentication count")            . $piReadOnly,
                 "tokenCountAuthSuccess" => _("Successful authentication count") . $piReadOnly,
 
                 # GOsa R+W
-                "tokenRevocation"       => _("Revocation of tokens allowed")   . $piWriteOnly,
-                "tokenRemoval"          => _("Removal of tokens allowed")      . $piWriteOnly,
-                "tokenActivation"       => _("Activation of tokens allowed")   . $piWriteOnly,
-                "tokenDeactivation"     => _("Deactivation of tokens allowed") . $piWriteOnly,
+                "tokenFailCountReset" => _("Resetting of fail counter allowed") . $piWriteOnly,
+                "tokenRevocation"     => _("Revocation of tokens allowed")      . $piWriteOnly,
+                "tokenRemoval"        => _("Removal of tokens allowed")         . $piWriteOnly,
+                "tokenActivation"     => _("Activation of tokens allowed")      . $piWriteOnly,
+                "tokenDeactivation"   => _("Deactivation of tokens allowed")    . $piWriteOnly,
             ),
         ));
     }

@@ -199,7 +199,7 @@
                 <div class="input-field">
                     <select id="mfaTokenBatchAction" name="mfaTokenBatchAction">
                         <option value="" disabled selected>{t}Choose an action{/t}</option>
-                        {render acl=$tokenFailCountACL}
+                        {render acl=$tokenFailCountResetACL}
                         <option value="mfaTokenResetCounter">{t}Reset error counter{/t}</option>
                         {/render}
                         {render acl=$tokenActivationACL}
@@ -219,7 +219,7 @@
             </fieldset>
         </div>
     </div>
-    {$tokensEditable=(strpos($tokenFailCountACL, "w") !== false || strpos($tokenDeactivationACL, "w") !== false ||  strpos($tokenActivationACL, "w") !== false || strpos($tokenRevocationACL, "w") !== false || strpos($tokenRemovalACL, "w") !== false)}
+    {$tokensEditable=(strpos($tokenFailCountResetACL, "w") !== false || strpos($tokenDeactivationACL, "w") !== false ||  strpos($tokenActivationACL, "w") !== false || strpos($tokenRevocationACL, "w") !== false || strpos($tokenRemovalACL, "w") !== false)}
     <div class="row">
         <div class="col s12">
         <table class="table" id="mfaTokenList">
@@ -285,7 +285,7 @@
                                 <span class="material-icons">edit</span>
                             </button>
                             {/render}
-                            {render acl=$tokenFailCountACL}
+                            {render acl=$tokenFailCountResetACL}
                             <button class="txtonlybtn{if $token.revoked || strpos($tokenFailCountACL, "w") === false}{/if}" type="submit" name="mfaTokenAction[mfaTokenResetCounter]" value="{$token.serial}" title="{t}Reset error counter{/t}">
                                 <span class="material-icons">restart_alt</span>
                             </button>
