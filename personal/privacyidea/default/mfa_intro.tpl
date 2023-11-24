@@ -217,6 +217,7 @@
             </fieldset>
         </div>
     </div>
+    {$tokensEditable=(strpos($tokenFailCountACL, "w") !== false || strpos($tokenStatusACL, "w") !== false || strpos($tokenRevocationACL, "w") !== false || strpos($tokenRemovalACL, "w") !== false)}
     <div class="row">
         <div class="col s12">
         <table class="table" id="mfaTokenList">
@@ -232,7 +233,7 @@
             </colgroup>
             <thead>
                 <tr>
-                    <th><label><input type="checkbox" id="mfaTokensSelectAll"><span></span></label></th>
+                    <th><label><input type="checkbox" id="mfaTokensSelectAll"{if !$tokensEditable} disabled{/if}><span></span></label></th>
                     <th>{t}ID{/t}</th>
                     <th>{t}Type{/t}</th>
                     <th>{t}Description{/t}</th>
@@ -245,7 +246,7 @@
             <tbody>
                 {foreach from=$tokens key=$key item=$token}
                     <tr>
-                        <td><label><input type="checkbox" name="mfaTokenSerials[]" value="{$token.serial}"><span></span></label></td>
+                        <td><label><input type="checkbox" name="mfaTokenSerials[]" value="{$token.serial}"{if !$tokensEditable} disabled{/if}><span></span></label></td>
                         <td style="overflow-wrap: break-word;">
                             <button class="txtonlybtn{if $token.revoked} line-through{/if}" type="submit"
                              name="mfaTokenAction[mfaTokenView]" value="{$token.serial}">{$token.serial}</button>
