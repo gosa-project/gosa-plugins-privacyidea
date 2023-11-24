@@ -51,7 +51,7 @@
 <div class="row">
     <div class="col">
         <label>
-            <input name="mfaRequiredByRule" type="checkbox" {if !$attributesEditMode}disabled{/if} {if $mfaRequiredByRule == "checked"}checked{/if}>
+            <input name="mfaRequiredByRule" type="checkbox"{if $mfaRequiredByRule == "checked"} checked{/if}>
             <span>{t}Additional factors required by organizational policy.{/t}</span>
         </label>
     </div>
@@ -64,7 +64,7 @@
 <div class="row">
     <div class="col">
         <label>
-            <input name="mfaRequiredByUser" type="checkbox" {if !$attributesEditMode}disabled{/if} {if $mfaRequiredByUser == "checked"}checked{/if}/>
+            <input name="mfaRequiredByUser" type="checkbox"{if $mfaRequiredByUser == "checked"} checked{/if}/>
             <span>
                 {t}Always require additional factors.{/t}
             </span>
@@ -76,43 +76,33 @@
 {/if}
 
 {if $allowedTokenTypesACL}
-{render acl=$allowedTokenTypesACL}
 <h2>{t}Allowed factors{/t}</h2>
 {foreach $allTokenTypes as $tokenType}
 <div class="row">
     <div class="input field col s12">
         <label>
-            <input type="checkbox" name="allowedTokenTypes[]" value="{$tokenType}"{if in_array($tokenType, $tokenTypes)} checked{/if}{if !$attributesEditMode && $parent!="roletabs"} disabled{/if}>
+            {render acl=$allowedTokenTypesACL}
+            <input type="checkbox" name="allowedTokenTypes[]" value="{$tokenType}"{if in_array($tokenType, $tokenTypes)} checked{/if}>
+            {/render}
             <span>{$mfa_{$tokenType}_title}</span>
         </label>
     </div>
 </div>
 {/foreach}
-{/render}
 {/if}
 
 {* If no token is registered, warn the user! *}
-{if ($parent == "usertabs" || $parent == "") && $showWarningNoTokenRegistered}
+{if $parent != "roletabs" && $showWarningNoTokenRegistered}
 <div class="card-panel red lighten-4 red-text text-darken-4">
-    <b>{t}Attention: {/t}</b>{t}You cannot log in again with this account because there is no multifactor method associated with it. Please add one of the available methods now.{/t}
+    {if $parent == ""}
+        <b>{t}Attention: {/t}</b> {t}You cannot log in again with this account because there is no multifactor method associated to it. Please add one of the available methods now.{/t}
+    {else}
+        <b>{t}Attention: {/t}</b> {t}The user cannot log in with this account because there is no multifactor method associated to it.{/t}
+    {/if}
 </div>
 {/if}
 
-{if ($parent != "roletabs")}
-<div class="row mt-1">
-    <div class="col">
-        {if $attributesEditMode}
-            <button class="btn-small" name="" type="submit">{t}Cancel{/t}</button>
-            <button class="btn-small primary" name="edit_apply" type="submit">{t}Save settings{/t}</button>
-        {else}
-            <button class="btn-small primary" name="attributesEdit" type="submit">{t}Edit settings{/t}</button>
-        {/if}
-    </div>
-</div>
-{/if}
-
-
-{if ($parent == "usertabs" || $parent == "") &&  !$attributesEditMode}
+{if ($parent == "usertabs" || $parent == "")}
 {if $manageTokensACL}
 {render acl=$manageTokensACL}
 <hr class="divider">
