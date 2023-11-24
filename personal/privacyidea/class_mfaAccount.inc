@@ -220,6 +220,9 @@ class mfaAccount extends plugin
             $this->smarty->assign($aclName, $aclVal);
         }
 
+        $this->smarty->assign("currentUserUID", $this->ui->uid);
+        $this->smarty->assign("currentObjectUID", $this->attrs["uid"][0] ?? '');
+
         $parentName = is_object($this->parent) ? get_class($this->parent) : '';
         $this->smarty->assign("parent", $parentName);
 
