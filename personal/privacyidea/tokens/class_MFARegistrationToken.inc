@@ -232,8 +232,14 @@ class MFARegistrationToken extends MFATokenHelper implements MFAToken
         );
 
         ob_end_clean(); // Clean (erase) the output buffer and turn off output buffering.
-        // TODO: Token description could be neat for pdfFileName too.
-        $pdfFileName = sprintf(_("recovery_key_%s.pdf"), $this->mfaAccount->getUid());
+
+        if (empty($this->tokenDescription)) {
+            $pdfFileName = sprintf(_("recovery_key_%s.pdf"), $this->mfaAccount->getUid());
+        } else {
+            $tokenDescription = str_replace(" ", "-", $this->tokenDescription);
+            $pdfFileName = sprintf(_("recovery_key_%s_%s.pdf"), $this->mfaAccount->getUid(), $tokenDescription);
+        }
+
         $infoPage->output('D', $pdfFileName, true);
 
         return true;
