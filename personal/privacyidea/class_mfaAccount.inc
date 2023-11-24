@@ -577,7 +577,7 @@ class mfaAccount extends plugin
                 return true;
 
             case 'mfaTokenDeactivate':
-                if (!$this->acl_is_writeable("tokenStatus")) {
+                if (!$this->acl_is_writeable("tokenDeactivation")) {
                     break;
                 }
 
@@ -592,7 +592,7 @@ class mfaAccount extends plugin
                 return true;
 
             case 'mfaTokenActivate':
-                if (!$this->acl_is_writeable("tokenStatus")) {
+                if (!$this->acl_is_writeable("tokenActivation")) {
                     break;
                 }
 
@@ -924,6 +924,13 @@ class mfaAccount extends plugin
     {
         $properties = mfaAccount::getProperties();
 
+        // PI read only means that it can't be set/resetted or changed in any way via privacyIDEA API.
+        // PI write only means that one can't get it via privacyIDEA API (Token actions for example).
+        $piReadOnly   = "&nbsp;(" . _("PI read-only") . ") ";
+        $piWriteOnly  = "&nbsp;(" . _("PI write-only") . ") ";
+        $writeOnly    = "&nbsp;(" . _("write-only") . ") ";
+        $readOnly     = "&nbsp;(" . _("read-only") . ") ";
+
         return (array (
             "plShortName"    => _("MFA"),
             "plDescription"  => _("Multifactor Authentification"),
@@ -945,26 +952,29 @@ class mfaAccount extends plugin
 
                 # GOsa R+W
                 "manageTokens"          => _("Manage tokens"),
-                # GOsa W
-                "addTokenAny"           => _("Add any type of token")            . "&nbsp;(" . _("write-only") . ") ",
-                "addTokenPaper"         => _("Add TAN list")                     . "&nbsp;(" . _("write-only") . ") ",
-                "addTokenRegistration"  => _("Add Recovery key")                 . "&nbsp;(" . _("write-only") . ") ",
-                "addTokenWebAuthn"      => _("Add Security key")                 . "&nbsp;(" . _("write-only") . ") ",
-                "addTokenTotp"          => _("Add Authentication app (TOTP)")    . "&nbsp;(" . _("write-only") . ") ",
 
-                # GOsa R+W (PI read only means that it can't be set/resetted or changed in any way via privacyIDEA API.)
-                "tokenDescription"      => _("Description"),
-                "tokenFailCount"        => _("Failed login counter"),
-                "tokenLastUsed"         => _("Last use")                        . "&nbsp;(" . _("PI read-only") . ") ",
-                "tokenStatus"           => _("Status")                          . "&nbsp;(" . _("PI read-only") . ") ",
-                "tokenCountAuth"        => _("Authentication count")            . "&nbsp;(" . _("PI read-only") . ") ",
-                "tokenCountAuthSuccess" => _("Successful authentication count") . "&nbsp;(" . _("PI read-only") . ") ",
+                # GOsa W
+                // TODO: Outsource addToken* ACLs into the specific MFAToken class (Create getACLInformation() func?)
+                "addTokenAny"           => _("Add any type of token")            . $writeOnly,
+                "addTokenPaper"         => _("Add TAN list")                     . $writeOnly,
+                "addTokenRegistration"  => _("Add Recovery key")                 . $writeOnly,
+                "addTokenWebAuthn"      => _("Add Security key")                 . $writeOnly,
+                "addTokenTotp"          => _("Add Authentication app (TOTP)")    . $writeOnly,
 
                 # GOsa R+W
-                "tokenRevocation"       => _("Revocation allowed"),
-                "tokenRemoval"          => _("Removal allowed"),
+                "tokenDescription"      => _("Description"),                    # R + W (editing description)
+                "tokenFailCount"        => _("Failed login counter"),           # R + W (resetting counter)
+                "tokenLastUsed"         => _("Last use")                        . $piReadOnly,
+                "tokenStatus"           => _("Status")                          . $piReadOnly,
+                "tokenCountAuth"        => _("Authentication count")            . $piReadOnly,
+                "tokenCountAuthSuccess" => _("Successful authentication count") . $piReadOnly,
+
+                # GOsa R+W
+                "tokenRevocation"       => _("Revocation of tokens allowed")   . $piWriteOnly,
+                "tokenRemoval"          => _("Removal of tokens allowed")      . $piWriteOnly,
+                "tokenActivation"       => _("Activation of tokens allowed")   . $piWriteOnly,
+                "tokenDeactivation"     => _("Deactivation of tokens allowed") . $piWriteOnly,
             ),
-            // TODO: Outsource addToken* ACLs into the specific MFAToken class (Create getACLInformation() func?)
         ));
     }
 
