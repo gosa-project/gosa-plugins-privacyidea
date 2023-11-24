@@ -94,7 +94,7 @@
 {* If no token is registered, warn the user! *}
 {if $parent != "roletabs" && $showWarningNoTokenRegistered}
 <div class="card-panel red lighten-4 red-text text-darken-4">
-    {if $parent == ""}
+    {if $currentUserUID == $currentObjectUID}
         <b>{t}Attention: {/t}</b> {t}You cannot log in again with this account because there is no multifactor method associated to it. Please add one of the available methods now.{/t}
     {else}
         <b>{t}Attention: {/t}</b> {t}The user cannot log in with this account because there is no multifactor method associated to it.{/t}
@@ -102,7 +102,7 @@
 </div>
 {/if}
 
-{if ($parent == "usertabs" || $parent == "")}
+{if ($parent != "roletabs")}
 {if $manageTokensACL}
 {render acl=$manageTokensACL}
 <hr class="divider">
