@@ -27,14 +27,17 @@
     public $U;
     public $B;
 
+    /** @var string */
+    public $fontFamily = "DejaVu";
+
     public function RecoveryKeyPDF($sn, $givenname, $academictitle, $address, $uid, $mfaRecoveryKey)
     {
         global $config;
         $this->__construct('P', 'mm', 'A4');
 
         // Add all used variants of Unicode font (uses UTF-8).
-        $this->AddFont('DejaVu', '', 'DejaVuSans.ttf', true);
-        $this->AddFont('DejaVu', 'B', 'DejaVuSans-Bold.ttf', true);
+        $this->AddFont($this->fontFamily, '', 'DejaVuSans.ttf', true);
+        $this->AddFont($this->fontFamily, 'B', 'DejaVuSans-Bold.ttf', true);
 
         // Instanciation of inherited class
         $this->SetTitle(iconv("UTF-8", "ASCII//TRANSLIT", _("Multifactor authentication recovery key")));
@@ -57,24 +60,28 @@
         $this->SetX(20);
         $this->SetY(60);
 
-        $this->SetFont('DejaVu', '', 10);
+        $this->SetFont($this->fontFamily, '', 10);
         $this->Ln();
         $this->Write(5, $address);
         $this->Ln();
 
         $this->Ln(15);
 
-        $this->SetFont('DejaVu', 'B', 10);
+        $this->SetFont($this->fontFamily, 'B', 10);
         $this->Cell(12, 10, _("Subject: Recovery key"));
         $this->Ln(12);
-        $this->SetFont('DejaVu', '', 10);
+        $this->SetFont($this->fontFamily, '', 10);
         $this->WriteHTML($this->Salutation($sn, $givenname, $academictitle));
         $this->Ln(12);
-        $this->WriteHTML(sprintf(_("A recovery key has been created for your account '%s'."), $uid), 10);
+        $this->WriteHTML(sprintf(_("A recovery key has been created for your account '%s'."), $uid));
         $this->Ln(6);
-        $this->WriteHTML(_("You can use this key one time only as a second factor when logging into our system."), 10);
+        $this->WriteHTML(_("You can use this key one time only as a second factor when logging into our system."));
         $this->Ln(12);
-        $this->WriteHTML(sprintf(_("Your recovery key is: <b>%s</b>"), $mfaRecoveryKey), 10);
+        $this->WriteHTML(_("Your recovery key is:"));
+        $this->Ln(12);
+        $this->SetFont($this->fontFamily, 'B', 12);
+        $this->Write(5, $mfaRecoveryKey);
+        $this->SetFont($this->fontFamily, '', 10);
         $this->Ln(24);
         $this->WriteHTML(_("Best regards"), 10);
     }
