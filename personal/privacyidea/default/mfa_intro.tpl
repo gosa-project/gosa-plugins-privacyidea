@@ -166,21 +166,25 @@
 
 <style>
 .txtonlybtn {
-        background:none;
-        border:none;
-        margin:0;
-        padding:0;
-        cursor: pointer;
-        font-size: 1em;
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    font-size: inherit;
 }
-.invisible {
-        visibility: hidden;
+
+#mfaTokenList th,
+#mfaTokenList td {
+    vertical-align: top;
 }
+
+#mfaTokenList button:disabled {
+    visibility: hidden;
+}
+
 .line-through {
-        text-decoration: line-through;
-}
-.align-top {
-        vertical-align: top;
+    text-decoration: line-through;
 }
 </style>
 
@@ -228,25 +232,25 @@
             </colgroup>
             <thead>
                 <tr>
-                    <th class="align-top"><label><input type="checkbox" id="mfaTokensSelectAll"><span></span></label></th>
-                    <th class="align-top">{t}ID{/t}</th>
-                    <th class="align-top">{t}Type{/t}</th>
-                    <th class="align-top">{t}Description{/t}</th>
-                    <th class="align-top">{t}Last use{/t}</th>
-                    <th class="align-top">{t}Status{/t}</th>
-                    <th class="align-top">{t}Error counter{/t}</th>
-                    <th class="align-top">{t}Actions{/t}</th>
+                    <th><label><input type="checkbox" id="mfaTokensSelectAll"><span></span></label></th>
+                    <th>{t}ID{/t}</th>
+                    <th>{t}Type{/t}</th>
+                    <th>{t}Description{/t}</th>
+                    <th>{t}Last use{/t}</th>
+                    <th>{t}Status{/t}</th>
+                    <th>{t}Error counter{/t}</th>
+                    <th>{t}Actions{/t}</th>
                 </tr>
             </thead>
             <tbody>
                 {foreach from=$tokens key=$key item=$token}
                     <tr>
-                        <td class="align-top"><label><input type="checkbox" name="mfaTokenSerials[]" value="{$token.serial}"><span></span></label></td>
-                        <td class="align-top" style="overflow-wrap: break-word;">
+                        <td><label><input type="checkbox" name="mfaTokenSerials[]" value="{$token.serial}"><span></span></label></td>
+                        <td style="overflow-wrap: break-word;">
                             <button class="txtonlybtn{if $token.revoked} line-through{/if}" type="submit"
                              name="mfaTokenAction[mfaTokenView]" value="{$token.serial}">{$token.serial}</button>
                         </td>
-                        <td class="align-top">
+                        <td>
                             {* TODO: Refactor getSetupCard{Icon,Title}, also mfa{tokenType}_{icon,title}.
                              * There are only available if in allowedTokenType or overriden by ACL.
                              * Make them a const in the MFA{Icon, Title}Token class. *}
@@ -256,10 +260,10 @@
                                 {$mfa_{$token.tokentype}_title}
                             </button>
                         </td>
-                        <td class="align-top"><button class="txtonlybtn{if $token.revoked} line-through{/if}" type="submit" name="mfaTokenAction[mfaTokenView]" value="{$token.serial}">
+                        <td><button class="txtonlybtn{if $token.revoked} line-through{/if}" type="submit" name="mfaTokenAction[mfaTokenView]" value="{$token.serial}">
                             {if strpos($tokenDescriptionACL, "r") !== false}{$token.description}{else}{t}not shown{/t}{/if}
                         </button></td>
-                        <td class="align-top">
+                        <td>
                             {if strpos($tokenLastUsedACL, "r") !== false}
                                 {if !empty($token.info.last_auth)}
                                     <time class="tokenLastUsed{if $token.revoked} line-through{/if}" datetime="{$token.info.last_auth}">{$token.info.last_auth}</time>
@@ -270,39 +274,39 @@
                                 {t}not shown{/t}
                             {/if}
                         </td>
-                        <td class="align-top">{if strpos($tokenStatusACL, "r") !== false}{$token.status}{else}{t}not shown{/t}{/if}</td>
-                        <td class="align-top">{if strpos($tokenFailCountACL, "r") !== false}{$token.failcount}{else}{t}not shown{/t}{/if}/{$token.maxfail}</td>
-                        <td class="align-top">
+                        <td>{if strpos($tokenStatusACL, "r") !== false}{$token.status}{else}{t}not shown{/t}{/if}</td>
+                        <td>{if strpos($tokenFailCountACL, "r") !== false}{$token.failcount}{else}{t}not shown{/t}{/if}/{$token.maxfail}</td>
+                        <td>
                             {render acl=$tokenDescriptionACL}
-                            <button class="txtonlybtn{if $token.revoked || strpos($tokenDescriptionACL, "w") === false} invisible{/if}" type="submit" name="mfaTokenAction[mfaTokenEdit]" value="{$token.serial}" title="{t}Edit{/t}">
+                            <button class="txtonlybtn{if $token.revoked || strpos($tokenDescriptionACL, "w") === false}{/if}" type="submit" name="mfaTokenAction[mfaTokenEdit]" value="{$token.serial}" title="{t}Edit{/t}">
                                 <span class="material-icons">edit</span>
                             </button>
                             {/render}
                             {render acl=$tokenFailCountACL}
-                            <button class="txtonlybtn{if $token.revoked || strpos($tokenFailCountACL, "w") === false} invisible{/if}" type="submit" name="mfaTokenAction[mfaTokenResetCounter]" value="{$token.serial}" title="{t}Reset error counter{/t}">
+                            <button class="txtonlybtn{if $token.revoked || strpos($tokenFailCountACL, "w") === false}{/if}" type="submit" name="mfaTokenAction[mfaTokenResetCounter]" value="{$token.serial}" title="{t}Reset error counter{/t}">
                                 <span class="material-icons">restart_alt</span>
                             </button>
                             {/render}
                         {if $token.active}
                             {render acl=$tokenDeactivationACL}
-                            <button class="txtonlybtn{if $token.revoked || strpos($tokenDeactivationACL, "w") === false} invisible{/if}" type="submit" name="mfaTokenAction[mfaTokenDeactivate]" value=_{$token.serial}" title="{t}Deactivate{/t}">
+                            <button class="txtonlybtn{if $token.revoked || strpos($tokenStatusACL, "w") === false}{/if}" type="submit" name="mfaTokenAction[mfaTokenDisable]" value=_{$token.serial}" title="{t}Deactivate{/t}">
                                 <span class="material-icons">lock</span>
                             </button>
                             {/render}
                         {else}
                             {render acl=$tokenActivationACL}
-                            <button class="txtonlybtn{if $token.revoked || strpos($tokenActivationACL, "w") === false} invisible{/if}" type="submit" name="mfaTokenAction[mfaTokenActivate]" value="{$token.serial}" title="{t}Activate{/t}">
+                            <button class="txtonlybtn{if $token.revoked || strpos($tokenStatusACL, "w") === false}{/if}" type="submit" name="mfaTokenAction[mfaTokenEnable]" value="{$token.serial}" title="{t}Activate{/t}">
                                 <span class="material-icons">lock_open</span>
                             </button>
                             {/render}
                         {/if}
                             {render acl=$tokenRevocationACL}
-                            <button class="txtonlybtn{if $token.revoked || strpos($tokenRevocationACL, "w") === false} invisible{/if}" type="submit" name="mfaTokenAction[mfaTokenRevoke]" value="{$token.serial}" title="{t}Revoke{/t}">
+                            <button class="txtonlybtn{if $token.revoked || strpos($tokenRevocationACL, "w") === false}{/if}" type="submit" name="mfaTokenAction[mfaTokenRevoke]" value="{$token.serial}" title="{t}Revoke{/t}">
                                 <span class="material-icons">cancel</span>
                             </button>
                             {/render}
                             {render acl=$tokenRemovalACL}
-                            <button class="txtonlybtn{if $token.revoked || strpos($tokenRemovalACL, "w") === false} invisible{/if}" type="submit" name="mfaTokenAction[mfaTokenRemove]" value="{$token.serial}" title="{t}Remove{/t}">
+                            <button class="txtonlybtn{if $token.revoked || strpos($tokenRemovalACL, "w") === false}{/if}" type="submit" name="mfaTokenAction[mfaTokenRemove]" value="{$token.serial}" title="{t}Remove{/t}">
                                 <span class="material-icons">delete_forever</span>
                             </button>
                             {/render}
