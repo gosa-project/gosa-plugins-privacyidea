@@ -133,6 +133,7 @@
                     </div>
 
                     <div class="card-action">
+                        {render acl=$manageTokensACL}
                         {if empty({$mfa_{$tokenType}_limitReachedMessage})}
                             <button
                                 class="btn-small primary"
@@ -151,6 +152,7 @@
                             {$mfa_{$tokenType}_button_text}
                             </button>
                         {/if}
+                        {/render}
                     </div>
                 </div>
             </div>
