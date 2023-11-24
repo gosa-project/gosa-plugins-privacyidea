@@ -206,8 +206,10 @@
                         {render acl=$tokenFailCountACL}
                         <option value="mfaTokenResetCounter">{t}Reset error counter{/t}</option>
                         {/render}
-                        {render acl=$tokenStatusACL}
+                        {render acl=$tokenActivationACL}
                         <option value="mfaTokenActivate">{t}Activate{/t}</option>
+                        {/render}
+                        {render acl=$tokenDeactivationACL}
                         <option value="mfaTokenDeactivate">{t}Deactivate{/t}</option>
                         {/render}
                         {render acl=$tokenRevocationACL}
@@ -292,14 +294,14 @@
                             </button>
                             {/render}
                         {if $token.active}
-                            {render acl=$tokenStatusACL}
-                            <button class="txtonlybtn{if $token.revoked || strpos($tokenStatusACL, "w") === false} invisible{/if}" type="submit" name="mfaTokenAction[mfaTokenDeactivate]" value=_{$token.serial}" title="{t}Deactivate{/t}">
+                            {render acl=$tokenDeactivationACL}
+                            <button class="txtonlybtn{if $token.revoked || strpos($tokenDeactivationACL, "w") === false} invisible{/if}" type="submit" name="mfaTokenAction[mfaTokenDeactivate]" value=_{$token.serial}" title="{t}Deactivate{/t}">
                                 <span class="material-icons">lock</span>
                             </button>
                             {/render}
                         {else}
-                            {render acl=$tokenStatusACL}
-                            <button class="txtonlybtn{if $token.revoked || strpos($tokenStatusACL, "w") === false} invisible{/if}" type="submit" name="mfaTokenAction[mfaTokenActivate]" value="{$token.serial}" title="{t}Activate{/t}">
+                            {render acl=$tokenActivationACL}
+                            <button class="txtonlybtn{if $token.revoked || strpos($tokenActivationACL, "w") === false} invisible{/if}" type="submit" name="mfaTokenAction[mfaTokenActivate]" value="{$token.serial}" title="{t}Activate{/t}">
                                 <span class="material-icons">lock_open</span>
                             </button>
                             {/render}
