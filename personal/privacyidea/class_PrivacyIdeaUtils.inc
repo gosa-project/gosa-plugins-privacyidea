@@ -674,7 +674,7 @@ class PrivacyIdeaUtils implements PILog
 
         // Get config value from LDAP tree, gosa config file (gosa.conf) or
         // defaults from class_mfaAccount.inc
-        $ret = $this->config->get_cfg_value("core", $key);
+        $ret = $this->config->get_cfg_value_ext("core", $key);
 
         if ($debug_to_jsconsole) {
             // Debug property to js console (if debugging is enabled!).
