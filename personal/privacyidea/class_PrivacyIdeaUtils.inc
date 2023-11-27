@@ -507,9 +507,10 @@ class PrivacyIdeaUtils implements PILog
         }
 
         $params = array(
-            "user"   => $user,
-            "realm"  => $userRealm,
-            "sortby" => "count", // TODO: Sort somehow by last use.
+            "user"     => $user,
+            "realm"    => $userRealm,
+            "sortby"   => "count", // TODO: Sort somehow by last use.
+            "pagesize" => 50,
         );
 
         if (isset($tokenSerial) && !empty($tokenSerial)) {
@@ -525,6 +526,11 @@ class PrivacyIdeaUtils implements PILog
             $returnArray = $requestAnswer["result"]["value"]["tokens"];
             // $returnArray = $this->mapTokenTypes($returnArray);
             $returnArray = $this->prepareTokensForUI($returnArray);
+
+            if ($requestAnswer["result"]["value"]["count"] != count($returnArray)) {
+                // There are more tokens hidden behind paging system. (Unlikely to happen since we have token limits)
+                // TODO: Show user that more tokens are available.
+            }
 
             if (!isset($tokenSerial)) {
                 // Cache tokens countings.
