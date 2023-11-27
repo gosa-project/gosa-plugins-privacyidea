@@ -19,7 +19,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *}
 
-<h2>{t}Verify authentication app (TOTP){/t}</h2>
+<h2>{t}Verify Authentication App (TOTP){/t}</h2>
 
 <div class="section">
     <div class="row">

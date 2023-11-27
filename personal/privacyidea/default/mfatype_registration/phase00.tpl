@@ -19,7 +19,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *}
 
-<h2>{t}Add a recovery key{/t}</h2>
+<h2>{t}Add a Recovery Key{/t}</h2>
 
 <div class="section">
     <p>{t}A recovery key can be used exactly once for logging in.{/t}</p>

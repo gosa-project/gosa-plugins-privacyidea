@@ -25,7 +25,7 @@
 {$mfa_webauthn_icon=usb}
 
 <fieldset style="border: none; padding: 0; margin: 0;" {if !$userExists}disabled{/if}>
-<h2>{t}Multifactor authentication requirements{/t}</h2>
+<h2>{t}Multifactor Authentication Requirements{/t}</h2>
 <div class="row">
 {if !$mfaRequiredByRuleACL && !$mfaRequiredByUserACL && !$allowedTokenTypesACL && !$manageTokensACL}
     <p>{t}Insufficient permissions for viewing or editing this user's multifactor authentication properties.{/t}</p>
@@ -76,7 +76,7 @@
 {/if}
 
 {if $allowedTokenTypesACL}
-<h2>{t}Allowed factors{/t}</h2>
+<h2>{t}Allowed Multifactor Methods{/t}</h2>
 {foreach $allTokenTypes as $tokenType}
 <div class="row">
     <div class="input field col s12">
@@ -106,7 +106,7 @@
 {if $manageTokensACL}
 {render acl=$manageTokensACL}
 <hr class="divider">
-<h2>{t}Add new multifactor token{/t}</h2>
+<h2>{t}Add new Multifactor Methods{/t}</h2>
 {if count($effectiveTokenTypes) > 0}
     <div class="row">
         <p>
@@ -191,7 +191,7 @@
 </style>
 
 <hr class="divider">
-<h2>{t}Associated multifactor methods{/t}</h2>
+<h2>{t}Associated Multifactor Methods{/t}</h2>
     {if count($tokens) > 0}
     <div class="row">
         <div class="col s2">

@@ -19,7 +19,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *}
 
-<h2>{t}Add FIDO2 security key{/t}</h2>
+<h2>{t}Add FIDO2 Security Key{/t}</h2>
 
 <div class="section">
     <p>{t}FIDO2-compatible hardware security keys are e.g. connected via USB of NFC and authentication is started using a device-specifcic mechanism, e.g. touching a sensor.{/t}</p>
