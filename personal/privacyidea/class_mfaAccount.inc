@@ -733,6 +733,8 @@ class mfaAccount extends plugin
         assert((is_array($mfaTokens) && array_is_list($mfaTokens)) || is_string($mfaTokens));
 
         $isBatch = is_array($mfaTokens);
+        $this->smarty->assign("isBatch", $isBatch);
+
         $tokenCount = $isBatch ? count($mfaTokens) : 1;
 
         $this->smarty->assign($isBatch ? "mfaTokenBatchAction" : "mfaTokenAction", $mfaTokenAction);

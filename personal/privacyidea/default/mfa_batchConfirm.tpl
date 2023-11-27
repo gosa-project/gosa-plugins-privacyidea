@@ -25,12 +25,7 @@
 {$mfa_webauthn_icon=usb}
 
 <h2>{$confirmationPrompt}</h2>
-{if isset($mfaTokenAction)}
-    <input type="hidden" name="mfaTokenAction" value="{$mfaTokenAction}">
-    {assign var="description" value="{$serialsTokens[$tokenSerial]['description']}"}
-    <input type="hidden" name="tokenSerial" value="{$tokenSerial}">
-    <p><b>{if !empty($description)}{$description} ({$tokenSerial}){else}{$tokenSerial}{/if}</b></p>
-{else}
+{if $isBatch}
     <input type="hidden" name="mfaTokenBatchAction" value="{$mfaTokenBatchAction}">
     <ul class="browser-default">
         {foreach $mfaTokenSerials as $tokenSerial}
@@ -38,6 +33,11 @@
             <li><input type="hidden" name="mfaTokenSerials[]" value="{$tokenSerial}"><b>{if !empty($description)}{$description} ({$tokenSerial}){else}{$tokenSerial}{/if}</b></li>
         {/foreach}
     </ul>
+{else}
+    <input type="hidden" name="mfaTokenAction" value="{$mfaTokenAction}">
+    {assign var="description" value="{$serialsTokens[$tokenSerial]['description']}"}
+    <input type="hidden" name="tokenSerial" value="{$tokenSerial}">
+    <p><b>{if !empty($description)}{$description} ({$tokenSerial}){else}{$tokenSerial}{/if}</b></p>
 {/if}
 
 <div class="section">
