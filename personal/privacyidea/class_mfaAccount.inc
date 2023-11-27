@@ -456,6 +456,10 @@ class mfaAccount extends plugin
                 $this->mfaRequired = array_diff($this->mfaRequired, array("by_user"));
             }
         }
+
+        /* Re-index the error, so index numbers always start with number 0 ... */
+        $this->mfaRequired = array_values($this->mfaRequired);
+
     }
 
     /**
