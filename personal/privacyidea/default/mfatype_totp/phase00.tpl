@@ -19,7 +19,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *}
 
-<h2>{t}Add authentication app (TOTP){/t}</h2>
+<h2>{t}Add Authentication App (TOTP){/t}</h2>
 
 <div class="section">
     <p>{t}An authentication app on your smartphone generates time-based one-time passwords (TOTP) which must be entered on each login.{/t}</p>

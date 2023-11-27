@@ -22,7 +22,7 @@
 <!-- Load WebAuthn logic stuff -->
 <script type="text/javascript" async="true" src="plugins/privacyidea/js/WebAuthn.js"></script>
 
-<h2>{t}Confirm security key setup{/t}</h2>
+<h2>{t}Confirm Security Key Setup{/t}</h2>
 
 <div class="section row">
     <div class="col m12 l6">

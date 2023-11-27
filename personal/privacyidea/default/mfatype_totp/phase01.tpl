@@ -18,7 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *}
-<h2>{t}Set up authentication app (TOTP){/t}</h2>
+<h2>{t}Set up Authentication App (TOTP){/t}</h2>
 
 <div class="section row">
     <div class="col m12 l4">
