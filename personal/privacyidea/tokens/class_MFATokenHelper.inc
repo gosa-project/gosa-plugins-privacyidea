@@ -147,6 +147,8 @@ class MFATokenHelper
         // Check for limit of all tokens combined.
         // Skip this comparison if tokenLimitAll is set to 0.
         if ($tokenLimitAll != 0) {
+            $this->utils->tokenCounts["all"] = $this->utils->tokenCounts["all"] ?? 0;
+
             if ($this->utils->tokenCounts["all"] >= $tokenLimitAll) {
                 return _("You have reached the limit on the number of tokens.");
             }
