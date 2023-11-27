@@ -130,22 +130,25 @@ class MFATokenHelper
         $tokenLimits["registration"] = $this->utils->getConfigIntValue("piTokenLimitRegistration");
         assert(in_array($tokenType, array_keys($tokenLimits)));
 
-        /* START COMPARISONS */
-        // Skip comparison if token limit is 0. That means there is no maximum limit for tokens.
+        // Skip comparisons if token limit is set to 0 (deactivated).
+        // There is no limit for this token specifically then.
+        if ($tokenLimits[$tokenType] == 0) {
+            return "";
+        }
+
+        if (!in_array($tokenType, array_keys($this->utils->tokenCounts))) {
+            $this->utils->tokenCounts[$tokenType] = 0;
+        }
+
+        if ($this->utils->tokenCounts[$tokenType] >= $tokenLimits[$tokenType]) {
+            return _("You have reached the limit for the number of tokens of this type.");
+        }
+
+        // Check for limit of all tokens combined.
+        // Skip this comparison if tokenLimitAll is set to 0.
         if ($tokenLimitAll != 0) {
             if ($this->utils->tokenCounts["all"] >= $tokenLimitAll) {
                 return _("You have reached the limit on the number of tokens.");
-            }
-        }
-
-        // Skip comparison if token limit is 0. That means there is no limit for this token specifically.
-        if ($tokenLimits[$tokenType] != 0) {
-            if (!in_array($tokenType, array_keys($this->utils->tokenCounts))) {
-                $this->utils->tokenCounts[$tokenType] = 0;
-            }
-
-            if ($this->utils->tokenCounts[$tokenType] >= $tokenLimits[$tokenType]) {
-                return _("You have reached the limit for the number of tokens of this type.");
             }
         }
 
