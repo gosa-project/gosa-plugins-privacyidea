@@ -306,8 +306,15 @@ class mfaAccount extends plugin
                         $tokens = $this->utils->getTokensOfUser($this->getUid(), $this->userRealm);
                         $activeTokenSerials = $this->utils->getActiveTokenSerials($tokens);
                         if (count(array_diff($activeTokenSerials, array($tokenSerial))) == 0) {
-                            // prevent user from locking himself out
-                            // TODO: Error message dialog here.
+                            // Prevent user from locking himself out
+                            msg_dialog::display(
+                                _("Unsupported action"),
+                                _("It is not supported to deactivated, revoke or remove your last token.") . "<br>" .
+                                _("Please add another token to ensure that you always have atleast one working " .
+                                  "token.") . "<br>" .
+                                $this->utils->pleaseTryAgainMsg()
+                            );
+
                             return $this->getMFAIntroTemplate();
                         }
 
@@ -358,7 +365,15 @@ class mfaAccount extends plugin
                         $tokens = $this->utils->getTokensOfUser($this->getUid(), $this->userRealm);
                         $activeTokenSerials = $this->utils->getActiveTokenSerials($tokens);
                         if (count(array_diff($activeTokenSerials, $mfaTokenSerials)) == 0) {
-                            // prevent user from locking himself out
+                            // Prevent user from locking himself out
+                            msg_dialog::display(
+                                _("Unsupported action"),
+                                _("It is not supported to deactivated, revoke or remove your last token.") . "<br>" .
+                                _("Please add another token to ensure that you always have atleast one working " .
+                                  "token.") . "<br>" .
+                                $this->utils->pleaseTryAgainMsg()
+                            );
+
                             return $this->getMFAIntroTemplate();
                         }
 
