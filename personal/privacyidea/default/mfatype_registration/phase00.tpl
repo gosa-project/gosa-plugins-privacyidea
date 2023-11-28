@@ -31,7 +31,9 @@
     <div class="row">
         <div class="input-field col s12">
             <label for="tokenDescription">{t}Description{/t}</label>
-            <input type="text" id="tokenDescription" name="tokenDescription" size="60" maxlength="60">
+            <input type="text" id="tokenDescription" name="tokenDescription" size="60" maxlength="60" required
+                oninvalid="this.setCustomValidity('{t}Empty descriptions are allowed but discouraged. They help you to identify your tokens later on. You can proceed now.{/t}')"
+                oninput="this.setCustomValidity('')">
             <span class="helper-text">
                 {t}Please enter a meaningful description allowing you to recognize the recovery key. This description may be edited later.{/t}
             </span>
@@ -43,5 +45,11 @@
     <input type="hidden" id="current_phase" name="current_phase" value="0">
 
     <button class="btn" formnovalidate type="submit">{t}Cancel{/t}</button>
-    <button class="btn primary" name="add_token" value="registration" type="submit">{t}Continue{/t}</button>
+    <button class="btn primary" name="add_token" value="registration" type="submit"
+        onclick="setTimeout(function() {literal} { {/literal}
+            document.getElementById('tokenDescription').removeAttribute('required');
+            document.getElementById('tokenDescription').setCustomValidity('');
+        }, 200);">
+        {t}Continue{/t}
+    </button>
 </div>
