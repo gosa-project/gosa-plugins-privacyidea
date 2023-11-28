@@ -178,6 +178,8 @@ class mfaAccount extends plugin
         /* Call parent execute */
         plugin::execute();
 
+        $this->utils->hasPiErrors = false;
+
         $this->uid = $this->getUid();
 
         if (!$this->is_account && $this->acl_is_writeable("")) {
@@ -723,6 +725,9 @@ class mfaAccount extends plugin
             $this->smarty->assign("activeTokenSerials", $this->utils->getActiveTokenSerials($tokens));
 
             $this->prepareSetupCards();
+
+            $this->smarty->assign('hasPiErrors', $this->utils->hasPiErrors);
+            $this->smarty->assign('plsTryAgainMsg', $this->utils->pleaseTryAgainMsg());
 
             $this->smarty->assign('tokenTypes', $this->allowedTokenTypes);
 

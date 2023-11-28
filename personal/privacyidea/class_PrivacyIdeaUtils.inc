@@ -44,6 +44,9 @@ class PrivacyIdeaUtils implements PILog
     /** @var array Token counts array ('all' => X, 'paper' => X, 'totp' => X...) */
     public $tokenCounts;
 
+    /** @var string Indicates if the communication with PI had some errors. */
+    public $hasPiErrors;
+
     /**
      * @var string $authToken The authentication token will be used with every API call to privacyIDEA.
      * https://privacyidea.readthedocs.io/en/latest/modules/api/auth.html
@@ -88,6 +91,8 @@ class PrivacyIdeaUtils implements PILog
             echo strip_tags("$message");
             echo "<br><br>";
         }
+
+        $this->hasPiErrors = true;
     }
 
     /**
