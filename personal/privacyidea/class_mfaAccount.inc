@@ -744,6 +744,8 @@ class mfaAccount extends plugin
     /**
      * Prepares Smarty to show the MFA confirmation page for destructive
      * actions, renders and returns it.
+     * @param string $mfaTokenAction
+     * @param array|string $mfaTokens
      * @return string Always returnes the MFA confirmation page template.
      */
     private function getMFAConfirmTemplate($mfaTokenAction, $mfaTokens)
