@@ -306,7 +306,7 @@ class mfaAccount extends plugin
                         $tokens = $this->utils->getTokensOfUser($this->getUid(), $this->userRealm);
                         $activeTokenSerials = $this->utils->getActiveTokenSerials($tokens);
                         if (count(array_diff($activeTokenSerials, array($tokenSerial))) == 0) {
-                            // Prevent user from locking himself out
+                            // Prevent users from locking themselves out
                             msg_dialog::display(
                                 _("Unsupported action"),
                                 _("It is not supported to deactivated, revoke or remove your last token.") . "<br>" .
@@ -365,7 +365,7 @@ class mfaAccount extends plugin
                         $tokens = $this->utils->getTokensOfUser($this->getUid(), $this->userRealm);
                         $activeTokenSerials = $this->utils->getActiveTokenSerials($tokens);
                         if (count(array_diff($activeTokenSerials, $mfaTokenSerials)) == 0) {
-                            // Prevent user from locking himself out
+                            // Prevent users from locking themselves out
                             msg_dialog::display(
                                 _("Unsupported action"),
                                 _("It is not supported to deactivated, revoke or remove your last token.") . "<br>" .
