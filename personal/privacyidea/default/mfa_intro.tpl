@@ -51,7 +51,7 @@
 <div class="row">
     <div class="col">
         <label>
-            <input name="mfaRequiredByRule" type="checkbox"{if $mfaRequiredByRule == "checked"} checked{/if}>
+            <input name="mfaRequiredByRule" type="checkbox"{if $mfaRequiredByRule == "checked"} checked{/if}/>
             <span>{t}Additional factors required by organizational policy.{/t}</span>
         </label>
     </div>
@@ -82,7 +82,7 @@
     <div class="input field col s12">
         <label>
             {render acl=$allowedTokenTypesACL}
-            <input type="checkbox" name="allowedTokenTypes[]" value="{$tokenType}"{if in_array($tokenType, $tokenTypes)} checked{/if}>
+            <input type="checkbox" name="allowedTokenTypes[]" value="{$tokenType}"{if in_array($tokenType, $tokenTypes)} checked{/if}/>
             {/render}
             <span>{$mfa_{$tokenType}_title}</span>
         </label>
@@ -104,6 +104,21 @@
 
 {if ($parent != "roletabs")}
 {if $manageTokensACL}
+<script>
+document.forms.mainform.addEventListener("submit", (e) => {
+    if (e.submitter.name === "add_token") {
+        for (let el of document.forms.mainform.querySelectorAll("input[type='checkbox']")) {
+            if (el.checked != (el.getAttribute("checked") !== null)) {
+                if (!confirm("{t}You have unsaved changes, are you sure you want to continue? All unsaved changes to this account will be lost.{/t}")) {
+                    e.preventDefault();
+                }
+                break;
+            }
+        }
+    }
+});
+</script>
+
 {render acl=$manageTokensACL}
 <hr class="divider">
 <h2>{t}Add new Multifactor Methods{/t}</h2>
