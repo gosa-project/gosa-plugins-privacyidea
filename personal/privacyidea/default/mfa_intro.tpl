@@ -408,7 +408,16 @@ document.forms.mainform.addEventListener("submit", (e) => {
         })();
     </script>
     {else}
-        <p>{t}Currently there are no multifactor methods associated.{/t}</p>
+        {if $hasPiErrors}
+            <div class="card-panel red lighten-4 red-text text-darken-4">
+                {t}We had trouble communicating with the PrivacyIDEA-backend server.{/t}<br>
+                {* Already translated string from backend. It says something
+                 * like try it again later or contact the sysadmin.*}
+                {$plsTryAgainMsg}
+            </div>
+        {else}
+            <p>{t}Currently there are no multifactor methods associated.{/t}</p>
+        {/if}
     {/if}
 {/render}
 {/if}
