@@ -309,8 +309,8 @@ class mfaAccount extends plugin
                             // Prevent users from locking themselves out
                             msg_dialog::display(
                                 _("Unsupported action"),
-                                _("It is not supported to deactivated, revoke or remove your last token.") . "<br>" .
-                                _("Please add another token to ensure that you always have atleast one working " .
+                                _("It is not supported to deactivate, revoke or remove your last token.") . "<br>" .
+                                _("Please add another token to ensure that you always have at least one working " .
                                   "token.") . "<br>" .
                                 $this->utils->pleaseTryAgainMsg()
                             );
@@ -368,8 +368,8 @@ class mfaAccount extends plugin
                             // Prevent users from locking themselves out
                             msg_dialog::display(
                                 _("Unsupported action"),
-                                _("It is not supported to deactivated, revoke or remove your last token.") . "<br>" .
-                                _("Please add another token to ensure that you always have atleast one working " .
+                                _("It is not supported to deactivate, revoke or remove your last token.") . "<br>" .
+                                _("Please add another token to ensure that you always have at least one working " .
                                   "token.") . "<br>" .
                                 $this->utils->pleaseTryAgainMsg()
                             );
