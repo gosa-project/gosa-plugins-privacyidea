@@ -69,21 +69,25 @@ class PrivacyIdeaUtils implements PILog
         $this->authRealm    = $this->getConfigStrValue("piServiceRealm");
 
         $this->pi = new PrivacyIDEA($_SERVER['HTTP_USER_AGENT'], $piServerUrl);
-        // $this->pi->logger = $this; // Needs $this->piDebug() and $this->piError().
+        $this->pi->logger = $this; // Needs $this->piDebug() and $this->piError().
     }
 
     public function piDebug($message)
     {
-        echo "piDebug (" . date("H:i:s") . "): ";
-        echo strip_tags("$message");
-        echo "<br><br>";
+        if ($this->ENABLE_DEBUG) {
+            echo "piDebug (" . date("H:i:s") . "): ";
+            echo strip_tags("$message");
+            echo "<br><br>";
+        }
     }
 
     public function piError($message)
     {
-        echo "piError (" . date("H:i:s") . "): ";
-        echo strip_tags("$message");
-        echo "<br><br>";
+        if ($this->ENABLE_DEBUG) {
+            echo "piError (" . date("H:i:s") . "): ";
+            echo strip_tags("$message");
+            echo "<br><br>";
+        }
     }
 
     /**
