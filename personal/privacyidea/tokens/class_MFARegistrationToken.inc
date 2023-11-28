@@ -99,6 +99,7 @@ class MFARegistrationToken extends MFATokenHelper implements MFAToken
         $requestAnswer = $this->utils->piSendRequest($params, array(), "POST", "/token/init");
 
         if (!$requestAnswer || !$requestAnswer["result"]["status"]) {
+            // TODO: Check if error message is even available.
             msg_dialog::display(
                 _("Internal error"),
                 _("Could not enroll recovery key (registration token) in privacyIDEA: ") . "<br>" .
