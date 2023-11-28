@@ -530,6 +530,9 @@ class mfaAccount extends plugin
             }
         }
 
+        /* Re-index the error, so index numbers always start with number 0 ... */
+        $this->allowedTokenTypes = array_values($this->allowedTokenTypes);
+
         $this->effectiveTokenTypes = array_unique(array_merge($this->allowedTokenTypes, $overrideTokenTypes));
     }
 
