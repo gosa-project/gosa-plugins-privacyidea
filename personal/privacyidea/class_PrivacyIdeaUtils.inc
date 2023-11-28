@@ -38,8 +38,8 @@ class PrivacyIdeaUtils implements PILog
     private config $config;
     private mfaAccount $mfaAccount;
     // TODO: Replace with GOsa's development mode.
-    // WARNING: Setting ENABLE_DEBUG_JS_CONSOLE=true leaks PI serviceAccount creds to the client (via JS console).
-    private bool $ENABLE_DEBUG_JS_CONSOLE = false;
+    // WARNING: Setting ENABLE_DEBUG=true leaks PI serviceAccount creds to the client (via JS console).
+    private bool $ENABLE_DEBUG = false;
 
     /** @var array Token counts array ('all' => X, 'paper' => X, 'totp' => X...) */
     public $tokenCounts;
@@ -640,8 +640,8 @@ class PrivacyIdeaUtils implements PILog
      */
     public function debugToJsConsole($data)
     {
-        // Don't print anything to js console, if ENABLE_DEBUG_JS_CONSOLE isn't 'true'.
-        if ($this->ENABLE_DEBUG_JS_CONSOLE !== true) {
+        // Don't print anything to js console, if ENABLE_DEBUG isn't 'true'.
+        if ($this->ENABLE_DEBUG !== true) {
             return;
         }
 
