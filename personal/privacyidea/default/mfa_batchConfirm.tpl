@@ -34,9 +34,8 @@
         {/foreach}
     </ul>
 {else}
-    <input type="hidden" name="mfaTokenAction" value="{$mfaTokenAction}">
+    <input type="hidden" name="mfaTokenAction[{$mfaTokenAction}]" value="{$tokenSerial}">
     {assign var="description" value="{$serialsTokens[$tokenSerial]['description']}"}
-    <input type="hidden" name="tokenSerial" value="{$tokenSerial}">
     <p><b>{if !empty($description)}{$description} ({$tokenSerial}){else}{$tokenSerial}{/if}</b></p>
 {/if}
 
