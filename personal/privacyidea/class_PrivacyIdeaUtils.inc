@@ -189,6 +189,9 @@ class PrivacyIdeaUtils implements PILog
                 _("Could not get authentification token from privacyIDEA backend server.") . "<br>" .
                 $this->pleaseTryAgainMsg()
             );
+            $this->authToken = "";
+            $this->hasPiErrors = true;
+            return false;
         }
 
         if (!empty($retString)) {
@@ -202,6 +205,7 @@ class PrivacyIdeaUtils implements PILog
                 $this->pleaseTryAgainMsg()
             );
             $this->authToken = "";
+            $this->hasPiErrors = true;
         }
 
         return false;
