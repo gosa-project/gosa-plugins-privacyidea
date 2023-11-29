@@ -45,7 +45,13 @@
         <div class="row">
             <div class="input-field col s12 xl6">
                 {render acl=$tokenDescriptionACL}
-                <input type="text" name="tokenDescription" value="{if strpos($tokenDescriptionACL, "r") !== false}{$token.description}{else}{t}not shown{/t}{/if}"{if !$editEnable} disabled{/if}>
+                <input type="text" name="tokenDescription"
+                    {if strpos($tokenDescriptionACL, "r") !== false}
+                        value="{if empty($token.description)}{t}(Empty){/t}{else}{$token.description}{/if}"
+                    {else}
+                        value="{t}not shown{/t}"
+                    {/if}
+                {if !$editEnable} disabled{/if}>
                 {/render}
                 <label for="tokenDescription">{t}Description{/t}</label>
             </div>
