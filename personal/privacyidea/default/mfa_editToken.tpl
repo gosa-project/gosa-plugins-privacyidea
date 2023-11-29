@@ -47,7 +47,7 @@
                 {render acl=$tokenDescriptionACL}
                 <input type="text" name="tokenDescription"
                     {if strpos($tokenDescriptionACL, "r") !== false}
-                        value="{if empty($token.description)}{t}(Empty){/t}{else}{$token.description}{/if}"
+                        value="{if empty($token.description)}{t}(empty){/t}{else}{$token.description}{/if}"
                     {else}
                         value="{t}not shown{/t}"
                     {/if}
