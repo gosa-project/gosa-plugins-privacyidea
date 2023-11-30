@@ -114,12 +114,13 @@ if (el.value.match(/^[0-9]/)) {
 {if $editEnable}
     <input type="hidden" id="editEnable" name="editEnable" value="yes">
 
-    <button class="btn" formnovalidate
-        type="submit">{t}Cancel{/t}
-    </button>
+
     <button class="btn primary"
         name="mfaTokenAction[mfaTokenSave]" value="{$token.serial}"
         type="submit">{t}Save{/t}
+    </button>
+    <button class="btn" formnovalidate style="order: -1;"
+        type="submit">{t}Cancel{/t}
     </button>
 {elseif $allowEdit}
     <button class="btn primary"
