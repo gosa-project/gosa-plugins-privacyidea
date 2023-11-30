@@ -44,15 +44,14 @@
         </div>
         <div class="row">
             <div class="input-field col s12 xl6">
-                {render acl=$tokenDescriptionACL}
                 <input type="text" name="tokenDescription"
                     {if strpos($tokenDescriptionACL, "r") !== false}
                         value="{if empty($token.description)}{t}(empty){/t}{else}{$token.description}{/if}"
                     {else}
                         value="{t}not shown{/t}"
                     {/if}
-                {if !$editEnable} disabled{/if}>
-                {/render}
+                    {if !$editEnable || !(strpos($tokenDescriptionACL, "w") !== false)} disabled{/if}
+                >
                 <label for="tokenDescription">{t}Description{/t}</label>
             </div>
         </div>
