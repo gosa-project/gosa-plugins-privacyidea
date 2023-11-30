@@ -108,11 +108,11 @@ if (el.value.match(/^[0-9]/)) {
 <input type="hidden" id="tokenSerial" name="tokenSerial" value="{$token.serial}">
 
 <div class="row">
-{render acl=$tokenDescriptionACL}
+{* If in the future more details can be edited, add ACLs here too, then. *}
+{$allowEdit = (strpos($tokenDescriptionACL, "w") !== false)}
+
 {if $editEnable}
     <input type="hidden" id="editEnable" name="editEnable" value="yes">
-    {* Remove 'add_token' from POST, so that mfaAccount doesn't think we are in a token setup anymore.
-     * Which means we return to the mfa intro page. *}
 
     <button class="btn" formnovalidate
         type="submit">{t}Cancel{/t}
@@ -121,11 +121,14 @@ if (el.value.match(/^[0-9]/)) {
         name="mfaTokenAction[mfaTokenSave]" value="{$token.serial}"
         type="submit">{t}Save{/t}
     </button>
-{else}
+{elseif $allowEdit}
     <button class="btn primary"
         name="mfaTokenAction[mfaTokenEdit]" value="{$token.serial}"
         type="submit">{t}Edit{/t}
     </button>
+{else}
+    <button class="btn" formnovalidate
+        type="submit">{t}Back{/t}
+    </button>
 {/if}
-{/render}
 </div>
