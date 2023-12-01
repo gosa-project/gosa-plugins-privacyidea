@@ -44,7 +44,7 @@
 <div class="card-panel clue lighten-4 blue-text text-darken-4">
     <p>{t escape=no 1=$mfaRecoveryKey}The recovery key value is: <b>%1</b>{/t}</p>
     <p><button class="txtonlybtn" name="add_token" value="registration" type="submit">
-        <span class="material-icons">file_download</span>{t}Download as PDF{/t}
+        <span class="material-icons">file_download</span> {t}Download as PDF{/t}
     </button></p>
 </div>
 
