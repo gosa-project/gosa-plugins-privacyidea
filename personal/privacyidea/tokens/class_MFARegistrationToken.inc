@@ -125,7 +125,7 @@ class MFARegistrationToken extends MFATokenHelper implements MFAToken
         $this->mfaRecoveryKey = $requestAnswer["detail"]["registrationcode"];
 
         $this->smarty->assign("tokenDescription", $this->tokenDescription);
-        $this->smarty->assign("mfaRecoveryKey", $this->mfaRecoveryKey);
+        $this->smarty->assign("mfaRecoveryKey", htmlspecialchars($this->mfaRecoveryKey));
 
         return true;
     }
