@@ -45,10 +45,15 @@
         <div class="row">
             <div class="input-field col s12 xl6">
                 <input type="text" name="tokenDescription"
+                    {* If in the future more details can be edited, copy this snippet here... *}
                     {if strpos($tokenDescriptionACL, "r") !== false}
-                        value="{if empty($token.description)}{t}(empty){/t}{else}{$token.description}{/if}"
+                        value="{if !$editEnable && empty($token.description)}{t}(empty){/t}{else}{$token.description}{/if}"
                     {else}
-                        value="{t}not shown{/t}"
+                        {if $editEnable}
+                            placeholder="{t}not shown but editable{/t}"
+                        {else}
+                            value="{t}not shown{/t}"
+                        {/if}
                     {/if}
                     {if !$editEnable || !(strpos($tokenDescriptionACL, "w") !== false)} disabled{/if}
                 >
