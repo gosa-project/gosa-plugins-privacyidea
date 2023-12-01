@@ -35,7 +35,7 @@
 }
 </style>
 
-<h2>{t}Recovery key added{/t}</h2>
+<h2>{t}Recovery Key added{/t}</h2>
 
 <div class="card-panel green lighten-4 green-text text-darken-4">
     {t escape=no 1=$tokenDescription}The recovery key <b>%1</b> was successfully added to this account and can now be used for logging in one time only.{/t}

@@ -19,7 +19,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *}
 
-<h2>{t}Add TAN list{/t}</h2>
+<h2>{t}Add TAN List{/t}</h2>
 
 <div class="section">
     <p>{t}Lists with transaction authentication number (TAN) are printed out and stored in a secure location. A TAN is a one-time password and a TAN from the list has to be entered on each login.{/t}</p>
@@ -32,7 +32,9 @@
     <div class="row">
         <div class="input-field col s12">
             <label for="tokenDescription">{t}Description{/t}</label>
-            <input type="text" id="tokenDescription" name="tokenDescription" size="60" maxlength="60">
+            <input type="text" id="tokenDescription" name="tokenDescription" size="60" maxlength="60" required
+                oninvalid="this.setCustomValidity('{t}Empty descriptions are allowed but discouraged. They help you to identify your tokens later on. You can proceed now.{/t}')"
+                oninput="this.setCustomValidity('')">
             <span class="helper-text">{t}Please enter a meaningful description allowing you to recognize the generated list. This description may be edited later.{/t}</span>
         </div>
     </div>
@@ -42,5 +44,11 @@
     <input type="hidden" id="current_phase" name="current_phase" value="0">
 
     <button class="btn" formnovalidate type="submit">{t}Cancel{/t}</button>
-    <button class="btn primary" name="add_token" value="paper" type="submit">{t}Continue{/t}</button>
+    <button class="btn primary" name="add_token" value="paper" type="submit"
+        onclick="setTimeout(function() {literal} { {/literal}
+            document.getElementById('tokenDescription').removeAttribute('required');
+            document.getElementById('tokenDescription').setCustomValidity('');
+        }, 200);">
+        {t}Continue{/t}
+    </button>
 </div>

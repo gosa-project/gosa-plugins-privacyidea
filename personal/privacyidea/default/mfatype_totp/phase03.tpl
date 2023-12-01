@@ -19,7 +19,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *}
 
-<h2>{t}Authentication app (TOTP) added{/t}</h2>
+<h2>{t}Authentication App (TOTP) added{/t}</h2>
 
 <div class="card-panel green lighten-4 green-text text-darken-4">
     {t escape=no 1=$tokenDescription}The authentication app <b>%1</b> was successfully added to this account and can now be used.{/t}

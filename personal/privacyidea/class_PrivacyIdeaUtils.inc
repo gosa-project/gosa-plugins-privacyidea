@@ -38,10 +38,14 @@ class PrivacyIdeaUtils implements PILog
     private config $config;
     private mfaAccount $mfaAccount;
     // TODO: Replace with GOsa's development mode.
-    private bool $ENABLE_DEBUG_JS_CONSOLE = true;
+    // WARNING: Setting ENABLE_DEBUG=true leaks PI serviceAccount creds to the client (via JS console).
+    private bool $ENABLE_DEBUG = false;
 
     /** @var array Token counts array ('all' => X, 'paper' => X, 'totp' => X...) */
     public $tokenCounts;
+
+    /** @var string Indicates if the communication with PI had some errors. */
+    public $hasPiErrors;
 
     /**
      * @var string $authToken The authentication token will be used with every API call to privacyIDEA.
@@ -68,21 +72,96 @@ class PrivacyIdeaUtils implements PILog
         $this->authRealm    = $this->getConfigStrValue("piServiceRealm");
 
         $this->pi = new PrivacyIDEA($_SERVER['HTTP_USER_AGENT'], $piServerUrl);
-        // $this->pi->logger = $this; // Needs $this->piDebug() and $this->piError().
+        $this->pi->logger = $this; // Needs $this->piDebug() and $this->piError().
     }
 
     public function piDebug($message)
     {
-        echo "piDebug (" . date("H:i:s") . "): ";
-        echo strip_tags("$message");
-        echo "<br><br>";
+        if ($this->ENABLE_DEBUG) {
+            echo "piDebug (" . date("H:i:s") . "): ";
+            echo strip_tags("$message");
+            echo "<br><br>";
+        }
     }
 
     public function piError($message)
     {
-        echo "piError (" . date("H:i:s") . "): ";
-        echo strip_tags("$message");
-        echo "<br><br>";
+        if ($this->ENABLE_DEBUG) {
+            echo "piError (" . date("H:i:s") . "): ";
+            echo strip_tags("$message");
+            echo "<br><br>";
+        }
+
+        $this->hasPiErrors = true;
+    }
+
+    /**
+     * Find key recursivly in array (Adapted from GOsa core)
+     *
+     * @param array $haystack the array which will be searched
+     * @param string $needle search string
+     * @return mixed result of key search
+     */
+    public function findRecursive($haystack, $needle): mixed
+    {
+        assert(is_array($haystack));
+        assert(is_string($needle));
+
+        $iterator = new RecursiveArrayIterator($haystack);
+        $recursive = new RecursiveIteratorIterator(
+            $iterator,
+            RecursiveIteratorIterator::SELF_FIRST
+        );
+        foreach ($recursive as $key => $value) {
+            if ($key === $needle) {
+                return $value;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * This function was adapted from privacyidea-php-client.
+     * This implementation checks if serviceAccount is an admin.
+     *
+     * Retrieves an auth token from the server using the service account.
+     * An auth token is required for some requests to privacyIDEA.
+     *
+     * @return string the auth token or empty string if the response did not
+     *                contain a token or no service account is configured.
+     * @throws PIBadRequestException if an error occurs during the request
+     */
+    public function getAuthToken()
+    {
+        if (!$this->pi->serviceAccountAvailable()) {
+            $this->pi->errorLog("Cannot retrieve auth token without service account!");
+            return "";
+        }
+
+        $params = array(
+            "username" => $this->pi->serviceAccountName,
+            "password" => $this->pi->serviceAccountPass
+        );
+
+        if ($this->pi->serviceAccountRealm != null && $this->pi->serviceAccountRealm != "") {
+            $params["realm"] = $this->pi->serviceAccountRealm;
+        }
+
+        $response = json_decode($this->pi->sendRequest($params, array(''), 'POST', '/auth'), true);
+
+        if (isset($response['result']['value']['token']) && !empty($response['result']['value']['token'])) {
+            // Ensure we have an admin account
+            if ($this->findRecursive((array)$response, "role") != 'admin') {
+                $this->pi->debugLog("auth token was of a user without admin role.");
+                return "";
+            }
+
+            return $response['result']['value']["token"];
+        }
+
+        $this->pi->debugLog("/auth response did not contain a auth token.");
+        return "";
     }
 
     /**
@@ -101,13 +180,18 @@ class PrivacyIdeaUtils implements PILog
 
         $retString = "";
         try {
-            $retString = $this->pi->getAuthToken();
+            // TODO: Use privacyidea-php-client's implementation instead of our own, if they fixed check if
+            // serviceAccount is admin upstream.
+            $retString = $this->getAuthToken();
         } catch (PIBadRequestException $e) {
             msg_dialog::display(
                 _("Internal error"),
                 _("Could not get authentification token from privacyIDEA backend server.") . "<br>" .
                 $this->pleaseTryAgainMsg()
             );
+            $this->authToken = "";
+            $this->hasPiErrors = true;
+            return false;
         }
 
         if (!empty($retString)) {
@@ -121,6 +205,7 @@ class PrivacyIdeaUtils implements PILog
                 $this->pleaseTryAgainMsg()
             );
             $this->authToken = "";
+            $this->hasPiErrors = true;
         }
 
         return false;
@@ -435,9 +520,10 @@ class PrivacyIdeaUtils implements PILog
         }
 
         $params = array(
-            "user"   => $user,
-            "realm"  => $userRealm,
-            "sortby" => "count", // TODO: Sort somehow by last use.
+            "user"     => $user,
+            "realm"    => $userRealm,
+            "sortby"   => "count", // TODO: Sort somehow by last use.
+            "pagesize" => 50,
         );
 
         if (isset($tokenSerial) && !empty($tokenSerial)) {
@@ -453,6 +539,11 @@ class PrivacyIdeaUtils implements PILog
             $returnArray = $requestAnswer["result"]["value"]["tokens"];
             // $returnArray = $this->mapTokenTypes($returnArray);
             $returnArray = $this->prepareTokensForUI($returnArray);
+
+            if ($requestAnswer["result"]["value"]["count"] != count($returnArray)) {
+                // There are more tokens hidden behind paging system. (Unlikely to happen since we have token limits)
+                // TODO: Show user that more tokens are available.
+            }
 
             if (!isset($tokenSerial)) {
                 // Cache tokens countings.
@@ -562,8 +653,8 @@ class PrivacyIdeaUtils implements PILog
      */
     public function debugToJsConsole($data)
     {
-        // Don't print anything to js console, if ENABLE_DEBUG_JS_CONSOLE isn't 'true'.
-        if ($this->ENABLE_DEBUG_JS_CONSOLE !== true) {
+        // Don't print anything to js console, if ENABLE_DEBUG isn't 'true'.
+        if ($this->ENABLE_DEBUG !== true) {
             return;
         }
 

@@ -44,9 +44,19 @@
         </div>
         <div class="row">
             <div class="input-field col s12 xl6">
-                {render acl=$tokenDescriptionACL}
-                <input type="text" name="tokenDescription" value="{if strpos($tokenDescriptionACL, "r") !== false}{$token.description}{else}{t}not shown{/t}{/if}"{if !$editEnable} disabled{/if}>
-                {/render}
+                <input type="text" name="tokenDescription"
+                    {* If in the future more details can be edited, copy this snippet here... *}
+                    {if strpos($tokenDescriptionACL, "r") !== false}
+                        value="{if !$editEnable && empty($token.description)}{t}(empty){/t}{else}{$token.description}{/if}"
+                    {else}
+                        {if $editEnable}
+                            placeholder="{t}not shown but editable{/t}"
+                        {else}
+                            value="{t}not shown{/t}"
+                        {/if}
+                    {/if}
+                    {if !$editEnable || !(strpos($tokenDescriptionACL, "w") !== false)} disabled{/if}
+                >
                 <label for="tokenDescription">{t}Description{/t}</label>
             </div>
         </div>
@@ -103,24 +113,28 @@ if (el.value.match(/^[0-9]/)) {
 <input type="hidden" id="tokenSerial" name="tokenSerial" value="{$token.serial}">
 
 <div class="row">
-{render acl=$tokenDescriptionACL}
+{* If in the future more details can be edited, add ACLs here too, then. *}
+{$allowEdit = (strpos($tokenDescriptionACL, "w") !== false)}
+
 {if $editEnable}
     <input type="hidden" id="editEnable" name="editEnable" value="yes">
-    {* Remove 'add_token' from POST, so that mfaAccount doesn't think we are in a token setup anymore.
-     * Which means we return to the mfa intro page. *}
 
-    <button class="btn" formnovalidate
-        type="submit">{t}Cancel{/t}
-    </button>
+
     <button class="btn primary"
         name="mfaTokenAction[mfaTokenSave]" value="{$token.serial}"
         type="submit">{t}Save{/t}
     </button>
-{else}
+    <button class="btn" formnovalidate style="order: -1;"
+        type="submit">{t}Cancel{/t}
+    </button>
+{elseif $allowEdit}
     <button class="btn primary"
         name="mfaTokenAction[mfaTokenEdit]" value="{$token.serial}"
         type="submit">{t}Edit{/t}
     </button>
+{else}
+    <button class="btn" formnovalidate
+        type="submit">{t}Back{/t}
+    </button>
 {/if}
-{/render}
 </div>

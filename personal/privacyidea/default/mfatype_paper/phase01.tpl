@@ -19,7 +19,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *}
 
-<h2>{t}Print TAN list{/t}</h2>
+<h2>{t}Print TAN List{/t}</h2>
 
 <div class="section">
     <p>{t escape=no 1=$tokenDescription}Please print the TAN list <b>%1</b>, one TAN from the list will be used in the next step to verify the list.{/t}</p>

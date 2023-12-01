@@ -25,7 +25,7 @@
 {$mfa_webauthn_icon=usb}
 
 <fieldset style="border: none; padding: 0; margin: 0;" {if !$userExists}disabled{/if}>
-<h2>{t}Multifactor authentication requirements{/t}</h2>
+<h2>{t}Multifactor Authentication Requirements{/t}</h2>
 <div class="row">
 {if !$mfaRequiredByRuleACL && !$mfaRequiredByUserACL && !$allowedTokenTypesACL && !$manageTokensACL}
     <p>{t}Insufficient permissions for viewing or editing this user's multifactor authentication properties.{/t}</p>
@@ -51,7 +51,7 @@
 <div class="row">
     <div class="col">
         <label>
-            <input name="mfaRequiredByRule" type="checkbox"{if $mfaRequiredByRule == "checked"} checked{/if}>
+            <input name="mfaRequiredByRule" type="checkbox"{if $mfaRequiredByRule == "checked"} checked{/if}/>
             <span>{t}Additional factors required by organizational policy.{/t}</span>
         </label>
     </div>
@@ -76,13 +76,13 @@
 {/if}
 
 {if $allowedTokenTypesACL}
-<h2>{t}Allowed factors{/t}</h2>
+<h2>{t}Allowed Multifactor Methods{/t}</h2>
 {foreach $allTokenTypes as $tokenType}
 <div class="row">
     <div class="input field col s12">
         <label>
             {render acl=$allowedTokenTypesACL}
-            <input type="checkbox" name="allowedTokenTypes[]" value="{$tokenType}"{if in_array($tokenType, $tokenTypes)} checked{/if}>
+            <input type="checkbox" name="allowedTokenTypes[]" value="{$tokenType}"{if in_array($tokenType, $tokenTypes)} checked{/if}/>
             {/render}
             <span>{$mfa_{$tokenType}_title}</span>
         </label>
@@ -104,9 +104,24 @@
 
 {if ($parent != "roletabs")}
 {if $manageTokensACL}
+<script>
+document.forms.mainform.addEventListener("submit", (e) => {
+    if (e.submitter.name === "add_token") {
+        for (let el of document.forms.mainform.querySelectorAll("input[type='checkbox']")) {
+            if (el.checked != (el.getAttribute("checked") !== null)) {
+                if (!confirm("{t}You have unsaved changes, are you sure you want to continue? All unsaved changes to this account will be lost.{/t}")) {
+                    e.preventDefault();
+                }
+                break;
+            }
+        }
+    }
+});
+</script>
+
 {render acl=$manageTokensACL}
 <hr class="divider">
-<h2>{t}Add new multifactor token{/t}</h2>
+<h2>{t}Add new Multifactor Methods{/t}</h2>
 {if count($effectiveTokenTypes) > 0}
     <div class="row">
         <p>
@@ -191,7 +206,7 @@
 </style>
 
 <hr class="divider">
-<h2>{t}Associated multifactor methods{/t}</h2>
+<h2>{t}Associated Multifactor Methods{/t}</h2>
     {if count($tokens) > 0}
     <div class="row">
         <div class="col s2">
@@ -320,80 +335,89 @@
         </table>
         </div>
     </div>
-<script>
-(() => {
-function updateMfaBatchOperation()
-{
-    document.querySelector("#mfaBatchOperation").disabled =
-        document.querySelectorAll("input[name='mfaTokenSerials[]']:checked").length === 0;
-}
+    <script>
+        (() => {
+        function updateMfaBatchOperation()
+        {
+            document.querySelector("#mfaBatchOperation").disabled =
+                document.querySelectorAll("input[name='mfaTokenSerials[]']:checked").length === 0;
+        }
 
-function isTokenActionAllowed(action, tokenSerials) {
-    switch (action) {
-    case "mfaTokenDeactivate": // FALLTHROUGH
-    case "mfaTokenRevoke":     // FALLTHROUGH
-    case "mfaTokenRemove":
-        let activeTokenCount = ACTIVE_TOKEN_SERIALS.size;
-        for (tokenSerial of tokenSerials) {
-            if (ACTIVE_TOKEN_SERIALS.has(tokenSerial)) {
-                activeTokenCount--;
+        function isTokenActionAllowed(action, tokenSerials) {
+            switch (action) {
+            case "mfaTokenDeactivate": // FALLTHROUGH
+            case "mfaTokenRevoke":     // FALLTHROUGH
+            case "mfaTokenRemove":
+                let activeTokenCount = ACTIVE_TOKEN_SERIALS.size;
+                for (tokenSerial of tokenSerials) {
+                    if (ACTIVE_TOKEN_SERIALS.has(tokenSerial)) {
+                        activeTokenCount--;
+                    }
+                }
+                return activeTokenCount > 0;
+            default:
+                return true;
             }
         }
-        return activeTokenCount > 0;
-    default:
-        return true;
-    }
-}
 
-document.querySelector("#mfaTokenList").addEventListener("change", (e) => {
-    if (e.target.id === "mfaTokensSelectAll") {
-        for (el of document.querySelectorAll("input[name='mfaTokenSerials[]']")) {
-            el.checked = e.target.checked;
+        document.querySelector("#mfaTokenList").addEventListener("change", (e) => {
+            if (e.target.id === "mfaTokensSelectAll") {
+                for (el of document.querySelectorAll("input[name='mfaTokenSerials[]']")) {
+                    el.checked = e.target.checked;
+                }
+            } else if (e.target.name === "mfaTokenSerials[]") {
+                document.querySelector("#mfaTokensSelectAll").checked = false;
+            }
+            updateMfaBatchOperation();
+        });
+
+        document.querySelector("#mfaBatchOperation").addEventListener("change", (e) => {
+            let data = new FormData(document.forms.mainform);
+            let tokenSerials = new Set(data.getAll("mfaTokenSerials[]"));
+            if (!isTokenActionAllowed(e.target.value, tokenSerials)) {
+                document.querySelector("#mfaTokenBatchAction").value = "";
+                alert("{t}At least one token needs to remain active.{/t}");
+                return;
+            }
+
+            e.target.form.submit();
+        });
+
+        document.forms.mainform.addEventListener("submit", (e) => {
+            let data = new FormData(document.forms.mainform);
+            let tokenSerials = new Set([data.get("tokenSerial")]);
+            if (e.submitter.name === "mfaTokenAction" && !isTokenActionAllowed(e.submitter.value, tokenSerials)) {
+                e.preventDefault();
+                alert("{t}At least one token needs to remain active.{/t}");
+                return;
+            }
+        });
+
+        const ACTIVE_TOKEN_SERIALS = new Set([
+        {foreach $activeTokenSerials as $tokenSerial}
+            "{$tokenSerial}",
+        {/foreach}
+        ]);
+
+        updateMfaBatchOperation();
+
+        for (let el of document.querySelectorAll(".tokenLastUsed")) {
+            const d = new Date(el.dateTime);
+            el.textContent = d.toLocaleString();
         }
-    } else if (e.target.name === "mfaTokenSerials[]") {
-        document.querySelector("#mfaTokensSelectAll").checked = false;
-    }
-    updateMfaBatchOperation();
-});
-
-document.querySelector("#mfaBatchOperation").addEventListener("change", (e) => {
-    let data = new FormData(document.forms.mainform);
-    let tokenSerials = new Set(data.getAll("mfaTokenSerials[]"));
-    if (!isTokenActionAllowed(e.target.value, tokenSerials)) {
-        document.querySelector("#mfaTokenBatchAction").value = "";
-        alert("{t}At least one token needs to remain active.{/t}");
-        return;
-    }
-
-    e.target.form.submit();
-});
-
-document.forms.mainform.addEventListener("submit", (e) => {
-    let data = new FormData(document.forms.mainform);
-    let tokenSerials = new Set([data.get("tokenSerial")]);
-    if (e.submitter.name === "mfaTokenAction" && !isTokenActionAllowed(e.submitter.value, tokenSerials)) {
-        e.preventDefault();
-        alert("{t}At least one token needs to remain active.{/t}");
-        return;
-    }
-});
-
-const ACTIVE_TOKEN_SERIALS = new Set([
-{foreach $activeTokenSerials as $tokenSerial}
-    "{$tokenSerial}",
-{/foreach}
-]);
-
-updateMfaBatchOperation();
-
-for (let el of document.querySelectorAll(".tokenLastUsed")) {
-    const d = new Date(el.dateTime);
-    el.textContent = d.toLocaleString();
-}
-})();
-</script>
+        })();
+    </script>
     {else}
-        <p>{t}Currently there are no multifactor methods associated.{/t}</p>
+        {if $hasPiErrors}
+            <div class="card-panel red lighten-4 red-text text-darken-4">
+                {t}We had trouble communicating with the privacyIDEA-backend server.{/t}<br>
+                {* Already translated string from backend. It says something
+                 * like try it again later or contact the sysadmin.*}
+                {$plsTryAgainMsg}
+            </div>
+        {else}
+            <p>{t}Currently there are no multifactor methods associated.{/t}</p>
+        {/if}
     {/if}
 {/render}
 {/if}

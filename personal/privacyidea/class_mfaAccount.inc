@@ -178,6 +178,8 @@ class mfaAccount extends plugin
         /* Call parent execute */
         plugin::execute();
 
+        $this->utils->hasPiErrors = false;
+
         $this->uid = $this->getUid();
 
         if (!$this->is_account && $this->acl_is_writeable("")) {
@@ -306,8 +308,15 @@ class mfaAccount extends plugin
                         $tokens = $this->utils->getTokensOfUser($this->getUid(), $this->userRealm);
                         $activeTokenSerials = $this->utils->getActiveTokenSerials($tokens);
                         if (count(array_diff($activeTokenSerials, array($tokenSerial))) == 0) {
-                            // prevent user from locking himself out
-                            // TODO: Error message dialog here.
+                            // Prevent users from locking themselves out
+                            msg_dialog::display(
+                                _("Unsupported action"),
+                                _("It is not supported to deactivate, revoke or remove your last token.") . "<br>" .
+                                _("Please add another token to ensure that you always have at least one working " .
+                                  "token.") . "<br>" .
+                                $this->utils->pleaseTryAgainMsg()
+                            );
+
                             return $this->getMFAIntroTemplate();
                         }
 
@@ -358,7 +367,15 @@ class mfaAccount extends plugin
                         $tokens = $this->utils->getTokensOfUser($this->getUid(), $this->userRealm);
                         $activeTokenSerials = $this->utils->getActiveTokenSerials($tokens);
                         if (count(array_diff($activeTokenSerials, $mfaTokenSerials)) == 0) {
-                            // prevent user from locking himself out
+                            // Prevent users from locking themselves out
+                            msg_dialog::display(
+                                _("Unsupported action"),
+                                _("It is not supported to deactivate, revoke or remove your last token.") . "<br>" .
+                                _("Please add another token to ensure that you always have at least one working " .
+                                  "token.") . "<br>" .
+                                $this->utils->pleaseTryAgainMsg()
+                            );
+
                             return $this->getMFAIntroTemplate();
                         }
 
@@ -456,6 +473,10 @@ class mfaAccount extends plugin
                 $this->mfaRequired = array_diff($this->mfaRequired, array("by_user"));
             }
         }
+
+        /* Re-index the error, so index numbers always start with number 0 ... */
+        $this->mfaRequired = array_values($this->mfaRequired);
+
     }
 
     /**
@@ -510,6 +531,9 @@ class mfaAccount extends plugin
                 $overrideTokenTypes[] = $tokenType;
             }
         }
+
+        /* Re-index the error, so index numbers always start with number 0 ... */
+        $this->allowedTokenTypes = array_values($this->allowedTokenTypes);
 
         $this->effectiveTokenTypes = array_unique(array_merge($this->allowedTokenTypes, $overrideTokenTypes));
     }
@@ -702,6 +726,9 @@ class mfaAccount extends plugin
 
             $this->prepareSetupCards();
 
+            $this->smarty->assign('hasPiErrors', $this->utils->hasPiErrors);
+            $this->smarty->assign('plsTryAgainMsg', $this->utils->pleaseTryAgainMsg());
+
             $this->smarty->assign('tokenTypes', $this->allowedTokenTypes);
 
             $showWarningNoTokenRegistered = !empty($this->mfaRequired) && empty($tokens);
@@ -722,6 +749,8 @@ class mfaAccount extends plugin
     /**
      * Prepares Smarty to show the MFA confirmation page for destructive
      * actions, renders and returns it.
+     * @param string $mfaTokenAction
+     * @param array|string $mfaTokens
      * @return string Always returnes the MFA confirmation page template.
      */
     private function getMFAConfirmTemplate($mfaTokenAction, $mfaTokens)
@@ -729,6 +758,8 @@ class mfaAccount extends plugin
         assert((is_array($mfaTokens) && array_is_list($mfaTokens)) || is_string($mfaTokens));
 
         $isBatch = is_array($mfaTokens);
+        $this->smarty->assign("isBatch", $isBatch);
+
         $tokenCount = $isBatch ? count($mfaTokens) : 1;
 
         $this->smarty->assign($isBatch ? "mfaTokenBatchAction" : "mfaTokenAction", $mfaTokenAction);
@@ -768,6 +799,10 @@ class mfaAccount extends plugin
     /** @return string The uid of the current user. */
     public function getUid()
     {
+        if (isset($this->uid) && $this->uid) {
+            return $this->uid;
+        }
+
         if (isset($this->attrs["uid"][0])) {
             return $this->attrs["uid"][0];
         }
@@ -794,9 +829,8 @@ class mfaAccount extends plugin
             $this->updateAttrsMfaRequired($mfaRequiredByRule, $mfaRequiredByUser);
 
             if ($this->acl_is_writeable("allowedTokenTypes")) {
-                if (isset($_POST['allowedTokenTypes']) && is_array($_POST['allowedTokenTypes'])) {
-                    $this->updateAttrsAllowedTokenTypes($_POST['allowedTokenTypes']);
-                }
+                $allowedTokenTypes = @is_array($_POST['allowedTokenTypes']) ? $_POST['allowedTokenTypes'] : array();
+                $this->updateAttrsAllowedTokenTypes($allowedTokenTypes);
             }
 
             new log(
