@@ -222,6 +222,10 @@ class MFARegistrationToken extends MFATokenHelper implements MFAToken
 
         $address = $this->buildAddress($attributes);
 
+        $sn            = isset($attributes["sn"][0])            ? trim($attributes["sn"][0])            : "";
+        $givenName     = isset($attributes["givenName"][0])     ? trim($attributes["givenName"][0])     : "";
+        $academicTitle = isset($attributes["academicTitle"][0]) ? trim($attributes["academicTitle"][0]) : "";
+
         $infoPage = new RecoveryKeyPDF();
         $infoPage->RecoveryKeyPDF(
             $sn,
