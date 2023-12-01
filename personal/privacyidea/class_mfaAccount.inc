@@ -799,6 +799,10 @@ class mfaAccount extends plugin
     /** @return string The uid of the current user. */
     public function getUid()
     {
+        if (isset($this->uid) && $this->uid) {
+            return $this->uid;
+        }
+
         if (isset($this->attrs["uid"][0])) {
             return $this->attrs["uid"][0];
         }
