@@ -183,7 +183,7 @@
     public function Salutation($sn, $givenname, $academictitle)
     {
         $greeter = $this->PersonNameAndTitle($sn, $givenname, $academictitle);
-        return sprintf(_("Dear %s"), $greeter);
+        return sprintf(_("Greetings %s"), $greeter);
     }
 
 }
