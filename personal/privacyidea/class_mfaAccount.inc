@@ -90,8 +90,8 @@ class mfaAccount extends plugin
             $this->ldapinfo = [];
         }
 
-        $this->allowedTokenTypes = $this->attrs['allowedTokenTypes'];
-        $this->mfaRequired       = $this->attrs['mfaRequired'];
+        $this->allowedTokenTypes = $this->attrs['allowedTokenTypes'] ?? array();
+        $this->mfaRequired       = $this->attrs['mfaRequired'] ?? array();
 
         $this->effectiveTokenTypes = [];
 
