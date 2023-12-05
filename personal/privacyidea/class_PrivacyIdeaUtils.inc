@@ -59,6 +59,9 @@ class PrivacyIdeaUtils implements PILog
     /** @var string */
     private $authRealm;
 
+    /** @var string Version number of privacyIDEA server - gets set via retrievePiServerVersion(). */
+    public $piServerVersion;
+
     /** @param mfaAccount $mfaAccount MFA Account class (likely parent) */
     public function __construct(&$mfaAccount)
     {
@@ -119,6 +122,48 @@ class PrivacyIdeaUtils implements PILog
         }
 
         return false;
+    }
+
+    /**
+     * Sets $this->piServerVersion to version number of privacyIDEA server.
+     */
+    public function retrievePiServerVersion()
+    {
+        // ASSUME WE ARE ALREADY AUTHENTICATED.
+        assert(!empty($this->authToken));
+
+        // Call /token/init again to enroll/verify token.
+        $resultArray = $this->piSendRequest(array(), array(), "GET", "/system/versionnumber");
+
+        if (!isset($resultArray["versionnumber"]) || empty($resultArray["versionnumber"])) {
+            new log(
+                "modify",
+                "users/" . get_class($this),
+                $this->mfaAccount->dn,
+                array(),
+                _("Couldn't retrieve version number of privacyIDEA server. Defaulting to legacy API scheme.")
+            );
+            return;
+        }
+
+        $this->piServerVersion = $resultArray["versionnumber"];
+    }
+
+    /**
+     * Wrapper for version_compare() to check $version against $this->piServerVersion.
+     * @param string $version Always second parameter to version_compare().
+     * @param string|null $operator [optional] If you specify the second optional operator argument,
+     *     you can test for a particular relationship. For possible operators see version_compare().
+     * @return int|bool|null See version_compare(). null means $piServerVersion couldn't be retrieved. Please fall back
+     *     to legacy API scheme in this case.
+     */
+    public function piServerVersionCompare($version, $operator = null)
+    {
+        assert(is_string($version) && !empty($version));
+        if (!isset($this->piServerVersion) || empty($this->piServerVersion)) {
+            return null;
+        }
+        return version_compare($this->piServerVersion, $version, $operator);
     }
 
     /**
@@ -196,6 +241,8 @@ class PrivacyIdeaUtils implements PILog
 
         if (!empty($retString)) {
             $this->authToken = $retString;
+            $this->retrievePiServerVersion();
+
             return true;
         } else {
             msg_dialog::display(
