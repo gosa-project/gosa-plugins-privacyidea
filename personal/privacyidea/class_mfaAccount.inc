@@ -579,7 +579,21 @@ class mfaAccount extends plugin
                 $params["serial"] = $tokenSerial;
                 $params["description"] = $tokenDescription;
 
-                $this->utils->piSendRequest($params, array(), "POST", "/token/description");
+                /*
+                 * /token/description requires that you have the admin.setdescription policy set.
+                 * However, this policy is only available as an admin policy from PI 3.9; previously it was only
+                 * available as a user policy: https://github.com/privacyidea/privacyidea/issues/3609
+                 * In order for the plugin to work for PI versions before 3.9, the /token/set API must be used,
+                 * which responds to the admin.set policy, which can also be set with 3.8.
+                 * See internal discussion at (login-protected):
+                 * https://gitlab.gonicus.de/uni-bonn/unibonn-gosa_v2-8/gosa_plugin_privacyidea/-/issues/15
+                 */
+                if ($this->utils->piServerVersionCompare("3.8.1", "gt") === true) {
+                    $this->utils->piSendRequest($params, array(), "POST", "/token/description");
+                } else {
+                    $this->utils->piSendRequest($params, array(), "POST", "/token/set");
+                }
+
                 new log(
                     "modify",
                     "users/" . get_class($this),
