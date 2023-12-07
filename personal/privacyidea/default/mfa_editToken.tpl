@@ -101,11 +101,30 @@
 </div>
 
 <script>
+function toLocaleStringSupportsLocales() {
+    return (
+        typeof Intl === "object" &&
+        !!Intl &&
+        typeof Intl.DateTimeFormat === "function"
+    );
+}
+
 (() => {
 const el = document.querySelector("#tokenLastUsed");
 if (el.value.match(/^[0-9]/)) {
     const d = new Date(el.value);
-    el.value = d.toLocaleString();
+    if (toLocaleStringSupportsLocales()) {
+        el.textContent = d.toLocaleString("default", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+        });
+    } else {
+        el.textContent = d.toLocaleString();
+    }
 }
 })();
 </script>
