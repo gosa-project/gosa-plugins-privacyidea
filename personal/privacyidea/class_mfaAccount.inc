@@ -474,9 +474,8 @@ class mfaAccount extends plugin
             }
         }
 
-        /* Re-index the error, so index numbers always start with number 0 ... */
+        // Re-index the array, so index numbers always start with number 0.
         $this->mfaRequired = array_values($this->mfaRequired);
-
     }
 
     /**
@@ -512,6 +511,9 @@ class mfaAccount extends plugin
 
         $this->allowedTokenTypes = array_unique($this->allowedTokenTypes);
 
+        // Re-index the array, so index numbers always start with number 0.
+        $this->allowedTokenTypes = array_values($this->allowedTokenTypes);
+
         /*
          * Determine the effectively allowed token types which is the union of
          * types allowed via the LDAP attribute allowedTokenTypes and those
@@ -531,9 +533,6 @@ class mfaAccount extends plugin
                 $overrideTokenTypes[] = $tokenType;
             }
         }
-
-        /* Re-index the error, so index numbers always start with number 0 ... */
-        $this->allowedTokenTypes = array_values($this->allowedTokenTypes);
 
         $this->effectiveTokenTypes = array_unique(array_merge($this->allowedTokenTypes, $overrideTokenTypes));
     }
