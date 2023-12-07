@@ -308,13 +308,13 @@ document.forms.mainform.addEventListener("submit", (e) => {
                         {if $token.active}
                             {render acl=$tokenDeactivationACL}
                             <button class="txtonlybtn" type="submit" name="mfaTokenAction[mfaTokenDeactivate]" value=_{$token.serial}" title="{t}Deactivate{/t}">
-                                <span class="material-icons">lock</span>
+                                <span class="material-icons">lock_open</span>
                             </button>
                             {/render}
                         {else}
                             {render acl=$tokenActivationACL}
                             <button class="txtonlybtn" type="submit" name="mfaTokenAction[mfaTokenActivate]" value="{$token.serial}" title="{t}Activate{/t}">
-                                <span class="material-icons">lock_open</span>
+                                <span class="material-icons">lock</span>
                             </button>
                             {/render}
                         {/if}
