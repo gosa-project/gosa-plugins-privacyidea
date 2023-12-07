@@ -132,7 +132,6 @@ class PrivacyIdeaUtils implements PILog
         // ASSUME WE ARE ALREADY AUTHENTICATED.
         assert(!empty($this->authToken));
 
-        // Call /token/init again to enroll/verify token.
         $resultArray = $this->piSendRequest(array(), array(), "GET", "/system/versionnumber");
 
         if (!isset($resultArray["versionnumber"]) || empty($resultArray["versionnumber"])) {
