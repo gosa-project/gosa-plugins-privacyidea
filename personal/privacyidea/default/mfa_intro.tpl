@@ -293,7 +293,7 @@ document.forms.mainform.addEventListener("submit", (e) => {
                             {/if}
                         </td>
                         <td>{if strpos($tokenStatusACL, "r") !== false}{$token.status}{else}{t}not shown{/t}{/if}</td>
-                        <td>{if strpos($tokenFailCountACL, "r") !== false}{$token.failcount}{else}{t}not shown{/t}{/if}/{$token.maxfail}</td>
+                        <td {if $token.revoked}class="line-through"{/if}>{if strpos($tokenFailCountACL, "r") !== false}{$token.failcount}{else}{t}not shown{/t}{/if}/{$token.maxfail}</td>
                         <td>
                             {render acl=$tokenDescriptionACL}
                             <button class="txtonlybtn" type="submit" name="mfaTokenAction[mfaTokenEdit]" value="{$token.serial}" title="{t}Edit{/t}">
