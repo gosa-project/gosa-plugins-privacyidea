@@ -901,17 +901,13 @@ class mfaAccount extends plugin
         // Call parents save to prepare $this->attrs
         plugin::save();
 
+        // Clean up $this->allowedTokenTypes and $this->mfaRequired
+        $this->updateAttrsAllowedTokenTypes();
+        $this->updateAttrsMfaRequired();
+
         // Fill $this->attrs with $this's fields.
         $this->attrs['allowedTokenTypes'] = $this->allowedTokenTypes;
         $this->attrs['mfaRequired'] = $this->mfaRequired;
-
-        // Clean up $this->attrs.
-        if (is_string($this->attrs['allowedTokenTypes']) && empty($this->attrs['allowedTokenTypes'])) {
-            $this->attrs['allowedTokenTypes'] = array();
-        }
-        if (is_string($this->attrs['mfaRequired']) && empty($this->attrs['mfaRequired'])) {
-            $this->attrs['mfaRequired'] = array();
-        }
 
         // Save data to LDAP
         $ldap->cd($this->dn);
