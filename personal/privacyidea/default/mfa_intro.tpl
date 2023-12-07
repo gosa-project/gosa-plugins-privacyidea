@@ -337,6 +337,14 @@ document.forms.mainform.addEventListener("submit", (e) => {
     </div>
     <script>
         (() => {
+        function toLocaleStringSupportsLocales() {
+            return (
+                typeof Intl === "object" &&
+                !!Intl &&
+                typeof Intl.DateTimeFormat === "function"
+            );
+        }
+
         function updateMfaBatchOperation()
         {
             document.querySelector("#mfaBatchOperation").disabled =
@@ -403,7 +411,18 @@ document.forms.mainform.addEventListener("submit", (e) => {
 
         for (let el of document.querySelectorAll(".tokenLastUsed")) {
             const d = new Date(el.dateTime);
-            el.textContent = d.toLocaleString();
+            if (toLocaleStringSupportsLocales()) {
+                el.textContent = d.toLocaleString("default", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit",
+                });
+            } else {
+                el.textContent = d.toLocaleString();
+            }
         }
         })();
     </script>

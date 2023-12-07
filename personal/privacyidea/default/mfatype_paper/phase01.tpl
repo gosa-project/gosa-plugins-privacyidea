@@ -162,6 +162,14 @@ h2 {
     <li class="mfaTanItem"></li>
 </template>
 <script type="text/javascript">
+function toLocaleStringSupportsLocales() {
+    return (
+        typeof Intl === "object" &&
+        !!Intl &&
+        typeof Intl.DateTimeFormat === "function"
+    );
+}
+
 (() => {
     const tanList = JSON.parse("{$mfaTanJSON}");
     const confirmationTan = "{$mfaConfirmationTan}";
@@ -175,8 +183,20 @@ h2 {
 
     const timeEl = bodyContent.querySelector("#mfaTanListTimestamp");
     const now = new Date();
+
     timeEl.dateTime = now.toISOString();
-    timeEl.textContent = now.toLocaleString();
+    if (toLocaleStringSupportsLocales()) {
+        timeEl.textContent = now.toLocaleString("default", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+        });
+    } else {
+        timeEl.textContent = now.toLocaleString();
+    }
 
     bodyContent.querySelector("#mfaConfirmationTan").textContent = confirmationTan;
 
