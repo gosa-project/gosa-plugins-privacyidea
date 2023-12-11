@@ -60,12 +60,12 @@
     </div>
 </div>
 
-<div class="section">
+<div class="section" style="display: flex;">
     <input type="hidden" id="current_phase" name="current_phase" value="1">
     <input type="hidden" id="add_token" name="add_token" value="webauthn">
     <input type="hidden" id="tokenSerial" name="tokenSerial" value="{$tokenSerial}">
     <input type="hidden" id="mfaWebAuthnRegisterResponse" name="mfaWebAuthnRegisterResponse" value="{* TO BE FILLED BY JAVASCRIPT *}">
 
-    <button class="btn" formnovalidate name="cancel_setup" value="yes" type="submit">{t}Cancel{/t}</button>
-    {* <button class="btn primary" name="add_token" value="webauthn" type="submit">{t}Continue{/t}</button> *}
+    {* <button class="btn primary" style="margin-left: 10px;" name="add_token" value="webauthn" type="submit">{t}Continue{/t}</button> *}
+    <button class="btn" style="order: -1;" formnovalidate name="cancel_setup" value="yes" type="submit">{t}Cancel{/t}</button>
 </div>

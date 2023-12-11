@@ -41,15 +41,15 @@
     </div>
 </div>
 
-<div class="section">
+<div class="section" style="display: flex;">
     <input type="hidden" id="current_phase" name="current_phase" value="0">
 
-    <button class="btn" formnovalidate type="submit">{t}Cancel{/t}</button>
-    <button class="btn primary" name="add_token" value="registration" type="submit"
+    <button class="btn primary" style="margin-left: 10px;" name="add_token" value="registration" type="submit"
         onclick="setTimeout(function() {literal} { {/literal}
             document.getElementById('tokenDescription').removeAttribute('required');
             document.getElementById('tokenDescription').setCustomValidity('');
         }, 200);">
         {t}Continue{/t}
     </button>
+    <button class="btn" style="order: -1;" formnovalidate type="submit">{t}Cancel{/t}</button>
 </div>

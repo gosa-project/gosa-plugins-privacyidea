@@ -30,7 +30,6 @@
     <p>{t}Please take precautions against your TAN list getting lost or compromised and set up at least one other factor as fallback.{/t}</p>
 </div>
 
-<div class="section">
-    <button class="btn primary" type="submit">{t}Back to overview{/t}
-    </button>
+<div class="section" style="display: flex;">
+    <button class="btn primary" type="submit">{t}Back to overview{/t}</button>
 </div>
