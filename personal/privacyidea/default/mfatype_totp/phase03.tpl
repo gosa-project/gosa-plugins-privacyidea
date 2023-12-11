@@ -31,7 +31,6 @@
     </p>
 </div>
 
-<div class="section">
-    <button class="btn primary" type="submit">{t}Back to overview{/t}
-    </button>
+<div class="section" style="display: flex;">
+    <button class="btn primary" type="submit">{t}Back to overview{/t}</button>
 </div>

@@ -131,15 +131,14 @@ if (el.value.match(/^[0-9]/)) {
 
 <input type="hidden" id="tokenSerial" name="tokenSerial" value="{$token.serial}">
 
-<div class="row">
+<div class="row" style="display: flex;">
 {* If in the future more details can be edited, add ACLs here too, then. *}
 {$allowEdit = (strpos($tokenDescriptionACL, "w") !== false)}
 
 {if $editEnable}
     <input type="hidden" id="editEnable" name="editEnable" value="yes">
 
-
-    <button class="btn primary"
+    <button class="btn primary" style="margin-left: 10px;"
         name="mfaTokenAction[mfaTokenSave]" value="{$token.serial}"
         type="submit">{t}Save{/t}
     </button>

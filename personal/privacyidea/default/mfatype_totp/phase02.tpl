@@ -33,10 +33,10 @@
     </div>
 </div>
 
-<div class="section">
+<div class="section" style="display: flex;">
     <input type="hidden" id="current_phase" name="current_phase" value="2">
     <input type="hidden" id="tokenSerial" name="tokenSerial" value="{$tokenSerial}">
 
-    <button class="btn" formnovalidate type="submit">{t}Cancel{/t}</button>
-    <button class="btn primary" name="add_token" value="totp" type="submit">{t}Continue{/t}</button>
+    <button class="btn primary" style="margin-left: 10px;" name="add_token" value="totp" type="submit">{t}Continue{/t}</button>
+    <button class="btn" style="order: -1;" formnovalidate type="submit">{t}Cancel{/t}</button>
 </div>

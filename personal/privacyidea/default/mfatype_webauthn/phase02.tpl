@@ -28,7 +28,6 @@
     <p>{t}Please take precautions against your device being damaged or lost and set up at least one more factor as fallback.{/t}</p>
 </div>
 
-<div class="section">
-    <button class="btn primary" type="submit">{t}Back to overview{/t}
-    </button>
+<div class="section" style="display: flex;">
+    <button class="btn primary" type="submit">{t}Back to overview{/t}</button>
 </div>
