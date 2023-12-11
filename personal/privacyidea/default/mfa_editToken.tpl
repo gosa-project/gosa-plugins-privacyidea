@@ -24,15 +24,6 @@
 {$mfa_totp_icon=smartphone}
 {$mfa_webauthn_icon=usb}
 
-{assign var=tokenLastUsed value="{t}not shown{/t}"}
-{if strpos($tokenLastUsedACL, "r") !== false}
-    {if !empty($token.info.last_auth)}
-        {assign var=tokenLastUsed value=$token.info.last_auth}
-    {else}
-        {assign var=tokenLastUsed value="{t}Never used before{/t}"}
-    {/if}
-{/if}
-
 <h2><i class="material-icons">{$mfa_{$token.tokentype}_icon}</i> {t 1=$mfa_{$token.tokentype}_title}%1 - Details{/t}</h2>
 <div class="row">
     <div class="col s12">
@@ -47,11 +38,18 @@
                 <input type="text" name="tokenDescription"
                     {* If in the future more details can be edited, copy this snippet here... *}
                     {if strpos($tokenDescriptionACL, "r") !== false}
-                        value="{if !$editEnable && empty($token.description)}{t}(empty){/t}{else}{$token.description}{/if}"
+                        {if !$editEnable && empty($token.description)}
+                            style="font-style: italic"
+                            value="{t}(empty){/t}"
+                        {else}
+                            value="{$token.description}"
+                        {/if}
                     {else}
                         {if $editEnable}
+                            style="font-style: italic"
                             placeholder="{t}not shown but editable{/t}"
                         {else}
+                            style="font-style: italic"
                             value="{t}not shown{/t}"
                         {/if}
                     {/if}
@@ -62,13 +60,31 @@
         </div>
         <div class="row">
             <div class="input-field col s12 xl6">
-                <input type="text" id="tokenLastUsed" name="tokenLastUsed" value="{$tokenLastUsed}" disabled>
+                <input type="text" id="tokenLastUsed" name="tokenLastUsed"
+                    {if strpos($tokenLastUsedACL, "r") !== false}
+                        {if empty($token.info.last_auth)}
+                            value="{t}Never used before{/t}"
+                        {else}
+                            value="{$token.info.last_auth}"
+                        {/if}
+                    {else}
+                        style="font-style: italic"
+                        value="{t}not shown{/t}"
+                    {/if}
+                    disabled>
                 <label for="tokenLastUsed">{t}Last use{/t}</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12 xl6">
-                <input type="text" name="tokenStatus" value="{if strpos($tokenStatusACL, "r") !== false}{$token.status}{else}{t}not shown{/t}{/if}" disabled>
+                <input type="text" id="tokenStatus" name="tokenStatus"
+                    {if strpos($tokenStatusACL, "r") !== false}
+                        value="{$token.status}"
+                    {else}
+                        style="font-style: italic"
+                        value="{t}not shown{/t}"
+                    {/if}
+                    disabled>
                 <label for="tokenStatus">{t}Status{/t}</label>
             </div>
         </div>
@@ -81,19 +97,48 @@
         </div> *}
         <div class="row">
             <div class="input-field col s12 xl6">
-                <input type="text" name="tokenLoginAttempts" value="{if strpos($tokenCountAuthACL, "r") !== false}{if empty($token.info.count_auth)}{t}Never used before{/t}{else}{$token.info.count_auth}{/if}{else}{t}not shown{/t}{/if}" disabled>
+                <input type="text" id="tokenLoginAttempts" name="tokenLoginAttempts"
+                    {if strpos($tokenCountAuthACL, "r") !== false}
+                        {if empty($token.info.count_auth)}
+                            value="{t}Never used before{/t}"
+                        {else}
+                            value="{$token.info.count_auth}"
+                        {/if}
+                    {else}
+                        style="font-style: italic"
+                        value="{t}not shown{/t}"
+                    {/if}
+                    disabled>
                 <label for="tokenLoginAttempts">{t}No. of login attempts{/t}</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12 xl6">
-                <input type="text" name="tokenSuccessfulLogins" value="{if strpos($tokenCountAuthSuccessACL, "r") !== false}{if empty($token.info.count_auth_succes)}{t}Never used before{/t}{else}{$token.info.count_auth_success}{/if}{else}{t}not shown{/t}{/if}" disabled>
+                <input type="text" id="tokenSuccessfulLogins" name="tokenSuccessfulLogins"
+                    {if strpos($tokenCountAuthSuccessACL, "r") !== false}
+                        {if empty($token.info.count_auth_succes)}
+                            value="{t}Never used before{/t}"
+                        {else}
+                            value="{$token.info.count_auth_success}"
+                        {/if}
+                    {else}
+                        style="font-style: italic"
+                        value="{t}not shown{/t}"
+                    {/if}
+                    disabled>
                 <label for="tokenSuccessfulLogins">{t}Successful logins{/t}</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12 xl6">
-                <input type="text" name="tokenFailedLogins" value="{if strpos($tokenFailCountACL, "r") !== false}{$token.failcount}{else}{t}not shown{/t}{/if}/{$token.maxfail}" disabled>
+                <input type="text" id="tokenFailedLogins" name="tokenFailedLogins"
+                    {if strpos($tokenFailCountACL, "r") !== false}
+                        value="{$token.failcount}/{$token.maxfail}"
+                    {else}
+                        style="font-style: italic"
+                        value="{t}not shown{/t}"
+                    {/if}
+                    disabled>
                 <label for="tokenFailedLogins">{t}Login failure counter (current / max.){/t}</label>
             </div>
         </div>
