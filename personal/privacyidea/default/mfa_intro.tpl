@@ -279,7 +279,7 @@ document.forms.mainform.addEventListener("submit", (e) => {
                             </button>
                         </td>
                         <td><button class="txtonlybtn{if $token.revoked} line-through{/if}" type="submit" name="mfaTokenAction[mfaTokenView]" value="{$token.serial}">
-                            {if strpos($tokenDescriptionACL, "r") !== false}{$token.description}{else}{t}not shown{/t}{/if}
+                            {if strpos($tokenDescriptionACL, "r") !== false}{$token.description}{else}<i>{t}not shown{/t}</i>{/if}
                         </button></td>
                         <td>
                             {if strpos($tokenLastUsedACL, "r") !== false}
@@ -289,11 +289,11 @@ document.forms.mainform.addEventListener("submit", (e) => {
                                     <span class="{if $token.revoked} line-through{/if}">{t}Never used before{/t}</span>
                                 {/if}
                             {else}
-                                {t}not shown{/t}
+                                {t}<i>not shown</i>{/t}
                             {/if}
                         </td>
-                        <td>{if strpos($tokenStatusACL, "r") !== false}{$token.status}{else}{t}not shown{/t}{/if}</td>
-                        <td {if $token.revoked}class="line-through"{/if}>{if strpos($tokenFailCountACL, "r") !== false}{$token.failcount}{else}{t}not shown{/t}{/if}/{$token.maxfail}</td>
+                        <td>{if strpos($tokenStatusACL, "r") !== false}{$token.status}{else}<i>{t}not shown{/t}</i>{/if}</td>
+                        <td {if $token.revoked}class="line-through"{/if}>{if strpos($tokenFailCountACL, "r") !== false}{$token.failcount}{else}<i>{t}not shown{/t}</i>{/if}/{$token.maxfail}</td>
                         <td>
                             {render acl=$tokenDescriptionACL}
                             <button class="txtonlybtn" type="submit" name="mfaTokenAction[mfaTokenEdit]" value="{$token.serial}" title="{t}Edit{/t}">
