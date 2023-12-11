@@ -53,7 +53,7 @@
     <p>{t}Recovery keys are fallback factors. Please make sure you have at least one factor configured for daily use.{/t}</p>
 </div>
 
-<div class="section">
+<div class="section" style="display: flex;">
     <input type="hidden" id="current_phase" name="current_phase" value="1">
     <button class="btn primary" type="submit">{t}Back to overview{/t}</button>
 </div>
