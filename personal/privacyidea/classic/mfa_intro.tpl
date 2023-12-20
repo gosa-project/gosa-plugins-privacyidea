@@ -21,9 +21,9 @@
 
 {* Define icons *}
 {$mfa_registration_icon=password}
-{$mfa_paper_icon=receipt}
-{$mfa_totp_icon=smartphone}
-{$mfa_webauthn_icon=usb}
+{$mfa_paper_icon=file_doc}
+{$mfa_totp_icon=pda_alt}
+{$mfa_webauthn_icon=usbpendrive_unmount}
 
 <fieldset style="border: none; padding: 0; margin: 0;" {if !$userExists}disabled{/if}>
 <h2>{t}Multifactor Authentication Requirements{/t}</h2>
@@ -139,44 +139,49 @@ document.forms.mainform.addEventListener("submit", (e) => {
     <div>
     {foreach $effectiveTokenTypes as $tokenType}
         <table style="width: 25%; min-width: 20em; float: left;" cellspacing="0" cellpadding="0">
-            <colgroup>
-                <col style="width: 25px">
-                <col>
-                <col style="width: 1em">
-            </colgroup>
-            <thead>
-                <tr>
-                    <th><img src="plugins/privacyidea/images/{$mfa_{$token.tokentype}_icon}.png" width="16" height="16"></th>
-                    <th style="border-left: none">{$mfa_{$tokenType}_title}</th>
-                    <th style="border-left: none">{if (!in_array($tokenType, $tokenTypes))}<span title="{t}Overridden by ACL{/t}">&#x2757;</span>{/if}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td colspan="3">{$mfa_{$tokenType}_description}</td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                    {render acl=$manageTokensACL}
-                    {if empty({$mfa_{$tokenType}_limitReachedMessage})}
-                        <button name="add_token"
-                            value="{$tokenType}"
-                            type="submit"
-                        >
-                        {$mfa_{$tokenType}_button_text}
-                        </button>
-                    {else}
-                        <button
-                            title="{$mfa_{$tokenType}_limitReachedMessage}"
-                            disabled
-                        >
-                        {$mfa_{$tokenType}_button_text}
-                        </button>
-                    {/if}
-                    {/render}
-                    </td>
-                </tr>
-            </tbody>
+            <tr>
+                <td style="width: 48px"><img src="plugins/privacyidea/images/{$mfa_{$tokenType}_icon}-large.png" width="48" height="48"></td>
+                <td>
+                    <table style="width: 25%; min-width: 20em; float: left;" cellspacing="0" cellpadding="0">
+                        <colgroup>
+                            <col>
+                            <col style="width: 1em">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th style="border-left: none; text-align: left">{$mfa_{$tokenType}_title}</th>
+                                <th style="border-left: none">{if (!in_array($tokenType, $tokenTypes))}<span title="{t}Overridden by ACL{/t}">&#x2757;</span>{/if}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="2">{$mfa_{$tokenType}_description}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="padding-top: 5px">
+                                {render acl=$manageTokensACL}
+                                {if empty({$mfa_{$tokenType}_limitReachedMessage})}
+                                    <button name="add_token"
+                                        value="{$tokenType}"
+                                        type="submit"
+                                    >
+                                    {$mfa_{$tokenType}_button_text}
+                                    </button>
+                                {else}
+                                    <button
+                                        title="{$mfa_{$tokenType}_limitReachedMessage}"
+                                        disabled
+                                    >
+                                    {$mfa_{$tokenType}_button_text}
+                                    </button>
+                                {/if}
+                                {/render}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
         </table>
     {/foreach}
     <div style="clear: both"></div>
