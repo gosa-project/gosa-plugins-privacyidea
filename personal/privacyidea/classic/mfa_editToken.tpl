@@ -21,9 +21,9 @@
 
 {* Define icons *}
 {$mfa_registration_icon=password}
-{$mfa_paper_icon=receipt}
-{$mfa_totp_icon=smartphone}
-{$mfa_webauthn_icon=usb}
+{$mfa_paper_icon=file_doc}
+{$mfa_totp_icon=pda_alt}
+{$mfa_webauthn_icon=usbpendrive_unmount}
 
 {assign var=tokenLastUsed value="{t}not shown{/t}"}
 {if strpos($tokenLastUsedACL, "r") !== false}
