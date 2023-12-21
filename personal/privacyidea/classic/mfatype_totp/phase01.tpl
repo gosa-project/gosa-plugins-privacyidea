@@ -75,6 +75,6 @@
 <div class="plugin-actions">
     <input type="hidden" id="current_phase" name="current_phase" value="1">
 
-    <button formnovalidate type="submit">{t}Cancel{/t}</button>
     <button name="add_token" value="totp" type="submit">{t}Continue{/t}</button>
+    <button formnovalidate type="submit">{t}Cancel{/t}</button>
 </div>
