@@ -1,7 +1,7 @@
 {*
  * This code is an addon for GOsa² (https://gosa.gonicus.de)
  * https://github.com/gosa-project/gosa-plugins-privacyidea/
- * Copyright (C) 2023 Daniel Teichmann <daniel.teichmann@das-netzwerkteam.de>
+ * Copyright (C) 2023 Guido Berhörster <guido+freiesoftware@berhoerster.name>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,4 +18,29 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *}
 
-<p>Using <i>classic</i> design.</p>
+<table cellspacing="0" cellpadding="0">
+    <tr>
+        <td>{image path='images/warning.png'}</td>
+        <td style="padding-left: 5px; vertical-align: middle"><h2>{$confirmationPrompt}</h2></td>
+    </tr>
+</table>
+
+{if $isBatch}
+    <input type="hidden" name="mfaTokenBatchAction" value="{$mfaTokenBatchAction}">
+    <ul>
+        {foreach $mfaTokenSerials as $tokenSerial}
+            {assign var="description" value="{$serialsTokens[$tokenSerial]['description']}"}
+            <li><input type="hidden" name="mfaTokenSerials[]" value="{$tokenSerial}"><b>{if !empty($description)}{$description} ({$tokenSerial}){else}{$tokenSerial}{/if}</b></li>
+        {/foreach}
+    </ul>
+{else}
+    <input type="hidden" name="mfaTokenAction[{$mfaTokenAction}]" value="{$tokenSerial}">
+    {assign var="description" value="{$serialsTokens[$tokenSerial]['description']}"}
+    <p><b>{if !empty($description)}{$description} ({$tokenSerial}){else}{$tokenSerial}{/if}</b></p>
+{/if}
+
+<hr>
+<div class="plugin-actions">
+    <button type="submit" name="mfaTokenActionConfirm" value="false">{t}Cancel{/t}</button>
+    <button type="submit" name="mfaTokenActionConfirm" value="true">{t}OK{/t}</button>
+</div>
