@@ -49,12 +49,10 @@
 <div class="plugin-actions">
     <input type="hidden" id="current_phase" name="current_phase" value="0">
 
-    <button formnovalidate type="submit">{t}Cancel{/t}</button>
     <button name="add_token" value="registration" type="submit"
         onclick="setTimeout(function() {literal} { {/literal}
             document.getElementById('tokenDescription').removeAttribute('required');
             document.getElementById('tokenDescription').setCustomValidity('');
-        }, 200);">
-        {t}Continue{/t}
-    </button>
+        }, 200);">{t}Continue{/t}</button>
+    <button formnovalidate type="submit">{t}Cancel{/t}</button>
 </div>

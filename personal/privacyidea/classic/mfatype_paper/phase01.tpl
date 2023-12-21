@@ -230,6 +230,6 @@ function toLocaleStringSupportsLocales() {
     <input type="hidden" id="current_phase" name="current_phase" value="1">
     <input type="hidden" id="tokenSerial" name="tokenSerial" value="{$tokenSerial}">
 
-    <button formnovalidate type="submit">{t}Cancel{/t}</button>
     <button name="add_token" value="paper" type="submit">{t}Continue{/t}</button>
+    <button formnovalidate type="submit">{t}Cancel{/t}</button>
 </div>

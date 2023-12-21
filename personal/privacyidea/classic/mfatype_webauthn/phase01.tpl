@@ -68,6 +68,6 @@
     <input type="hidden" id="tokenSerial" name="tokenSerial" value="{$tokenSerial}">
     <input type="hidden" id="mfaWebAuthnRegisterResponse" name="mfaWebAuthnRegisterResponse" value="{* TO BE FILLED BY JAVASCRIPT *}">
 
-    <button formnovalidate name="cancel_setup" value="yes" type="submit">{t}Cancel{/t}</button>
     {* <button name="add_token" value="webauthn" type="submit">{t}Continue{/t}</button> *}
+    <button formnovalidate name="cancel_setup" value="yes" type="submit">{t}Cancel{/t}</button>
 </div>
