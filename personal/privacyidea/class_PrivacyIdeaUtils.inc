@@ -99,32 +99,6 @@ class PrivacyIdeaUtils implements PILog
     }
 
     /**
-     * Find key recursivly in array (Adapted from GOsa core)
-     *
-     * @param array $haystack the array which will be searched
-     * @param string $needle search string
-     * @return mixed result of key search
-     */
-    public function findRecursive($haystack, $needle): mixed
-    {
-        assert(is_array($haystack));
-        assert(is_string($needle));
-
-        $iterator = new RecursiveArrayIterator($haystack);
-        $recursive = new RecursiveIteratorIterator(
-            $iterator,
-            RecursiveIteratorIterator::SELF_FIRST
-        );
-        foreach ($recursive as $key => $value) {
-            if ($key === $needle) {
-                return $value;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Sets $this->piServerVersion to version number of privacyIDEA server.
      */
     public function retrievePiServerVersion()
@@ -166,49 +140,6 @@ class PrivacyIdeaUtils implements PILog
     }
 
     /**
-     * This function was adapted from privacyidea-php-client.
-     * This implementation checks if serviceAccount is an admin.
-     *
-     * Retrieves an auth token from the server using the service account.
-     * An auth token is required for some requests to privacyIDEA.
-     *
-     * @return string the auth token or empty string if the response did not
-     *                contain a token or no service account is configured.
-     * @throws PIBadRequestException if an error occurs during the request
-     */
-    public function getAuthToken()
-    {
-        if (!$this->pi->serviceAccountAvailable()) {
-            $this->pi->errorLog("Cannot retrieve auth token without service account!");
-            return "";
-        }
-
-        $params = array(
-            "username" => $this->pi->serviceAccountName,
-            "password" => $this->pi->serviceAccountPass
-        );
-
-        if ($this->pi->serviceAccountRealm != null && $this->pi->serviceAccountRealm != "") {
-            $params["realm"] = $this->pi->serviceAccountRealm;
-        }
-
-        $response = json_decode($this->pi->sendRequest($params, array(''), 'POST', '/auth'), true);
-
-        if (isset($response['result']['value']['token']) && !empty($response['result']['value']['token'])) {
-            // Ensure we have an admin account
-            if ($this->findRecursive((array)$response, "role") != 'admin') {
-                $this->pi->debugLog("auth token was of a user without admin role.");
-                return "";
-            }
-
-            return $response['result']['value']["token"];
-        }
-
-        $this->pi->debugLog("/auth response did not contain a auth token.");
-        return "";
-    }
-
-    /**
      * Requests a authentication token which will be stored in $this->authToken if successful.
      * @return bool Indicates if authentication was successful.
      */
@@ -224,9 +155,7 @@ class PrivacyIdeaUtils implements PILog
 
         $retString = "";
         try {
-            // TODO: Use privacyidea-php-client's implementation instead of our own, if they fixed check if
-            // serviceAccount is admin upstream.
-            $retString = $this->getAuthToken();
+            $retString = $this->pi->getAuthToken();
         } catch (PIBadRequestException $e) {
             msg_dialog::display(
                 _("Internal error"),
