@@ -241,6 +241,13 @@ class mfaAccount extends plugin
             $setup = null;
             $editToken = null;
             $array_keys_post = array_keys($_POST);
+
+            // If we are in a TOTP flow and press regenerate QR, readd the required context
+            if (in_array_ics('mfa_generate_totp_secret', $array_keys_post)) {
+                $_POST['add_token'] = 'totp';
+                $array_keys_post[] = 'add_token';
+            }
+
             if (in_array_ics('add_token', $array_keys_post)) {
                 if (in_array_ics('cancel_setup', $array_keys_post)) {
                     return $this->getMFAIntroTemplate();
