@@ -360,7 +360,7 @@ class mfaAccount extends plugin
                 $mfaTokenSerials = [];
                 if (isset($_POST['mfaTokenSerials']) && is_array($_POST['mfaTokenSerials'])) {
                     $mfaTokenSerials = array_unique($_POST['mfaTokenSerials']);
-                    array_filter($mfaTokenSerials, $this->utils->isTokenSerialValid);
+                    array_filter($mfaTokenSerials, [$this->utils, 'isTokenSerialValid']);
                 }
 
                 $mfaTokenAction = $_POST["mfaTokenBatchAction"] ?? null;
