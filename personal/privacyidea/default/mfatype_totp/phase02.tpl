@@ -24,7 +24,7 @@
 <div class="section">
     <div class="row">
         <div class="col s12">
-            <p>{t escape=no 1=$tokenDescription}Please verify your authentication app <b>%1</b> by entering a generated code.{/t}</p>
+            <p>{t escape=no 1=$tokenDescription|escape}Please verify your authentication app <b>%1</b> by entering a generated code.{/t}</p>
         </div>
         <div class="input-field col s3">
             <label for="mfaTOTPCode">{t}Authentication code{/t}</label>

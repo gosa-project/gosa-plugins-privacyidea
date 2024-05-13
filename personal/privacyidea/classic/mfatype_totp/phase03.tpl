@@ -24,7 +24,7 @@
 <table style="width: 100%" cellspacing="0" cellpadding="0">
     <tr>
         <td style="width: 16px">{image path="images/info.png"}</td>
-        <td style="vertical-align: middle; padding-left: 5px">{t escape=no 1=$tokenDescription}The authentication app <b>%1</b> was successfully added to this account and can now be used.{/t}</td>
+        <td style="vertical-align: middle; padding-left: 5px">{t escape=no 1=$tokenDescription|escape}The authentication app <b>%1</b> was successfully added to this account and can now be used.{/t}</td>
     </tr>
 </table>
 

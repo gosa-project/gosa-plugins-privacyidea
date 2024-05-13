@@ -279,7 +279,7 @@ document.forms.mainform.addEventListener("submit", (e) => {
                             </button>
                         </td>
                         <td><button class="txtonlybtn{if $token.revoked} line-through{/if}" type="submit" name="mfaTokenAction[mfaTokenView]" value="{$token.serial}">
-                            {if strpos($tokenDescriptionACL, "r") !== false}{$token.description}{else}<i>{t}not shown{/t}</i>{/if}
+                            {if strpos($tokenDescriptionACL, "r") !== false}{$token.description|escape}{else}<i>{t}not shown{/t}</i>{/if}
                         </button></td>
                         <td>
                             {if strpos($tokenLastUsedACL, "r") !== false}

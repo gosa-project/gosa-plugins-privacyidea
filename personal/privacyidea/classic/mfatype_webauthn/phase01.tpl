@@ -27,7 +27,7 @@
 <table cellspacing="0" cellpadding="0" style="width: 100%">
     <tr>
         <td style="width: 33%">
-            <p>{t escape=no 1=$tokenDescription}Please confirm the setup of the security key <b>%1</b>.{/t}</p>
+            <p>{t escape=no 1=$tokenDescription|escape}Please confirm the setup of the security key <b>%1</b>.{/t}</p>
             <p>{t}Your browser or operating system will guide you through the setup of the security key.{/t}</p>
 
             <ol>

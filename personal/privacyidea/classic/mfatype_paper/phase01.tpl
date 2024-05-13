@@ -21,7 +21,7 @@
 
 <h2>{t}Print TAN List{/t}</h2>
 
-<p>{t escape=no 1=$tokenDescription}Please print the TAN list <b>%1</b>, one TAN from the list will be used in the next step to verify the list.{/t}</p>
+<p>{t escape=no 1=$tokenDescription|escape}Please print the TAN list <b>%1</b>, one TAN from the list will be used in the next step to verify the list.{/t}</p>
 
 <table cellspacing="0" cellpadding="0" style="width: 100%">
     <tr>
@@ -151,7 +151,7 @@ h2 {
         <button value="Print page" onClick="window.print()">Print page</button>
     </aside>
     <div id="mfaTanPage">
-        <h1>{t escape=no 1=$tokenDescription}TAN list <b>%1</b>{/t}</h1>
+        <h1>{t escape=no 1=$tokenDescription|escape}TAN list <b>%1</b>{/t}</h1>
         <h3>(<time id="mfaTanListTimestamp"></time>)</h3>
         <p>{t}If you just generated this list you will need to confirm it by entering the confirmation TAN on the website from which you downloaded this list.{/t}</p>
         <p><span id="mfaConfirmationLabel">{t}Confirmation TAN:{/t}</span> <span id="mfaConfirmationTan"></span></p>
@@ -175,7 +175,7 @@ function toLocaleStringSupportsLocales() {
     const tanList = JSON.parse("{$mfaTanJSON}");
     const confirmationTan = "{$mfaConfirmationTan}";
 
-    const doc = document.implementation.createHTMLDocument("{t}TAN list {$tokenDescription}{/t}");
+    const doc = document.implementation.createHTMLDocument("{t}TAN list {$tokenDescription|escape:"javascript"}{/t}");
 
     const headContent = document.querySelector("#mfaTanListHeadTemplate").content.cloneNode(true);
     doc.head.appendChild(headContent);

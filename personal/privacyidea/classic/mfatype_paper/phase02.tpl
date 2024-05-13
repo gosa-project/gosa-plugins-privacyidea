@@ -21,7 +21,7 @@
 
 <h2>{t}Verify TAN List{/t}</h2>
 
-<p>{t escape=no 1=$tokenDescription}Please verify your TAN list <b>%1</b> by entering the verification TAN.{/t}</p>
+<p>{t escape=no 1=$tokenDescription|escape}Please verify your TAN list <b>%1</b> by entering the verification TAN.{/t}</p>
 
 <p>
     <label for="mfaVerificationTan">{t}Verification TAN{/t}</label>

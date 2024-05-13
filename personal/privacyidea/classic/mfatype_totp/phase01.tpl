@@ -26,7 +26,7 @@
             <table cellspacing="0" cellpadding="0" style="width: 100%">
                 <tr>
                     <td>
-                        <p>{t escape=no 1=$tokenDescription}Please set up your authentication app <b>%1</b> as follows:{/t}</p>
+                        <p>{t escape=no 1=$tokenDescription|escape}Please set up your authentication app <b>%1</b> as follows:{/t}</p>
                         <ol>
                             <li>{t}Open your authentication app.{/t}</li>
                             <li>{t}Find an option to add a new account (this is often a button with a plus or QR code symbol).{/t}</li>
@@ -47,7 +47,7 @@
                         <button name="mfa_generate_totp_secret"
                             type="submit">{t}Generate new QR code{/t}</button>
                         {* Make sure to provide needed variables again. *}
-                        <input type="hidden" id="tokenDescription" name="tokenDescription" value="{$tokenDescription}">
+                        <input type="hidden" id="tokenDescription" name="tokenDescription" value="{$tokenDescription|escape}">
                         <input type="hidden" id="tokenSerial" name="tokenSerial" value="{$tokenSerial}">
                     </td>
                 </tr>

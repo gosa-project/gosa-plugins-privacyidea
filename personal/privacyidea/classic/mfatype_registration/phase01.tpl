@@ -36,7 +36,7 @@
 <table cellspacing="0" cellpadding="0">
     <tr>
         <td style="vertical-align: middle">{image path="images/info.png"}</td>
-        <td style="vertical-align: middle; padding-left: 5px">{t escape=no 1=$tokenDescription}The recovery key <b>%1</b> was successfully added to this account and can now be used for logging in one time only.{/t}</td>
+        <td style="vertical-align: middle; padding-left: 5px">{t escape=no 1=$tokenDescription|escape}The recovery key <b>%1</b> was successfully added to this account and can now be used for logging in one time only.{/t}</td>
     </tr>
 </table>
 

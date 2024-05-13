@@ -53,7 +53,7 @@
                 <input type="text" name="tokenDescription"
                     {* If in the future more details can be edited, copy this snippet here... *}
                     {if strpos($tokenDescriptionACL, "r") !== false}
-                        value="{if !$editEnable && empty($token.description)}{t}(empty){/t}{else}{$token.description}{/if}"
+                        value="{if !$editEnable && empty($token.description)}{t}(empty){/t}{else}{$token.description|escape}{/if}"
                     {else}
                         {if $editEnable}
                             placeholder="{t}not shown but editable{/t}"

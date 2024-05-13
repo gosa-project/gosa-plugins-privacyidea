@@ -21,7 +21,7 @@
 
 <h2>{t}Security Key added{/t}</h2>
 
-<div class="card-panel green lighten-4 green-text text-darken-4">{t escape=no 1=$tokenDescription}The security key <b>%1</b> was successfully added to this account and can now be used.{/t}</div>
+<div class="card-panel green lighten-4 green-text text-darken-4">{t escape=no 1=$tokenDescription|escape}The security key <b>%1</b> was successfully added to this account and can now be used.{/t}</div>
 
 <div class="section">
     <p>{t}Please ensure that nobody other than yourself is able to access this factor.{/t}</p>

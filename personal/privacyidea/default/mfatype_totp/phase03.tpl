@@ -22,7 +22,7 @@
 <h2>{t}Authentication App (TOTP) added{/t}</h2>
 
 <div class="card-panel green lighten-4 green-text text-darken-4">
-    {t escape=no 1=$tokenDescription}The authentication app <b>%1</b> was successfully added to this account and can now be used.{/t}
+    {t escape=no 1=$tokenDescription|escape}The authentication app <b>%1</b> was successfully added to this account and can now be used.{/t}
 </div>
 
 <div class="section">

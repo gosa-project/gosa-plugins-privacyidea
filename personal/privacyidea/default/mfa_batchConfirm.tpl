@@ -30,13 +30,13 @@
     <ul class="browser-default">
         {foreach $mfaTokenSerials as $tokenSerial}
             {assign var="description" value="{$serialsTokens[$tokenSerial]['description']}"}
-            <li><input type="hidden" name="mfaTokenSerials[]" value="{$tokenSerial}"><b>{if !empty($description)}{$description} ({$tokenSerial}){else}{$tokenSerial}{/if}</b></li>
+            <li><input type="hidden" name="mfaTokenSerials[]" value="{$tokenSerial}"><b>{if !empty($description)}{$description|escape} ({$tokenSerial}){else}{$tokenSerial}{/if}</b></li>
         {/foreach}
     </ul>
 {else}
     <input type="hidden" name="mfaTokenAction[{$mfaTokenAction}]" value="{$tokenSerial}">
     {assign var="description" value="{$serialsTokens[$tokenSerial]['description']}"}
-    <p><b>{if !empty($description)}{$description} ({$tokenSerial}){else}{$tokenSerial}{/if}</b></p>
+    <p><b>{if !empty($description)}{$description|escape} ({$tokenSerial}){else}{$tokenSerial}{/if}</b></p>
 {/if}
 
 <div class="section">

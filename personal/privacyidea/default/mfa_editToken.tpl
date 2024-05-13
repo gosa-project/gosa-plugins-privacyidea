@@ -42,7 +42,7 @@
                             style="font-style: italic"
                             value="{t}(empty){/t}"
                         {else}
-                            value="{$token.description}"
+                            value="{$token.description|escape}"
                         {/if}
                     {else}
                         {if $editEnable}
