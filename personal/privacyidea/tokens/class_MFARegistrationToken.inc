@@ -104,7 +104,8 @@ class MFARegistrationToken extends MFATokenHelper implements MFAToken
                 _("Internal error"),
                 _("Could not enroll recovery key (registration token) in privacyIDEA: ") . "<br>" .
                 $requestAnswer["result"]["error"]["message"] . "<br><br>" .
-                $this->utils->pleaseTryAgainMsg()
+                $this->utils->pleaseTryAgainMsg(),
+                ERROR_DIALOG
             );
             return false;
         }
