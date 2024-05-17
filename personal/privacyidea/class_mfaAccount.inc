@@ -175,6 +175,9 @@ class mfaAccount extends plugin
      */
     public function execute()
     {
+        /* Before using smarty get the up-to-date handle */
+        $this->smarty = get_smarty();
+
         /* Call parent execute */
         plugin::execute();
 
