@@ -123,6 +123,7 @@ class MFAPaperToken extends MFATokenHelper implements MFAToken
     /** @return bool */
     protected function preparePhase1()
     {
+        $this->smarty = get_smarty();
         $limitReachedMessage = $this->checkUserTokenLimit("paper");
         if (!empty($limitReachedMessage)) {
             msg_dialog::display(
@@ -192,6 +193,7 @@ class MFAPaperToken extends MFATokenHelper implements MFAToken
     /** @return bool */
     protected function preparePhase2()
     {
+        $this->smarty = get_smarty();
         $this->smarty->assign("tokenSerial", $this->tokenSerial);
         $this->smarty->assign("needsVerifying", $this->needsVerifying);
         return true;

@@ -54,6 +54,7 @@ class MFATotpToken extends MFATokenHelper implements MFAToken
     /** @return bool */
     protected function evaluatePhase1()
     {
+        $this->smarty = get_smarty();
         // Special case for TOTP: Allow regenerating QR code.
         if (isset($_POST["mfa_generate_totp_secret"])) {
             // Make sure to provide needed variables again.
@@ -139,6 +140,7 @@ class MFATotpToken extends MFATokenHelper implements MFAToken
     /** @return bool */
     protected function preparePhase1()
     {
+        $this->smarty = get_smarty();
         $limitReachedMessage = $this->checkUserTokenLimit("totp");
         if (!empty($limitReachedMessage)) {
             msg_dialog::display(
@@ -194,6 +196,7 @@ class MFATotpToken extends MFATokenHelper implements MFAToken
     /** @return bool */
     protected function preparePhase2()
     {
+        $this->smarty = get_smarty();
         $this->smarty->assign("tokenSerial", $this->tokenSerial);
         $this->smarty->assign("needsVerifying", $this->needsVerifying);
         return true;

@@ -65,6 +65,8 @@ class MFATokenHelper
 
     public function renderSetup()
     {
+        // avoid serilization problems
+        $this->smarty = get_smarty();
         // Do not try to catch any of the exceptions call_user_func throws.
         // If it throws smth, then that must mean the programmer f'ed smth up while developing.
 

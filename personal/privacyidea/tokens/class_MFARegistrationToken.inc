@@ -79,6 +79,7 @@ class MFARegistrationToken extends MFATokenHelper implements MFAToken
     /** @return bool */
     protected function preparePhase1()
     {
+        $this->smarty = get_smarty();
         $limitReachedMessage = $this->checkUserTokenLimit("registration");
         if (!empty($limitReachedMessage)) {
             msg_dialog::display(

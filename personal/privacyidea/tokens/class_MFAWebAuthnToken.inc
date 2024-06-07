@@ -101,6 +101,7 @@ class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
     /** @return bool */
     protected function preparePhase1()
     {
+        $this->smarty = get_smarty();
         $limitReachedMessage = $this->checkUserTokenLimit("webauthn");
         if (!empty($limitReachedMessage)) {
             msg_dialog::display(
