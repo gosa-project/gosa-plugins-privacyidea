@@ -958,7 +958,7 @@ class mfaAccount extends plugin
         // then don't let user leave!
         // $message[] = msgPool::required(_("A MFA method must be initialized or else you can't login anymore!"));
 
-        // $message[] = msgPool::required(_("Mail address"));
+        // $message[] = msgPool::required(_("Email address"));
         // $message[] = "check()";
 
         return ($message);
