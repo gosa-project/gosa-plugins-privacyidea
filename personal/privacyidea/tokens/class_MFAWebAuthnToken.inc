@@ -41,7 +41,7 @@ class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
         $this->tokenDescription = "";
         if (isset($_POST["tokenDescription"])) {
             $this->tokenDescription = $_POST["tokenDescription"];
-            $this->tokenDescription = trim($this->tokenDescription);
+            $this->tokenDescription = $this->filterTokenDescription($this->tokenDescription);
         } else {
             // Empty descriptions are okay.
         }

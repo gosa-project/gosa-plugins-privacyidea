@@ -50,7 +50,7 @@
                 <label for="tokenDescription">{t}Description{/t}</label>
             </td>
             <td>
-                <input type="text" name="tokenDescription"
+                <input type="text" name="tokenDescription" pattern="[^<>\x22\x27]+"
                     {* If in the future more details can be edited, copy this snippet here... *}
                     {if strpos($tokenDescriptionACL, "r") !== false}
                         value="{if !$editEnable && empty($token.description)}{t}(empty){/t}{else}{$token.description|escape}{/if}"

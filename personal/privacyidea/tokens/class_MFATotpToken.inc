@@ -41,9 +41,10 @@ class MFATotpToken extends MFATokenHelper implements MFAToken
     protected function evaluatePhase0()
     {
         $this->tokenDescription = "";
+
         if (isset($_POST["tokenDescription"])) {
             $this->tokenDescription = $_POST["tokenDescription"];
-            $this->tokenDescription = trim($this->tokenDescription);
+            $this->tokenDescription = $this->filterTokenDescription($this->tokenDescription);
         } else {
             // Empty descriptions are okay.
         }

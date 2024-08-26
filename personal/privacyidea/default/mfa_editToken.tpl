@@ -35,7 +35,7 @@
         </div>
         <div class="row">
             <div class="input-field col s12 xl6">
-                <input type="text" name="tokenDescription"
+                <input type="text" name="tokenDescription" pattern="[^<>\x22\x27]+"
                     {* If in the future more details can be edited, copy this snippet here... *}
                     {if strpos($tokenDescriptionACL, "r") !== false}
                         {if !$editEnable && empty($token.description)}

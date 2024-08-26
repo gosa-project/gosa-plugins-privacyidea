@@ -177,4 +177,8 @@ class MFATokenHelper
 
         return $currentPhase;
     }
+
+    public function filterTokenDescription($tokenDescription) {
+        return trim(strip_tags($tokenDescription));
+    }
 }
