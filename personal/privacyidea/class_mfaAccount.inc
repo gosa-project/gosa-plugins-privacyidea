@@ -66,6 +66,7 @@ class mfaAccount extends plugin
 
     // Indicate to parent that its footer should be hidden
     public $skipFooter    = false;
+    public $skipWrite;
 
     public function __construct(&$config, $dn = null)
     {

@@ -266,7 +266,7 @@ document.forms.mainform.addEventListener("submit", (e) => {
                 </tr>
             </thead>
             <tbody>
-                {foreach from=$tokens key=$key item=$token}
+                {foreach from=$tokens key=key item=token}
                     <tr>
                         <td><input type="checkbox" name="mfaTokenSerials[]" value="{$token.serial}"{if !$tokensEditable} disabled{/if}></td>
                         <td style="overflow-wrap: break-word;">
