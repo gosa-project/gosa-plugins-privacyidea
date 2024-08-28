@@ -947,7 +947,7 @@ class mfaAccount extends plugin
     public function check()
     {
         if (!$this->is_account) {
-            return (array ());
+            return (array());
         }
 
         $ldap = $this->config->get_ldap_link();
@@ -971,7 +971,7 @@ class mfaAccount extends plugin
      * @param string $dn   DN of the template to adapt from.
      * @param array  $skip
      */
-    public function adapt_from_template($dn, $skip = array ())
+    public function adapt_from_template($dn, $skip = array())
     {
         // TODO: Adapt allowed token types.
         plugin::adapt_from_template($dn, $skip);
@@ -992,18 +992,18 @@ class mfaAccount extends plugin
         $writeOnly    = "&nbsp;(" . _("write-only") . ") ";
         $readOnly     = "&nbsp;(" . _("read-only") . ") ";
 
-        return (array (
+        return (array(
             "plShortName"    => _("MFA"),
             "plDescription"  => _("Multifactor Authentification"),
             "plSelfModify"   => true,
-            "plDepends"      => array ("user"),           // This plugin depends on
+            "plDepends"      => array("user"),           // This plugin depends on
             "plPriority"     => 4,                        // Position in tabs
-            "plSection"      => array ("personal"   => _("My account")),
-            "plCategory"     => array ("users"),
-            "plOptions"      => array (),
+            "plSection"      => array("personal"   => _("My account")),
+            "plCategory"     => array("users"),
+            "plOptions"      => array(),
             "plProperties"   => $properties,
-            "plRequirements" => array ('onFailureDisablePlugin' => array (get_class())),
-            "plProvidedAcls" => array (
+            "plRequirements" => array('onFailureDisablePlugin' => array(get_class())),
+            "plProvidedAcls" => array(
                 # GOsa R+W
                 "allowedTokenTypes"     => _("MFA token types"),
 
