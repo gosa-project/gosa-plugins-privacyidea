@@ -224,13 +224,13 @@ class mfaAccount extends plugin
         $providedACLs = $this->plInfo()['plProvidedAcls'];
         foreach ($providedACLs as $name => $transl) {
             switch ($name) {
-            case "allowedTokenTypes":   // FALLTHROUGH
-            case "mfaRequiredByRule":   // FALLTHROUGH
-            case "mfaRequiredByUser":
-                $mfaSkipWrite = $skipWrite;
-                break;
-            default:
-                $mfaSkipWrite = false;
+                case "allowedTokenTypes":   // FALLTHROUGH
+                case "mfaRequiredByRule":   // FALLTHROUGH
+                case "mfaRequiredByUser":
+                    $mfaSkipWrite = $skipWrite;
+                    break;
+                default:
+                    $mfaSkipWrite = false;
             }
             $aclVal  = $this->getacl($name, $mfaSkipWrite);
             $aclName = "$name" . "ACL";
