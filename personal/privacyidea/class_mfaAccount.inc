@@ -1035,75 +1035,75 @@ class mfaAccount extends plugin
      */
     public static function getProperties()
     {
-        $privacyidea_settings = array(
-            array(
-                "name"        => "piServer",
-                "type"        => "string",
-                "check"       => "gosaProperty::isString",
-                "group"       => "core",
-                "default"     => "http://localhost:5000/",
-                "migrate"     => "",
-                "mandatory"   => true,
-                "description" => _("privacyIDEA server URL.")
-            ),
-            array(
-                "name"        => "piTokenOrigin",
-                "type"        => "string",
-                "check"       => "gosaProperty::isString",
-                "group"       => "core",
-                "default"     => "https://gosa.example.org/",
-                "migrate"     => "",
-                "mandatory"   => false,
-                "description" => _("Protocol + FQDN. Used to set Origin: header for privacyIDEA where needed.")
-            ),
-            array(
-                "name"        => "piServiceAccount",
-                "type"        => "string",
-                "check"       => "gosaProperty::isString",
-                "group"       => "core",
-                "default"     => "username",
-                "migrate"     => "",
-                "mandatory"   => true,
-                "description" => _("privacyIDEA service account username. Used to authenticate GOsa² against privacyIDEA.")
-            ),
-            array(
-                "name"        => "piServicePass",
-                "type"        => "string",
-                "check"       => "gosaProperty::isString",
-                "group"       => "core",
-                "default"     => "password",
-                "migrate"     => "",
-                "mandatory"   => true,
-                "description" => _("privacyIDEA service account password. Used to authenticate GOsa² against privacyIDEA.")
-            ),
-            array(
-                "name"        => "piServiceRealm",
-                "type"        => "string",
-                "check"       => "gosaProperty::isString",
-                "group"       => "core",
-                "default"     => "defrealm",
-                "migrate"     => "",
-                "mandatory"   => true,
-                "description" => _("privacyIDEA service account realm. Used to authenticate GOsa² against privacyIDEA.")
-            ),
-            array(
-                "name"        => "piUserRealm",
-                "type"        => "string",
-                "check"       => "gosaProperty::isString",
-                "group"       => "core",
-                "default"     => "defrealm",
-                "migrate"     => "",
-                "mandatory"   => true,
-                "description" => _("privacyIDEA user realm. Used to find users in privacyIDEA.")
-            ),
-        );
+        // $privacyidea_settings = array(
+        //     array(
+        //         "name"        => "piServer",
+        //         "type"        => "string",
+        //         "check"       => "gosaProperty::isString",
+        //         "group"       => "core",
+        //         "default"     => "http://localhost:5000/",
+        //         "migrate"     => "",
+        //         "mandatory"   => true,
+        //         "description" => _("privacyIDEA server URL.")
+        //     ),
+        //     array(
+        //         "name"        => "piTokenOrigin",
+        //         "type"        => "string",
+        //         "check"       => "gosaProperty::isString",
+        //         "group"       => "core",
+        //         "default"     => "https://gosa.example.org/",
+        //         "migrate"     => "",
+        //         "mandatory"   => false,
+        //         "description" => _("Protocol + FQDN. Used to set Origin: header for privacyIDEA where needed.")
+        //     ),
+        //     array(
+        //         "name"        => "piServiceAccount",
+        //         "type"        => "string",
+        //         "check"       => "gosaProperty::isString",
+        //         "group"       => "core",
+        //         "default"     => "username",
+        //         "migrate"     => "",
+        //         "mandatory"   => true,
+        //         "description" => _("privacyIDEA service account username. Used to authenticate GOsa² against privacyIDEA.")
+        //     ),
+        //     array(
+        //         "name"        => "piServicePass",
+        //         "type"        => "string",
+        //         "check"       => "gosaProperty::isString",
+        //         "group"       => "core",
+        //         "default"     => "password",
+        //         "migrate"     => "",
+        //         "mandatory"   => true,
+        //         "description" => _("privacyIDEA service account password. Used to authenticate GOsa² against privacyIDEA.")
+        //     ),
+        //     array(
+        //         "name"        => "piServiceRealm",
+        //         "type"        => "string",
+        //         "check"       => "gosaProperty::isString",
+        //         "group"       => "core",
+        //         "default"     => "defrealm",
+        //         "migrate"     => "",
+        //         "mandatory"   => true,
+        //         "description" => _("privacyIDEA service account realm. Used to authenticate GOsa² against privacyIDEA.")
+        //     ),
+        //     array(
+        //         "name"        => "piUserRealm",
+        //         "type"        => "string",
+        //         "check"       => "gosaProperty::isString",
+        //         "group"       => "core",
+        //         "default"     => "defrealm",
+        //         "migrate"     => "",
+        //         "mandatory"   => true,
+        //         "description" => _("privacyIDEA user realm. Used to find users in privacyIDEA.")
+        //     ),
+        // );
 
         $token_limits = array(
             array(
                 "name"        => "piTokenLimitAll",
                 "type"        => "integer",
                 "check"       => "gosaProperty::isInteger",
-                "group"       => "core",
+                "group"       => get_class(),
                 "default"     => "10",
                 "migrate"     => "",
                 "mandatory"   => true,
@@ -1113,7 +1113,7 @@ class mfaAccount extends plugin
                 "name"        => "piTokenLimitPaper",
                 "type"        => "integer",
                 "check"       => "gosaProperty::isInteger",
-                "group"       => "core",
+                "group"       => get_class(),
                 "default"     => "6",
                 "migrate"     => "",
                 "mandatory"   => true,
@@ -1123,7 +1123,7 @@ class mfaAccount extends plugin
                 "name"        => "piTokenLimitTotp",
                 "type"        => "integer",
                 "check"       => "gosaProperty::isInteger",
-                "group"       => "core",
+                "group"       => get_class(),
                 "default"     => "6",
                 "migrate"     => "",
                 "mandatory"   => true,
@@ -1133,7 +1133,7 @@ class mfaAccount extends plugin
                 "name"        => "piTokenLimitWebAuthn",
                 "type"        => "integer",
                 "check"       => "gosaProperty::isInteger",
-                "group"       => "core",
+                "group"       => get_class(),
                 "default"     => "4",
                 "migrate"     => "",
                 "mandatory"   => true,
@@ -1143,7 +1143,7 @@ class mfaAccount extends plugin
                 "name"        => "piTokenLimitRegistration",
                 "type"        => "integer",
                 "check"       => "gosaProperty::isInteger",
-                "group"       => "core",
+                "group"       => get_class(),
                 "default"     => "0",
                 "migrate"     => "",
                 "mandatory"   => true,
@@ -1158,7 +1158,7 @@ class mfaAccount extends plugin
                 "name"        => "piAmountOfPaperTokenOTPs",
                 "type"        => "integer",
                 "check"       => "gosaProperty::isInteger",
-                "group"       => "core",
+                "group"       => get_class(),
                 "default"     => "20",
                 "migrate"     => "",
                 "mandatory"   => true,
@@ -1166,6 +1166,7 @@ class mfaAccount extends plugin
             ),
         );
 
-        return array_merge($privacyidea_settings, $token_limits, $misc);
+        // return array_merge($privacyidea_settings, $token_limits, $misc);
+        return array_merge($token_limits, $misc);
     }
 }
