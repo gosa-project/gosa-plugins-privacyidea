@@ -104,7 +104,7 @@
                 <label for="tokenSuccessfulLogins">{t}Successful logins{/t}</label>
             </td>
             <td>
-                <input type="text" name="tokenSuccessfulLogins" value="{if strpos($tokenCountAuthSuccessACL, "r") !== false}{if empty($token.info.count_auth_succes)}{t}Never used before{/t}{else}{$token.info.count_auth_success}{/if}{else}{t}not shown{/t}{/if}" disabled>
+                <input type="text" name="tokenSuccessfulLogins" value="{if strpos($tokenCountAuthSuccessACL, "r") !== false}{if empty($token.info.count_auth_success)}{t}Never used before{/t}{else}{$token.info.count_auth_success}{/if}{else}{t}not shown{/t}{/if}" disabled>
             </td>
         </tr>
         <tr>

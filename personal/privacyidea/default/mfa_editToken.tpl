@@ -117,7 +117,7 @@
             <div class="input-field col s12 xl6">
                 <input type="text" id="tokenSuccessfulLogins" name="tokenSuccessfulLogins"
                     {if strpos($tokenCountAuthSuccessACL, "r") !== false}
-                        {if empty($token.info.count_auth_succes)}
+                        {if empty($token.info.count_auth_success)}
                             value="{t}Never used before{/t}"
                         {else}
                             value="{$token.info.count_auth_success}"
