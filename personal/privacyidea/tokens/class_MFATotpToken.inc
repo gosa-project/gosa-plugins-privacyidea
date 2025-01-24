@@ -225,14 +225,16 @@ class MFATotpToken extends MFATokenHelper implements MFAToken
                     _("The verification of the TOTP token was not successful. The confirmation TAN was probably " .
                       "not entered correctly: please make sure that you have entered it correctly.") . "<br>" .
                     $this->utils->pleaseTryAgainMsg() . "<br>" .
-                    sprintf(_("privacyIDEA server error message: %s"), $resultArray["result"]["error"]["message"])
+                    sprintf(_("privacyIDEA server error message: %s"), $resultArray["result"]["error"]["message"]),
+                    ERROR_DIALOG
                 );
             } else {
                 msg_dialog::display(
                     _("Error"),
                     _("The verification of the TOTP token was not successful. The confirmation TAN was probably " .
                       "not entered correctly: please make sure that you have entered it correctly.") . "<br>" .
-                    $this->utils->pleaseTryAgainMsg()
+                    $this->utils->pleaseTryAgainMsg(),
+                    ERROR_DIALOG
                 );
             }
             return false;
