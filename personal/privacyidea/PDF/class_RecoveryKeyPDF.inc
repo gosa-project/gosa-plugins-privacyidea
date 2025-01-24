@@ -77,8 +77,11 @@
         $this->Ln(6);
         $this->WriteHTML(_("You can use this key one time only as a second factor when logging into our system."));
         $this->Ln(12);
-        $this->WriteHTML(_("Your recovery key is:"));
+
+        # Please no dot at the end of the next sentence.
+        $this->Write(10, _("Your recovery key is:") . " ");
         $this->Ln(12);
+
         $this->SetFont($this->fontFamily, 'B', 12);
         $this->Write(5, $mfaRecoveryKey);
         $this->SetFont($this->fontFamily, '', 10);
@@ -185,5 +188,4 @@
         $greeter = $this->PersonNameAndTitle($sn, $givenname, $academictitle);
         return sprintf(_("Greetings %s"), $greeter);
     }
-
 }
