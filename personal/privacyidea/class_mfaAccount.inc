@@ -729,6 +729,12 @@ class mfaAccount extends plugin
             // Nothing special to prepare...
         }
 
+        $tokenType = $token['tokentype'];
+        $tokenTitle = "";
+        if (isset($this->mfaTokens[$token['tokentype']])) {
+            $tokenTitle = $this->mfaTokens[$token['tokentype']]->getSetupCardTitle();
+        }
+        $this->smarty->assign("mfa_" . $token['tokentype'] . "_title", $tokenTitle);
         $this->smarty->assign("token", $token);
         $this->smarty->assign("tokenSerial", $tokenSerial);
         $this->smarty->assign("editEnable", $editEnable);
