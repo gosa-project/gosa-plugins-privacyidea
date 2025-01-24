@@ -57,7 +57,7 @@ class MFATokenHelper
         $this->ldap   = $mfaAccount->ldap;
         $this->config = $mfaAccount->config;
         assert(get_class($this->utils)  == "PrivacyIdeaUtils");
-        assert(get_class($this->smarty) == "Smarty");
+        assert(in_array(get_class($this->smarty), ["Smarty", "Smarty\Smarty"]));
         assert(get_class($this->config) == "config");
         assert(get_class($this->ldap)   == "LDAP" ||
                get_class($this->ldap)   == "ldapMultiplexer");
