@@ -200,6 +200,7 @@ class MFAPaperToken extends MFATokenHelper implements MFAToken
     {
         $this->smarty = get_smarty();
         $this->smarty->assign("tokenSerial", $this->tokenSerial);
+        $this->smarty->assign("tokenDescription", $this->tokenDescription);
         $this->smarty->assign("needsVerifying", $this->needsVerifying);
         return true;
     }
