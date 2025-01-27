@@ -231,7 +231,8 @@ class PrivacyIdeaUtils implements PILog
             msg_dialog::display(
                 _("Internal error"),
                 _("Could not get authentification token from privacyIDEA backend server.") . "<br>" .
-                $this->pleaseTryAgainMsg()
+                $this->pleaseTryAgainMsg(),
+                ERROR_DIALOG
             );
             $this->authToken = "";
             $this->hasPiErrors = true;
@@ -248,7 +249,8 @@ class PrivacyIdeaUtils implements PILog
                 _("Internal Error"),
                 _("Could not get authentification token from privacyIDEA backend server.") . "<br>" .
                 _("Dear admin: Please ensure that the privacyIDEA service credentials are set correctly.") . "<br>" .
-                $this->pleaseTryAgainMsg()
+                $this->pleaseTryAgainMsg(),
+                ERROR_DIALOG
             );
             $this->authToken = "";
             $this->hasPiErrors = true;
@@ -340,7 +342,8 @@ class PrivacyIdeaUtils implements PILog
                     _("Internal error"),
                     _("Could not execute step 1 of WebAuthn token enrollment: ") . "<br>" .
                     $requestAnswer["result"]["error"]["message"] . "<br><br>" .
-                    $this->pleaseTryAgainMsg()
+                    $this->pleaseTryAgainMsg(),
+                    ERROR_DIALOG
                 );
             }
 
@@ -662,7 +665,8 @@ class PrivacyIdeaUtils implements PILog
             msg_dialog::display(
                 _("Internal error"),
                 _("Could not connect to privacyIDEA backend server.") . "<br>" .
-                $this->pleaseTryAgainMsg()
+                $this->pleaseTryAgainMsg(),
+                ERROR_DIALOG
             );
 
             return array(

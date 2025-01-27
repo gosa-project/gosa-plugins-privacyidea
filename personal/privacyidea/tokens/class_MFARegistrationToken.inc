@@ -68,7 +68,8 @@ class MFARegistrationToken extends MFATokenHelper implements MFAToken
             msg_dialog::display(
                 _("Internal error"),
                 $limitReachedMessage . "<br>" .
-                $this->utils->pleaseTryAgainMsg()
+                $this->utils->pleaseTryAgainMsg(),
+                ERROR_DIALOG
             );
             return false;
         }
@@ -85,7 +86,8 @@ class MFARegistrationToken extends MFATokenHelper implements MFAToken
             msg_dialog::display(
                 _("Internal error"),
                 $limitReachedMessage . "<br>" .
-                $this->utils->pleaseTryAgainMsg()
+                $this->utils->pleaseTryAgainMsg(),
+                ERROR_DIALOG
             );
             return false;
         }

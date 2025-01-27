@@ -262,7 +262,8 @@ class mfaAccount extends plugin
                     msg_dialog::display(
                         _("Insufficient permissions"),
                         _("You are not allowed to add a new factor.") . "<br>" .
-                        $this->utils->pleaseTryAgainMsg()
+                        $this->utils->pleaseTryAgainMsg(),
+                        ERROR_DIALOG
                     );
 
                     return $this->getMFAIntroTemplate();
@@ -279,7 +280,8 @@ class mfaAccount extends plugin
                     msg_dialog::display(
                         _("Internal error"),
                         _("Could not process POST data of your request.") . "<br>" .
-                        $this->utils->pleaseTryAgainMsg()
+                        $this->utils->pleaseTryAgainMsg(),
+                        ERROR_DIALOG
                     );
 
                     return $this->getMFAIntroTemplate();
@@ -291,7 +293,8 @@ class mfaAccount extends plugin
                     msg_dialog::display(
                         _("Insufficient permissions"),
                         _("You are not allowed to manage MFA factors.") . "<br>" .
-                        $this->utils->pleaseTryAgainMsg()
+                        $this->utils->pleaseTryAgainMsg(),
+                        ERROR_DIALOG
                     );
 
                     return $this->getMFAIntroTemplate();
@@ -325,7 +328,8 @@ class mfaAccount extends plugin
                                 _("It is not supported to deactivate, revoke or remove your last token.") . "<br>" .
                                 _("Please add another token to ensure that you always have at least one working " .
                                   "token.") . "<br>" .
-                                $this->utils->pleaseTryAgainMsg()
+                                $this->utils->pleaseTryAgainMsg(),
+                                ERROR_DIALOG
                             );
 
                             return $this->getMFAIntroTemplate();
@@ -355,7 +359,8 @@ class mfaAccount extends plugin
                     msg_dialog::display(
                         _("Insufficient permissions"),
                         _("You are not allowed to manage MFA factors.") . "<br>" .
-                        $this->utils->pleaseTryAgainMsg()
+                        $this->utils->pleaseTryAgainMsg(),
+                        ERROR_DIALOG
                     );
 
                     return $this->getMFAIntroTemplate();
@@ -384,7 +389,8 @@ class mfaAccount extends plugin
                                 _("It is not supported to deactivate, revoke or remove your last token.") . "<br>" .
                                 _("Please add another token to ensure that you always have at least one working " .
                                   "token.") . "<br>" .
-                                $this->utils->pleaseTryAgainMsg()
+                                $this->utils->pleaseTryAgainMsg(),
+                                ERROR_DIALOG
                             );
 
                             return $this->getMFAIntroTemplate();
@@ -410,7 +416,8 @@ class mfaAccount extends plugin
                         msg_dialog::display(
                             _("Internal error"),
                             sprintf(_("A batch operation failed on token '%s'. Skipping remaining operations."), $mfaTokenSerial) . "<br>" .
-                            $this->utils->pleaseTryAgainMsg()
+                            $this->utils->pleaseTryAgainMsg(),
+                            ERROR_DIALOG
                         );
                         break;
                     }
@@ -431,7 +438,8 @@ class mfaAccount extends plugin
                 msg_dialog::display(
                     _("Internal error"),
                     _("Could not load/render template for MFA setup.") . "<br>" .
-                    $this->utils->pleaseTryAgainMsg()
+                    $this->utils->pleaseTryAgainMsg(),
+                    ERROR_DIALOG
                 );
 
                 return $this->getMFAIntroTemplate();
@@ -694,7 +702,8 @@ class mfaAccount extends plugin
         msg_dialog::display(
             _("Internal error"),
             _("Token action malformed or not allowed.") . "<br>" .
-            $this->utils->pleaseTryAgainMsg()
+            $this->utils->pleaseTryAgainMsg(),
+            ERROR_DIALOG
         );
     }
 
@@ -892,7 +901,8 @@ class mfaAccount extends plugin
         if (!$ldap->success()) {
             msg_dialog::display(
                 _("LDAP error"),
-                msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class())
+                msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()),
+                ERROR_DIALOG
             );
         }
 
@@ -928,7 +938,8 @@ class mfaAccount extends plugin
         if (!$ldap->success()) {
             msg_dialog::display(
                 _("LDAP error"),
-                msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class())
+                msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()),
+                ERROR_DIALOG
             );
         }
 

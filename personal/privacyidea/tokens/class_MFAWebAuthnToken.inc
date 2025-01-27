@@ -57,7 +57,8 @@ class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
             msg_dialog::display(
                 _("Internal error"),
                 _("Token serial wasn't given or was given malformed.") . "<br>" .
-                $this->utils->pleaseTryAgainMsg()
+                $this->utils->pleaseTryAgainMsg(),
+                ERROR_DIALOG
             );
 
             return false;
@@ -90,7 +91,8 @@ class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
             msg_dialog::display(
                 _("Internal error"),
                 $limitReachedMessage . "<br>" .
-                $this->utils->pleaseTryAgainMsg()
+                $this->utils->pleaseTryAgainMsg(),
+                ERROR_DIALOG
             );
             return false;
         }
@@ -107,7 +109,8 @@ class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
             msg_dialog::display(
                 _("Internal error"),
                 $limitReachedMessage . "<br>" .
-                $this->utils->pleaseTryAgainMsg()
+                $this->utils->pleaseTryAgainMsg(),
+                ERROR_DIALOG
             );
             return false;
         }
@@ -123,7 +126,8 @@ class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
             msg_dialog::display(
                 _("Internal error"),
                 _("Couldn't enroll token!") . "<br>" .
-                $this->utils->pleaseTryAgainMsg()
+                $this->utils->pleaseTryAgainMsg(),
+                ERROR_DIALOG
             );
 
             return false;
@@ -133,7 +137,8 @@ class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
             msg_dialog::display(
                 _("Internal error"),
                 _("privacyIDEA server gave invalid/malformed webAuthnRegisterRequest data.") . "<br>" .
-                $this->utils->pleaseTryAgainMsg()
+                $this->utils->pleaseTryAgainMsg(),
+                ERROR_DIALOG
             );
 
             return false;
@@ -187,13 +192,15 @@ class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
                     _("Internal error"),
                     _("Failed to execute step 2 of token enrollment.") . "<br>" .
                     $this->utils->pleaseTryAgainMsg() . "<br>" .
-                    sprintf(_("privacyIDEA server error message: %s"), $resultArray["result"]["error"]["message"])
+                    sprintf(_("privacyIDEA server error message: %s"), $resultArray["result"]["error"]["message"]),
+                    ERROR_DIALOG
                 );
             } else {
                 msg_dialog::display(
                     _("Internal error"),
                     _("Failed to execute step 2 of token enrollment.") . "<br>" .
-                    $this->utils->pleaseTryAgainMsg()
+                    $this->utils->pleaseTryAgainMsg(),
+                    ERROR_DIALOG
                 );
             }
             return false;

@@ -78,7 +78,8 @@ class MFATotpToken extends MFATokenHelper implements MFAToken
             msg_dialog::display(
                 _("Internal error"),
                 _("Token serial wasn't given or was given malformed.") . "<br>" .
-                $this->utils->pleaseTryAgainMsg()
+                $this->utils->pleaseTryAgainMsg(),
+                ERROR_DIALOG
             );
 
             return false;
@@ -104,7 +105,8 @@ class MFATotpToken extends MFATokenHelper implements MFAToken
                 msg_dialog::display(
                     _("Internal error"),
                     _("Given validation code was malformed. We couldn't verify your token.") . "<br>" .
-                    $this->utils->pleaseTryAgainMsg()
+                    $this->utils->pleaseTryAgainMsg(),
+                    ERROR_DIALOG
                 );
 
                 return false;
@@ -130,7 +132,8 @@ class MFATotpToken extends MFATokenHelper implements MFAToken
             msg_dialog::display(
                 _("Internal error"),
                 $limitReachedMessage . "<br>" .
-                $this->utils->pleaseTryAgainMsg()
+                $this->utils->pleaseTryAgainMsg(),
+                ERROR_DIALOG
             );
             return false;
         }
@@ -147,7 +150,8 @@ class MFATotpToken extends MFATokenHelper implements MFAToken
             msg_dialog::display(
                 _("Internal error"),
                 $limitReachedMessage . "<br>" .
-                $this->utils->pleaseTryAgainMsg()
+                $this->utils->pleaseTryAgainMsg(),
+                ERROR_DIALOG
             );
             return false;
         }
@@ -164,7 +168,8 @@ class MFATotpToken extends MFATokenHelper implements MFAToken
             msg_dialog::display(
                 _("Internal error"),
                 _("Couldn't enroll token!") . "<br>" .
-                $this->utils->pleaseTryAgainMsg()
+                $this->utils->pleaseTryAgainMsg(),
+                ERROR_DIALOG
             );
 
             return false;
