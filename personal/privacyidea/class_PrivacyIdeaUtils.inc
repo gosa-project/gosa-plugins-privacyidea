@@ -490,7 +490,7 @@ class PrivacyIdeaUtils implements PILog
                 }
             }
 
-            if (isset($token["rollout_state"]) && $token["rollout_state"] == "verify") {
+            if (isset($token["rollout_state"]) && in_array($token["rollout_state"], ["verify", "clientwait"])) {
                 $tokens[$key]["status"] = _("Not verified");
             } elseif (isset($token["locked"]) && $token["locked"]) {
                 $tokens[$key]["status"] = _("Locked");
