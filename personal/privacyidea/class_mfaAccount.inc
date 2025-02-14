@@ -70,7 +70,7 @@ class mfaAccount extends plugin
 
     public function __construct(&$config, $dn = null)
     {
-        plugin::__construct($config, $dn);
+        parent::__construct($config, $dn);
 
         $this->orig_dn = $dn;
 
@@ -180,7 +180,7 @@ class mfaAccount extends plugin
         $this->smarty = get_smarty();
 
         /* Call parent execute */
-        plugin::execute();
+        parent::execute();
 
         $this->utils->hasPiErrors = false;
 
@@ -844,7 +844,7 @@ class mfaAccount extends plugin
      */
     public function save_object()
     {
-        plugin::save_object();
+        parent::save_object();
 
         // If user clicked save settings button.
         if (isset($_POST['edit_apply']) || isset($_POST['edit_finish'])) {
@@ -878,7 +878,7 @@ class mfaAccount extends plugin
         }
 
         // Remove GOsa attributes
-        plugin::remove_from_parent();
+        parent::remove_from_parent();
 
         $this->cleanup();
 
@@ -910,7 +910,7 @@ class mfaAccount extends plugin
         // if ($this->initially_was_account) {}
 
         // Call parents save to prepare $this->attrs
-        plugin::save();
+        parent::save();
 
         // Clean up $this->allowedTokenTypes and $this->mfaRequired
         $this->updateAttrsAllowedTokenTypes();
@@ -953,7 +953,7 @@ class mfaAccount extends plugin
         $ldap = $this->config->get_ldap_link();
 
         // Call common method to give check the hook
-        $message = plugin::check();
+        $message = parent::check();
 
         // TODO: If user looks at it's own page AND mfa method must be activated
         // then don't let user leave!
@@ -974,7 +974,7 @@ class mfaAccount extends plugin
     public function adapt_from_template($dn, $skip = array())
     {
         // TODO: Adapt allowed token types.
-        plugin::adapt_from_template($dn, $skip);
+        parent::adapt_from_template($dn, $skip);
     }
 
     /**
