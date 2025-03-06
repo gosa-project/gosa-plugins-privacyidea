@@ -175,6 +175,8 @@ class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
         //     return false;
         // }
 
+        $this->smarty->assign("tokenDescription", $this->tokenDescription);
+
         if (isset($this->mfaWebAuthnRegisterResponse)) {
             $resultArray = $this->enrollWebAuthnTokenStep2();
         }
