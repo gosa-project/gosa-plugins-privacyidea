@@ -507,7 +507,7 @@ class PrivacyIdeaUtils implements PILog
                 $piString = $token['info']['last_auth'];
                 $dateTimeObject = new DateTime($piString, new DateTimeZone('UTC'));
 
-                $dateTimeString = $dateTimeObject->format("Y-m-d\TH:m:s");
+                $dateTimeString = $dateTimeObject->format("Y-m-d\TH:i:s");
                 $tokens[$key]['info']['last_auth'] = $dateTimeString;
             }
 
