@@ -29,14 +29,12 @@
     <input type="hidden" name="mfaTokenBatchAction" value="{$mfaTokenBatchAction}">
     <ul>
         {foreach $mfaTokenSerials as $tokenSerial}
-            {assign var="description" value="{$serialsTokens[$tokenSerial]['description']}"}
-            <li><input type="hidden" name="mfaTokenSerials[]" value="{$tokenSerial}"><b>{if !empty($description)}{$description|escape} ({$tokenSerial}){else}{$tokenSerial}{/if}</b></li>
+            <li><input type="hidden" name="mfaTokenSerials[]" value="{$tokenSerial}"><b>{$tokensDescriptions[$tokenSerial]|escape}</b></li>
         {/foreach}
     </ul>
 {else}
     <input type="hidden" name="mfaTokenAction[{$mfaTokenAction}]" value="{$tokenSerial}">
-    {assign var="description" value="{$serialsTokens[$tokenSerial]['description']}"}
-    <p><b>{if !empty($description)}{$description|escape} ({$tokenSerial}){else}{$tokenSerial}{/if}</b></p>
+    <p><b>{$tokensDescriptions[$tokenSerial]|escape}</b></p>
 {/if}
 
 <hr>

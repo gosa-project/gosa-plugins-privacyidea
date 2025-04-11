@@ -830,7 +830,17 @@ class mfaAccount extends plugin
             $result[$token["serial"]] = $token;
             return $result;
         }, []);
-        $this->smarty->assign("serialsTokens", $serialsTokens);
+        $tokensDescriptions = array();
+        if ($isBatch) {
+            foreach ($mfaTokens as $tokenSerial) {
+                $tokensDescriptions[$tokenSerial] = array_key_exists($tokenSerial, $serialsTokens) ?
+                        $serialsTokens[$tokenSerial]['description'] . " ($tokenSerial)" : "$tokenSerial";
+            }
+        } else {
+            $tokensDescriptions[$mfaTokens] = array_key_exists($mfaTokens, $serialsTokens) ?
+                    $serialsTokens[$mfaTokens]['description'] . " ($mfaTokens)" : "$mfaTokens";
+        }
+        $this->smarty->assign("tokensDescriptions", $tokensDescriptions);
 
         return $this->smarty->fetch(get_template_path("mfa_batchConfirm.tpl", true, dirname(__FILE__)));
     }
