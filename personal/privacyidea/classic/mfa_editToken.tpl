@@ -51,6 +51,7 @@
             </td>
             <td>
                 <input type="text" name="tokenDescription" pattern="[^<>\x22\x27]+"
+                       title="{t}Quotation marks and the characters < and > are not allowed in the description{/t}"
                     {* If in the future more details can be edited, copy this snippet here... *}
                     {if strpos($tokenDescriptionACL, "r") !== false}
                         value="{if !$editEnable && empty($token.description)}{t}(empty){/t}{else}{$token.description|escape}{/if}"

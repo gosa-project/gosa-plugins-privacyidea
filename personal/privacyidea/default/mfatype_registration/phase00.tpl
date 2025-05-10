@@ -32,6 +32,7 @@
         <div class="input-field col s12">
             <label for="tokenDescription">{t}Description{/t}</label>
             <input type="text" id="tokenDescription" name="tokenDescription" size="60" maxlength="60" pattern="[^<>\x22\x27]+" required
+                title="{t}Quotation marks and the characters < and > are not allowed in the description{/t}"
                 oninvalid="this.setCustomValidity('{t}Empty descriptions are allowed but discouraged. They help you to identify your tokens later on. You can proceed now.{/t}')"
                 oninput="this.setCustomValidity('')">
             <span class="helper-text">

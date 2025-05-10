@@ -36,6 +36,7 @@
         <div class="row">
             <div class="input-field col s12 xl6">
                 <input type="text" name="tokenDescription" pattern="[^<>\x22\x27]+"
+                       title="{t}Quotation marks and the characters < and > are not allowed in the description{/t}"
                     {* If in the future more details can be edited, copy this snippet here... *}
                     {if strpos($tokenDescriptionACL, "r") !== false}
                         {if !$editEnable && empty($token.description)}

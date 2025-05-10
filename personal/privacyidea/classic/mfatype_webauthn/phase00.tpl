@@ -35,6 +35,7 @@
         </td>
         <td>
             <input type="text" id="tokenDescription" name="tokenDescription" size="60" maxlength="60" pattern="[^<>\x22\x27]+" required
+                title="{t}Quot ation marks and the characters < and > are not allowed in the description{/t}"
                 oninvalid="this.setCustomValidity('{t}Empty descriptions are allowed but discouraged. They help you to identify your tokens later on. You can proceed now.{/t}')"
                 oninput="this.setCustomValidity('')">
         </td>
