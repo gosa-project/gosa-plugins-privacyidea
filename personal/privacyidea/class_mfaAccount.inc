@@ -24,7 +24,7 @@ class mfaAccount extends plugin
 {
     // Plugin definitions
     public $plHeadline    = "Multifactor authentication";
-    public $plDescription = "Manage Multifactor authentication";
+    public $plDescription = "Manage multifactor authentication";
     public $access        = "";
 
     // Attribute list for save action

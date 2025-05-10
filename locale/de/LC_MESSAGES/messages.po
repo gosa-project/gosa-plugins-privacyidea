@@ -933,7 +933,7 @@ msgid "Multifactor authentication"
 msgstr "Multifaktor-Authentifizierung"
 
 #: personal/privacyidea/class_mfaAccount.inc:27
-msgid "Manage Multifactor authentication"
+msgid "Manage multifactor authentication"
 msgstr "Multifaktor-Authentifizierung verwalten"
 
 #: personal/privacyidea/class_mfaAccount.inc:245
