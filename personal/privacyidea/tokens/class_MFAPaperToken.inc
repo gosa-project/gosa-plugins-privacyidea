@@ -209,11 +209,23 @@ class MFAPaperToken extends MFATokenHelper implements MFAToken
 
         $resultArray = $this->utils->enrollTokenStep2($this->tokenSerial, $this->mfaVerificationTan, "paper");
         if (!$resultArray["result"]["status"]) {
-            msg_dialog::display(
-                _("Internal error"),
-                _("Failed to execute step 2 of token enrollment.") . "<br>" .
-                $this->utils->pleaseTryAgainMsg()
-            );
+            if (isset($resultArray["result"]["error"]["message"])) {
+                msg_dialog::display(
+                    _("Error"),
+                    _("The verification of the TAN list was not successful. The confirmation TAN was probably not " .
+                      "entered correctly: please make sure that you have entered it correctly.") . "<br>" .
+                    $this->utils->pleaseTryAgainMsg() . "<br>" .
+                    sprintf(_("privacyIDEA server error message: %s"), $resultArray["result"]["error"]["message"]),
+                    ERROR_DIALOG
+                );
+            } else {
+                msg_dialog::display(
+                    _("Error"),
+                    _("The verification of the TAN list was not successful. The confirmation TAN was probably not " .
+                      "entered correctly: please make sure that you have entered it correctly.") . "<br>" .
+                    $this->utils->pleaseTryAgainMsg()
+                );
+            }
 
             return false;
         }
