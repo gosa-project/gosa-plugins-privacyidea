@@ -21,7 +21,7 @@
 
 <h2>{t}Add TAN List{/t}</h2>
 
-<p>{t}Lists with transaction authentication number (TAN) are printed out and stored in a secure location. A TAN is a one-time password and a TAN from the list has to be entered on each login.{/t}</p>
+<p>{t}Lists with transaction authentication numbers (TAN) are printed out and stored in a secure location. A TAN is a one-time password and a TAN from the list has to be entered on each login.{/t}</p>
 
 <p>{t}Creating a TAN list requires multiple steps:{/t}</p>
 <ol>

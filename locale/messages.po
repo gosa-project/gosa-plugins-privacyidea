@@ -186,8 +186,8 @@ msgstr ""
 #: personal/privacyidea/default/mfatype_webauthn/phase00.tpl:25
 #: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:236
 msgid ""
-"FIDO2-compatible hardware security keys are e.g. connected via USB of NFC "
-"and authentication is started using a device-specifcic mechanism, e.g. "
+"FIDO2-compatible hardware security keys are e.g. connected via USB or NFC "
+"and authentication is started using a device-specific mechanism, e.g. "
 "touching a sensor."
 msgstr ""
 
@@ -577,7 +577,7 @@ msgstr ""
 #: personal/privacyidea/default/mfatype_paper/phase00.tpl:25
 #: personal/privacyidea/tokens/class_MFAPaperToken.inc:229
 msgid ""
-"Lists with transaction authentication number (TAN) are printed out and "
+"Lists with transaction authentication numbers (TAN) are printed out and "
 "stored in a secure location. A TAN is a one-time password and a TAN from the "
 "list has to be entered on each login."
 msgstr ""

@@ -236,8 +236,8 @@ class MFAWebAuthnToken extends MFATokenHelper implements MFAToken
     public function getSetupCardDescription()
     {
         return _("FIDO2-compatible hardware security keys are e.g. " .
-            "connected via USB of NFC and authentication is started " .
-            "using a device-specifcic mechanism, e.g. touching a sensor.");
+            "connected via USB or NFC and authentication is started " .
+            "using a device-specific mechanism, e.g. touching a sensor.");
     }
 
     public function getSetupCardButtonText()

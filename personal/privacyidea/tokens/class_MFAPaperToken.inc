@@ -226,7 +226,7 @@ class MFAPaperToken extends MFATokenHelper implements MFAToken
 
     public function getSetupCardDescription()
     {
-        return _("Lists with transaction authentication number (TAN) are " .
+        return _("Lists with transaction authentication numbers (TAN) are " .
             "printed out and stored in a secure location. A TAN is a one-time " .
             "password and a TAN from the list has to be entered on each login.");
     }

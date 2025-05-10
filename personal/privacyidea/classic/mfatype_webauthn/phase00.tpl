@@ -21,7 +21,7 @@
 
 <h2>{t}Add FIDO2 Security Key{/t}</h2>
 
-<p>{t}FIDO2-compatible hardware security keys are e.g. connected via USB of NFC and authentication is started using a device-specifcic mechanism, e.g. touching a sensor.{/t}</p>
+<p>{t}FIDO2-compatible hardware security keys are e.g. connected via USB or NFC and authentication is started using a device-specific mechanism, e.g. touching a sensor.{/t}</p>
 <p>{t}A FIDO2-compatible hardware key is required for the following setup procedure:{/t}</p>
 <ol>
     <li>{t}Assign a meaningful description for the security key.{/t}</li>
