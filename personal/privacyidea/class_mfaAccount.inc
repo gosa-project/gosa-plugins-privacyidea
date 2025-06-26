@@ -879,7 +879,12 @@ class mfaAccount extends plugin
             return $this->attrs["uid"][0];
         }
 
-        // fall back to logged in user
+        // use logged-in user for roletabs
+        if (is_object($this->parent) && ($this->parent instanceof roletabs)) {
+            return $this->ui->uid;
+        }
+
+        // fall back to logged-in user if no parent
         if (!isset($this->parent)) {
             return $this->ui->uid;
         }
