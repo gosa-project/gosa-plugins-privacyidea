@@ -67,6 +67,7 @@ class mfaAccount extends plugin
     // Indicate to parent that its footer should be hidden
     public $skipFooter    = false;
     public $skipWrite;
+    public $skipWrite_mfaRequiredByUser;
 
     public function __construct(&$config, $dn = null)
     {
@@ -213,6 +214,9 @@ class mfaAccount extends plugin
         /* In 'MyAccount' mode, we must remove write acls if we are not in editing mode (plus exception for roletabs mode). */
         $this->skipWrite = $parentName != "roletabs" && !session::is_set('edit');
 
+        /* If user has no tokens of type (must be in allowedTokenTypes) active, then we also need to set skipWrite */
+        $this->skipWrite_mfaRequiredByUser = $this->skipWrite || !$this->containsActiveTokenSerials([], $this->allowedTokenTypes);
+
         /* Log view */
         if ($this->is_account && !$this->view_logged) {
             $this->view_logged = true;
@@ -225,9 +229,11 @@ class mfaAccount extends plugin
         foreach ($providedACLs as $name => $transl) {
             switch ($name) {
                 case "allowedTokenTypes":   // FALLTHROUGH
-                case "mfaRequiredByRule":   // FALLTHROUGH
-                case "mfaRequiredByUser":
+                case "mfaRequiredByRule":
                     $mfaSkipWrite = $this->skipWrite;
+                    break;
+                case "mfaRequiredByUser":
+                    $mfaSkipWrite = $this->skipWrite_mfaRequiredByUser;
                     break;
                 default:
                     $mfaSkipWrite = false;
@@ -775,6 +781,7 @@ class mfaAccount extends plugin
         $this->smarty->assign("userExists", ($this->orig_dn != "new"));
         $this->smarty->assign("mfaRequiredByRule", in_array("by_rule", $this->mfaRequired) ? "checked" : "");
         $this->smarty->assign("mfaRequiredByUser", in_array("by_user", $this->mfaRequired) ? "checked" : "");
+        $this->smarty->assign("mfaRequiredByUserDisabled", $this->skipWrite_mfaRequiredByUser);
 
         $this->smarty->assign("mfaRequired", empty($this->mfaRequired) ? false : true);
 
