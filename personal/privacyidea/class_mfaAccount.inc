@@ -210,8 +210,8 @@ class mfaAccount extends plugin
             return ($display);
         }
 
-        /* In 'MyAccount' mode, we must remove write acls if we are not in editing mode. */
-        $skipWrite = $parentName != "roletabs" && !session::is_set('edit');
+        /* In 'MyAccount' mode, we must remove write acls if we are not in editing mode (plus exception for roletabs mode). */
+        $this->skipWrite = $parentName != "roletabs" && !session::is_set('edit');
 
         /* Log view */
         if ($this->is_account && !$this->view_logged) {
@@ -227,7 +227,7 @@ class mfaAccount extends plugin
                 case "allowedTokenTypes":   // FALLTHROUGH
                 case "mfaRequiredByRule":   // FALLTHROUGH
                 case "mfaRequiredByUser":
-                    $mfaSkipWrite = $skipWrite;
+                    $mfaSkipWrite = $this->skipWrite;
                     break;
                 default:
                     $mfaSkipWrite = false;
