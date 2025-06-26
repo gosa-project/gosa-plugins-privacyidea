@@ -329,9 +329,7 @@ class mfaAccount extends plugin
                     case 'mfaTokenDeactivate':   // FALLTHROUGH
                     case 'mfaTokenRevoke':       // FALLTHROUGH
                     case 'mfaTokenRemove':
-                        $tokens = $this->utils->getTokensOfUser($this->getUid(), $this->userRealm);
-                        $activeTokenSerials = $this->utils->getActiveTokenSerials($tokens);
-                        if (count(array_diff($activeTokenSerials, array($tokenSerial))) == 0) {
+                        if ($this->containsActiveTokenSerials(array($tokenSerial))) {
                             // Prevent users from locking themselves out
                             msg_dialog::display(
                                 _("Unsupported action"),
@@ -390,9 +388,7 @@ class mfaAccount extends plugin
                     case 'mfaTokenDeactivate':   // FALLTHROUGH
                     case 'mfaTokenRevoke':       // FALLTHROUGH
                     case 'mfaTokenRemove':
-                        $tokens = $this->utils->getTokensOfUser($this->getUid(), $this->userRealm);
-                        $activeTokenSerials = $this->utils->getActiveTokenSerials($tokens);
-                        if (count(array_diff($activeTokenSerials, $mfaTokenSerials)) == 0) {
+                        if ($this->containsActiveTokenSerials($mfaTokenSerials)) {
                             // Prevent users from locking themselves out
                             msg_dialog::display(
                                 _("Unsupported action"),
@@ -505,6 +501,23 @@ class mfaAccount extends plugin
 
         // Re-index the array, so index numbers always start with number 0.
         $this->mfaRequired = array_values($this->mfaRequired);
+    }
+
+    /**
+     * This function checks if a user has active tokens of given types.
+     * @param array|null $tokenSerials
+     * @param array|null $types
+     * @return bool TRUE, if user has active tokens of either of the given types.
+     */
+    private function containsActiveTokenSerials($tokenSerials = [], $types = [])
+    {
+        $tokens = $this->utils->getTokensOfUser($this->getUid(), $this->userRealm);
+        $activeTokenSerials = $this->utils->getActiveTokenSerials($tokens, $types);
+        if ($tokenSerials) {
+            return (count(array_diff($activeTokenSerials, $tokenSerials)) > 0);
+        } else {
+            return (count($activeTokenSerials) > 0);
+        }
     }
 
     /**
