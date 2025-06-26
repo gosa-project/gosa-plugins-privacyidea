@@ -69,6 +69,12 @@
             <label for="mfaRequiredByUser">{t}Always require additional factors.{/t}</label>
         </td>
     </tr>
+{if $mfaRequiredByUserDisabled}
+    <tr>
+        <td></td>
+        <td>{t}You need to add a multifactor method before you can enable this setting.{/t}</td>
+    </tr>
+{/if}
 {/render}
 {/if}
 {/if}

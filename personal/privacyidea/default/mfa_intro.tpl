@@ -69,6 +69,9 @@
                 {t}Always require additional factors.{/t}
             </span>
         </label>
+{if $mfaRequiredByUserDisabled}
+        <div>{t}You need to add a multifactor method before you can enable this setting.{/t}</div>
+{/if}
     </div>
 </div>
 {/render}
