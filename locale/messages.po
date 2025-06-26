@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-21 15:31+0100\n"
+"POT-Creation-Date: 2025-06-26 11:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,173 +18,258 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: personal/privacyidea/default/mfatype_registration/phase01.tpl:22
-msgid "Recovery key added"
+#: personal/privacyidea/default/mfatype_registration/phase01.tpl:38
+#: personal/privacyidea/classic/mfatype_registration/phase01.tpl:34
+msgid "Recovery Key added"
 msgstr ""
 
-#: personal/privacyidea/default/mfatype_registration/phase01.tpl:25
+#: personal/privacyidea/default/mfatype_registration/phase01.tpl:41
+#: personal/privacyidea/classic/mfatype_registration/phase01.tpl:39
 msgid ""
 "The recovery key <b>%1</b> was successfully added to this account and can "
 "now be used for logging in one time only."
 msgstr ""
 
-#: personal/privacyidea/default/mfatype_registration/phase01.tpl:29
+#: personal/privacyidea/default/mfatype_registration/phase01.tpl:45
+#: personal/privacyidea/classic/mfatype_registration/phase01.tpl:47
 msgid "The recovery key value is: <b>%1</b>"
 msgstr ""
 
-#: personal/privacyidea/default/mfatype_registration/phase01.tpl:31
+#: personal/privacyidea/default/mfatype_registration/phase01.tpl:47
+#: personal/privacyidea/classic/mfatype_registration/phase01.tpl:49
 msgid "Download as PDF"
 msgstr ""
 
-#: personal/privacyidea/default/mfatype_registration/phase01.tpl:36
+#: personal/privacyidea/default/mfatype_registration/phase01.tpl:52
 #: personal/privacyidea/default/mfatype_webauthn/phase02.tpl:27
 #: personal/privacyidea/default/mfatype_totp/phase03.tpl:29
 #: personal/privacyidea/default/mfatype_paper/phase03.tpl:29
+#: personal/privacyidea/classic/mfatype_registration/phase01.tpl:54
+#: personal/privacyidea/classic/mfatype_webauthn/phase02.tpl:31
+#: personal/privacyidea/classic/mfatype_totp/phase03.tpl:31
+#: personal/privacyidea/classic/mfatype_paper/phase03.tpl:31
 msgid ""
 "Please ensure that nobody other than yourself is able to access this factor."
 msgstr ""
 
-#: personal/privacyidea/default/mfatype_registration/phase01.tpl:37
+#: personal/privacyidea/default/mfatype_registration/phase01.tpl:53
+#: personal/privacyidea/classic/mfatype_registration/phase01.tpl:55
 msgid ""
 "Recovery keys are fallback factors. Please make sure you have at least one "
 "factor configured for daily use."
 msgstr ""
 
-#: personal/privacyidea/default/mfatype_registration/phase01.tpl:41
+#: personal/privacyidea/default/mfatype_registration/phase01.tpl:58
 #: personal/privacyidea/default/mfatype_webauthn/phase02.tpl:32
 #: personal/privacyidea/default/mfatype_totp/phase03.tpl:35
 #: personal/privacyidea/default/mfatype_paper/phase03.tpl:34
+#: personal/privacyidea/classic/mfatype_registration/phase01.tpl:60
+#: personal/privacyidea/classic/mfatype_webauthn/phase02.tpl:36
+#: personal/privacyidea/classic/mfatype_totp/phase03.tpl:36
+#: personal/privacyidea/classic/mfatype_paper/phase03.tpl:36
 msgid "Back to overview"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_registration/phase00.tpl:22
-msgid "Add a recovery key"
+#: personal/privacyidea/classic/mfatype_registration/phase00.tpl:22
+msgid "Add a Recovery Key"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_registration/phase00.tpl:25
+#: personal/privacyidea/classic/mfatype_registration/phase00.tpl:24
 msgid "A recovery key can be used exactly once for logging in."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_registration/phase00.tpl:26
+#: personal/privacyidea/classic/mfatype_registration/phase00.tpl:25
 msgid "Recovery keys are created through the following procedure:"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_registration/phase00.tpl:28
+#: personal/privacyidea/classic/mfatype_registration/phase00.tpl:27
 msgid "Assign a meaningful description for the recovery key."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_registration/phase00.tpl:29
+#: personal/privacyidea/classic/mfatype_registration/phase00.tpl:28
 msgid "The key will be shown immediately."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_registration/phase00.tpl:33
 #: personal/privacyidea/default/mfatype_webauthn/phase00.tpl:33
-#: personal/privacyidea/default/mfa_intro.tpl:233
-#: personal/privacyidea/default/mfa_editToken.tpl:50
+#: personal/privacyidea/default/mfa_intro.tpl:259
+#: personal/privacyidea/default/mfa_editToken.tpl:59
 #: personal/privacyidea/default/mfatype_totp/phase00.tpl:35
 #: personal/privacyidea/default/mfatype_paper/phase00.tpl:34
-#: personal/privacyidea/class_mfaAccount.inc:947
+#: personal/privacyidea/classic/mfatype_registration/phase00.tpl:34
+#: personal/privacyidea/classic/mfatype_webauthn/phase00.tpl:34
+#: personal/privacyidea/classic/mfa_intro.tpl:267
+#: personal/privacyidea/classic/mfa_editToken.tpl:50
+#: personal/privacyidea/classic/mfatype_totp/phase00.tpl:36
+#: personal/privacyidea/classic/mfatype_paper/phase00.tpl:36
+#: personal/privacyidea/class_mfaAccount.inc:1088
 msgid "Description"
 msgstr ""
 
+#: personal/privacyidea/default/mfatype_registration/phase00.tpl:35
+#: personal/privacyidea/default/mfatype_webauthn/phase00.tpl:35
+#: personal/privacyidea/default/mfa_editToken.tpl:39
+#: personal/privacyidea/default/mfatype_totp/phase00.tpl:37
+#: personal/privacyidea/default/mfatype_paper/phase00.tpl:36
+#: personal/privacyidea/classic/mfatype_registration/phase00.tpl:38
+#: personal/privacyidea/classic/mfatype_webauthn/phase00.tpl:38
+#: personal/privacyidea/classic/mfa_editToken.tpl:54
+#: personal/privacyidea/classic/mfatype_totp/phase00.tpl:40
+#: personal/privacyidea/classic/mfatype_paper/phase00.tpl:40
+msgid ""
+"Quotation marks and the characters < and > are not allowed in the description"
+msgstr ""
+
 #: personal/privacyidea/default/mfatype_registration/phase00.tpl:36
+#: personal/privacyidea/default/mfatype_webauthn/phase00.tpl:36
+#: personal/privacyidea/default/mfatype_totp/phase00.tpl:38
+#: personal/privacyidea/default/mfatype_paper/phase00.tpl:37
+#: personal/privacyidea/classic/mfatype_registration/phase00.tpl:39
+#: personal/privacyidea/classic/mfatype_webauthn/phase00.tpl:39
+#: personal/privacyidea/classic/mfatype_totp/phase00.tpl:41
+#: personal/privacyidea/classic/mfatype_paper/phase00.tpl:41
+msgid ""
+"Empty descriptions are allowed but discouraged. They help you to identify "
+"your tokens later on. You can proceed now."
+msgstr ""
+
+#: personal/privacyidea/default/mfatype_registration/phase00.tpl:39
+#: personal/privacyidea/classic/mfatype_registration/phase00.tpl:45
 msgid ""
 "Please enter a meaningful description allowing you to recognize the recovery "
 "key. This description may be edited later."
 msgstr ""
 
-#: personal/privacyidea/default/mfatype_registration/phase00.tpl:45
-#: personal/privacyidea/default/mfatype_webauthn/phase01.tpl:71
-#: personal/privacyidea/default/mfatype_webauthn/phase00.tpl:43
-#: personal/privacyidea/default/mfa_intro.tpl:96
-#: personal/privacyidea/default/mfa_editToken.tpl:113
-#: personal/privacyidea/default/mfa_batchConfirm.tpl:44
+#: personal/privacyidea/default/mfatype_registration/phase00.tpl:53
+#: personal/privacyidea/default/mfatype_webauthn/phase01.tpl:69
+#: personal/privacyidea/default/mfatype_webauthn/phase00.tpl:51
 #: personal/privacyidea/default/mfatype_totp/phase02.tpl:40
 #: personal/privacyidea/default/mfatype_totp/phase01.tpl:68
-#: personal/privacyidea/default/mfatype_totp/phase00.tpl:45
+#: personal/privacyidea/default/mfatype_totp/phase00.tpl:53
 #: personal/privacyidea/default/mfatype_paper/phase02.tpl:40
-#: personal/privacyidea/default/mfatype_paper/phase01.tpl:210
-#: personal/privacyidea/default/mfatype_paper/phase00.tpl:44
-msgid "Cancel"
-msgstr ""
-
-#: personal/privacyidea/default/mfatype_registration/phase00.tpl:46
-#: personal/privacyidea/default/mfatype_webauthn/phase01.tpl:72
-#: personal/privacyidea/default/mfatype_webauthn/phase00.tpl:44
-#: personal/privacyidea/default/mfatype_totp/phase02.tpl:41
-#: personal/privacyidea/default/mfatype_totp/phase01.tpl:69
-#: personal/privacyidea/default/mfatype_totp/phase00.tpl:46
-#: personal/privacyidea/default/mfatype_paper/phase02.tpl:41
-#: personal/privacyidea/default/mfatype_paper/phase01.tpl:211
-#: personal/privacyidea/default/mfatype_paper/phase00.tpl:45
+#: personal/privacyidea/default/mfatype_paper/phase01.tpl:231
+#: personal/privacyidea/default/mfatype_paper/phase00.tpl:52
+#: personal/privacyidea/classic/mfatype_registration/phase00.tpl:57
+#: personal/privacyidea/classic/mfatype_webauthn/phase01.tpl:71
+#: personal/privacyidea/classic/mfatype_webauthn/phase00.tpl:59
+#: personal/privacyidea/classic/mfatype_totp/phase02.tpl:37
+#: personal/privacyidea/classic/mfatype_totp/phase01.tpl:78
+#: personal/privacyidea/classic/mfatype_totp/phase00.tpl:61
+#: personal/privacyidea/classic/mfatype_paper/phase02.tpl:37
+#: personal/privacyidea/classic/mfatype_paper/phase01.tpl:233
+#: personal/privacyidea/classic/mfatype_paper/phase00.tpl:60
 msgid "Continue"
 msgstr ""
 
+#: personal/privacyidea/default/mfatype_registration/phase00.tpl:55
+#: personal/privacyidea/default/mfatype_webauthn/phase01.tpl:70
+#: personal/privacyidea/default/mfatype_webauthn/phase00.tpl:53
+#: personal/privacyidea/default/mfa_editToken.tpl:192
+#: personal/privacyidea/default/mfa_batchConfirm.tpl:41
+#: personal/privacyidea/default/mfatype_totp/phase02.tpl:41
+#: personal/privacyidea/default/mfatype_totp/phase01.tpl:69
+#: personal/privacyidea/default/mfatype_totp/phase00.tpl:55
+#: personal/privacyidea/default/mfatype_paper/phase02.tpl:41
+#: personal/privacyidea/default/mfatype_paper/phase01.tpl:232
+#: personal/privacyidea/default/mfatype_paper/phase00.tpl:54
+#: personal/privacyidea/classic/mfatype_registration/phase00.tpl:58
+#: personal/privacyidea/classic/mfatype_webauthn/phase01.tpl:72
+#: personal/privacyidea/classic/mfatype_webauthn/phase00.tpl:61
+#: personal/privacyidea/classic/mfa_editToken.tpl:164
+#: personal/privacyidea/classic/mfa_batchConfirm.tpl:42
+#: personal/privacyidea/classic/mfatype_totp/phase02.tpl:38
+#: personal/privacyidea/classic/mfatype_totp/phase01.tpl:79
+#: personal/privacyidea/classic/mfatype_totp/phase00.tpl:63
+#: personal/privacyidea/classic/mfatype_paper/phase02.tpl:38
+#: personal/privacyidea/classic/mfatype_paper/phase01.tpl:234
+#: personal/privacyidea/classic/mfatype_paper/phase00.tpl:62
+msgid "Cancel"
+msgstr ""
+
 #: personal/privacyidea/default/mfatype_webauthn/phase02.tpl:22
-msgid "Security key added"
+#: personal/privacyidea/classic/mfatype_webauthn/phase02.tpl:22
+msgid "Security Key added"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_webauthn/phase02.tpl:24
+#: personal/privacyidea/classic/mfatype_webauthn/phase02.tpl:27
 msgid ""
 "The security key <b>%1</b> was successfully added to this account and can "
 "now be used."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_webauthn/phase02.tpl:28
+#: personal/privacyidea/classic/mfatype_webauthn/phase02.tpl:32
 msgid ""
 "Please take precautions against your device being damaged or lost and set up "
 "at least one more factor as fallback."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_webauthn/phase01.tpl:25
-msgid "Confirm security key setup"
+#: personal/privacyidea/classic/mfatype_webauthn/phase01.tpl:25
+msgid "Confirm Security Key Setup"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_webauthn/phase01.tpl:30
+#: personal/privacyidea/classic/mfatype_webauthn/phase01.tpl:30
 msgid "Please confirm the setup of the security key <b>%1</b>."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_webauthn/phase01.tpl:31
+#: personal/privacyidea/classic/mfatype_webauthn/phase01.tpl:31
 msgid ""
 "Your browser or operating system will guide you through the setup of the "
 "security key."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_webauthn/phase01.tpl:34
+#: personal/privacyidea/classic/mfatype_webauthn/phase01.tpl:34
 msgid ""
 "Connect your security key to your computer, e.g. plug it into a USB port or "
 "place it near the computer's NFC reader."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_webauthn/phase01.tpl:35
+#: personal/privacyidea/classic/mfatype_webauthn/phase01.tpl:35
 msgid "Initiate the setup by pressing the button below."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_webauthn/phase01.tpl:36
+#: personal/privacyidea/classic/mfatype_webauthn/phase01.tpl:36
 msgid ""
 "Confirm the setup using a device-specific mechanism, e.g. by touching a "
 "sensor on the key."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_webauthn/phase01.tpl:37
+#: personal/privacyidea/classic/mfatype_webauthn/phase01.tpl:37
 msgid ""
 "The browser will proceed to the next page if the setup has been sucessful."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_webauthn/phase01.tpl:42
+#: personal/privacyidea/classic/mfatype_webauthn/phase01.tpl:42
 msgid "Start the setup for your WebAuthn device."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_webauthn/phase01.tpl:43
+#: personal/privacyidea/classic/mfatype_webauthn/phase01.tpl:43
 msgid "Start setup"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_webauthn/phase00.tpl:22
-msgid "Add FIDO2 security key"
+#: personal/privacyidea/classic/mfatype_webauthn/phase00.tpl:22
+msgid "Add FIDO2 Security Key"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_webauthn/phase00.tpl:25
-#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:236
+#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:248
+#: personal/privacyidea/classic/mfatype_webauthn/phase00.tpl:24
 msgid ""
 "FIDO2-compatible hardware security keys are e.g. connected via USB or NFC "
 "and authentication is started using a device-specific mechanism, e.g. "
@@ -192,390 +277,537 @@ msgid ""
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_webauthn/phase00.tpl:26
+#: personal/privacyidea/classic/mfatype_webauthn/phase00.tpl:25
 msgid ""
 "A FIDO2-compatible hardware key is required for the following setup "
 "procedure:"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_webauthn/phase00.tpl:28
+#: personal/privacyidea/classic/mfatype_webauthn/phase00.tpl:27
 msgid "Assign a meaningful description for the security key."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_webauthn/phase00.tpl:29
+#: personal/privacyidea/classic/mfatype_webauthn/phase00.tpl:28
 msgid ""
 "Connect the key to your computer and confirm the setup using a device-"
 "specific mechanism, e.g. by touching a sensor on the key."
 msgstr ""
 
-#: personal/privacyidea/default/mfatype_webauthn/phase00.tpl:35
+#: personal/privacyidea/default/mfatype_webauthn/phase00.tpl:38
+#: personal/privacyidea/classic/mfatype_webauthn/phase00.tpl:45
 msgid ""
 "Please enter a meaningful description allowing you to recognize the security "
 "key. This description may be edited later."
 msgstr ""
 
 #: personal/privacyidea/default/mfa_intro.tpl:28
-msgid "Multifactor authentication requirements"
+#: personal/privacyidea/classic/mfa_intro.tpl:29
+msgid "Multifactor Authentication Requirements"
 msgstr ""
 
 #: personal/privacyidea/default/mfa_intro.tpl:31
+#: personal/privacyidea/classic/mfa_intro.tpl:31
+msgid ""
+"Insufficient permissions for viewing or editing this user's multifactor "
+"authentication properties."
+msgstr ""
+
+#: personal/privacyidea/default/mfa_intro.tpl:34
+#: personal/privacyidea/classic/mfa_intro.tpl:34
 msgid ""
 "Multifactor authentication protects your account from unauthorized access."
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:32
+#: personal/privacyidea/default/mfa_intro.tpl:35
+#: personal/privacyidea/classic/mfa_intro.tpl:35
 msgid "The current configuration for this account is that the use of MFA is "
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:35
+#: personal/privacyidea/default/mfa_intro.tpl:38
+#: personal/privacyidea/classic/mfa_intro.tpl:38
 msgid "required"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:37
+#: personal/privacyidea/default/mfa_intro.tpl:40
+#: personal/privacyidea/classic/mfa_intro.tpl:40
 msgid "not required"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:40
+#: personal/privacyidea/default/mfa_intro.tpl:43
+#: personal/privacyidea/classic/mfa_intro.tpl:44
 msgid "This happens due to organizational policy or user choice:"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:49
+#: personal/privacyidea/default/mfa_intro.tpl:55
+#: personal/privacyidea/classic/mfa_intro.tpl:56
 msgid "Additional factors required by organizational policy."
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:61
+#: personal/privacyidea/default/mfa_intro.tpl:69
+#: personal/privacyidea/classic/mfa_intro.tpl:69
 msgid "Always require additional factors."
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:71
-msgid "Allowed factors"
+#: personal/privacyidea/default/mfa_intro.tpl:73
+#: personal/privacyidea/classic/mfa_intro.tpl:75
+msgid ""
+"You need to add a multifactor method before you can enable this setting."
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:88
+#: personal/privacyidea/default/mfa_intro.tpl:82
+#: personal/privacyidea/classic/mfa_intro.tpl:85
+msgid "Allowed Multifactor Methods"
+msgstr ""
+
+#: personal/privacyidea/default/mfa_intro.tpl:101
+#: personal/privacyidea/default/mfa_intro.tpl:103
 msgid "Attention: "
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:88
+#: personal/privacyidea/default/mfa_intro.tpl:101
+#: personal/privacyidea/classic/mfa_intro.tpl:111
 msgid ""
 "You cannot log in again with this account because there is no multifactor "
-"method associated with it. Please add one of the available methods now."
+"method associated to it. Please add one of the available methods now."
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:97
-msgid "Save settings"
+#: personal/privacyidea/default/mfa_intro.tpl:103
+#: personal/privacyidea/classic/mfa_intro.tpl:113
+msgid ""
+"The user cannot log in with this account because there is no multifactor "
+"method associated to it."
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:99
-msgid "Edit settings"
+#: personal/privacyidea/default/mfa_intro.tpl:115
+#: personal/privacyidea/classic/mfa_intro.tpl:127
+msgid ""
+"You have unsaved changes, are you sure you want to continue? All unsaved "
+"changes to this account will be lost."
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:110
-msgid "Add new multifactor token"
+#: personal/privacyidea/default/mfa_intro.tpl:127
+#: personal/privacyidea/classic/mfa_intro.tpl:139
+msgid "Add new Multifactor Methods"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:114
+#: personal/privacyidea/default/mfa_intro.tpl:131
+#: personal/privacyidea/classic/mfa_intro.tpl:142
 msgid ""
 "Here you can add a new login method for your account. You can choose between "
 "different methods below."
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:127
+#: personal/privacyidea/default/mfa_intro.tpl:144
+#: personal/privacyidea/classic/mfa_intro.tpl:159
 msgid "Overridden by ACL"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:163
+#: personal/privacyidea/default/mfa_intro.tpl:182
+#: personal/privacyidea/classic/mfa_intro.tpl:197
 msgid "You are not allowed to configure any additional multifactor tokens."
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:189
-msgid "Associated multifactor methods"
+#: personal/privacyidea/default/mfa_intro.tpl:212
+#: personal/privacyidea/classic/mfa_intro.tpl:227
+msgid "Associated Multifactor Methods"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:196
+#: personal/privacyidea/default/mfa_intro.tpl:219
+#: personal/privacyidea/classic/mfa_intro.tpl:231
 msgid "Choose an action"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:198
-#: personal/privacyidea/default/mfa_intro.tpl:281
+#: personal/privacyidea/default/mfa_intro.tpl:221
+#: personal/privacyidea/default/mfa_intro.tpl:307
+#: personal/privacyidea/classic/mfa_intro.tpl:233
+#: personal/privacyidea/classic/mfa_intro.tpl:315
 msgid "Reset error counter"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:201
-#: personal/privacyidea/default/mfa_intro.tpl:293
+#: personal/privacyidea/default/mfa_intro.tpl:224
+#: personal/privacyidea/default/mfa_intro.tpl:319
+#: personal/privacyidea/classic/mfa_intro.tpl:236
+#: personal/privacyidea/classic/mfa_intro.tpl:327
 msgid "Activate"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:202
-#: personal/privacyidea/default/mfa_intro.tpl:287
+#: personal/privacyidea/default/mfa_intro.tpl:227
+#: personal/privacyidea/default/mfa_intro.tpl:313
+#: personal/privacyidea/classic/mfa_intro.tpl:239
+#: personal/privacyidea/classic/mfa_intro.tpl:321
 msgid "Deactivate"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:205
-#: personal/privacyidea/default/mfa_intro.tpl:299
+#: personal/privacyidea/default/mfa_intro.tpl:230
+#: personal/privacyidea/default/mfa_intro.tpl:325
+#: personal/privacyidea/classic/mfa_intro.tpl:242
+#: personal/privacyidea/classic/mfa_intro.tpl:333
 msgid "Revoke"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:208
-#: personal/privacyidea/default/mfa_intro.tpl:304
+#: personal/privacyidea/default/mfa_intro.tpl:233
+#: personal/privacyidea/default/mfa_intro.tpl:330
+#: personal/privacyidea/classic/mfa_intro.tpl:245
+#: personal/privacyidea/classic/mfa_intro.tpl:338
 msgid "Remove"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:231
+#: personal/privacyidea/default/mfa_intro.tpl:257
+#: personal/privacyidea/classic/mfa_intro.tpl:265
 msgid "ID"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:232
+#: personal/privacyidea/default/mfa_intro.tpl:258
+#: personal/privacyidea/classic/mfa_intro.tpl:266
 msgid "Type"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:234
-#: personal/privacyidea/default/mfa_editToken.tpl:56
-#: personal/privacyidea/class_mfaAccount.inc:948
+#: personal/privacyidea/default/mfa_intro.tpl:260
+#: personal/privacyidea/default/mfa_editToken.tpl:76
+#: personal/privacyidea/classic/mfa_intro.tpl:268
+#: personal/privacyidea/classic/mfa_editToken.tpl:71
+#: personal/privacyidea/class_mfaAccount.inc:1090
 msgid "Last use"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:235
-#: personal/privacyidea/default/mfa_editToken.tpl:62
-#: personal/privacyidea/class_mfaAccount.inc:950
+#: personal/privacyidea/default/mfa_intro.tpl:261
+#: personal/privacyidea/default/mfa_editToken.tpl:89
+#: personal/privacyidea/classic/mfa_intro.tpl:269
+#: personal/privacyidea/classic/mfa_editToken.tpl:79
+#: personal/privacyidea/class_mfaAccount.inc:1091
 msgid "Status"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:236
+#: personal/privacyidea/default/mfa_intro.tpl:262
+#: personal/privacyidea/classic/mfa_intro.tpl:270
 msgid "Error counter"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:237
+#: personal/privacyidea/default/mfa_intro.tpl:263
+#: personal/privacyidea/classic/mfa_intro.tpl:271
 msgid "Actions"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:259
-#: personal/privacyidea/default/mfa_intro.tpl:269
-#: personal/privacyidea/default/mfa_intro.tpl:272
-#: personal/privacyidea/default/mfa_intro.tpl:273
-#: personal/privacyidea/default/mfa_editToken.tpl:27
-#: personal/privacyidea/default/mfa_editToken.tpl:48
-#: personal/privacyidea/default/mfa_editToken.tpl:61
-#: personal/privacyidea/default/mfa_editToken.tpl:74
-#: personal/privacyidea/default/mfa_editToken.tpl:80
+#: personal/privacyidea/default/mfa_intro.tpl:285
+#: personal/privacyidea/default/mfa_intro.tpl:298
+#: personal/privacyidea/default/mfa_intro.tpl:299
+#: personal/privacyidea/default/mfa_editToken.tpl:54
+#: personal/privacyidea/default/mfa_editToken.tpl:73
 #: personal/privacyidea/default/mfa_editToken.tpl:86
+#: personal/privacyidea/default/mfa_editToken.tpl:110
+#: personal/privacyidea/default/mfa_editToken.tpl:127
+#: personal/privacyidea/default/mfa_editToken.tpl:140
+#: personal/privacyidea/classic/mfa_intro.tpl:293
+#: personal/privacyidea/classic/mfa_intro.tpl:303
+#: personal/privacyidea/classic/mfa_intro.tpl:306
+#: personal/privacyidea/classic/mfa_intro.tpl:307
+#: personal/privacyidea/classic/mfa_editToken.tpl:28
+#: personal/privacyidea/classic/mfa_editToken.tpl:62
+#: personal/privacyidea/classic/mfa_editToken.tpl:82
+#: personal/privacyidea/classic/mfa_editToken.tpl:99
+#: personal/privacyidea/classic/mfa_editToken.tpl:107
+#: personal/privacyidea/classic/mfa_editToken.tpl:115
 msgid "not shown"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:266
-#: personal/privacyidea/default/mfa_editToken.tpl:32
-#: personal/privacyidea/default/mfa_editToken.tpl:74
-#: personal/privacyidea/default/mfa_editToken.tpl:80
+#: personal/privacyidea/default/mfa_intro.tpl:292
+#: personal/privacyidea/default/mfa_editToken.tpl:67
+#: personal/privacyidea/default/mfa_editToken.tpl:104
+#: personal/privacyidea/default/mfa_editToken.tpl:121
+#: personal/privacyidea/classic/mfa_intro.tpl:300
+#: personal/privacyidea/classic/mfa_editToken.tpl:33
+#: personal/privacyidea/classic/mfa_editToken.tpl:99
+#: personal/privacyidea/classic/mfa_editToken.tpl:107
 msgid "Never used before"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:276
-#: personal/privacyidea/default/mfa_editToken.tpl:122
+#: personal/privacyidea/default/mfa_intro.tpl:295
+msgid "<i>not shown</i>"
+msgstr ""
+
+#: personal/privacyidea/default/mfa_intro.tpl:302
+#: personal/privacyidea/default/mfa_editToken.tpl:197
+#: personal/privacyidea/classic/mfa_intro.tpl:310
+#: personal/privacyidea/classic/mfa_editToken.tpl:168
 msgid "Edit"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:356
-#: personal/privacyidea/default/mfa_intro.tpl:368
+#: personal/privacyidea/default/mfa_intro.tpl:390
+#: personal/privacyidea/default/mfa_intro.tpl:402
+#: personal/privacyidea/classic/mfa_intro.tpl:397
+#: personal/privacyidea/classic/mfa_intro.tpl:409
 msgid "At least one token needs to remain active."
 msgstr ""
 
-#: personal/privacyidea/default/mfa_intro.tpl:388
+#: personal/privacyidea/default/mfa_intro.tpl:435
+#: personal/privacyidea/classic/mfa_intro.tpl:447
+msgid "We had trouble communicating with the privacyIDEA-backend server."
+msgstr ""
+
+#: personal/privacyidea/default/mfa_intro.tpl:441
+#: personal/privacyidea/classic/mfa_intro.tpl:455
 msgid "Currently there are no multifactor methods associated."
 msgstr ""
 
-#: personal/privacyidea/default/mfa_editToken.tpl:36
+#: personal/privacyidea/default/mfa_editToken.tpl:27
+#: personal/privacyidea/classic/mfa_editToken.tpl:37
 msgid "%1 - Details"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_editToken.tpl:42
+#: personal/privacyidea/default/mfa_editToken.tpl:33
+#: personal/privacyidea/classic/mfa_editToken.tpl:42
 msgid "Serial"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_editToken.tpl:69
+#: personal/privacyidea/default/mfa_editToken.tpl:44
+#: personal/privacyidea/classic/mfa_editToken.tpl:57
+msgid "(empty)"
+msgstr ""
+
+#: personal/privacyidea/default/mfa_editToken.tpl:51
+#: personal/privacyidea/classic/mfa_editToken.tpl:60
+msgid "not shown but editable"
+msgstr ""
+
+#: personal/privacyidea/default/mfa_editToken.tpl:96
+#: personal/privacyidea/classic/mfa_editToken.tpl:88
 msgid "Last used TAN no."
 msgstr ""
 
-#: personal/privacyidea/default/mfa_editToken.tpl:75
+#: personal/privacyidea/default/mfa_editToken.tpl:113
+#: personal/privacyidea/classic/mfa_editToken.tpl:96
 msgid "No. of login attempts"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_editToken.tpl:81
+#: personal/privacyidea/default/mfa_editToken.tpl:130
+#: personal/privacyidea/classic/mfa_editToken.tpl:104
 msgid "Successful logins"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_editToken.tpl:87
+#: personal/privacyidea/default/mfa_editToken.tpl:143
+#: personal/privacyidea/classic/mfa_editToken.tpl:112
 msgid "Login failure counter (current / max.)"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_editToken.tpl:117
+#: personal/privacyidea/default/mfa_editToken.tpl:189
+#: personal/privacyidea/classic/mfa_editToken.tpl:162
 msgid "Save"
 msgstr ""
 
-#: personal/privacyidea/default/mfa_batchConfirm.tpl:45
+#: personal/privacyidea/default/mfa_editToken.tpl:201
+#: personal/privacyidea/classic/mfa_editToken.tpl:171
+msgid "Back"
+msgstr ""
+
+#: personal/privacyidea/default/mfa_batchConfirm.tpl:42
+#: personal/privacyidea/classic/mfa_batchConfirm.tpl:43
 msgid "OK"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_totp/phase02.tpl:22
-msgid "Verify authentication app (TOTP)"
+#: personal/privacyidea/classic/mfatype_totp/phase02.tpl:22
+msgid "Verify Authentication App (TOTP)"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_totp/phase02.tpl:27
+#: personal/privacyidea/classic/mfatype_totp/phase02.tpl:24
 msgid ""
 "Please verify your authentication app <b>%1</b> by entering a generated code."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_totp/phase02.tpl:30
+#: personal/privacyidea/classic/mfatype_totp/phase02.tpl:27
 msgid "Authentication code"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_totp/phase02.tpl:31
 #: personal/privacyidea/default/mfatype_paper/phase02.tpl:31
+#: personal/privacyidea/classic/mfatype_totp/phase02.tpl:29
+#: personal/privacyidea/classic/mfatype_paper/phase02.tpl:29
 msgid "e.g. 000000"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_totp/phase01.tpl:21
-msgid "Set up authentication app (TOTP)"
+#: personal/privacyidea/classic/mfatype_totp/phase01.tpl:21
+msgid "Set up Authentication App (TOTP)"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_totp/phase01.tpl:26
+#: personal/privacyidea/classic/mfatype_totp/phase01.tpl:29
 msgid "Please set up your authentication app <b>%1</b> as follows:"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_totp/phase01.tpl:28
+#: personal/privacyidea/classic/mfatype_totp/phase01.tpl:31
 msgid "Open your authentication app."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_totp/phase01.tpl:29
+#: personal/privacyidea/classic/mfatype_totp/phase01.tpl:32
 msgid ""
 "Find an option to add a new account (this is often a button with a plus or "
 "QR code symbol)."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_totp/phase01.tpl:30
+#: personal/privacyidea/classic/mfatype_totp/phase01.tpl:33
 msgid "Scan the shown QR code with your authentication app."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_totp/phase01.tpl:39
+#: personal/privacyidea/classic/mfatype_totp/phase01.tpl:46
 msgid ""
 "Please ensure nobody has seen the QR code. If unsure, generate a new code."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_totp/phase01.tpl:42
+#: personal/privacyidea/classic/mfatype_totp/phase01.tpl:48
 msgid "Generate new QR code"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_totp/phase00.tpl:22
-msgid "Add authentication app (TOTP)"
+#: personal/privacyidea/classic/mfatype_totp/phase00.tpl:22
+msgid "Add Authentication App (TOTP)"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_totp/phase00.tpl:25
-#: personal/privacyidea/tokens/class_MFATotpToken.inc:239
+#: personal/privacyidea/tokens/class_MFATotpToken.inc:253
+#: personal/privacyidea/classic/mfatype_totp/phase00.tpl:24
 msgid ""
 "An authentication app on your smartphone generates time-based one-time "
 "passwords (TOTP) which must be entered on each login."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_totp/phase00.tpl:26
+#: personal/privacyidea/classic/mfatype_totp/phase00.tpl:25
 msgid "Setting up the authentication app requires multiple steps:"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_totp/phase00.tpl:28
+#: personal/privacyidea/classic/mfatype_totp/phase00.tpl:27
 msgid "Install and open a suitable TOTP authentication app"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_totp/phase00.tpl:29
+#: personal/privacyidea/classic/mfatype_totp/phase00.tpl:28
 msgid "Assign meaningful description for the smartphone and app."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_totp/phase00.tpl:30
+#: personal/privacyidea/classic/mfatype_totp/phase00.tpl:29
 msgid "Scan a displayed QR code with the app."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_totp/phase00.tpl:31
+#: personal/privacyidea/classic/mfatype_totp/phase00.tpl:30
 msgid "Verify the setup with a generated code."
 msgstr ""
 
-#: personal/privacyidea/default/mfatype_totp/phase00.tpl:37
+#: personal/privacyidea/default/mfatype_totp/phase00.tpl:40
+#: personal/privacyidea/classic/mfatype_totp/phase00.tpl:47
 msgid ""
 "Please enter a meaningful description allowing you to recognize the used "
 "device and app. This description may be edited later."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_totp/phase03.tpl:22
-msgid "Authentication app (TOTP) added"
+#: personal/privacyidea/classic/mfatype_totp/phase03.tpl:22
+msgid "Authentication App (TOTP) added"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_totp/phase03.tpl:25
+#: personal/privacyidea/classic/mfatype_totp/phase03.tpl:27
 msgid ""
 "The authentication app <b>%1</b> was successfully added to this account and "
 "can now be used."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_totp/phase03.tpl:30
+#: personal/privacyidea/classic/mfatype_totp/phase03.tpl:32
 msgid ""
 "Please take precautions against your smartphone being damaged or lost and "
 "set up at least one more factor as fallback."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_paper/phase02.tpl:22
-msgid "Verify TAN list"
+#: personal/privacyidea/classic/mfatype_paper/phase02.tpl:22
+msgid "Verify TAN List"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_paper/phase02.tpl:27
+#: personal/privacyidea/classic/mfatype_paper/phase02.tpl:24
 msgid "Please verify your TAN list <b>%1</b> by entering the verification TAN."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_paper/phase02.tpl:30
+#: personal/privacyidea/classic/mfatype_paper/phase02.tpl:27
 msgid "Verification TAN"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_paper/phase01.tpl:22
-#: personal/privacyidea/default/mfatype_paper/phase01.tpl:32
-msgid "Print TAN list"
+#: personal/privacyidea/classic/mfatype_paper/phase01.tpl:22
+msgid "Print TAN List"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_paper/phase01.tpl:25
+#: personal/privacyidea/classic/mfatype_paper/phase01.tpl:24
 msgid ""
 "Please print the TAN list <b>%1</b>, one TAN from the list will be used in "
 "the next step to verify the list."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_paper/phase01.tpl:30
+#: personal/privacyidea/classic/mfatype_paper/phase01.tpl:29
 msgid "Keep this list secret."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_paper/phase01.tpl:31
+#: personal/privacyidea/classic/mfatype_paper/phase01.tpl:30
 msgid "Please print it and then store it in a secure location."
 msgstr ""
 
+#: personal/privacyidea/default/mfatype_paper/phase01.tpl:32
+#: personal/privacyidea/classic/mfatype_paper/phase01.tpl:31
+msgid "Print TAN list"
+msgstr ""
+
 #: personal/privacyidea/default/mfatype_paper/phase01.tpl:133
+#: personal/privacyidea/classic/mfatype_paper/phase01.tpl:134
 msgid "will be visible when printed"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_paper/phase01.tpl:149
+#: personal/privacyidea/classic/mfatype_paper/phase01.tpl:150
 msgid "Please print this page and then store it in a secure location."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_paper/phase01.tpl:153
+#: personal/privacyidea/classic/mfatype_paper/phase01.tpl:154
 msgid "TAN list <b>%1</b>"
 msgstr ""
 
-#: personal/privacyidea/default/mfatype_paper/phase01.tpl:154
+#: personal/privacyidea/default/mfatype_paper/phase01.tpl:155
+#: personal/privacyidea/classic/mfatype_paper/phase01.tpl:156
 msgid ""
 "If you just generated this list you will need to confirm it by entering the "
 "confirmation TAN on the website from which you downloaded this list."
 msgstr ""
 
-#: personal/privacyidea/default/mfatype_paper/phase01.tpl:155
+#: personal/privacyidea/default/mfatype_paper/phase01.tpl:156
+#: personal/privacyidea/classic/mfatype_paper/phase01.tpl:157
 msgid "Confirmation TAN:"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_paper/phase00.tpl:22
-#: personal/privacyidea/tokens/class_MFAPaperToken.inc:236
-#: personal/privacyidea/class_mfaAccount.inc:943
-msgid "Add TAN list"
+#: personal/privacyidea/classic/mfatype_paper/phase00.tpl:22
+msgid "Add TAN List"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_paper/phase00.tpl:25
-#: personal/privacyidea/tokens/class_MFAPaperToken.inc:229
+#: personal/privacyidea/tokens/class_MFAPaperToken.inc:250
+#: personal/privacyidea/classic/mfatype_paper/phase00.tpl:24
 msgid ""
 "Lists with transaction authentication numbers (TAN) are printed out and "
 "stored in a secure location. A TAN is a one-time password and a TAN from the "
@@ -583,252 +815,302 @@ msgid ""
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_paper/phase00.tpl:26
+#: personal/privacyidea/classic/mfatype_paper/phase00.tpl:26
 msgid "Creating a TAN list requires multiple steps:"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_paper/phase00.tpl:28
+#: personal/privacyidea/classic/mfatype_paper/phase00.tpl:28
 msgid ""
 "Assign a meaningful description which allows you to recognize the generated "
 "list."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_paper/phase00.tpl:29
+#: personal/privacyidea/classic/mfatype_paper/phase00.tpl:29
 msgid "Print the list."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_paper/phase00.tpl:30
+#: personal/privacyidea/classic/mfatype_paper/phase00.tpl:30
 msgid "Verify the setup by entering a TAN from the list."
 msgstr ""
 
-#: personal/privacyidea/default/mfatype_paper/phase00.tpl:36
+#: personal/privacyidea/default/mfatype_paper/phase00.tpl:39
+#: personal/privacyidea/classic/mfatype_paper/phase00.tpl:47
 msgid ""
 "Please enter a meaningful description allowing you to recognize the "
 "generated list. This description may be edited later."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_paper/phase03.tpl:22
-msgid "TAN list added"
+#: personal/privacyidea/classic/mfatype_paper/phase03.tpl:22
+msgid "TAN List added"
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_paper/phase03.tpl:25
+#: personal/privacyidea/classic/mfatype_paper/phase03.tpl:27
 msgid ""
 "The TAN list <b>%1</b> was successfully added to this account and can now be "
 "used."
 msgstr ""
 
 #: personal/privacyidea/default/mfatype_paper/phase03.tpl:30
+#: personal/privacyidea/classic/mfatype_paper/phase03.tpl:32
 msgid ""
 "Please take precautions against your TAN list getting lost or compromised "
 "and set up at least one other factor as fallback."
 msgstr ""
 
-#: personal/privacyidea/class_PrivacyIdeaUtils.inc:106
-#: personal/privacyidea/class_PrivacyIdeaUtils.inc:208
-#: personal/privacyidea/class_PrivacyIdeaUtils.inc:525
+#: personal/privacyidea/class_PrivacyIdeaUtils.inc:143
+msgid ""
+"Couldn't retrieve version number of privacyIDEA server. Defaulting to legacy "
+"API scheme."
+msgstr ""
+
+#: personal/privacyidea/class_PrivacyIdeaUtils.inc:232
+#: personal/privacyidea/class_PrivacyIdeaUtils.inc:342
+#: personal/privacyidea/class_PrivacyIdeaUtils.inc:675
 #: personal/privacyidea/tokens/class_MFAPaperToken.inc:62
-#: personal/privacyidea/tokens/class_MFAPaperToken.inc:87
-#: personal/privacyidea/tokens/class_MFAPaperToken.inc:113
-#: personal/privacyidea/tokens/class_MFAPaperToken.inc:129
-#: personal/privacyidea/tokens/class_MFAPaperToken.inc:145
-#: personal/privacyidea/tokens/class_MFAPaperToken.inc:211
-#: personal/privacyidea/tokens/class_MFATotpToken.inc:77
-#: personal/privacyidea/tokens/class_MFATotpToken.inc:103
-#: personal/privacyidea/tokens/class_MFATotpToken.inc:129
-#: personal/privacyidea/tokens/class_MFATotpToken.inc:145
-#: personal/privacyidea/tokens/class_MFATotpToken.inc:162
-#: personal/privacyidea/tokens/class_MFATotpToken.inc:214
-#: personal/privacyidea/tokens/class_MFATotpToken.inc:221
-#: personal/privacyidea/tokens/class_MFARegistrationToken.inc:60
-#: personal/privacyidea/tokens/class_MFARegistrationToken.inc:76
-#: personal/privacyidea/tokens/class_MFARegistrationToken.inc:94
+#: personal/privacyidea/tokens/class_MFAPaperToken.inc:88
+#: personal/privacyidea/tokens/class_MFAPaperToken.inc:115
+#: personal/privacyidea/tokens/class_MFAPaperToken.inc:133
+#: personal/privacyidea/tokens/class_MFAPaperToken.inc:150
+#: personal/privacyidea/tokens/class_MFATotpToken.inc:79
+#: personal/privacyidea/tokens/class_MFATotpToken.inc:106
+#: personal/privacyidea/tokens/class_MFATotpToken.inc:133
+#: personal/privacyidea/tokens/class_MFATotpToken.inc:151
+#: personal/privacyidea/tokens/class_MFATotpToken.inc:169
+#: personal/privacyidea/tokens/class_MFARegistrationToken.inc:69
+#: personal/privacyidea/tokens/class_MFARegistrationToken.inc:87
+#: personal/privacyidea/tokens/class_MFARegistrationToken.inc:107
 #: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:58
-#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:91
-#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:107
-#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:123
-#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:133
-#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:189
-#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:196
-#: personal/privacyidea/class_mfaAccount.inc:262
-#: personal/privacyidea/class_mfaAccount.inc:377
-#: personal/privacyidea/class_mfaAccount.inc:398
-#: personal/privacyidea/class_mfaAccount.inc:641
+#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:92
+#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:110
+#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:127
+#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:138
+#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:192
+#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:200
+#: personal/privacyidea/class_mfaAccount.inc:297
+#: personal/privacyidea/class_mfaAccount.inc:429
+#: personal/privacyidea/class_mfaAccount.inc:451
+#: personal/privacyidea/class_mfaAccount.inc:732
 msgid "Internal error"
 msgstr ""
 
-#: personal/privacyidea/class_PrivacyIdeaUtils.inc:107
-#: personal/privacyidea/class_PrivacyIdeaUtils.inc:118
+#: personal/privacyidea/class_PrivacyIdeaUtils.inc:233
+#: personal/privacyidea/class_PrivacyIdeaUtils.inc:250
 msgid "Could not get authentification token from privacyIDEA backend server."
 msgstr ""
 
-#: personal/privacyidea/class_PrivacyIdeaUtils.inc:117
+#: personal/privacyidea/class_PrivacyIdeaUtils.inc:249
 msgid "Internal Error"
 msgstr ""
 
-#: personal/privacyidea/class_PrivacyIdeaUtils.inc:119
+#: personal/privacyidea/class_PrivacyIdeaUtils.inc:251
 msgid ""
 "Dear admin: Please ensure that the privacyIDEA service credentials are set "
 "correctly."
 msgstr ""
 
-#: personal/privacyidea/class_PrivacyIdeaUtils.inc:209
+#: personal/privacyidea/class_PrivacyIdeaUtils.inc:343
 msgid "Could not execute step 1 of WebAuthn token enrollment: "
 msgstr ""
 
-#: personal/privacyidea/class_PrivacyIdeaUtils.inc:362
+#: personal/privacyidea/class_PrivacyIdeaUtils.inc:497
 msgid "Not verified"
 msgstr ""
 
-#: personal/privacyidea/class_PrivacyIdeaUtils.inc:364
+#: personal/privacyidea/class_PrivacyIdeaUtils.inc:499
 msgid "Locked"
 msgstr ""
 
-#: personal/privacyidea/class_PrivacyIdeaUtils.inc:366
+#: personal/privacyidea/class_PrivacyIdeaUtils.inc:501
 msgid "Active"
 msgstr ""
 
-#: personal/privacyidea/class_PrivacyIdeaUtils.inc:368
+#: personal/privacyidea/class_PrivacyIdeaUtils.inc:503
 msgid "Deactivated"
 msgstr ""
 
-#: personal/privacyidea/class_PrivacyIdeaUtils.inc:526
+#: personal/privacyidea/class_PrivacyIdeaUtils.inc:676
 msgid "Could not connect to privacyIDEA backend server."
 msgstr ""
 
-#: personal/privacyidea/class_PrivacyIdeaUtils.inc:555
+#: personal/privacyidea/class_PrivacyIdeaUtils.inc:706
 msgid ""
 "Please try logging out and logging in again and contact your system "
 "administrator, if the problem persists. Thank you."
 msgstr ""
 
-#: personal/privacyidea/PDF/class_RecoveryKeyPDF.inc:36
+#: personal/privacyidea/PDF/class_RecoveryKeyPDF.inc:43
 msgid "Multifactor authentication recovery key"
 msgstr ""
 
-#: personal/privacyidea/PDF/class_RecoveryKeyPDF.inc:37
+#: personal/privacyidea/PDF/class_RecoveryKeyPDF.inc:44
 msgid "Automatically generated"
 msgstr ""
 
-#: personal/privacyidea/PDF/class_RecoveryKeyPDF.inc:41
+#: personal/privacyidea/PDF/class_RecoveryKeyPDF.inc:48
 #, php-format
 msgid ""
 "This document contains information about a multifactor authentication "
 "recovery key for your account %s."
 msgstr ""
 
-#: personal/privacyidea/PDF/class_RecoveryKeyPDF.inc:59
+#: personal/privacyidea/PDF/class_RecoveryKeyPDF.inc:71
 msgid "Subject: Recovery key"
 msgstr ""
 
-#: personal/privacyidea/PDF/class_RecoveryKeyPDF.inc:62
-#, php-format
-msgid "Dear %s %s,"
-msgstr ""
-
-#: personal/privacyidea/PDF/class_RecoveryKeyPDF.inc:64
+#: personal/privacyidea/PDF/class_RecoveryKeyPDF.inc:76
 #, php-format
 msgid "A recovery key has been created for your account '%s'."
 msgstr ""
 
-#: personal/privacyidea/PDF/class_RecoveryKeyPDF.inc:66
+#: personal/privacyidea/PDF/class_RecoveryKeyPDF.inc:78
 msgid ""
 "You can use this key one time only as a second factor when logging into our "
 "system."
 msgstr ""
 
-#: personal/privacyidea/PDF/class_RecoveryKeyPDF.inc:68
-#, php-format
-msgid "Your recovery key is: <b>%s</b>"
+#: personal/privacyidea/PDF/class_RecoveryKeyPDF.inc:82
+msgid "Your recovery key is:"
 msgstr ""
 
-#: personal/privacyidea/PDF/class_RecoveryKeyPDF.inc:70
+#: personal/privacyidea/PDF/class_RecoveryKeyPDF.inc:89
 msgid "Best regards"
 msgstr ""
 
-#: personal/privacyidea/tokens/class_MFATokenHelper.inc:137
-msgid "You have reached the limit on the number of tokens."
+#: personal/privacyidea/PDF/class_RecoveryKeyPDF.inc:189
+#, php-format
+msgid "Greetings %s"
 msgstr ""
 
-#: personal/privacyidea/tokens/class_MFATokenHelper.inc:148
+#: personal/privacyidea/tokens/class_MFATokenHelper.inc:146
 msgid "You have reached the limit for the number of tokens of this type."
 msgstr ""
 
+#: personal/privacyidea/tokens/class_MFATokenHelper.inc:155
+msgid "You have reached the limit on the number of tokens."
+msgstr ""
+
 #: personal/privacyidea/tokens/class_MFAPaperToken.inc:63
-#: personal/privacyidea/tokens/class_MFATotpToken.inc:78
+#: personal/privacyidea/tokens/class_MFATotpToken.inc:80
 #: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:59
 msgid "Token serial wasn't given or was given malformed."
 msgstr ""
 
-#: personal/privacyidea/tokens/class_MFAPaperToken.inc:88
-#: personal/privacyidea/tokens/class_MFATotpToken.inc:104
+#: personal/privacyidea/tokens/class_MFAPaperToken.inc:89
+#: personal/privacyidea/tokens/class_MFATotpToken.inc:107
 msgid "Given validation code was malformed. We couldn't verify your token."
 msgstr ""
 
-#: personal/privacyidea/tokens/class_MFAPaperToken.inc:146
-#: personal/privacyidea/tokens/class_MFATotpToken.inc:163
-#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:124
+#: personal/privacyidea/tokens/class_MFAPaperToken.inc:151
+#: personal/privacyidea/tokens/class_MFATotpToken.inc:170
+#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:128
 msgid "Couldn't enroll token!"
 msgstr ""
 
-#: personal/privacyidea/tokens/class_MFAPaperToken.inc:212
-#: personal/privacyidea/tokens/class_MFATotpToken.inc:215
-#: personal/privacyidea/tokens/class_MFATotpToken.inc:222
-#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:190
-#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:197
-msgid "Failed to execute step 2 of token enrollment."
+#: personal/privacyidea/tokens/class_MFAPaperToken.inc:220
+#: personal/privacyidea/tokens/class_MFAPaperToken.inc:229
+#: personal/privacyidea/tokens/class_MFATotpToken.inc:224
+#: personal/privacyidea/tokens/class_MFATotpToken.inc:233
+msgid "Error"
+msgstr ""
+
+#: personal/privacyidea/tokens/class_MFAPaperToken.inc:221
+#: personal/privacyidea/tokens/class_MFAPaperToken.inc:230
+msgid ""
+"The verification of the TAN list was not successful. The confirmation TAN "
+"was probably not entered correctly: please make sure that you have entered "
+"it correctly."
 msgstr ""
 
 #: personal/privacyidea/tokens/class_MFAPaperToken.inc:224
-msgid "TAN list"
-msgstr ""
-
-#: personal/privacyidea/tokens/class_MFATotpToken.inc:217
-#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:192
+#: personal/privacyidea/tokens/class_MFATotpToken.inc:228
+#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:195
 #, php-format
 msgid "privacyIDEA server error message: %s"
 msgstr ""
 
+#: personal/privacyidea/tokens/class_MFAPaperToken.inc:245
+msgid "TAN list"
+msgstr ""
+
+#: personal/privacyidea/tokens/class_MFAPaperToken.inc:257
+#: personal/privacyidea/class_mfaAccount.inc:1082
+msgid "Add TAN list"
+msgstr ""
+
+#: personal/privacyidea/tokens/class_MFATotpToken.inc:225
 #: personal/privacyidea/tokens/class_MFATotpToken.inc:234
+msgid ""
+"The verification of the TOTP token was not successful. The confirmation TAN "
+"was probably not entered correctly: please make sure that you have entered "
+"it correctly."
+msgstr ""
+
+#: personal/privacyidea/tokens/class_MFATotpToken.inc:248
 msgid "Authentication app (TOTP)"
 msgstr ""
 
-#: personal/privacyidea/tokens/class_MFATotpToken.inc:246
+#: personal/privacyidea/tokens/class_MFATotpToken.inc:260
 msgid "Add authentication app"
 msgstr ""
 
-#: personal/privacyidea/tokens/class_MFARegistrationToken.inc:95
+#: personal/privacyidea/tokens/class_MFARegistrationToken.inc:108
 msgid "Could not enroll recovery key (registration token) in privacyIDEA: "
 msgstr ""
 
-#: personal/privacyidea/tokens/class_MFARegistrationToken.inc:127
+#: personal/privacyidea/tokens/class_MFARegistrationToken.inc:150
+msgid "personally"
+msgstr ""
+
+#: personal/privacyidea/tokens/class_MFARegistrationToken.inc:246
 #, php-format
 msgid "recovery_key_%s.pdf"
 msgstr ""
 
-#: personal/privacyidea/tokens/class_MFARegistrationToken.inc:144
+#: personal/privacyidea/tokens/class_MFARegistrationToken.inc:249
+#, php-format
+msgid "recovery_key_%s_%s.pdf"
+msgstr ""
+
+#: personal/privacyidea/tokens/class_MFARegistrationToken.inc:259
 msgid "Recovery key"
 msgstr ""
 
-#: personal/privacyidea/tokens/class_MFARegistrationToken.inc:149
+#: personal/privacyidea/tokens/class_MFARegistrationToken.inc:264
 msgid ""
 "A recovery key can be used exactly once for logging in. They are only issued "
 "if no other authentication method is available, e.g. in case of hardware "
 "loss."
 msgstr ""
 
-#: personal/privacyidea/tokens/class_MFARegistrationToken.inc:156
+#: personal/privacyidea/tokens/class_MFARegistrationToken.inc:271
 msgid "Add recovery key"
 msgstr ""
 
-#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:134
+#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:139
 msgid "privacyIDEA server gave invalid/malformed webAuthnRegisterRequest data."
 msgstr ""
 
-#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:231
-msgid "Security key"
+#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:193
+#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:201
+msgid "Failed to execute step 2 of token enrollment."
 msgstr ""
 
 #: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:243
+msgid "Security key"
+msgstr ""
+
+#: personal/privacyidea/tokens/class_MFAWebAuthnToken.inc:255
 msgid "Add security key"
+msgstr ""
+
+#: personal/privacyidea/classic/mfa_intro.tpl:111
+#: personal/privacyidea/classic/mfa_intro.tpl:113
+msgid "Attention:"
 msgstr ""
 
 #: personal/privacyidea/class_mfaAccount.inc:26
@@ -839,185 +1121,235 @@ msgstr ""
 msgid "Manage multifactor authentication"
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:245
-#: personal/privacyidea/class_mfaAccount.inc:274
-#: personal/privacyidea/class_mfaAccount.inc:330
+#: personal/privacyidea/class_mfaAccount.inc:279
+#: personal/privacyidea/class_mfaAccount.inc:310
+#: personal/privacyidea/class_mfaAccount.inc:374
 msgid "Insufficient permissions"
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:246
+#: personal/privacyidea/class_mfaAccount.inc:280
 msgid "You are not allowed to add a new factor."
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:263
+#: personal/privacyidea/class_mfaAccount.inc:298
 msgid "Could not process POST data of your request."
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:275
-#: personal/privacyidea/class_mfaAccount.inc:331
+#: personal/privacyidea/class_mfaAccount.inc:311
+#: personal/privacyidea/class_mfaAccount.inc:375
 msgid "You are not allowed to manage MFA factors."
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:378
+#: personal/privacyidea/class_mfaAccount.inc:341
+#: personal/privacyidea/class_mfaAccount.inc:400
+msgid "Unsupported action"
+msgstr ""
+
+#: personal/privacyidea/class_mfaAccount.inc:342
+#: personal/privacyidea/class_mfaAccount.inc:401
+msgid "It is not supported to deactivate, revoke or remove your last token."
+msgstr ""
+
+#: personal/privacyidea/class_mfaAccount.inc:343
+#: personal/privacyidea/class_mfaAccount.inc:402
+msgid ""
+"Please add another token to ensure that you always have at least one working "
+"token."
+msgstr ""
+
+#: personal/privacyidea/class_mfaAccount.inc:430
 #, php-format
 msgid "A batch operation failed on token '%s'. Skipping remaining operations."
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:399
+#: personal/privacyidea/class_mfaAccount.inc:452
 msgid "Could not load/render template for MFA setup."
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:642
+#: personal/privacyidea/class_mfaAccount.inc:733
 msgid "Token action malformed or not allowed."
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:734
+#: personal/privacyidea/class_mfaAccount.inc:837
 msgid "Reset the failed login counter for the following token?"
 msgid_plural "Reset the failed login counter for the following tokens?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: personal/privacyidea/class_mfaAccount.inc:737
+#: personal/privacyidea/class_mfaAccount.inc:840
 msgid "Disable the following token?"
 msgid_plural "Disable the following tokens?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: personal/privacyidea/class_mfaAccount.inc:740
+#: personal/privacyidea/class_mfaAccount.inc:843
 msgid "Enable the following token?"
 msgid_plural "Enable the following tokens?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: personal/privacyidea/class_mfaAccount.inc:743
+#: personal/privacyidea/class_mfaAccount.inc:846
 msgid "Revoke the following token?"
 msgid_plural "Revoke the following tokens?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: personal/privacyidea/class_mfaAccount.inc:746
+#: personal/privacyidea/class_mfaAccount.inc:849
 msgid "Remove the following token?"
 msgid_plural "Remove the following tokens?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: personal/privacyidea/class_mfaAccount.inc:828
-#: personal/privacyidea/class_mfaAccount.inc:868
+#: personal/privacyidea/class_mfaAccount.inc:954
+#: personal/privacyidea/class_mfaAccount.inc:991
 msgid "LDAP error"
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:927
+#: personal/privacyidea/class_mfaAccount.inc:1052
+msgid "PI read-only"
+msgstr ""
+
+#: personal/privacyidea/class_mfaAccount.inc:1053
+msgid "PI write-only"
+msgstr ""
+
+#: personal/privacyidea/class_mfaAccount.inc:1054
+msgid "write-only"
+msgstr ""
+
+#: personal/privacyidea/class_mfaAccount.inc:1055
+msgid "read-only"
+msgstr ""
+
+#: personal/privacyidea/class_mfaAccount.inc:1058
 msgid "MFA"
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:928
+#: personal/privacyidea/class_mfaAccount.inc:1059
 msgid "Multifactor Authentification"
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:932
+#: personal/privacyidea/class_mfaAccount.inc:1063
 msgid "My account"
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:938
+#: personal/privacyidea/class_mfaAccount.inc:1070
 msgid "MFA token types"
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:939
+#: personal/privacyidea/class_mfaAccount.inc:1073
 msgid "Require MFA due to organizational policy"
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:940
+#: personal/privacyidea/class_mfaAccount.inc:1074
 msgid "Require MFA due to user preference"
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:941
+#: personal/privacyidea/class_mfaAccount.inc:1077
 msgid "Manage tokens"
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:942
+#: personal/privacyidea/class_mfaAccount.inc:1081
 msgid "Add any type of token"
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:944
+#: personal/privacyidea/class_mfaAccount.inc:1083
 msgid "Add Recovery key"
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:945
+#: personal/privacyidea/class_mfaAccount.inc:1084
 msgid "Add Security key"
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:946
+#: personal/privacyidea/class_mfaAccount.inc:1085
 msgid "Add Authentication app (TOTP)"
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:949
+#: personal/privacyidea/class_mfaAccount.inc:1089
 msgid "Failed login counter"
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:951
+#: personal/privacyidea/class_mfaAccount.inc:1092
 msgid "Authentication count"
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:952
+#: personal/privacyidea/class_mfaAccount.inc:1093
 msgid "Successful authentication count"
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:953
-msgid "Revocation allowed"
+#: personal/privacyidea/class_mfaAccount.inc:1096
+msgid "Resetting of fail counter allowed"
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:954
-msgid "Removal allowed"
+#: personal/privacyidea/class_mfaAccount.inc:1097
+msgid "Revocation of tokens allowed"
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:975
+#: personal/privacyidea/class_mfaAccount.inc:1098
+msgid "Removal of tokens allowed"
+msgstr ""
+
+#: personal/privacyidea/class_mfaAccount.inc:1099
+msgid "Activation of tokens allowed"
+msgstr ""
+
+#: personal/privacyidea/class_mfaAccount.inc:1100
+msgid "Deactivation of tokens allowed"
+msgstr ""
+
+#: personal/privacyidea/class_mfaAccount.inc:1120
 msgid "privacyIDEA server URL."
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:985
+#: personal/privacyidea/class_mfaAccount.inc:1130
+msgid ""
+"Protocol + FQDN. Used to set Origin: header for privacyIDEA where needed."
+msgstr ""
+
+#: personal/privacyidea/class_mfaAccount.inc:1140
 msgid ""
 "privacyIDEA service account username. Used to authenticate GOsa² against "
 "privacyIDEA."
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:995
+#: personal/privacyidea/class_mfaAccount.inc:1150
 msgid ""
 "privacyIDEA service account password. Used to authenticate GOsa² against "
 "privacyIDEA."
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:1005
+#: personal/privacyidea/class_mfaAccount.inc:1160
 msgid ""
 "privacyIDEA service account realm. Used to authenticate GOsa² against "
 "privacyIDEA."
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:1015
+#: personal/privacyidea/class_mfaAccount.inc:1170
 msgid "privacyIDEA user realm. Used to find users in privacyIDEA."
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:1028
+#: personal/privacyidea/class_mfaAccount.inc:1183
 msgid ""
 "Users are only allowed to link a total of X tokens from the available MFA "
 "methods."
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:1038
+#: personal/privacyidea/class_mfaAccount.inc:1193
 msgid "Users are only allowed have a total of X paper tokens."
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:1048
+#: personal/privacyidea/class_mfaAccount.inc:1203
 msgid "Users are only allowed have a total of X TOTP tokens."
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:1058
+#: personal/privacyidea/class_mfaAccount.inc:1213
 msgid "Users are only allowed have a total of X WebAuthn tokens."
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:1068
+#: personal/privacyidea/class_mfaAccount.inc:1223
 msgid "Users are only allowed have a total of X Registration tokens."
 msgstr ""
 
-#: personal/privacyidea/class_mfaAccount.inc:1083
+#: personal/privacyidea/class_mfaAccount.inc:1238
 msgid "Amount of OTPs which will be printed on a single TAN list."
 msgstr ""
