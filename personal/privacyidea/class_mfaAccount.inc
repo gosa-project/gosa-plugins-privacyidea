@@ -1017,6 +1017,18 @@ class mfaAccount extends plugin
         // Call common method to give check the hook
         $message = parent::check();
 
+        // Clean up $this->allowedTokenTypes and $this->mfaRequired
+        $this->updateAttrsAllowedTokenTypes();
+        $this->updateAttrsMfaRequired();
+
+        // If user has no tokens of type (must be in allowedTokenTypes) active,
+        // then we must deny setting mfaRequiredByUser attribute
+        $deny_mfaRequiredByUser = (in_array("by_user", $this->mfaRequired) && !$this->containsActiveTokenSerials([], $this->allowedTokenTypes));
+
+        if ($deny_mfaRequiredByUser) {
+            $message[] = msg_dialog::display(_("Error"), _("You need to add a multifactor method before you can enable this setting."), ERROR_DIALOG);
+        }
+
         // TODO: If user looks at it's own page AND mfa method must be activated
         // then don't let user leave!
         // $message[] = msgPool::required(_("A MFA method must be initialized or else you can't login anymore!"));
