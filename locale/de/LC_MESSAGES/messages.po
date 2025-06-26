@@ -11,11 +11,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.6\n"
 
 #: personal/privacyidea/default/mfatype_registration/phase01.tpl:38
 #: personal/privacyidea/classic/mfatype_registration/phase01.tpl:34
-#, fuzzy
 msgid "Recovery Key added"
 msgstr "Wiederherstellungsschlüssel hinzugefügt"
 
@@ -75,7 +74,6 @@ msgstr "Zurück zur Übersicht"
 
 #: personal/privacyidea/default/mfatype_registration/phase00.tpl:22
 #: personal/privacyidea/classic/mfatype_registration/phase00.tpl:22
-#, fuzzy
 msgid "Add a Recovery Key"
 msgstr "Wiederherstellungsschlüssel hinzufügen"
 
@@ -134,6 +132,8 @@ msgstr "Beschreibung"
 msgid ""
 "Quotation marks and the characters < and > are not allowed in the description"
 msgstr ""
+"Anführungszeichen sowie die Zeichen < und > sind in der Beschreibung nicht "
+"zulässig."
 
 #: personal/privacyidea/default/mfatype_registration/phase00.tpl:36
 #: personal/privacyidea/default/mfatype_webauthn/phase00.tpl:36
@@ -147,6 +147,9 @@ msgid ""
 "Empty descriptions are allowed but discouraged. They help you to identify "
 "your tokens later on. You can proceed now."
 msgstr ""
+"Eine leere Beschreibung ist zulässig aber wird nicht empfohlen. "
+"Beschreibungen helfen Ihnen Ihre Tokens später wiederzuerkennen. Sie können "
+"nun fortfahren."
 
 #: personal/privacyidea/default/mfatype_registration/phase00.tpl:39
 #: personal/privacyidea/classic/mfatype_registration/phase00.tpl:45
@@ -206,9 +209,8 @@ msgstr "Abbrechen"
 
 #: personal/privacyidea/default/mfatype_webauthn/phase02.tpl:22
 #: personal/privacyidea/classic/mfatype_webauthn/phase02.tpl:22
-#, fuzzy
 msgid "Security Key added"
-msgstr "Sicherheitsschlüssel angelegt"
+msgstr "Sicherheitsschlüssel hinzugefügt"
 
 #: personal/privacyidea/default/mfatype_webauthn/phase02.tpl:24
 #: personal/privacyidea/classic/mfatype_webauthn/phase02.tpl:27
@@ -231,9 +233,8 @@ msgstr ""
 
 #: personal/privacyidea/default/mfatype_webauthn/phase01.tpl:25
 #: personal/privacyidea/classic/mfatype_webauthn/phase01.tpl:25
-#, fuzzy
 msgid "Confirm Security Key Setup"
-msgstr "Sicherheitsschlüssel bestätigen"
+msgstr "Sicherheitsschlüsseleinrichtung bestätigen"
 
 #: personal/privacyidea/default/mfatype_webauthn/phase01.tpl:30
 #: personal/privacyidea/classic/mfatype_webauthn/phase01.tpl:30
@@ -292,7 +293,6 @@ msgstr "Einrichtung jetzt starten"
 
 #: personal/privacyidea/default/mfatype_webauthn/phase00.tpl:22
 #: personal/privacyidea/classic/mfatype_webauthn/phase00.tpl:22
-#, fuzzy
 msgid "Add FIDO2 Security Key"
 msgstr "FIDO2-Sicherheitsschlüssel hinzufügen"
 
@@ -344,9 +344,8 @@ msgstr ""
 
 #: personal/privacyidea/default/mfa_intro.tpl:28
 #: personal/privacyidea/classic/mfa_intro.tpl:29
-#, fuzzy
 msgid "Multifactor Authentication Requirements"
-msgstr "Vorgaben zur Multifaktor-Authentifizierung"
+msgstr "Anforderungen für Multifaktor-Authentifizierung"
 
 #: personal/privacyidea/default/mfa_intro.tpl:31
 #: personal/privacyidea/classic/mfa_intro.tpl:31
@@ -354,6 +353,8 @@ msgid ""
 "Insufficient permissions for viewing or editing this user's multifactor "
 "authentication properties."
 msgstr ""
+"Unzureichende Berechtigungen um die Multifactor-Anmeldeeinstellungen dieses "
+"Benutzers anzuzeigen und zu bearbeiten."
 
 #: personal/privacyidea/default/mfa_intro.tpl:34
 #: personal/privacyidea/classic/mfa_intro.tpl:34
@@ -400,12 +401,13 @@ msgstr "Zusätzlicher Faktor soll freiwillig immer abgefragt werden."
 msgid ""
 "You need to add a multifactor method before you can enable this setting."
 msgstr ""
+"Sie können diese Einstellung erst aktivieren, wenn Sie vorher eine MFA-"
+"Methode verknüpft haben. "
 
 #: personal/privacyidea/default/mfa_intro.tpl:82
 #: personal/privacyidea/classic/mfa_intro.tpl:85
-#, fuzzy
 msgid "Allowed Multifactor Methods"
-msgstr "Verknüpfte Multifaktor-Methoden"
+msgstr "Zulässige Multifaktor-Methoden"
 
 #: personal/privacyidea/default/mfa_intro.tpl:101
 #: personal/privacyidea/default/mfa_intro.tpl:103
@@ -414,25 +416,22 @@ msgstr "Achtung:"
 
 #: personal/privacyidea/default/mfa_intro.tpl:101
 #: personal/privacyidea/classic/mfa_intro.tpl:111
-#, fuzzy
 msgid ""
 "You cannot log in again with this account because there is no multifactor "
 "method associated to it. Please add one of the available methods now."
 msgstr ""
-"Sie können sich nicht erneut mit diesem Konto anmelden, da sie keine "
-"anwendbare Multifaktor-Methode verknüpft haben. Bitte fügen Sie jetzt eine "
-"der verfügbaren Methoden hinzu."
+"Sie können sich nicht mit diesem Konto anmelden, da sie keine anwendbare "
+"Multifaktor-Methode verknüpft haben. Bitte fügen Sie jetzt eine der "
+"verfügbaren Methoden hinzu."
 
 #: personal/privacyidea/default/mfa_intro.tpl:103
 #: personal/privacyidea/classic/mfa_intro.tpl:113
-#, fuzzy
 msgid ""
 "The user cannot log in with this account because there is no multifactor "
 "method associated to it."
 msgstr ""
-"Sie können sich nicht erneut mit diesem Konto anmelden, da sie keine "
-"anwendbare Multifaktor-Methode verknüpft haben. Bitte fügen Sie jetzt eine "
-"der verfügbaren Methoden hinzu."
+"Der Benutzer kann sich mit diesem Konto nicht anmelden, da keine Multifaktor-"
+"Methode mit dem Konto verknüpft ist."
 
 #: personal/privacyidea/default/mfa_intro.tpl:115
 #: personal/privacyidea/classic/mfa_intro.tpl:127
@@ -440,12 +439,14 @@ msgid ""
 "You have unsaved changes, are you sure you want to continue? All unsaved "
 "changes to this account will be lost."
 msgstr ""
+"Es gibt nicht gespeicherte Änderungen, sind Sie sicher, dass sie fortfahren "
+"möchten? Alle nicht gespeicherten Änderungen an diesem Konto werden "
+"verworfen."
 
 #: personal/privacyidea/default/mfa_intro.tpl:127
 #: personal/privacyidea/classic/mfa_intro.tpl:139
-#, fuzzy
 msgid "Add new Multifactor Methods"
-msgstr "Neue Multifaktor-Methode hinzufügen"
+msgstr "Neue Multifaktor-Methoden hinzufügen"
 
 #: personal/privacyidea/default/mfa_intro.tpl:131
 #: personal/privacyidea/classic/mfa_intro.tpl:142
@@ -469,7 +470,6 @@ msgstr ""
 
 #: personal/privacyidea/default/mfa_intro.tpl:212
 #: personal/privacyidea/classic/mfa_intro.tpl:227
-#, fuzzy
 msgid "Associated Multifactor Methods"
 msgstr "Verknüpfte Multifaktor-Methoden"
 
@@ -583,9 +583,8 @@ msgid "Never used before"
 msgstr "Noch niemals verwendet"
 
 #: personal/privacyidea/default/mfa_intro.tpl:295
-#, fuzzy
 msgid "<i>not shown</i>"
-msgstr "nicht angezeigt"
+msgstr "<i>nicht angezeigt</i>"
 
 #: personal/privacyidea/default/mfa_intro.tpl:302
 #: personal/privacyidea/default/mfa_editToken.tpl:197
@@ -603,9 +602,9 @@ msgstr "Mindestens ein Token muss aktiviert bleiben."
 
 #: personal/privacyidea/default/mfa_intro.tpl:435
 #: personal/privacyidea/classic/mfa_intro.tpl:447
-#, fuzzy
 msgid "We had trouble communicating with the privacyIDEA-backend server."
-msgstr "Verbindung mit dem privacyIDEA Backend-Server nicht möglich."
+msgstr ""
+"Es gab Probleme bei der Kommunikation mit dem privacyIDEA Backend-Server."
 
 #: personal/privacyidea/default/mfa_intro.tpl:441
 #: personal/privacyidea/classic/mfa_intro.tpl:455
@@ -625,12 +624,12 @@ msgstr "lfd. Nummer"
 #: personal/privacyidea/default/mfa_editToken.tpl:44
 #: personal/privacyidea/classic/mfa_editToken.tpl:57
 msgid "(empty)"
-msgstr ""
+msgstr "(leer)"
 
 #: personal/privacyidea/default/mfa_editToken.tpl:51
 #: personal/privacyidea/classic/mfa_editToken.tpl:60
 msgid "not shown but editable"
-msgstr ""
+msgstr "nicht gezeigt, aber bearbeitbar"
 
 #: personal/privacyidea/default/mfa_editToken.tpl:96
 #: personal/privacyidea/classic/mfa_editToken.tpl:88
@@ -669,9 +668,8 @@ msgstr "OK"
 
 #: personal/privacyidea/default/mfatype_totp/phase02.tpl:22
 #: personal/privacyidea/classic/mfatype_totp/phase02.tpl:22
-#, fuzzy
 msgid "Verify Authentication App (TOTP)"
-msgstr "Authentifizierungsapp bestätigen (TOTP)"
+msgstr "Authentifizierungsapp (TOTP) Bestätigen"
 
 #: personal/privacyidea/default/mfatype_totp/phase02.tpl:27
 #: personal/privacyidea/classic/mfatype_totp/phase02.tpl:24
@@ -695,9 +693,8 @@ msgstr "z.B. 000000"
 
 #: personal/privacyidea/default/mfatype_totp/phase01.tpl:21
 #: personal/privacyidea/classic/mfatype_totp/phase01.tpl:21
-#, fuzzy
 msgid "Set up Authentication App (TOTP)"
-msgstr "Eine Authentifizierungsapp (TOTP) einrichten"
+msgstr "Authentifizierungsapp (TOTP) Einrichten"
 
 #: personal/privacyidea/default/mfatype_totp/phase01.tpl:26
 #: personal/privacyidea/classic/mfatype_totp/phase01.tpl:29
@@ -738,7 +735,6 @@ msgstr "Neuen QR-Code erzeugen"
 
 #: personal/privacyidea/default/mfatype_totp/phase00.tpl:22
 #: personal/privacyidea/classic/mfatype_totp/phase00.tpl:22
-#, fuzzy
 msgid "Add Authentication App (TOTP)"
 msgstr "Authentifizierungsapp (TOTP) hinzufügen"
 
@@ -790,7 +786,6 @@ msgstr ""
 
 #: personal/privacyidea/default/mfatype_totp/phase03.tpl:22
 #: personal/privacyidea/classic/mfatype_totp/phase03.tpl:22
-#, fuzzy
 msgid "Authentication App (TOTP) added"
 msgstr "Authentifizierungsapp (TOTP) hinzugefügt"
 
@@ -815,9 +810,8 @@ msgstr ""
 
 #: personal/privacyidea/default/mfatype_paper/phase02.tpl:22
 #: personal/privacyidea/classic/mfatype_paper/phase02.tpl:22
-#, fuzzy
 msgid "Verify TAN List"
-msgstr "TAN-Liste bestätigen"
+msgstr "TAN-Liste Bestätigen"
 
 #: personal/privacyidea/default/mfatype_paper/phase02.tpl:27
 #: personal/privacyidea/classic/mfatype_paper/phase02.tpl:24
@@ -833,9 +827,8 @@ msgstr "Bestätigungs-TAN der Liste"
 
 #: personal/privacyidea/default/mfatype_paper/phase01.tpl:22
 #: personal/privacyidea/classic/mfatype_paper/phase01.tpl:22
-#, fuzzy
 msgid "Print TAN List"
-msgstr "TAN-Liste ausdrucken"
+msgstr "TAN-Liste Drucken"
 
 #: personal/privacyidea/default/mfatype_paper/phase01.tpl:25
 #: personal/privacyidea/classic/mfatype_paper/phase01.tpl:24
@@ -893,7 +886,6 @@ msgstr "Bestätigungs-TAN:"
 
 #: personal/privacyidea/default/mfatype_paper/phase00.tpl:22
 #: personal/privacyidea/classic/mfatype_paper/phase00.tpl:22
-#, fuzzy
 msgid "Add TAN List"
 msgstr "TAN-Liste hinzufügen"
 
@@ -945,7 +937,6 @@ msgstr ""
 
 #: personal/privacyidea/default/mfatype_paper/phase03.tpl:22
 #: personal/privacyidea/classic/mfatype_paper/phase03.tpl:22
-#, fuzzy
 msgid "TAN List added"
 msgstr "TAN-Liste hinzugefügt"
 
@@ -973,6 +964,8 @@ msgid ""
 "Couldn't retrieve version number of privacyIDEA server. Defaulting to legacy "
 "API scheme."
 msgstr ""
+"Konnte die Versionsnummer des privacyIDEA-Servers nicht ermitteln. Falle "
+"zurück auf das Legacy-API-Schema."
 
 #: personal/privacyidea/class_PrivacyIdeaUtils.inc:232
 #: personal/privacyidea/class_PrivacyIdeaUtils.inc:342
@@ -1088,18 +1081,17 @@ msgstr ""
 "unserem System verwendet werden."
 
 #: personal/privacyidea/PDF/class_RecoveryKeyPDF.inc:82
-#, fuzzy
 msgid "Your recovery key is:"
-msgstr "Der Wiederherstellungsschlüssel lautet: <b>%s</b>."
+msgstr "Der Wiederherstellungsschlüssel lautet:"
 
 #: personal/privacyidea/PDF/class_RecoveryKeyPDF.inc:89
 msgid "Best regards"
 msgstr "Mit freundlichen Grüßen"
 
 #: personal/privacyidea/PDF/class_RecoveryKeyPDF.inc:189
-#, fuzzy, php-format
+#, php-format
 msgid "Greetings %s"
-msgstr "Einstellungen speichern"
+msgstr "Hallo %s"
 
 #: personal/privacyidea/tokens/class_MFATokenHelper.inc:146
 msgid "You have reached the limit for the number of tokens of this type."
@@ -1142,6 +1134,9 @@ msgid ""
 "was probably not entered correctly: please make sure that you have entered "
 "it correctly."
 msgstr ""
+"Die Überprüfung der TAN-Liste war nicht erfolgreich. Die Bestätigungs-TAN "
+"wurde wahrscheinlich nicht korrekt eingegeben: Bitte stellen Sie sicher, "
+"dass sie diese korrekt eingegeben haben."
 
 #: personal/privacyidea/tokens/class_MFAPaperToken.inc:224
 #: personal/privacyidea/tokens/class_MFATotpToken.inc:228
@@ -1166,6 +1161,9 @@ msgid ""
 "was probably not entered correctly: please make sure that you have entered "
 "it correctly."
 msgstr ""
+"Die Überprüfung des TOTP-Tokens war nicht erfolgreich. Die Bestätigungs-TAN "
+"wurde wahrscheinlich nicht korrekt eingegeben: Bitte stellen Sie sicher, "
+"dass sie diese korrekt eingegeben haben."
 
 #: personal/privacyidea/tokens/class_MFATotpToken.inc:248
 msgid "Authentication app (TOTP)"
@@ -1180,7 +1178,6 @@ msgid "Could not enroll recovery key (registration token) in privacyIDEA: "
 msgstr "Konnte Wiederherstellungsschlüssel nicht in privacyIDEA registrieren: "
 
 #: personal/privacyidea/tokens/class_MFARegistrationToken.inc:150
-#, fuzzy
 msgid "personally"
 msgstr "persönlich"
 
@@ -1190,9 +1187,9 @@ msgid "recovery_key_%s.pdf"
 msgstr "Wiederherstellungsschlüssel_%s.pdf"
 
 #: personal/privacyidea/tokens/class_MFARegistrationToken.inc:249
-#, fuzzy, php-format
+#, php-format
 msgid "recovery_key_%s_%s.pdf"
-msgstr "Wiederherstellungsschlüssel_%s.pdf"
+msgstr "Wiederherstellungsschlüssel_%s_%s.pdf"
 
 #: personal/privacyidea/tokens/class_MFARegistrationToken.inc:259
 msgid "Recovery key"
@@ -1233,7 +1230,6 @@ msgstr "Sicherheitsschlüssel hinzufügen"
 
 #: personal/privacyidea/classic/mfa_intro.tpl:111
 #: personal/privacyidea/classic/mfa_intro.tpl:113
-#, fuzzy
 msgid "Attention:"
 msgstr "Achtung:"
 
@@ -1267,12 +1263,14 @@ msgstr "Es ist Ihnen nicht gestattet, MFA Faktoren zu verwalten."
 #: personal/privacyidea/class_mfaAccount.inc:341
 #: personal/privacyidea/class_mfaAccount.inc:400
 msgid "Unsupported action"
-msgstr ""
+msgstr "Nicht unterstützte Aktion"
 
 #: personal/privacyidea/class_mfaAccount.inc:342
 #: personal/privacyidea/class_mfaAccount.inc:401
 msgid "It is not supported to deactivate, revoke or remove your last token."
 msgstr ""
+"Es wird nicht unterstützt, das letzte Token zu deaktivieren, zurückzuziehen "
+"oder zu löschen."
 
 #: personal/privacyidea/class_mfaAccount.inc:343
 #: personal/privacyidea/class_mfaAccount.inc:402
@@ -1280,6 +1278,8 @@ msgid ""
 "Please add another token to ensure that you always have at least one working "
 "token."
 msgstr ""
+"Bitte fügen Sie ein anderes Token hinzu, um sicherzustellen, dass Sie immer "
+"mindestens ein funktionierendes Token haben."
 
 #: personal/privacyidea/class_mfaAccount.inc:430
 #, php-format
@@ -1334,21 +1334,18 @@ msgid "LDAP error"
 msgstr "LDAP-Fehler"
 
 #: personal/privacyidea/class_mfaAccount.inc:1052
-#, fuzzy
 msgid "PI read-only"
-msgstr "nur Lesen"
+msgstr "PI nur Lesen"
 
 #: personal/privacyidea/class_mfaAccount.inc:1053
 msgid "PI write-only"
-msgstr ""
+msgstr "PI nur Schreiben"
 
 #: personal/privacyidea/class_mfaAccount.inc:1054
-#, fuzzy
 msgid "write-only"
-msgstr "schreiben"
+msgstr "nur Schreiben"
 
 #: personal/privacyidea/class_mfaAccount.inc:1055
-#, fuzzy
 msgid "read-only"
 msgstr "nur Lesen"
 
@@ -1410,27 +1407,23 @@ msgstr "Zähler für erfolgreiche Anmeldungen"
 
 #: personal/privacyidea/class_mfaAccount.inc:1096
 msgid "Resetting of fail counter allowed"
-msgstr ""
+msgstr "Zurücksetzen des Fehlerzählers erlaubt"
 
 #: personal/privacyidea/class_mfaAccount.inc:1097
-#, fuzzy
 msgid "Revocation of tokens allowed"
-msgstr "Widerrufen erlaubt"
+msgstr "Widerrufen von Tokens erlaubt"
 
 #: personal/privacyidea/class_mfaAccount.inc:1098
-#, fuzzy
 msgid "Removal of tokens allowed"
-msgstr "Löschen erlaubt"
+msgstr "Löschen von Tokens erlaubt"
 
 #: personal/privacyidea/class_mfaAccount.inc:1099
-#, fuzzy
 msgid "Activation of tokens allowed"
-msgstr "Verifizierung des Tokens fehlgeschlagen."
+msgstr "Aktivierung von Tokens erlaubt"
 
 #: personal/privacyidea/class_mfaAccount.inc:1100
-#, fuzzy
 msgid "Deactivation of tokens allowed"
-msgstr "Verifizierung des Tokens fehlgeschlagen."
+msgstr "Deaktivierung von Tokens erlaubt"
 
 #: personal/privacyidea/class_mfaAccount.inc:1120
 msgid "privacyIDEA server URL."
@@ -1440,6 +1433,7 @@ msgstr "privacyIDEA Server-URL"
 msgid ""
 "Protocol + FQDN. Used to set Origin: header for privacyIDEA where needed."
 msgstr ""
+"Protkoll + FQDN: Wird verwendet, um Origin: Header für privacyIDEA zu setzen."
 
 #: personal/privacyidea/class_mfaAccount.inc:1140
 msgid ""
